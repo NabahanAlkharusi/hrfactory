@@ -1,0 +1,694 @@
+﻿@using HumanResourceHelth.Model
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>HR FACTORY</title>
+    <meta name="author" content="HR Factory">
+    <meta name="robots" content="index follow">
+    <meta name="googlebot" content="index follow">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="keywords" content="HR Factory">
+    <meta name="description" content="HR Factory">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="ContentImages/favicon.png" />
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap" rel="stylesheet">
+
+
+
+    <!-- animate -->
+    <link rel="preload" href="~/assets/css/animate.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/animate.css"></noscript>
+    @*<link rel="stylesheet" href="~/assets/css/animate.css" />*@
+
+    <!-- owl Carousel assets -->
+    <link rel="preload" href="~/assets/css/owl.carousel.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/owl.carousel.css"></noscript>
+    @*<link href="~/assets/css/owl.carousel.css" rel="stylesheet">*@
+
+    <link rel="preload" href="~/assets/css/owl.theme.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/owl.theme.css"></noscript>
+    @*<link href="~/assets/css/owl.theme.css" rel="stylesheet">*@
+
+    <!-- bootstrap -->
+    <link rel="preload" href="~/assets/css/bootstrap.min.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/bootstrap.min.css"></noscript>
+    @*<link rel="stylesheet" href="~/assets/css/bootstrap.min.css">*@
+    <!-- hover anmation -->
+    <link rel="preload" href="~/assets/css/hover-min.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/hover-min.css"></noscript>
+    <!-- <link rel="stylesheet" href="~/assets/css/hover-min.css"> -->
+    <!-- flag icon -->
+    <link rel="preload" href="~/assets/css/flag-icon.min.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/flag-icon.min.css"></noscript>
+    <!-- <link rel="stylesheet" href="~/assets/css/flag-icon.min.css"> -->
+
+
+    @*<link rel="stylesheet" href="~/assets/css/skew.css">*@
+    <!-- main style -->
+    <link rel="preload" href="~/assets/css/flag-icon.min.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/flag-icon.min.css"></noscript>
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!-- colors -->
+        <link rel="preload" href="~/assets/css/colors/main.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/colors/main.css"></noscript>
+    <!-- <link rel="stylesheet" href="~/assets/css/colors/main.css"> -->
+    <!-- elegant icon -->
+    <link rel="preload" href="~/assets/css/elegant_icon.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/css/elegant_icon.css"></noscript>
+    <!-- <link rel="stylesheet" href="~/assets/css/elegant_icon.css"> -->
+    <!-- jquery  UI style  -->
+     <link rel="preload" href="~/Content/themes/base/jquery-ui.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"></noscript>
+    <!-- <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" /> -->
+     <link rel="preload" href="~/Content/themes/base/jquery-ui.min.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/Content/themes/base/jquery-ui.min.css"></noscript>
+    <!-- <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" /> -->
+    <!-- jquery library  -->
+    <script type="text/javascript" src="~/assets/js/jquery-3.2.1.min.js"></script>
+    <!-- jquery UI library  -->
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <!-- fontawesome  -->
+    <script src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <!-- google maps api  -->
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="~/assets/js/jquery.gomap-1.3.3.min.js"></script>
+    <script src="~/Scripts/jquery-gauge.min.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+     <link rel="preload" href="~/Content/jquery-gauge.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/Content/jquery-gauge.css"></noscript>
+    <!-- <link href="~/Content/jquery-gauge.css" rel="stylesheet" /> -->
+    <link rel="preload" href="~/Content/toastr.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/Content/toastr.css"></noscript>
+    <!-- <link href="~/Content/toastr.css" rel="stylesheet" /> -->
+    <!-- REVOLUTION STYLE SHEETS -->
+    <link rel="preload" href="~/assets/revslider/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/revslider/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"></noscript>
+    <!-- <link rel="stylesheet" type="text/css" href="~/assets/revslider/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"> -->
+    <link rel="preload" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css"></noscript>
+    <!-- <link rel="stylesheet" type="text/css" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css"> -->
+    <link rel="preload" href="~/assets/revslider/css/settings.css" as="style"
+          onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="~/assets/revslider/css/settings.css"></noscript>
+    <!-- <link rel="stylesheet" type="text/css" href="~/assets/revslider/css/settings.css"> -->
+
+
+    <link href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <!-- REVOLUTION LAYERS STYLES -->
+    <!-- REVOLUTION JS FILES -->
+    <script type="text/javascript" src="~/assets/revslider/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/jquery.themepunch.revolution.min.js"></script>
+
+    <!-- SLIDER REVOLUTION 5.0 EXTENSIONS  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.actions.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.migration.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.video.min.js"></script>
+    <script src="https://cdn.ckeditor.com/4.15.0/full/ckeditor.js"></script>
+    <script src="~/Scripts/jquery.blockUI.js"></script>
+</head>
+
+<body class="background-white" lang="ar-OM">
+    @functions{ IHtmlString GetContent(int contentId)
+        {
+            string content = "";
+            List<Content> contents = (List<Content>)Session["Content"];
+            if ((string)Session["lang"] == "en-US")
+            {
+                content = contents.Where(x => x.Id == contentId).Single().EnglishText;
+                if (content.Trim() == "") content = "Please Insert Text";
+            }
+            else
+            {
+                content = contents.Where(x => x.Id == contentId).Single().ArabicText;
+                if (content.Trim() == "") content = "برجاء ادخال نص";
+            }
+            return Html.Raw(content);
+        } }
+
+    <!-- header -->
+    <header class="gradient-white box-shadow">
+        <div class="background-grey-2 padding-tb-5px position-relative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-4 col-4">
+                        <!-- lang dropdown -->
+                        @if (Session["lang"].ToString() == "en-US")
+                        {
+                            <a class=" text-white" href="@Url.Action("ChangeLanguage","Home", new { lang = "ar-OM"})" id="dropdownMenuLink"> عربى </a> }
+                        else
+                        {
+                            <a class=" text-white" href="@Url.Action("ChangeLanguage","Home", new { lang = "en-US"})" id="dropdownMenuLink"> English </a>}
+
+                        <!-- // lang dropdown -->
+                    </div>
+                    <div class="col-xl-3 col-2 col-lg-4 col-md-12">
+
+                        <!-- // Social -->
+                    </div>
+                    <div class="col-xl-4  d-none d-xl-block"> </div>
+                    <div class="col-xl-3 col-lg-4 col-6">
+                        <ul class="user-area list-inline float-right margin-0px text-white">
+                            @if (Session["User"] != null)
+                            {
+                                if (((User)(Session["User"])).IsAdmin)
+                                {
+                                    if ((bool)Session["CMS"] == true)
+                                    {
+                                        <li class="list-inline-item"><a href="@Url.Action("DisableCms","Home")" style="color:lawngreen;">CMS</a></li>
+ }
+                                    else
+                                    {
+                                        <li class="list-inline-item"><a href="@Url.Action("EnableCms","Home")" style="color:lightgray;">CMS</a></li>
+}
+                                }
+                            }
+                            @if (Session["UserId"] == null || Session["User"] == null)
+                            {
+                                <li class="list-inline-item  padding-right-10px"><a href="@Url.Action("Index","Login")"><i class="fa fa-lock padding-right-5px"></i>@Resources.General.Login</a></li>
+ }
+                            else
+                            {
+                                <li class="list-inline-item  padding-right-10px"><a href="@Url.Action("Logout","Login")"><i class="fa fa-lock padding-right-5px"></i>@Resources.General.Logout</a></li>
+                                <li class="list-inline-item"><a href="@Url.Action("UserProfile","Home")"><i class="fa fa-user-plus padding-right-5px"></i>@Resources.General.Welcome @(((HumanResourceHelth.Model.User)Session["User"]).Name)</a></li>
+}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-output">
+            <div class="container header-in">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-2"> <a id="logo" href="/" class="d-inline-block margin-tb-10px"><img src="~/assets/img/logo-1.png" alt=""></a> <a class="mobile-toggle padding-15px background-main-color" href="#"><i class="fas fa-bars"></i></a> </div>
+                    <div class="col-xl-8 col-lg-8 margin-tb-25px">
+                        <div class="float-lg-right">
+                            <ul id="menu-main" class="float-lg-left nav-menu dropdown-dark">
+                                <li><a href="@Url.Action("Index","Home")">@Resources.General.Home</a></li>
+                                <li><a href="@(Url.Action("Index","Home"))#subscriptionPlans">@Resources.General.Subscribe</a> </li>
+                                <li><a href="@Url.Action("Index","TrainingHome")#learnOnline">@Resources.General.Learn</a> </li>
+                                <li><a href="@Url.Action("Index","Home")#consultHR">@Resources.General.Consult</a> </li>
+                                <li><a href="@Url.Action("AboutUs","Home")">@Resources.General.AboutUs</a> </li>
+                                @*<li><a href="@Url.Action("ContactUs","Home")">@Resources.General.Ask</a></li>*@
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- // Social -->
+                    <div class="col-xl-2 col-lg-2 padding-social">
+                        <div class="d-none d-lg-block pull-right model-link">
+                            <ul class="list-inline text-center margin-0px social">
+                                <li class="list-inline-item"><a class="twitter cms" data-contentId="105" href="@GetContent(105)"><i class="fab fa-twitter"></i></a></li>
+                                <li class="list-inline-item"><a class="youtube cms" data-contentId="106" href="@GetContent(106)"><i class="fab fa-instagram"></i></a></li>
+                                <li class="list-inline-item"><a class="linkedin cms" data-contentId="107" href="@GetContent(107)"><i class="fab fa-linkedin"></i></a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- // header -->
+    @RenderBody()
+
+
+    <footer class="background-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-8 col-lg-10 col-md-10 margin-tb-20px wow fadeInUp">
+                    <div class="logo margin-bottom-10px"><img src="~/assets/img/logo.png" alt=""></div>
+                    <div class="text-grey-2 font-weight-300"></div>
+
+                    <!-- // Social -->
+                </div>
+                <div class="col-4 col-lg-2 col-md-2 wow fadeInUp" data-wow-delay="0.2s">
+                    <ul class="list-inline text-left margin-tb-20px margin-lr-0px text-white">
+                        <li class="list-inline-item"><a class="twitter cms" data-contentId="105" href="@GetContent(105)"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a class="youtube cms" data-contentId="106" href="@GetContent(106)"><i class="fab fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a class="linkedin cms" data-contentId="107" href="@GetContent(107)"><i class="fab fa-linkedin"></i></a></li>
+                    </ul>
+                    <a class="text-white" href="tel:+96879178007"><i class="fas fa-phone"></i>&nbsp; +968 7917 8007</a><br />
+                    <a class="text-white" href="mailto:care@hrfactoryapp.com"><i class="fas fa-envelope"></i>&nbsp; care@hrfactoryapp.com</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="cmsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
+        <div class="modal-dialog" role="document" style="max-width: max-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cmsModalLabel">Edit Text</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="cmsModalBody">
+
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="changeImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
+        <div class="modal-dialog" role="document" style="max-width: max-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changeImageModalLabel">Change Image</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="changeImageModalBody">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--  <script type="text/javascript" src="~/assets/js/numscroller-1.0.js"></script> -->
+    <script type="text/javascript" src="~/assets/js/sticky-sidebar.js" ></script>
+    <script type="text/javascript" src="~/assets/js/YouTubePopUp.jquery.js" ></script>
+    <script type="text/javascript" src="~/assets/js/owl.carousel.min.js" ></script>
+    <script type="text/javascript" src="~/assets/js/imagesloaded.min.js" ></script>
+    <script type="text/javascript" src="~/assets/js/wow.min.js" ></script>
+    <script type="text/javascript" src="~/assets/js/custom.js" ></script>
+    <script type="text/javascript" src="~/assets/js/popper.min.js" ></script>
+    <script type="text/javascript" src="~/assets/js/bootstrap.min.js" ></script>
+    @*==========================================================================*@
+
+    <script>
+        function agree(div) {
+
+            $('#' + div).toggleClass('d-none show');
+        }
+        function getCouponDiscount(textbox, link, catogry, price) {
+            //alert("this textbox value: " + );
+
+            var linkdata = $('#' + link).attr('href');
+
+            var priceBeforDiscount = price * 1000;
+            $.ajax({
+                type: 'GET',
+                url: '/Coupon/getCouponRate?CouponFor=' + catogry + '&&code=' + $('#' + textbox).val(),
+
+                timeout: 5000,
+                success: function (data) {
+                    if (data['result'] == "success") {
+                        if (textbox == 'CourseCouponCode') {
+                            var CourseDiscountRate = parseFloat(data['rate']);
+                            var CourseintCost = parseInt(priceBeforDiscount) * ((100 - CourseDiscountRate) / 100);
+                            $('#CoursePlanPriceCD').html((priceBeforDiscount / 1000).toFixed(3));
+                            $('#CourseCouponDiscRateCD').html(CourseDiscountRate + '%');
+                            $('#CoursePriceAftDisCD').html((CourseintCost / 1000).toFixed(3));
+                            var CourseLink = $('#' + link).attr('href');
+                            console.log(CourseintCost);
+                            console.log(CourseLink +'');
+                            var SiplitedCourseLink = CourseLink.split('&')
+                            if (CourseintCost == 0) {
+                                var coursesplitedlink = SiplitedCourseLink[0].split('?');
+                                console.log(coursesplitedlink);
+                                var test = SiplitedCourseLink[0].replace(coursesplitedlink[0], '/TrainingHome/CourseMaterial')
+                                console.log(test)
+                                $('#' + link).attr('href', test);
+                            }
+                            else {
+                                console.log(SiplitedCourseLink[0]);
+                                var priceSpilted = SiplitedCourseLink[1].split('=')
+                                var CourseLinkafter = CourseLink.replace(priceSpilted[1], (CourseintCost / 1000).toFixed(3))
+                                $('#' + link).attr('href', CourseLinkafter);
+                            }
+                            
+                            $('#CoursePriceSaveCD').html('<del>' + ((priceBeforDiscount - CourseintCost) / 1000).toFixed(3) + '</del>');
+
+                            if ($('#CourseDiscountDiv').hasClass('d-none')) {
+                                $('#CourseDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                $('#CourseDiscountDiv').removeClass('d-none');
+
+
+                            }
+                        }
+                        else {
+
+                            var splitedLink = linkdata.split("=");
+                            var RealCost = splitedLink[3];
+                            var discountRate = parseFloat(data['rate']);
+                            var splitedLinks = linkdata.split("=");
+                            var RealCosts = splitedLink[3];
+                            var intCost = parseInt(priceBeforDiscount) * ((100 - discountRate) / 100);
+                            if (intCost == 0) intCost = intCost + '000'
+                            var AfterDiscount = linkdata.replace(RealCosts, parseInt(intCost));
+
+                            $('#' + link).attr("href", AfterDiscount);
+                            if (textbox == 'SearchCouponCodeStartUp') {
+                                $('#startupPlanPriceCD').html((priceBeforDiscount / 1000).toFixed(3));
+                                $('#startupCouponDiscRateCD').html(discountRate + '%');
+                                $('#startupPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#startupPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#annualStartUpDiscountDiv').hasClass('d-none')) {
+                                    $('#annualStartUpDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#annualStartUpDiscountDiv').removeClass('d-none');
+
+
+                                }
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeStartUPAnnual').hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPAnnual').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPAnnual').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+                            if (textbox == 'MonthlySearchCouponCodeStartUp') {
+                                $('#MonthlystartupPlanPriceCD').html((priceBeforDiscount / 1000));
+                                $('#MonthlystartupCouponDiscRateCD').html(discountRate + '%');
+                                $('#MonthlystartupPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#MonthlystartupPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#MonthlyStartUpDiscountDiv').hasClass('d-none')) {
+                                    $('#MonthlyStartUpDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#MonthlyStartUpDiscountDiv').removeClass('d-none');
+
+
+                                }
+
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeStartUPMonthly').hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPMonthly').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPMonthly').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+                            if (textbox == 'MonthlySearchCouponCodeManualBuilder') {
+                                $('#MonthlyManualBuilderPlanPriceCD').html((priceBeforDiscount / 1000));
+                                $('#MonthlyManualBuilderCouponDiscRateCD').html(discountRate + '%');
+                                $('#MonthlyManualBuilderPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#MonthlyManualBuilderPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#MonthlyManualBuilderDiscountDiv').hasClass('d-none')) {
+                                    $('#MonthlyManualBuilderDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#MonthlyManualBuilderDiscountDiv').removeClass('d-none');
+
+
+                                }
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeManualBuilderMonthly').hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderMonthly').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderMonthly').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+                            if (textbox == 'AnnualSearchCouponCodeManualBuilder') {
+                                $('#AnnualManualBuilderPlanPriceCD').html((priceBeforDiscount / 1000));
+                                $('#AnnualManualBuilderCouponDiscRateCD').html(discountRate + '%');
+                                $('#AnnualManualBuilderPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#AnnualManualBuilderPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#AnnualManualBuilderDiscountDiv').hasClass('d-none')) {
+                                    $('#AnnualManualBuilderDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#AnnualManualBuilderDiscountDiv').removeClass('d-none');
+
+
+                                }
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeManualBuilderAnnual').hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderAnnual').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderAnnual').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    else {
+
+                        splitedLink = linkdata.split('=');
+                        var RealCost = splitedLink[3];
+
+                        var nochange = linkdata.replace(RealCost, parseInt(priceBeforDiscount));
+                        $('#' + link).attr("href", nochange);
+
+                        if (textbox == 'SearchCouponCodeStartUp') {
+                            if (!$('#annualStartUpDiscountDiv').hasClass('d-none')) {
+                                $('#annualStartUpDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'MonthlySearchCouponCodeStartUp') {
+                            if (!$('#MonthlyStartUpDiscountDiv').hasClass('d-none')) {
+                                $('#MonthlyStartUpDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'MonthlySearchCouponCodeManualBuilder') {
+                            if (!$('#MonthlyManualBuilderDiscountDiv').hasClass('d-none')) {
+                                $('#MonthlyManualBuilderDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'AnnualSearchCouponCodeManualBuilder') {
+                            if (!$('#AnnualManualBuilderDiscountDiv').hasClass('d-none')) {
+                                $('#AnnualManualBuilderDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'CourseCouponCode') {
+                            if (!$('#CourseDiscountDiv').hasClass('d-none')) {
+                                $('#CourseDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                    }
+                }
+            });
+
+        }
+        $(document).ready(function () {
+
+
+            var requestUrl = "http://ip-api.com/json";
+
+            $.ajax({
+                url: requestUrl,
+                type: 'GET',
+                success: function (json) {
+                    var country = json.country;
+
+                    $("#selectCountry option").each(function () {
+
+                        if ($(this).text() == country) $(this).attr('selected', true);
+                    });
+                    $.ajax({
+                        type: 'get',
+                        url: 'https://restcountries.eu/rest/v2/name/' + country,
+                        success: function (data) {
+                            if (data.length > 1) {
+                                $.ajax({
+                                    type: 'get',
+                                    url: 'https://restcountries.eu/rest/v2/name/' + country + '?fullText=true',
+                                    success: function (data) {
+                                        // console.log(data);
+                                        var stringified = JSON.stringify(data);
+                                        var parsedObj = JSON.parse(stringified);
+                                        $('#countryPhoneKey').html(parsedObj[0]['callingCodes']);
+
+                                        $('#flagimg').attr('src', parsedObj[0]['flag']);
+                                        $('#flagimg').attr('alt', parsedObj[0]['name']);
+
+                                    }
+
+                                });
+                            }
+                            else if (data.length != 0) {
+                                var stringified = JSON.stringify(data);
+                                var parsedObj = JSON.parse(stringified);
+                                $('#countryPhoneKey').html(parsedObj[0]['callingCodes']);
+
+                                $('#flagimg').attr('src', parsedObj[0]['flag']);
+                                $('#flagimg').attr('alt', parsedObj[0]['name']);
+                            }
+
+                        }
+                    });
+                },
+                error: function (err) {
+                    console.log("Request failed, error= " + err);
+                }
+            });
+
+
+            $('#selectCountry').change(function () {
+                var country = $("#selectCountry option:selected").text();
+                $.ajax({
+                    type: 'get',
+                    url: 'https://restcountries.eu/rest/v2/name/' + country,
+                    success: function (data) {
+                        if (data.length > 1) {
+                            $.ajax({
+                                type: 'get',
+                                url: 'https://restcountries.eu/rest/v2/name/' + country + '?fullText=true',
+                                success: function (data) {
+                                    // console.log(data);
+                                    if (data.length > 0) {
+                                        var stringified = JSON.stringify(data);
+                                        var parsedObj = JSON.parse(stringified);
+                                        $('#countryPhoneKey').html(parsedObj[0]['callingCodes']);
+
+                                        $('#flagimg').attr('src', parsedObj[0]['flag']);
+                                        $('#flagimg').attr('alt', parsedObj[0]['name']);
+                                    } else {
+                                        alert("wiwi");
+                                    }
+
+                                },
+                                error: function (data) {
+                                    $('#countryPhoneKey').html('Double Click Here');
+
+                                    $('#flagimg').attr('src', 'None');
+                                    $('#flagimg').attr('alt', 'Not Availabel');
+                                }
+
+                            });
+                        }
+                        else if (data.length != 0) {
+                            var stringified = JSON.stringify(data);
+                            var parsedObj = JSON.parse(stringified);
+                            $('#countryPhoneKey').html(parsedObj[0]['callingCodes']);
+
+                            $('#flagimg').attr('src', parsedObj[0]['flag']);
+                            $('#flagimg').attr('alt', parsedObj[0]['name']);
+                        }
+                        else {
+                            alert("ddd")
+                        }
+
+                    }
+                });
+            });
+        });
+    </script>
+
+    @*==========================================================================*@
+    <script>
+        $.blockUI.defaults.message = "Please Wait";
+        $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+    </script>
+    <script>
+        $(".cms").on("click", function (e) {
+
+            @if(Session["CMS"] == null || (bool)Session["CMS"] == false) { <text>return;</text>}
+            e.preventDefault();
+            var contentId = $(this).attr("data-contentId");
+            $.ajax({
+                url: "@Url.Action("EditContent", "Home")",
+                data: { "contentId": contentId},
+                sync: false,
+                success: function (data) {
+                    $("#cmsModalBody").html(data);
+                },
+                error: function (err, status, error) {
+                    debugger;
+                    toastr.error(err.statusText)
+                },
+            });
+
+            $('#cmsModal').modal('show');
+        });
+    </script>
+    <script>
+        $(".contentImage").on("click", function () {
+            debugger;
+            var currentSource = $(this).attr("src");
+            $(this).uniqueId();
+            var imageId = $(this).attr("Id");
+            @if(Session["CMS"] == null || (bool)Session["CMS"] == false) { <text>return;</text>}
+
+            $.ajax({
+                url: "@Url.Action("ChangeImage", "Home")",
+                data: { currentSource: currentSource, imageId: imageId},
+                sync: false,
+                success: function (data) {
+                    $("#changeImageModalBody").html(data);
+                },
+                error: function (err, status, error) {
+                    debugger;
+                    toastr.error(err.statusText)
+                },
+            });
+            $('#changeImageModal').modal('show');
+        });
+    </script>
+
+    <script type="text/javascript">
+        var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq || { widgetcode: "a0bf81e7cc85be531435933c0fb3566921edc78b8a6779188a891ea821207fc1", values: {}, ready: function () { } };
+        var d = document;
+        s = d.createElement("script");
+        s.type = "text/javascript";
+        s.id = "zsiqscript"; 
+        s.src = "https://salesiq.zoho.com/widget";
+        t = d.getElementsByTagName("script")[0];
+        t.parentNode.insertBefore(s, t);
+        d.write("<div id='zsiqwidget'></div>");
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+﻿@using HumanResourceHelth.Model.Resources
+@*@inject LocalizationService LocalizationService*@
+
+@model IEnumerable<HumanResourceHelth.Model.Pyments>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr class="active">
+                <th>
+                    @Html.DisplayNameFor(model => model.PymentID )
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PymentDate)
+                </th>
+                <th hidden>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PymentID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PymentDate)
+                    </td>
+                    <td hidden>
+                        @Html.DisplayFor(modelItem => item.Amount )
+                    </td>
+                    <td>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

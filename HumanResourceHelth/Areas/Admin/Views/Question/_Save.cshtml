@@ -1,0 +1,142 @@
+﻿@using HumanResourceHelth.Web.Areas.Admin.Data
+@using HumanResourceHelth.Model
+@model QuestionViewModel
+@{
+    ViewBag.Title = "_Save";
+}
+
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Questions</h4>
+        </div>
+        <div class="panel-body">
+
+
+            <fieldset>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Name</label>
+                        <div>
+                            <input type="text" id="txtName" class="form-control" value="@Model.Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Name Arabic</label>
+                        <div>
+                            <input type="text" id="txtNameAr" class="form-control" value="@Model.NameAr">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Practice</label>
+                        <div>
+                            <input type="text" id="txtPractice" class="form-control" value="@Model.Practice">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Practice Arabic</label>
+                        <div>
+                            <input type="text" id="txtPracticeAr" class="form-control" value="@Model.PracticeAr">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Indicator</label>
+                        <div>
+                            <select class="form-control" id="indicatorTypeId">
+                                <option value="0">Select</option>
+                                @foreach (Indicator indicator in Model.indicators)
+                                {
+                                    if (indicator.Id == Model.IndicatorId)
+                                    {
+                                        <option value="@indicator.Id" selected="selected">@indicator.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@indicator.Id">@indicator.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input id="btnSave" type="button" class="btn btn-primary" value="Save" />
+                        <a href="@Url.Action("Index", "Question",new { indicatorId=Model.IndicatorId})" class="btn btn-primary">Back</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnSave").on("click", function () {
+        @if(Model.Id == 0)
+        {
+            <text>
+                save();
+
+            </text>
+        }
+        else
+        {
+            <text>
+                update();
+            </text>
+        }
+
+    });
+
+    function save() {
+        var name = $("#txtName").val();
+        var nameAr = $("#txtNameAr").val();
+        var practice = $("#txtPractice").val();
+        var practiceAr = $("#txtPracticeAr").val();
+        var indicatorId = $("#indicatorTypeId").val();
+        $.ajax({
+            url: "@Url.Action("Save", "Question")",
+            data: { name: name, nameAr: nameAr, practice: practice, practiceAr: practiceAr, indicatorId: indicatorId },
+            type: "GET",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+
+    function update() {
+        var name = $("#txtName").val();
+        var nameAr = $("#txtNameAr").val();
+        var practice = $("#txtPractice").val();
+        var practiceAr = $("#txtPracticeAr").val();
+        var indicatorId = $("#indicatorTypeId").val();
+        debugger;
+        $.ajax({
+            url: "@Url.Action("Update", "Question")",
+            data: { name: name, nameAr: nameAr, practice: practice, practiceAr: practiceAr, indicatorId: indicatorId, id: @(Model.Id)},
+            type: "POST",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+</script>
+

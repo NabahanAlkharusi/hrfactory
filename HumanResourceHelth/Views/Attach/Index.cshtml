@@ -1,0 +1,194 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model IEnumerable<HumanResourceHelth.Model.Attachments>
+
+
+@{
+    ViewData["Title"] = AppResource.CourseAttachments;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+                <h1 class="h2">
+
+                    @ViewBag.CourseName
+                </h1>
+                <a class="btn btn-sm btn-warning " href="@Url.Action("Index","Courses")">
+                    @AppResource.Courses
+                    <i class="fa fa-list"></i>
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="table-responsive">
+                        <h4 class="title">
+                            @AppResource.Videos
+                            <a href="@Url.Action("AddVideo","Attach",new {CID=Context.Request.QueryString["CID"] })"
+                               class="btn  btn-warning">
+                                @AppResource.AddVideo ...
+                                <i class="fa  fa-plus"></i>
+                                <i class="fa fa-video"></i>
+                            </a>
+                        </h4>
+                        <table class="table table-bordered active">
+                            <thead>
+                                <tr class="bg-grey">
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AttachName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AttachType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ExternalLink)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    if (item.AttachType == "youtube" || item.AttachType == "vimeo")
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AttachName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AttachType)
+                                                @if (item.AttachType == "youtube")
+                                                {
+                                                    <i class="fa fa-youtube-square"></i>
+                                                }
+                                                else if (item.AttachType == "vimeo")
+                                                {
+                                                    <i class="fa fa-vimeo-square"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-file-o "></i>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @{
+                                                    if (item.AttachType == "youtube" || item.AttachType == "vimeo")
+                                                    {
+                                                        <iframe width="150" height="100"
+                                                                src="@item.ExternalLink"
+                                                                frameborder="0"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(modelItem => item.FilePath)
+
+                                                    }
+                                                }
+                                            </td>
+                                            <td>
+                                                @{
+                                                    <a class="text-warning m-1" href="@Url.Action("AddVideo",new {CID=item.CourseID,AttachID=item.AttachID })">
+                                                        @AppResource.Edit   <i class="fa fa-edit fa-2x"></i>
+                                                    </a>
+                                                }
+                                                |
+                                                <a class="text-danger m-1 " href="@Url.Action("Delete",new {AttachID=item.AttachID })">
+                                                    <i class="fa fa-trash fa-2x"></i>   @AppResource.Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+
+                    <div class="table-responsive">
+                        <h4 class="title">
+                            @AppResource.Attachments
+                            <a class="btn btn-warning" href="@Url.Action("AddFile","Attach",new {CID=@Context.Request.QueryString["CID"] })">
+                                <i class="fa fa-plus"></i>
+                                <i class="fa fa-file"></i>
+                                @AppResource.AddAttachment ...
+                            </a>
+                        </h4>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr class="bg-grey">
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AttachName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AttachType)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.InternalLink)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    if (item.AttachType == "PDF" || item.AttachType == "docx")
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AttachName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AttachType)
+                                                @if (item.AttachType == "PDF")
+                                                {
+                                                    <i class="fa fa-file-pdf-o"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-file-o "></i>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FilePath)
+
+                                            </td>
+                                            <td>
+                                                <a class="text-warning m-1" href="@Url.Action("AddFile",new {CID=item.CourseID,AttachID=item.AttachID })">
+                                                    @AppResource.Edit
+                                                    <i class="fa fa-edit fa-2x"></i>
+                                                </a>
+                                                |
+                                                <a class="text-danger m-1 " href="@Url.Action("Delete",new {AttachID=item.AttachID })">
+                                                    <i class="fa fa-trash fa-2x"></i>  @AppResource.Delete
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+</div>
+</div>
+</div>

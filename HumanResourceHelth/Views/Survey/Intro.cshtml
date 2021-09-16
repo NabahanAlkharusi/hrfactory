@@ -1,0 +1,120 @@
+﻿@using HumanResourceHelth.Model
+@{
+    ViewBag.Title = "Intro";
+    //Session["Backto"] = "Survey";
+}
+
+@functions{
+    IHtmlString GetContent(int contentId)
+    {
+        string content = "";
+        List<Content> contents = (List<Content>)Session["Content"];
+        if ((string)Session["lang"] == "en-US")
+        {
+            content = contents.Where(x => x.Id == contentId).Single().EnglishText;
+            if (content.Trim() == "") content = "Please Insert Text";
+        }
+        else
+        {
+            content = contents.Where(x => x.Id == contentId).Single().ArabicText;
+            if (content.Trim() == "") content = "برجاء ادخال نص";
+        }
+
+        return Html.Raw(content);
+    }
+}
+
+<div id="page-title" class="text-grey background-overlay " style="background-image: url(@(Url.Content("~/assets/img/aboutUsbanner.jpg")));">
+    <div>
+        <div class="container padding-tb-185px z-index-2 position-relative">
+            <h1 class="font-weight-700 text-capitalize page-title cms" data-contentId="51">@GetContent(51)</h1>
+            <div class="row ">
+                <div class="col-lg-7"><h1 class="font-weight-700 pageSubTitle padding-tb-15px cms" data-contentId="52">@GetContent(52)</h1></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="padding-tb-80px background-white">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 wow fadeInUp factors-bottom-mr">
+                <span class="opacity-7 padding-tb-35px cms" data-contentId="53">@GetContent(53)</span>
+            </div>
+            <div class="col-md-12 wow fadeInUp  margin-bottom-30px ">
+                <h3 class="cms" data-contentId="54">@GetContent(54)</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="clearfix  margin-bottom-30px">
+                            <div class="margin-right-30px float-left">
+                                <img class="border-radius-100" src="@Url.Content("~/assets/img/no1.png")" alt="">
+                            </div>
+                            <p class="factors-txt cms" data-contentId="55">@GetContent(55)</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="clearfix  margin-bottom-30px ">
+                            <div class="margin-right-30px float-left">
+                                <img class="border-radius-100" src="@Url.Content("~/assets/img/no2.png")" alt="">
+                            </div>
+                            <p class="factors-txt cms" data-contentId="56">@GetContent(56)</p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="clearfix  margin-bottom-30px ">
+                            <div class="margin-right-30px float-left">
+                                <img class="border-radius-100" src="@Url.Content("~/assets/img/no3.png")" alt="">
+                            </div>
+                            <p class="factors-txt cms" data-contentId="57">@GetContent(57)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <!-- sidebar -->
+                <div class="col-lg-12 col-md-12">
+
+                    <div class="widget widget_recent_entries">
+                        <ul>
+                            <li><a href="#" data-toggle="modal" data-target="#exampleModal" class="text-blue cms" data-contentId="58">@GetContent(58)</a></li>
+                        </ul>
+                        @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
+                        {
+                            <a href="javascript:void(0);" class="btn text-white text-uppercase text-small btn-block margin-top-15px background-orange rounded-0 border-0 cms" data-contentId="61">@GetContent(61)</a>
+                        }
+                        else
+                        {
+                            <a href="@(Url.Action("Index","Survey"))#subscriptionPlans" class="btn text-white text-uppercase text-small btn-block margin-top-15px background-orange rounded-0 border-0">@GetContent(61)</a>
+                        }
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title cms" data-contentId="59">@GetContent(59)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cms" data-contentId="60">@GetContent(60)</div>
+        </div>
+    </div>
+</div>

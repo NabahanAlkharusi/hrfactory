@@ -1,0 +1,37 @@
+﻿@*<script src="~/assets/js/jquery-3.2.1.min.js"></script>*@
+
+<script>
+
+    $(document).ready(function () {
+        //Call EmpDetails jsonResult Method
+        $.getJSON("TrainingHome/GetAllTrainers",
+            function (json) {
+                var cardColumns = document.getElementById('cardColumns');
+                var card ="";
+                //Append each row to html table
+                for (var i = 0; i < json.length; i++) {
+                    var tn = "";
+                    tn = json[i].trainerName;
+                    alert(tn);
+                    card += " <div class='card  border-0'>";
+                    card += " <img class='card-img-top border-radius-90 img-thumbnail' width='100' src='" + json[i].trainerAvatar + "'  <div class='card-body'> ";
+                    card += "<h5 class='card-title'>" + tn + "</h5>";
+                    card += " <p class='card-text'>" + json[i].trainerBio + "</p>    </div> </div>";
+                    //alert(cardColumns);
+                }
+                $("#cardColumns").html(card);
+
+            });
+    });
+</script>
+@*<img src='~/lectur1.jpg' class='rounded img-thumbnail border-radius-50' width='120' />*@
+@*class=' border-radius-50 img-thumbnail' width='120'*@
+<div class="container">
+    <h2 class="title">Trainers</h2>
+
+    <div class="fa-resistance">
+        <div id="cardColumns" class="card-columns ">
+
+        </div>
+    </div>
+</div>

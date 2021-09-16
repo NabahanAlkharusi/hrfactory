@@ -1,0 +1,32 @@
+﻿@using HumanResourceHelth.Model.Resources
+@model HumanResourceHelth.Model.Specialties
+
+
+@{
+    ViewData["Title"] = AppResource.Details;
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+
+    <h1>
+       @AppResource.Details
+
+    </h1>
+
+<div>
+    <h4>  @AppResource.Specialties</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SpecialtyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SpecialtyName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a href="@Url.Action("Edit",new{id=Model.SpecialtyID})" >  @AppResource.Edit</a> |
+    <a href="@Url.Action("Index")">@AppResource.BackToList</a>
+</div>

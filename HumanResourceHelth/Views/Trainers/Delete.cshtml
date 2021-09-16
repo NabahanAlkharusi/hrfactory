@@ -1,0 +1,75 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+
+@model HumanResourceHelth.Model.Trainers
+
+@{
+    ViewData["Title"] = "Delete Trainer";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Delete</h1><br />
+                <a class="btn btn-sm btn-warning" href="@Url.Action("Index")">
+                    @AppResource.ShowAll
+                    <i class="fa  fa-list "></i>
+                </a>
+
+            </div>
+            </div>
+        <div class="panel-body">
+            <h3>@AppResource.sure</h3>
+            <hr />
+            <dl class="row table">
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.TrainerName)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.TrainerName)
+                </dd>
+
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.TrainerBio)
+                </dt>
+                <dd class="col-sm-9 text-light-green">
+                    @Html.DisplayFor(model => model.TrainerBio)
+                </dd>
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.CreatedDate)
+                    <br />
+                </dd>
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.isActive)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.isActive)
+                </dd>
+            </dl>
+
+
+            @using (Html.BeginForm())
+            {
+                @Html.HiddenFor(model => model.TrainerID, new { htmlAttributes = new { @class = "form-control" } })
+
+                <input type="hidden" asp-for="TrainerID" />
+                <button type="submit" class="btn btn-danger">
+                    @AppResource.Delete
+                    <i class="fa fa-trash"></i>
+                </button>
+            }
+        </div>
+        <div class="panel-footer">
+            <a asp-action="Index">@AppResource.BackToList</a>
+
+        </div>
+            </div>
+            </div>

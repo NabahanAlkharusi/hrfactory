@@ -1,0 +1,82 @@
+﻿@using HumanResourceHelth.Model.Resources
+@using System.Threading
+@model List<HumanResourceHelth.Model.Specialties>
+
+@{
+    ViewData["Title"] = AppResource.Specialties;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+@{ 
+    var dir = "ltr";
+    var alignclass = "pull-left";
+}
+@if (@Thread.CurrentThread.CurrentCulture.DisplayName == "العربية (مصر)")
+{
+    dir = "rtl";
+    alignclass = "pull-right";
+}
+
+<div class="container">
+    <div class="panel panel-info" dir="@dir">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Specialties</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2 @alignclass">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Create")">
+                            @AppResource.Create
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().SpecialtyID)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().SpecialtyName)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.SpecialtyID)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.SpecialtyName)
+                                </td>
+                                <td class="text-center">
+                                    <a class=" text-warning m-1" href="@Url.Action("Edit",new { id = item.SpecialtyID })">
+                                        @AppResource.Edit <i class="fa fa-edit fa-2x"></i>|
+                                    </a>
+                                    <a class="text-danger m-1 " href="@Url.Action("Delete",new { id = item.SpecialtyID })">
+                                        <i class="fa fa-trash fa-2x"></i> @AppResource.Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>

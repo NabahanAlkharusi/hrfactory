@@ -1,0 +1,81 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model HumanResourceHelth.Model.Courses
+
+@{
+    ViewData["Title"] = AppResource.Delete;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <h1>@AppResource.Delete</h1>
+
+        </div>
+        <div class="panel-body">
+
+            <h3>@AppResource.sure</h3>
+            <div class="panel panel-danger">
+                <h4>
+                    @AppResource.Courses
+                </h4>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CourseName)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CourseName)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CoursePrice)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CoursePrice)
+                    </dd>
+
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CourseDate)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.CourseDate)
+                    </dd>
+
+                    <dt class="col-sm-2" hidden>
+                        @Html.DisplayNameFor(model => model.isfree)
+                    </dt>
+                    <dd class="col-sm-10" hidden>
+                        @Html.DisplayFor(model => model.isfree)
+                    </dd>
+                    <dt class="col-sm-2" hidden>
+                        @Html.DisplayNameFor(model => model.Department)
+                    </dt>
+                    <dd class="col-sm-10" hidden>
+                        @Html.DisplayFor(model => model.Department.Name)
+                    </dd>
+                    <dt class="col-sm-2" hidden>
+                        @Html.DisplayNameFor(model => model.Trainer)
+                    </dt>
+                    <dd class="col-sm-10" hidden>
+                        @Html.DisplayFor(model => model.Trainer.TrainerName)
+                    </dd>
+                </dl>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.CourseID, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger " /> |
+                        @Html.ActionLink(@AppResource.BackToList, "Index")
+                    </div>
+                }
+            </div>
+
+</div>
+</div>
+</div>

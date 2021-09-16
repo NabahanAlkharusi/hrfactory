@@ -1,0 +1,67 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+
+@model IEnumerable<HumanResourceHelth.Model.Departments>
+
+@{
+    ViewData["Title"] = AppResource.Departments;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Departments</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Create")">
+                        @AppResource.Add
+                        <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    <a class=" text-warning m-1" href="@Url.Action("Edit",new { id=item.DepartmentID})">
+                                        @AppResource.Edit <i class="fa fa-edit fa-2x"></i>|
+                                    </a>
+                                    <a class="text-danger m-1 " href="@Url.Action("Delete",new { id=item.DepartmentID})">
+                                        <i class="fa fa-trash fa-2x"></i> @AppResource.Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+</div>
+</div>

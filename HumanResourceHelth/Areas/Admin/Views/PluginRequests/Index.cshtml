@@ -1,0 +1,53 @@
+﻿@using HumanResourceHelth.Model
+@model List<PluginRequest>
+@{
+    ViewBag.Title = "Pluging Requests";
+}
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Plugin Requests</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>plan</th>
+                        <th>Date</th>
+
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (PluginRequest pluginRequest in Model)
+                    {
+                        <tr>
+                            <td>@(counter++)</td>
+                            <td>@pluginRequest.User.Name</td>
+                            <td>@pluginRequest.Email</td>
+                            <td>@pluginRequest.PlanName</td>
+
+                            <td>@pluginRequest.RequestDate.ToString()</td>
+                            @*<td>@pluginRequest.PluginRequestType.Name</td>*@
+                            <td>@pluginRequest.Description</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,141 @@
+﻿
+
+@using HumanResourceHelth.Model
+@model List<Video>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+
+                <a href="@Url.Action("Create", "Video",new { courseId=ViewBag.CourseId})" title="Add Video" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Videos</h4>
+        </div>
+        <div class="panel-body" id="panel">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th></th>
+                        <th>video name</th>
+                        <th>order</th>
+                        <th>lenght</th>
+                        <th>Is For Preview</th>
+                        <th>url</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (Video video in Model)
+                    {
+                    <tr>
+                        <td>@(counter++)</td>
+                        <td>
+                            @if (counter != 2)
+                            {
+                            <div class="row">
+                                <div class="col-12">
+                                    <a onclick="moveUp(`@video.Id`)"><i class="fa  fa-angle-up fa-2x"></i></a>
+                                </div>
+                            </div>
+                            }
+                            @if(counter!=(Model.Count)+1)
+                            {
+                            <div class="row">
+                                <div class="col-12">
+                                    <a onclick="moveDown(`@video.Id`)"><i class="fa fa-angle-down fa-2x"></i></a>
+                                </div>
+                            </div>
+                            }
+                        </td>
+                        <td>@video.Name</td>
+                        <td>@video.Ordering</td>
+                        <td>@video.Lenght</td>
+                        @if (video.IsForPriview == true)
+                        {
+                            <td><span class="fa fa-check text-primary"></span></td>
+                        }
+                        else
+                        {
+                           <td><span></span></td>  
+                        }
+                        <td>@video.Url</td>
+
+                        <td>
+                            <a title="Edit video Data" href="@(Url.Action("Edit", "Video", new {videoId = video.Id}))"><i class="fa fa-edit" style="color: blue;"></i></a> |
+                            <a href="javascript:;" id="btnDelete" class="btn btn-xs btn-icon  " onclick="deleteVideo(@video.Id)"><i class="fa fa-trash fa-2x" style="color: red;"></i></a>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function deleteVideo(videoId) {
+        var id = videoId;
+        var result = confirm("Are you Sure you want to Delete This video ?");
+        if (result) {
+            $.ajax({
+                url: "@Url.Action("Delete", "Video")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("Data Deleted Successffly")
+                    location.reload();
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+        }
+
+    };
+
+
+    function moveUp(id) {
+        $.ajax({
+                url: "@Url.Action("MoveUp", "Video")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("ordered Successffly")
+                    $("#panel").load(location.href + " #panel");
+                 
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+    }
+
+    function moveDown(id) {
+         $.ajax({
+                url: "@Url.Action("MoveDown", "Video")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("ordered Successffly")
+                    $("#panel").load(location.href + " #panel");
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+    }
+
+
+</script>
+
+

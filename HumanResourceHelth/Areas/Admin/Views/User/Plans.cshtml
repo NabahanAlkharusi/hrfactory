@@ -1,0 +1,215 @@
+﻿@using HumanResourceHelth.Model
+@using HumanResourceHelth.Web.Areas.Admin.Data;
+@model UserPlansViewModel
+@{
+    ViewBag.Title = "Plans";
+}
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="@Url.Action("Details","User",  new { userId = Model.User.Id})" class="btn btn-xs btn-icon btn-circle btn-warning" title="My User"><i class="fas fa-user"></i></a>
+                <a href="@Url.Action("Index","User")" class="btn btn-xs btn-icon btn-circle btn-warning" title="All Users"><i class="fas fa-users"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">User Plans (@(Model.User.Name))</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Is Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (UserPlan userPlan in Model.UserPlans)
+                    {
+                        <tr>
+                            <td>@(counter++)</td>
+                            <td>@userPlan.Plan.Name</td>
+                            <td>@userPlan.StartDate.ToString("dd MMM yyyy")</td>
+                            <td>@userPlan.EndDate.ToString("dd MMM yyyy")</td>
+                            <td>@userPlan.IsActive.ToString()</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Manual Subscribtion for (@(Model.User.Name))</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-1">Plan</div>
+                <div class="col-md-3">
+                    <select id="ddlPlan" class="form-control">
+                        @foreach (Plan plan in Model.Plans)
+                        {
+                            <option value="@plan.Id">@plan.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">Start Date</div>
+                <div class="col-md-1">
+                    <select id="ddlFromDay" class="form-control">
+                        @for (int i = 1; i <= 31; i++)
+                        {
+                            if (i == DateTime.Today.Day)
+                            {
+                                <option value="@i" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select id="ddlFromMonth" class="form-control">
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            if (i == DateTime.Today.Month)
+                            {
+                                <option value="@i" selected>@(new DateTime(2010, i, 1).ToString("MMM", System.Globalization.CultureInfo.InvariantCulture))</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@(new DateTime(2010, i, 1).ToString("MMM", System.Globalization.CultureInfo.InvariantCulture))</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <select id="ddlFromYear" class="form-control">
+                        @for (int i = 2021; i <= 2040; i++)
+                        {
+                            if (i == DateTime.Today.Year)
+                            {
+                                <option value="@i" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">Start Date</div>
+                <div class="col-md-1">
+                    <select id="ddlToDay" class="form-control">
+                        @for (int i = 1; i <= 31; i++)
+                        {
+                            if (i == DateTime.Today.AddMonths(1).AddDays(-1).Day)
+                            {
+                                <option value="@i" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select id="ddlToMonth" class="form-control">
+                        @for (int i = 1; i <= 12; i++)
+                        {
+                            if (i == DateTime.Today.AddMonths(1).AddDays(-1).Month)
+                            {
+                                <option value="@i" selected>@(new DateTime(2010, i, 1).ToString("MMM", System.Globalization.CultureInfo.InvariantCulture))</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@(new DateTime(2010, i, 1).ToString("MMM", System.Globalization.CultureInfo.InvariantCulture))</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <select id="ddlToYear" class="form-control">
+                        @for (int i = 2021; i <= 2040; i++)
+                        {
+                            if (i == DateTime.Today.AddMonths(1).AddDays(-1).Year)
+                            {
+                                <option value="@i" selected>@i</option>
+                            }
+                            else
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">Price</div>
+                <div class="col-md-3">
+                    <input type="number" id="txtPrice" class="form-control" value="0" />
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <button id="btnAddPlan" class="btn btn-primary">Add Plan</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnAddPlan").on("click", function () {
+        var userId = @(Model.User.Id);
+        var planId = $("#ddlPlan").val();
+        var fromDay = $("#ddlFromDay").val();
+        var fromMonth = $("#ddlFromMonth").val();
+        var fromYear = $("#ddlFromYear").val();
+        var toDay = $("#ddlToDay").val();
+        var toMonth = $("#ddlToMonth").val();
+        var toYear = $("#ddlToYear").val();
+        var price = $("#txtPrice").val();
+        $.ajax({
+            url: "@Url.Action("AddPlan", "User")",
+            data: {
+                "userId": userId, "planId": planId,
+                "fromDay": fromDay, "fromMonth": fromMonth, "fromYear": fromYear,
+                "toDay": toDay, "toMonth": toMonth, "toYear": toYear,
+                "price": price
+            },
+            type: "GET",
+            success: function () {
+                //toastr.success("Data Deleted Successffly")
+                location.reload();
+            },
+            error: function (err) {
+                toastr.error(err.statusText)
+            }
+        });
+    });
+</script>

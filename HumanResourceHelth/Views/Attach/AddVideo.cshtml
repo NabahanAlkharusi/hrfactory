@@ -1,0 +1,139 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model HumanResourceHelth.Model.Attachments
+
+@{
+    ViewData["Title"] = AppResource.AddVideo;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @AppResource.AddVideo</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Index")">
+                            @AppResource.ShowAll
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body">
+
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form asp-action="AddVideo" method="post" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" id="AttachID" value="@Model.AttachID" />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.CourseID, new { @class = "control-label" })
+                                            @Html.DropDownListFor(m => m.CourseID, (SelectList)ViewBag.CoursesList, new { @class = "form-control disabled" })
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.AttachType, new { @class = "control-label" })
+                                            @Html.DropDownListFor(m => m.AttachType, new List<SelectListItem>
+                                       {
+                                           new SelectListItem{ Text="Select Type", Value="null" },
+                                           new SelectListItem{ Text="youtube", Value="youtube" },
+                                           new SelectListItem{ Text="vimeo", Value="vimeo" },
+                                       }, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group" id="forExternalLink">
+                                            @Html.LabelFor(m => m.ExternalLink, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.ExternalLink, new { placeholder = "ExternalLink", @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.ExternalLink)
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group" id="forAttachName">
+                                            @Html.LabelFor(m => m.AttachName, new { @class = "control-label" })
+                                            @Html.TextBoxFor(m => m.AttachName, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.AttachName)
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="forsubmit">
+                                    <div class="col-lg-6" hidden>
+                                        <div class="form-group form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" id="Isfree" /> @Html.DisplayNameFor(model => model.Isfree)
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="submit" value="@AppResource.Save" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" hidden>
+                                    <label asp-for="CreatedDate" class="control-label"></label>
+                                    <input id="CreatedDate" value="@Model.CreatedDate" class="form-control" />
+                                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label asp-for="CreatedBy" class="control-label"></label>
+                                    <input id="CreatedBy" value="@Model.CreatedBy" class="form-control" />
+
+                                    <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label asp-for="ModifiedDate" class="control-label"></label>
+                                    <input id="ModifiedDate" value="@Model.ModifiedDate" class="form-control" />
+                                    <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <label asp-for="ModifiedBy" class="control-label"></label>
+                                    <input id="ModifiedBy" value="@Model.ModifiedBy" class="form-control" />
+                                    <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+                                </div>
+                                <div class="form-group form-check" hidden>
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" id="isActive" /> @Html.DisplayNameFor(model => model.isActive)
+                                    </label>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("Index",new { CID=Model.CourseID})"> @AppResource.BackToList</a>
+                </div>
+            </div>
+
+            @*@section Scripts {
+                @{Html.RenderPartial("_ValidationScriptsPartial");}
+            }*@
+</div>
+</div>
+</div>

@@ -1,0 +1,40 @@
+﻿<div class="form-group col-md-12">
+    <label>Upload File</label>
+    <input id="fileChangeImage" type="file" />
+</div>
+
+
+<button id="btnChangeImage" class="btn btn-primary">Upload</button>
+
+<script>
+    $("#btnChangeImage").on("click", function () {
+        debugger;
+
+        var myForm = new FormData();
+        var fileUpload = $("#fileChangeImage")[0].files[0];
+        myForm.append("ImageFile", fileUpload);
+        myForm.append("filePath", '@ViewBag.FileName' );
+
+        $.ajax({
+            url: '@Url.Action("UploadImage", "Home")',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            sync: false,
+            data: myForm,
+            success: function (result) {
+                debugger;
+                toastr.success("Logo Saved Successffly")
+                $(".fileChangeImage").val('');
+                d = new Date();
+                $("#@(ViewBag.ImageId)").attr("src", $("#@(ViewBag.ImageId)").attr("src") + "?" + d.getTime());
+            },
+            error: function (err) {
+                toastr.error(err.statusText);
+                $(".fileChangeImage").val('');
+                $("#@(ViewBag.ImageId)").attr("src", $("#@(ViewBag.ImageId)").attr("src") + "?" + d.getTime());
+            }
+        });
+        $('#changeImageModal').modal('hide');
+    });
+</script>

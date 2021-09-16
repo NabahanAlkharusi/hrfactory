@@ -1,0 +1,107 @@
+﻿@using HumanResourceHelth.Web.Areas.Admin.Data
+@using HumanResourceHelth.Model
+@model IndicatorViewModel
+@{
+    ViewBag.Title = "_Save";
+   
+}
+
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Indicators "@ViewBag.SurveyType"</h4>
+        </div>
+        <div class="panel-body">
+            <fieldset>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Name</label>
+                        <div>
+                            <input type="text" id="txtName" class="form-control" value="@Model.Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Name Arabic</label>
+                        <div>
+                            <input type="text" id="txtNameAr" class="form-control" value="@Model.NameAr">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input id="btnSave" type="button" class="btn btn-primary" value="Save" />
+                        @if (ViewBag.SurveyTypeId == 1)
+                        {
+                            <a href="@Url.Action("Free", "Indicator")" class="btn btn-primary">Back</a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Paid", "Indicator")" class="btn btn-primary">Back</a>
+                        }
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnSave").on("click", function () {
+        @if(Model.Id == 0)
+        {
+            <text>
+                save();
+
+            </text>
+        }
+        else
+        {
+            <text>
+                update();
+            </text>
+        }
+
+    });
+
+    function save() {
+        var name = $("#txtName").val();
+        var nameAr = $("#txtNameAr").val();
+        var surveyTypeId = @ViewBag.SurveyTypeId;
+        $.ajax({
+            url: "@Url.Action("Save", "Indicator")",
+            data: { name: name, nameAr: nameAr, surveyTypeId: surveyTypeId },
+            type: "GET",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+
+    function update() {
+        debugger;
+        var name = $("#txtName").val();
+        var nameAr = $("#txtNameAr").val();
+        var surveyTypeId = @ViewBag.SurveyTypeId;
+        debugger;
+        $.ajax({
+            url: "@Url.Action("Update", "Indicator")",
+            data: { name: name, nameAr: nameAr, surveyTypeId: surveyTypeId, id: @(Model.Id)},
+            type: "POST",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+</script>

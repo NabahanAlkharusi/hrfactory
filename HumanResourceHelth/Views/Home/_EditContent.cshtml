@@ -1,0 +1,54 @@
+﻿@using HumanResourceHelth.Model
+@{ Layout = null;}
+@model Content
+
+<div class="form-group col-md-12">
+    <label>English Text</label>
+    <textarea name="editorEnglishText">@Model.EnglishText</textarea>
+    <script>
+        CKEDITOR.replace('editorEnglishText', {
+            extraPlugins: 'editorplaceholder',
+            editorplaceholder: 'Start typing here Hello...',
+        });
+    </script>
+</div>
+
+
+<div class="form-group col-md-12">
+    <label>Arabic Text</label>
+    <textarea name="editorArabicText">@Model.ArabicText</textarea>
+    <script>
+        CKEDITOR.replace('editorArabicText', {
+            extraPlugins: 'editorplaceholder',
+            editorplaceholder: 'Start typing here Hello...',
+        });
+    </script>
+</div>
+
+<div class="form-group col-md-2">
+    <button type="button" class="btn btn-primary" Id="btnSaveContent">Save</button>
+</div>
+
+<script>
+    $("#btnSaveContent").on("click", function () {
+        var contentId = @(Model.Id);
+        var arabicText = CKEDITOR.instances['editorArabicText'].getData();
+        var englishText = CKEDITOR.instances['editorEnglishText'].getData();
+ 
+        $.ajax({
+            url: "@Url.Action("SaveContent", "Home")",
+            data: { "arabicText": arabicText, "englishText": englishText, "contentId": contentId },
+            sync: false,
+            type: "POST",
+            success: function () {
+                location.reload();
+            },
+            error: function (err, status, error) {
+                debugger;
+                toastr.error(err.statusText)
+            },
+        });
+    });
+
+
+</script>

@@ -1,0 +1,383 @@
+﻿@using HumanResourceHelth.Web.Areas.Admin.Data
+@model PlanViewModel
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "EditPlan";
+}
+<h2>@Model.plan.ToString()</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>English</th>
+            <th>Arabic</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div class="col col-md-1">
+                    PDF
+                </div>
+                <div class="col col-md-8">
+                    <input type="file" id="uploadPdf" accept=".pdf" class="fileUpload form-control" />
+                </div>
+                <div class="col col-md-3">
+                    <input type="button" id="btnUploadPdf" value="Upload File" class="buttonUpload btn-primary" />
+                </div>
+            </td>
+            <td>
+                <div class="col col-md-1">
+                    PDF
+                </div>
+                <div class="col col-md-8">
+                    <input type="file" id="uploadPdfArabic" accept=".pdf" class="fileUpload form-control" />
+                </div>
+                <div class="col col-md-3">
+                    <input type="button" id="btnUploadPdfArabic" value="Upload File" class="buttonUpload btn-primary" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col col-md-1">
+                    Video
+                </div>
+                <div class="col col-md-8">
+                    <input type="file" id="uploadVideo" class="fileUpload form-control" accept=".mp4" />
+                </div>
+                <div class="col col-md-2">
+                    <input type="button" id="btnUploadVideo" value="Upload File" class="buttonUpload  btn-primary" />
+                </div>
+            </td>
+            <td>
+                <div class="col col-md-1">
+                    Video
+                </div>
+                <div class="col col-md-8">
+                    <input type="file" id="uploadVideoArabic" class="fileUpload form-control" accept=".mp4" />
+                </div>
+                <div class="col col-md-3">
+                    <input type="button" id="btnUploadVideoArabic" value="Upload File" class="buttonUpload  btn-primary" />
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table table-striped">
+                    @foreach (DirectoryInfo directory in Model.DirectoriesEnglish)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control txtDirName" value="@directory.Name" />
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" data-Language="English" data-CurrentName="@directory.Name" class="lnkEditCategoryName"><i class="fa fa-save"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+            <td>
+                <table class="table table-striped">
+                    @foreach (DirectoryInfo directory in Model.DirectoriesArabic)
+                    {
+                        <tr>
+                            <td>
+                                <input type="text" class="form-control txtDirName" value="@directory.Name" />
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" data-Language="Arabic" data-CurrentName="@directory.Name" class="lnkEditCategoryName"><i class="fa fa-save"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col col-md-4">
+                    <input type="file" id="MultiFiles" class="fileUpload form-control" accept=".docx,.pdf,.xlsx" multiple />
+                </div>
+                <div class="col col-md-4">
+                    <select id="categories" required class="form-control">
+                        @foreach (DirectoryInfo directory in Model.DirectoriesEnglish)
+                        {
+                            <option value="@directory.Name">@directory.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col col-md-2">
+                    <input type="button" id="FilesUpload" value="Upload File" class="btn btn-primary" />
+                </div>
+                @Html.Action("GridFiles", "PlansData", new { plan = Model.plan, lang = "English" })
+            </td>
+            <td>
+                <div class="col col-md-4">
+                    <input type="file" id="MultiFilesArabic" class="fileUpload form-control" accept=".docx,.pdf,.xlsx" multiple />
+                </div>
+                <div class="col col-md-4">
+                    <select id="categoriesArabic" required class="form-control">
+                        @foreach (DirectoryInfo directory in Model.DirectoriesArabic)
+                        {
+                            <option value="@directory.Name">@directory.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col col-md-2">
+                    <input type="button" id="FilesUploadArabic" value="Upload File" class="btn btn-primary" />
+                </div>
+                @Html.Action("GridFiles", "PlansData", new { plan = Model.plan, lang = "Arabic" })
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    $(".lnkEditCategoryName").on("click", function () {
+        var currentName = $(this).attr("data-CurrentName");
+        var lang = $(this).attr("data-Language");
+        var plan = "@(Model.plan)";
+        var newName = $(this).parent().parent().find(".txtDirName").val();
+        if (currentName == newName) return;
+
+        $.ajax({
+            url: "@Url.Action("UpdateCategoryName", "PlansData")",
+            data: { "plan": plan, "currentName": currentName, "newName": newName, "lang": lang },
+            type: "GET",
+            success: function () {
+                //toastr.success("Data Deleted Successffly")
+                location.reload();
+            },
+            error: function (err) {
+                toastr.error(err.statusText)
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#btnUploadPdf').click(function () {
+            if (window.FormData !== undefined) {
+                var pdfFile = $("#uploadPdf").val();
+                var fileData = new FormData();
+                if (pdfFile != '') {
+                    var fileUpload = $("#uploadPdf").get(0);
+                    // Adding one more key to FormData object
+                    fileData.append('plan', '@Model.plan' + '.pdf');
+                } else {
+                    return;
+                }
+                var files = fileUpload.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Upload", "PlansData")',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData ,
+                    success: function (result) {
+                        toastr.success("Data Uploaded Successffly")
+                        $(".fileUpload").val('') ;
+                    },
+                    error: function (err) {
+                        toastr.error(err.statusText);
+                        $(".fileUpload").val('');
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+        $('#btnUploadPdfArabic').click(function () {
+            debugger;
+            if (window.FormData !== undefined) {
+                var pdfFile = $("#uploadPdfArabic").val();
+                var fileData = new FormData();
+                if (pdfFile != '') {
+                    var fileUpload = $("#uploadPdfArabic").get(0);
+                    // Adding one more key to FormData object
+                    fileData.append('plan', '@Model.plan' + 'Arabic.pdf');
+                } else {
+                    return;
+                }
+                var files = fileUpload.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Upload", "PlansData")',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData ,
+                    success: function (result) {
+                        toastr.success("Data Uploaded Successffly")
+                        $(".fileUpload").val('') ;
+                    },
+                    error: function (err) {
+                        toastr.error(err.statusText);
+                        $(".fileUpload").val('');
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#btnUploadVideo').click(function () {
+            if (window.FormData !== undefined) {
+                var pdfFile = $("#uploadVideo").val();
+                var fileData = new FormData();
+                if (pdfFile != '') {
+                    var fileUpload = $("#uploadVideo").get(0);
+                    fileData.append('plan', '@Model.plan' + '.mp4');
+                } else {
+                    return;
+                }
+                var files = fileUpload.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Upload", "PlansData")',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData ,
+                    success: function (result) {
+                        toastr.success("Data Uploaded Successffly")
+                        $(".fileUpload").val('') ;
+                    },
+                    error: function (err) {
+                        toastr.error("Error");
+                        $(".fileUpload").val('');
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+        $('#btnUploadVideoArabic').click(function () {
+            if (window.FormData !== undefined) {
+                var pdfFile = $("#uploadVideoArabic").val();
+                var fileData = new FormData();
+                if (pdfFile != '') {
+                    var fileUpload = $("#uploadVideoArabic").get(0);
+                    fileData.append('plan', '@Model.plan' + 'Arabic.mp4');
+                } else {
+                    return;
+                }
+                var files = fileUpload.files;
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+
+                $.ajax({
+                    url: '@Url.Action("Upload", "PlansData")',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData ,
+                    success: function (result) {
+                        toastr.success("Data Uploaded Successffly")
+                        $(".fileUpload").val('') ;
+                    },
+                    error: function (err) {
+                        toastr.error("Error");
+                        $(".fileUpload").val('');
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#FilesUpload').click(function () {
+            if (window.FormData !== undefined) {
+                var FilesUpload = $("#MultiFiles").get(0);
+                var fileData = new FormData();
+                var category = $("#categories").val();
+                fileData.append('plan', '@Model.plan');
+                fileData.append('lang', 'English');
+                fileData.append('category', `${category}`);
+                console.log(FilesUpload);
+                var files = FilesUpload.files;
+                console.log(files);
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                $.ajax({
+                    url: '@Url.Action("UploadFiles", "PlansData")',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    enctype: "multipart/form-data",
+                    processData: false, // Not to process data
+                    data: fileData ,
+                    success: function (result) {
+                        toastr.success("Data Uploaded Successffly")
+                        $(".fileUpload").val('');
+                        location.reload();
+                    },
+                    error: function (err) {
+                        toastr.error("Error");
+                        $(".fileUpload").val('');
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+
+
+        });
+        $('#FilesUploadArabic').click(function () {
+            if (window.FormData !== undefined) {
+                var FilesUpload = $("#MultiFilesArabic").get(0);
+                var fileData = new FormData();
+                var category = $("#categoriesArabic").val();
+                fileData.append('plan', '@Model.plan');
+                fileData.append('lang', 'Arabic');
+                fileData.append('category', `${category}`);
+                console.log(FilesUpload);
+                var files = FilesUpload.files;
+                console.log(files);
+                for (var i = 0; i < files.length; i++) {
+                    fileData.append(files[i].name, files[i]);
+                }
+                $.ajax({
+                    url: '@Url.Action("UploadFiles", "PlansData" )',
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    enctype: "multipart/form-data",
+                    processData: false, // Not to process data
+                    data: fileData ,
+                    success: function (result) {
+                        toastr.success("Data Uploaded Successffly")
+                        $(".fileUpload").val('');
+                        location.reload();
+                    },
+                    error: function (err) {
+                        toastr.error("Error");
+                        $(".fileUpload").val('');
+                    }
+                });
+            } else {
+                alert("FormData is not supported.");
+            }
+        });
+    });
+</script>

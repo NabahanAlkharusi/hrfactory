@@ -1,0 +1,67 @@
+﻿@using HumanResourceHelth.Web.Areas.Admin.Data
+@model GridFilesViewModel
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Plugin Requests</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name of File</th>
+                        <th>Name of Category</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int counter = 1;
+                    }
+                    @foreach (DirectoryInfo directory in Model.PlanDirectory)
+                    {
+                        foreach (FileInfo file in directory.GetFiles())
+                        {
+                            <tr>
+                                <td>@(counter++)</td>
+                                <th><a href="@(Url.Content(string.Format("~/Areas/plansData/{0}/Categories{1}/{2}/", ViewBag.Plan, Model.Language , directory.Name) + file.Name))" download>@file.Name</a></th>
+                                <th>@directory.Name</th>
+                                <td>
+                                    <button id="btnDelete" data-Language="@Model.Language" class="btn btn-xs btn-icon" onclick="return del('@directory.Name', '@(file.Name)', '@Model.Language')">
+                                        <i class="fa fa-trash fa-2x" style="color: red;"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function del(directory,file,lang) {
+        debugger;
+        var result = confirm("Are you Sure you want to Delete This item ?");
+        if (result) {
+            $.ajax({
+                url: "@Url.Action("DeleteFile", "PlansData")",
+                data: { "plan": "@ViewBag.Plan", "directory": directory, "file": file, "lang": lang },
+                type: "GET",
+                success: function () {
+                    toastr.success("Data Deleted Successffly")
+                    location.reload();
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+        }
+    };
+</script>

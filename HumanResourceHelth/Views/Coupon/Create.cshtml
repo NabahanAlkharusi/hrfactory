@@ -1,0 +1,117 @@
+﻿@model HumanResourceHelth.Model.Coupons
+@using HumanResourceHelth.Model.Resources
+@using System.Threading
+@{
+    ViewBag.Title = AppResource.AddCoupon;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    var dir = "ltr";
+    var alignclass = "pull-left";
+    var buttonalignclass = "col-md-offset-10 col-md-2";
+}
+@if (@Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    alignclass = "pull-right";
+    buttonalignclass = "col-md-2";
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @AppResource.AddCoupon</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2 @alignclass">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Index")">
+                            @HumanResourceHelth.Model.Resources.Coupons.Coupons.ShowAllList
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" dir="@dir">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal" dir="@dir">
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger"})
+                    <div class="form-group" dir="@dir">
+                        @Html.LabelFor(model => model.coupon_code, htmlAttributes: new { @class = "control-label col-md-2 text-center "+ @alignclass })
+                        <div class="col-md-5 @alignclass">
+                            @Html.EditorFor(model => model.coupon_code, new { htmlAttributes = new { @class = "form-control", Value = ViewBag.CouponCode, placeholder = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCodePrompt } })
+                            @Html.ValidationMessageFor(model => model.coupon_code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.coupon_discount_rate, htmlAttributes: new { @class = "control-label col-md-2 text-center " + @alignclass })
+                        <div class="col-md-5 @alignclass">
+                            @Html.EditorFor(model => model.coupon_discount_rate, new { htmlAttributes = new { @class = "form-control" ,placeholder = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponDiscountRatePrompt } })
+                            @Html.ValidationMessageFor(model => model.coupon_discount_rate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.coupon_stat, htmlAttributes: new { @class = "control-label col-md-2 text-center " + @alignclass })
+                        <div class="col-md-5 @alignclass">
+                            @Html.DropDownListFor(model => model.coupon_stat, new List<SelectListItem>{
+                        new SelectListItem { Text = HumanResourceHelth.Model.Resources.Coupons.Coupons.InActiveCoupon, Value = "0" },
+                        new SelectListItem { Text = HumanResourceHelth.Model.Resources.Coupons.Coupons.ActiveCoupon, Value = "1" }
+                    }, HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponStatPrompt,  new { @class = "form-control" } )
+                            @Html.ValidationMessageFor(model => model.coupon_stat, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.coupon_satrt_date, htmlAttributes: new { @class = "control-label col-md-2 text-center " + @alignclass })
+                        <div class="col-md-5 @alignclass" dir="@dir">
+                            @Html.EditorFor(model => model.coupon_satrt_date, new { htmlAttributes = new { @class = "form-control", placeholder = "ss" } })
+                            @Html.ValidationMessageFor(model => model.coupon_satrt_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.coupon_end_date, htmlAttributes: new { @class = "control-label col-md-2 text-center " + @alignclass })
+                        <div class="col-md-5 @alignclass">
+                            @Html.EditorFor(model => model.coupon_end_date, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.coupon_end_date, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.coupon_for, htmlAttributes: new { @class = "control-label col-md-2 text-center " + @alignclass })
+                        <div class="col-md-5 @alignclass">
+                            @Html.DropDownListFor(model => model.coupon_for, new List<SelectListItem>{
+                new SelectListItem { Text = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO1, Value = "1" },
+                new SelectListItem { Text = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO2, Value = "2" },
+                new SelectListItem { Text = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO3, Value = "3" },
+                new SelectListItem { Text = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO4, Value = "4" }
+            }, HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDD, new { @class = "form-control", placeholder = "" })
+                            @Html.ValidationMessageFor(model => model.coupon_for, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="@buttonalignclass">
+                            <input type="submit" value="@HumanResourceHelth.Model.Resources.Coupons.Coupons.AddCouponButton" class="btn btn-success" />
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div>
+                @Html.ActionLink(HumanResourceHelth.Model.Resources.Coupons.Coupons.BackToList, "Index")
+            </div>
+        </div>
+    </div>
+</div>

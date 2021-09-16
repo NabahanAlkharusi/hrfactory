@@ -1,0 +1,84 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model HumanResourceHelth.Model.Attachments
+
+@{
+    ViewData["Title"] = AppResource.Delete;
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<h3>@AppResource.sure</h3>
+<div>
+    <h4>@AppResource.Attachments</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AttachName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AttachName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AttachType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AttachType)
+        </dd>
+        @{ if (Model.AttachType == "youtube" || Model.AttachType == "vimeo")
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.ExternalLink)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ExternalLink)
+                </dd>
+            }
+            else if (Model.AttachType == "PDF" || Model.AttachType == "docx")
+            {
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FilePath)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FilePath)
+                </dd>
+            }
+        }
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Course)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Course.CourseName)
+            </dd>*@
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.AttachID, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.HiddenFor(model => model.CourseID, new { htmlAttributes = new { @class = "form-control" } })
+
+<div class="form-actions no-color">
+    <input type="submit" value="Delete" class="btn btn-danger " /> |
+    <a href="@Url.Action("Index",new { CID=Model.CourseID})"> @AppResource.BackToList</a>
+    @Html.ActionLink(@AppResource.BackToList, "Index")
+</div>
+    }
+
+    @*<form asp-action="Delete">
+        <input type="hidden" id="AttachID" value="@Model.AttachID" />
+        <input type="hidden" id="CourseID" value="@Model.CourseID" />
+        <input type="submit" value="@AppResource.Delete" class="btn btn-danger" /> |
+        <a href="@Url.Action("Index",new { CID=Model.CourseID})"> @AppResource.BackToList</a>
+    </form>*@
+</div>

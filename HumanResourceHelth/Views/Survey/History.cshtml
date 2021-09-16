@@ -1,0 +1,25 @@
+﻿@using HumanResourceHelth.Model
+@model List<Survey>
+@{
+    ViewBag.Title = "History";
+}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>@Resources.General.HealthCheck</td>
+            <td>@Resources.General.ShowResults</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Survey survey in Model)
+        {
+            <tr>
+                <td>@Resources.General.HealthCheckOnDate @survey.SurveyDate.ToString("dd MMM yyyy")</td>
+                <td><a class="btn btn-warning" href="@Url.Action("SurveyResult","Survey", new { surveyId= survey.Id })">@Resources.General.ShowResults</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

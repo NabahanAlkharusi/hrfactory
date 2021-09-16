@@ -1,0 +1,88 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model IEnumerable<HumanResourceHelth.Model.ViewModels.TrainersViewModel>
+
+@{
+    ViewData["Title"] = AppResource.Trainers;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Trainers</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Create")">
+                            <i class="fa fa-plus fa-2x"></i>
+                            @AppResource.CreateTrainer
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="active">
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Trainers.TrainerName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Specialties.SpecialtyName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Trainers.CreatedDate)
+                            </th>
+                            <th hidden>
+                                @Html.DisplayNameFor(model => model.Trainers.isActive)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Images/TrainerAvatar/@item.Trainers.TrainerAvatar" height="70" width="70"
+                                         class=" profile-img-container " />
+
+
+                                    @Html.DisplayFor(modelItem => item.Trainers.TrainerName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Specialties.SpecialtyName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Trainers.CreatedDate)
+                                </td>
+                                <td hidden>
+                                    @Html.DisplayFor(modelItem => item.Trainers.isActive)
+                                </td>
+                                <td>
+                                    <a class=" text-warning m-1" href="@Url.Action("Create",new { id=item.Trainers.TrainerID})">
+                                        @AppResource.Edit <i class="fa fa-edit fa-2x"></i>|
+                                        </a>
+                                    <a class="text-danger m-1 " href="@Url.Action("Delete",new { id=item.Trainers.TrainerID})">
+                                        <i class="fa fa-trash fa-2x"></i> @AppResource.Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+</div>
+</div>
+</div>

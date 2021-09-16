@@ -1,0 +1,236 @@
+﻿
+@using HumanResourceHelth.Model
+@model HumanResourceHelth.Web.Data.SurveyViewModel
+
+
+@{
+    ViewBag.Title = "Index";
+    var indicators = Model.indicators.ToList();
+}
+<style>
+    .page-title-surv {
+        font-size: 25px !important;
+        padding: 20px;
+        color: #ffffff;
+        text-align: center;
+    }
+</style>
+
+<div id="page-title" class="text-grey background-overlay " style="background-image: url(@(Url.Content("~/assets/img/healthcheck.jpg")));background-size: cover;background-repeat: no-repeat;">
+    <div>
+        <div class="container padding-tb-35px z-index-2 position-relative">
+            <div class="row">
+                <div class="col-xl-2">
+                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 98">
+                        <defs>
+                            <style>
+                                .cls-11 {
+                                    fill: #1f1c1d !important;
+                                }
+
+                                .cls-22 {
+                                    fill: #e4a229 !important;
+                                }
+                            </style>
+                        </defs>
+                        <title>icon-hr-doctor-01</title>
+                        <path class="cls-11" d="M29.83,85.89A43.4,43.4,0,0,1,13.1,70.56,43.05,43.05,0,1,1,49.5,90.65H48.07V77A29.41,29.41,0,0,1,22.8,35.28a29.67,29.67,0,0,1,7-9.55l0,0a1.54,1.54,0,0,1,.1-2.2h0a1.59,1.59,0,0,1,2.21.1l2,2.17A1.59,1.59,0,0,1,34,28h0a1.55,1.55,0,0,1-2.2-.11,27.23,27.23,0,0,0-6.37,8.61A26.83,26.83,0,0,0,23,47.6,26.53,26.53,0,1,0,76,47.6a26.83,26.83,0,0,0-2.42-11.13,27.23,27.23,0,0,0-6.37-8.61A1.55,1.55,0,0,1,65,28h0a1.59,1.59,0,0,1-.11-2.21l2-2.17a1.59,1.59,0,0,1,2.21-.1h0a1.54,1.54,0,0,1,.1,2.2l0,0a29.67,29.67,0,0,1,7,9.55A29,29,0,0,1,78.9,47.6,29.39,29.39,0,0,1,50.93,77V87.74A40.19,40.19,0,1,0,15.52,69,40.79,40.79,0,0,0,30.85,83.19a6.53,6.53,0,0,1,.87-1.08,6.66,6.66,0,0,1,9.38,0h0a6.73,6.73,0,0,1,2,4.69,6.62,6.62,0,0,1-2,4.69v0A6.65,6.65,0,0,1,29.76,86.8a9.06,9.06,0,0,1,.07-.91Zm9.24-1.75a3.78,3.78,0,0,0-6.44,2.66,3.82,3.82,0,0,0,3.78,3.78,3.7,3.7,0,0,0,2.66-1.12h0a3.75,3.75,0,0,0,1.09-2.66,3.85,3.85,0,0,0-1.09-2.66Z" />
+                        <path class="cls-22" d="M34.8,42.25a5.52,5.52,0,1,1,5.5-5.53,5.51,5.51,0,0,1-5.5,5.53,8.27,8.27,0,0,0-8.26,8.25v3.12a24.47,24.47,0,0,0,2,5.14h.87l.18,1.75A23.89,23.89,0,0,0,39.14,69L40,61.11a4.14,4.14,0,0,1-2.38-3.75V49.1A11.91,11.91,0,0,1,39,43.44a8.1,8.1,0,0,0-4.2-1.19ZM71.3,50.5A8.25,8.25,0,0,0,63,42.25a5.52,5.52,0,1,1,5.53-5.53A5.53,5.53,0,0,1,63,42.25a8.2,8.2,0,0,0-4.2,1.19,12,12,0,0,1,1.47,5.66v8.26a4.14,4.14,0,0,1-2.38,3.75l.81,8.33a23.65,23.65,0,0,0,9.34-7.07l.35-3.61h1.51a1.49,1.49,0,0,0,.56-.14,18.27,18.27,0,0,0,.8-1.68Zm-21-11v9.48a1.38,1.38,0,0,1-2.76,0V39.45a9.6,9.6,0,0,0-8.26,9.48v8.26a1.36,1.36,0,0,0,1.36,1.36h3.12l1,12.29a24,24,0,0,0,4.76.49A29.32,29.32,0,0,0,53,71.08l1-12.53h3.08a1.37,1.37,0,0,0,1.4-1.36V48.93a9.61,9.61,0,0,0-8.26-9.48Zm-1.4-.14a6.88,6.88,0,1,1,6.89-6.9,6.88,6.88,0,0,1-6.89,6.9Z" />
+                    </svg>
+                </div>
+            </div>
+            <h3 class="font-weight-700 text-capitalize page-title-dc">HEALTH CHECK</h3>
+            <div class="padding-bottom-22px"> <a href="#" class="btn btn-sm background-main-color text-white padding-lr-20px border-0 opacity-8"> </a></div>
+        </div>
+    </div>
+</div>
+<!-- Page title --->
+
+<section>
+    <div id="sectioninner" class="section">
+        <div class="sectionInner">
+            <div class="container">
+                @foreach (Indicator indicator in indicators)
+                {
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 sm-mb-30px wow fadeInUp"></div>
+                        <div class="col-lg-8 col-md-8 sm-mb-30px wow fadeInUp">
+                            <div class="blog-item thum-hover background-white">
+                                <div class="position-relative background-beig">
+                                    <h4 class="font-weight-700 text-capitalize page-title-surv">
+                                        @if ((string)Session["Lang"] != "ar-EG")
+                                        {
+                                            @indicator.Name
+                                        }
+                                        else
+                                        {
+                                            @indicator.NameAr
+                                        }
+
+                                    </h4>
+                                </div>
+                                @{ int counter = 1;}
+                                @foreach (Question question in indicator.Questions)
+                                {
+                                    <div class="blog-item padding-lr-30px text-center">
+                                        <div class="container">
+                                            <div class="row questions" id="q@(question.Id)" data-QuestionId="@question.Id" data-IndicatorId="@indicator.Id">
+                                                <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
+                                                    <div class="item margin-lr-15px">
+                                                        <div class="background-white opacity-hover-7 padding-30px">
+                                                            <div class="float-left margin-right-20px"><h1 class="surv-quest">@(counter++)</h1></div>
+                                                            <p class="margin-bottom-0px text-left">
+                                                                @if ((string)Session["Lang"] != "ar-EG")
+                                                                {
+                                                                    @question.Name
+                                                                }
+                                                                else
+                                                                {
+                                                                    @question.NameAr
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @for (int i = 1; i < 5; i++)
+                                                {
+                                                    <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                                        <img src="@Url.Content("~/assets/img/emotion_0" + i + ".png")" alt="">
+                                                    </div>
+                                                }
+                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            @Html.RadioButton("rdoQuestion" + question.Id, 100) @Resources.General.Agree
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            @Html.RadioButton("rdoQuestion" + question.Id, 50) @Resources.General.Maybe
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            @Html.RadioButton("rdoQuestion" + question.Id, 0) @Resources.General.Disagree
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                                    <div class="form-check">
+                                                        <label class="form-check-label">
+                                                            @Html.RadioButton("rdoQuestion" + question.Id, -1) @Resources.General.NotApplicable
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 sm-mb-30px wow fadeInUp"></div>
+                    </div>
+
+                }
+
+                <div class="padding-bottom-22px padding-top-60px">
+                    <button type="button" id="btnSave" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Finish</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+@*<form method="post" style="margin-left:10px;">
+    @foreach (Indicator indicator in indicators)
+    {
+        <h2>@indicator.Name</h2>
+        foreach (Question question in indicator.Questions)
+        {
+            <h4>@question.Name</h4>
+            <p>
+                <fieldset id="q@(question.Id)" class="questions" data-QuestionId="@question.Id" data-IndicatorId="@indicator.Id">
+
+                    <div class="col col-md-12">
+                        <div class="col col-md-3">
+                            @Html.RadioButton("rdoQuestion" + question.Id, 100)
+                            @Html.Label("Agree")
+                        </div>
+                        <div class="col col-md-3">
+                            @Html.RadioButton("rdoQuestion" + question.Id, 50)
+                            @Html.Label("Maybe")
+                        </div>
+                        <div class="col col-md-3">
+                            @Html.RadioButton("rdoQuestion" + question.Id, 0)
+                            @Html.Label("Disagree")
+                        </div>
+                        <div class="col col-md-3">
+                            @Html.RadioButton("rdoQuestion" + question.Id, -1)
+                            @Html.Label("Not to me")
+                        </div>
+                    </div>
+                </fieldset>
+            </p>
+            <hr />
+        }
+    }
+    <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+    <div id="divSurveyResult" class="col col-md-12">
+    </div>    </form>*@
+<script>
+    $("#btnSave").on("click", function () {
+        debugger;
+        console.log("Save Started");
+        var answers = [];
+
+        var isNotAnswered = false;
+
+        $('.questions').each(function () {
+            if (isNotAnswered) return
+            debugger;
+            var questionId = $(this).attr("data-QuestionId");
+            var indicatorId = $(this).attr("data-IndicatorId");
+            var answer = $("input[name='rdoQuestion" + questionId + "']:checked").val();
+            if (answer == undefined) {
+                isNotAnswered = true;
+            }
+            console.log("questionId : " + questionId + ", answer : " + answer);
+            var item = {};
+            item["QuestionId"] = questionId;
+            item["Answer"] = answer;
+            item["IndicatorId"] = indicatorId;
+            answers.push(item);
+        });
+
+        if (isNotAnswered) {
+            toastr.error("Please Answer All Questions");
+            return;
+        }
+        $.ajax({
+            url: "@Url.Action("Save", "Survey")",
+            data: { "answers": answers, "surveyTypeId" : @ViewBag.SurveyTypeId},
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                window.location = "@Url.Action("SurveyResult", "Survey")" + "?surveyId=" + result.Result;
+                console.log("Save Done Successffly");
+            },
+            error: function () {
+                debugger;
+                toastr.error("Error")
+            }
+        });
+    });
+</script>
+

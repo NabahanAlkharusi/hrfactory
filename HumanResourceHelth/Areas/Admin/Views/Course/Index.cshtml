@@ -1,0 +1,85 @@
+﻿@using HumanResourceHelth.Model
+@model List<Course>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="@Url.Action("Create", "Course")" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Courses</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Rate</th>
+                        <th>PublishDate</th>
+                        <th>LastModifidDate</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (Course course in Model)
+                    {
+                        <tr>
+                            <td>@(counter++)</td>
+                            <td>@course.Name</td>
+                            <td>@course.Description</td>
+                            <td>@course.Price</td>
+                            <td>@course.Rate</td>
+                            <td>@course.PublishDate</td>
+                            <td>@course.LastModifidDate</td>
+
+                            <td>
+                                <a title="Edit Course Data" href="@(Url.Action("Edit", "Course", new {courseId = course.Id}))"><i class="fa fa-edit" style="color: blue;"></i></a> |
+                                <a title="Index Video Data" href="@(Url.Action("Index", "Video", new {courseId = course.Id}))" class="btn btn-xs btn-icon btn-circle btn-warning"><i class="fa fa-play-circle"></i></a> |
+                                <a href="javascript:;" id="btnDelete" class="btn btn-xs btn-icon  " onclick="deleteCourse(@course.Id)"><i class="fa fa-trash fa-2x" style="color: red;"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function deleteCourse(CourseId) {
+        var id = CourseId;
+        var result = confirm("Are you Sure you want to Delete This item ?");
+        if (result) {
+
+
+            $.ajax({
+                url: "@Url.Action("Delete", "Course")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("Data Deleted Successffly")
+                    location.reload();
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+        }
+
+    };
+</script>
+ 

@@ -1,0 +1,84 @@
+﻿@using HumanResourceHelth.Model
+@model List<Indicator>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                @if (ViewBag.SurveyTypeId == 1)
+                {
+                    <a href="@Url.Action("Create", "Indicator", new { checkType = 1})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Create", "Indicator", new { checkType = 2})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
+                }
+
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Indicators "@(ViewBag.SurveyType)"</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Name Arabic</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (Indicator indicator in Model)
+                    {
+                    <tr>
+                        <td>@(counter++)</td>
+                        <td>@indicator.Name</td>
+                        <td>@indicator.NameAr</td>
+                        <td>
+                            <a title="Edit indicator Data" href="@(Url.Action("Edit", "Indicator", new {indicatorId = indicator.Id}))"><i class="fa fa-edit" style="color: blue;"></i></a> |
+                            <a title="Index Question Data" href="@(Url.Action("Index", "Question", new {indicatorId = indicator.Id}))" class="btn btn-xs btn-icon btn-circle btn-warning"><i class="fa fa-question-circle"></i></a> |
+                            <a href="javascript:;" id="btnDelete" class="btn btn-xs btn-icon  " onclick="del(@indicator.Id)"><i class="fa fa-trash fa-2x" style="color: red;"></i></a>
+                        </td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function del(indicatorId) {
+        var id = indicatorId;
+        var result = confirm("Are you Sure you want to Delete This item ?");
+        if (result) {
+
+
+            $.ajax({
+                url: "@Url.Action("Delete", "Indicator")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("Data Deleted Successffly")
+                    location.reload();
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+        }
+
+    };
+
+
+
+</script>
+

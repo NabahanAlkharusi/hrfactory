@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8B766F5B-C039-495B-9958-BF05087110B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HumanResourceHelth.Model</RootNamespace>
+    <AssemblyName>HumanResourceHelth.Model</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Answer.cs" />
+    <Compile Include="AppUser.cs" />
+    <Compile Include="Attachments.cs" />
+    <Compile Include="BaseEntity.cs" />
+    <Compile Include="Category.cs" />
+    <Compile Include="Content.cs" />
+    <Compile Include="Countries.cs" />
+    <Compile Include="Country.cs" />
+    <Compile Include="Coupons.cs" />
+    <Compile Include="IntroVedio.cs" />
+    <Compile Include="CourseRate.cs" />
+    <Compile Include="Courses.cs" />
+    <Compile Include="Department.cs" />
+    <Compile Include="Developer.cs" />
+    <Compile Include="DocFile.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="HrSetting.cs" />
+    <Compile Include="Indicator.cs" />
+    <Compile Include="Industry.cs" />
+    <Compile Include="Course.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="NumberOfEmployees.cs" />
+    <Compile Include="Plan.cs" />
+    <Compile Include="DoctorRequest.cs" />
+    <Compile Include="PluginRequest.cs" />
+    <Compile Include="Project.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pyments.cs" />
+    <Compile Include="Question.cs" />
+    <Compile Include="RegisterViewModel.cs" />
+    <Compile Include="Resources\AppResource.ar.Designer.cs" />
+    <Compile Include="Resources\AppResource.Designer.cs" />
+    <Compile Include="Resources\Attachments\Attachments.Designer.cs" />
+    <Compile Include="Resources\Courses\Courses.Designer.cs" />
+    <Compile Include="Resources\Departments\Departments.Designer.cs" />
+    <Compile Include="Resources\HrSetting\HrSetting.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HrSetting.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HrSetting\HrSetting.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HrSetting.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\LocalizationService.cs" />
+    <Compile Include="Resources\Reviews1\Reviews.Designer.cs" />
+    <Compile Include="Resources\Coupons\Coupons.Designer.cs" />
+    <Compile Include="Resources\Specialties\Specialties.Designer.cs" />
+    <Compile Include="Resources\Trainers\Trainers.Designer.cs" />
+    <Compile Include="Reviews.cs" />
+    <Compile Include="RoleEdit.cs" />
+    <Compile Include="RoleModification.cs" />
+    <Compile Include="Section.cs" />
+    <Compile Include="Specialties.cs" />
+    <Compile Include="SurveyType.cs" />
+    <Compile Include="Survey.cs" />
+    <Compile Include="SurveyResult.cs" />
+    <Compile Include="TechRequest.cs" />
+    <Compile Include="Trainers.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserCourse.cs" />
+    <Compile Include="UserCourseView.cs" />
+    <Compile Include="UserPlan.cs" />
+    <Compile Include="UserReview.cs" />
+    <Compile Include="UserWatchVideo.cs" />
+    <Compile Include="Video.cs" />
+    <Compile Include="ViewModels\CoursesViewModel.cs" />
+    <Compile Include="ViewModels\TrainersViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AppResource.ar.resx" />
+    <EmbeddedResource Include="Resources\AppResource.resx" />
+    <EmbeddedResource Include="Resources\Attachments\Attachments.ar.resx" />
+    <EmbeddedResource Include="Resources\Attachments\Attachments.resx" />
+    <EmbeddedResource Include="Resources\Courses\Courses.ar.resx" />
+    <EmbeddedResource Include="Resources\Courses\Courses.resx" />
+    <EmbeddedResource Include="Resources\Departments\Departments.ar.resx" />
+    <EmbeddedResource Include="Resources\Departments\Departments.resx" />
+    <EmbeddedResource Include="Resources\HrSetting\HrSetting.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HrSetting.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HrSetting\HrSetting.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HrSetting.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reviews1\Reviews.ar.resx" />
+    <EmbeddedResource Include="Resources\Reviews1\Reviews.resx" />
+    <EmbeddedResource Include="Resources\Coupons\Coupons.ar.resx" />
+    <EmbeddedResource Include="Resources\Coupons\Coupons.resx" />
+    <EmbeddedResource Include="Resources\Specialties\Specialties.ar.resx" />
+    <EmbeddedResource Include="Resources\Specialties\Specialties.resx" />
+    <EmbeddedResource Include="Resources\Trainers\Trainers.ar.resx" />
+    <EmbeddedResource Include="Resources\Trainers\Trainers.resx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

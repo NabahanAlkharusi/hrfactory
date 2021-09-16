@@ -1,0 +1,69 @@
+﻿@using HumanResourceHelth.Web.Models
+@using HumanResourceHelth.Model
+@model BuilderViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+        h1 {
+            font-size: 28pt;
+        }
+
+        h2 {
+            font-size: 20pt;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <table style="width:100%;">
+            <tr>
+                <td style="text-align:left;font-size:24pt;vertical-align:central"><img width="75" src="@Model.LogoFile" />&nbsp;@Model.CompanyName</td>
+            </tr>
+        </table>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br /><br />
+        <table style="width:100%">
+            <tr>
+                <td style="width:100%;text-align:center;font-size:36pt;color:darkblue;">@Model.DocumentName</td>
+            </tr>
+        </table>
+    </div>
+    <div style="page-break-before:always">
+        @{ bool IsFirstSection = true; }
+        @foreach (Section parentSection in Model.Sections)
+        {
+            string newLine = "";
+            if (!IsFirstSection && parentSection.IsHaveLineBefore)
+            {
+                newLine = "page-break-before:always";
+            }
+            IsFirstSection = false;
+            <div style="@newLine">
+                <h1>@parentSection.Title</h1>
+            </div>
+            <br />
+            <div>@Html.Raw(parentSection.Content)</div><br />
+            foreach (Section childSection in parentSection.Childs.Where(x => x.IsActive))
+            {
+                newLine = "";
+                if (childSection.IsHaveLineBefore)
+                {
+                    newLine = "page-break-before:always";
+                }
+                <div style="@newLine">
+                    <h2>@childSection.Title</h2>
+                </div>
+                <br />
+                <div>@Html.Raw(childSection.Content)</div><br />
+            }
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,237 @@
+﻿@using HumanResourceHelth.Web.Data
+@model SectionViewModel
+@{
+    ViewBag.Title = "Index";
+    //Layout = "~/Views/Shared/_layout.cshtml";
+    
+
+}
+
+<script src="https://cdn.ckeditor.com/4.15.0/full/ckeditor.js" defer></script>
+<div class="container-fluid">
+    <div class="row"style="display:flex;">
+        <div class="col-sm-3">
+            <div id="accordion">
+
+                @if (Model.Sections.Count != 0)
+                {
+
+                    for (int i = 0; i < Model.Sections.Count(); i++)
+                    {
+                        if (Model.Sections[i].ParenId == null)
+                        {
+                            <div class="group">
+                                <div class="row test " id="@Model.Sections[i].Id"style="display:flex;">
+
+                                    <div class="col-sm-9">
+                                        <h4>@Model.Sections[i].Title</h4>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a href="javascript:;" class="btn btn-icon" onclick="editSection(@Model.Sections[i].Id)"><i class="fa fa-edit" style="color: blue;"></i></a>
+                                    </div>
+                                </div>
+                                <ul class="cities" style="list-style:none;">
+                                    @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
+                                    {
+                                        <li class="ui-state-default" id="@Item.Id"style="display:flex;justify-content:space-between">
+                                            <h5 class="m-2">@Item.Title</h5>
+                                            <a href="javascript:;" class="btn  btn-icon" onclick="editSection(@Item.Id)"><i class="fa fa-edit" style="color: blue;"></i></a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    }
+
+                }
+
+            </div>
+            <hr />
+            <div class="row"style="display:flex;justify-content:space-between">
+                <a onclick="location.href='@Url.Action("Create", "Builder")'" title="Add Section" data-toggle="modal" class="btn btn-primary"><i class="fa fa-plus"></i>Add New Section</a>
+                <input type="button" class="btn btn-primary" title="Convert" value="Convert to Pdf" onclick="location.href='@Url.Action("Convert", "Builder")'" />
+            </div>
+        </div>
+        <div class="col-sm-8 ">
+            <div class="col-12">
+                @*<br />*@
+            </div>
+            <div class="col-sm-12 "style="display:flex;margin-bottom:20px;">
+                <div class="d-flex">
+                    @if (Session["UserId"] != null)
+                    {
+                        int userId = (int)Session["UserId"];
+                        if (File.Exists(Server.MapPath("~/CompanyLogo/" + userId + ".png")))
+                        {
+                            <img id="imgLogo" src="@Url.Content(string.Format("~/CompanyLogo/{0}.png", userId))" width="70" height="70" />
+                        }
+                        else
+                        {
+                            <img id="imgLogo" src="@Url.Content("~/CompanyLogo/default.png")" width="70" height="70" />
+                        }
+                    }
+                </div>
+                <div >Choose Logo <input type="file" id="fileLogo" /></div>
+                <div ><button id="btnUploadLogo" type="button">Upload</button></div>
+            </div>
+            <div class="col-12">
+                <br />
+            </div>
+            <div class="col-12 d-flex" id="divEditSection">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#accordion")
+            .accordion({
+            header: "> div > .test",
+                heightStyle: true,
+                collapsible: true,
+                active: false,
+                activate: function () {
+                    //alert("Hello Edit");
+                    @*var id = sectionId;
+                    var result = confirm("Are you Sure you want to Delete This item ?");
+                    if (result) {
+                        $.ajax({
+                            url: "@Url.Action("Edit", "Section")",
+                            data: { id: id },
+                            type: "GET",
+                            success: function () {
+                                toastr.success("Data Deleted Successffly")
+                                location.reload();
+                            },
+                            error: function () {
+                                toastr.error("Error")
+                            }
+                        });
+                    }*@
+                }
+            })
+            .sortable({
+                axis: "y",
+                handle: ".test",
+                stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children(".test").triggerHandler("focusout");
+                    newOrder = (ui.item.index()+1);
+                    console.log(ui.item);
+                    sectionId=ui.item[0].children[0].id;
+                    // Refresh accordion to handle new order
+                    $(this).accordion("refresh");
+                    $.ajax({
+
+                        url: "@Url.Action("SaveSectionOrder", "Builder")",
+                        data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                        type: "GET",
+                        success: function () {
+                            toastr.success("Section New Location Saved")
+                            //location.reload();
+                        },
+                        error: function () {
+                            //toastr.error("Error");
+                        }
+                    });
+                }
+            });
+    });
+
+    $(function () {
+        $(".cities").sortable({
+            revert: true,
+            stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children(".test").triggerHandler("focusout");
+                newOrder = (ui.item.index() + 1);
+                //console.log(ui.item[0].id);
+                sectionId = ui.item[0].id
+                    // Refresh accordion to handle new order
+
+                    $.ajax({
+
+                        url: "@Url.Action("SaveSubSectionOrder", "Bulder")",
+                        data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                        type: "GET",
+                        success: function () {
+                            toastr.success("Section New Location Saved")
+                            //location.reload();
+                        },
+                        error: function () {
+                            //toastr.success(" Success")
+                        }
+                    });
+                }
+        })
+    });
+
+</script>
+<script>
+    function deleteSection(sectionId) {
+        var id = sectionId;
+        var result = confirm("Are you Sure you want to Delete This item ?");
+        if (result) {
+            $.ajax({
+                url: "@Url.Action("Delete", "Builder")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("Data Deleted Successffly")
+                    location.reload();
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+        }
+    };
+
+</script>
+
+<script>
+    function editSection(sectionId) {
+        $.ajax({
+            url: "@Url.Action("Edit", "Builder")",
+            data: { "sectionId": sectionId },
+            type: "GET",
+            async: false,
+            success: function (data) {
+                $("#divEditSection").html(data);
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+
+    };
+</script>
+<script>
+    $("#btnUploadLogo").on("click", function () {
+        var myForm = new FormData();
+        var fileUpload = $("#fileLogo")[0].files[0];
+        myForm.append("Logo", fileUpload);
+
+        $.ajax({
+            url: '@Url.Action("UploadLogo", "Builder")',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            sync: false,
+            data: myForm ,
+            success: function (result) {
+                toastr.success("Logo Saved Successffly")
+                $(".fileUpload").val('');
+                d = new Date();
+                $("#imgLogo").attr("src", "@Url.Content(string.Format("~/CompanyLogo/{0}.png?", ((int)Session["UserId"]).ToString()))" + d.getTime());
+            },
+            error: function (err) {
+                toastr.error("Error");
+                $(".fileUpload").val('');
+            }
+        });
+    });
+</script>

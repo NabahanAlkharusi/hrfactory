@@ -1,0 +1,38 @@
+﻿@using HumanResourceHelth.Web.Models
+@using HumanResourceHelth.Model
+@model BuilderViewModel
+@{ Layout = null; }
+<!DOCTYPE html>
+
+<html>
+
+<body>
+
+    <table dir="rtl" style="width:100%;">
+        <tr>
+            <td style="width:75%; text-align: left;font-size:18pt;font-family:arial;"><img width="25" height="25" src="@Model.LogoFile" />&nbsp; @Model.CompanyName</td>
+        </tr>
+    </table>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br /><br /><br />
+
+    <div dir="rtl" style="font-size:30pt;color:darkblue;font-family:arial;text-align:center;">@Model.DocumentName</div>
+
+    <div style="page-break-before:always">
+        @foreach (Section parentSection in Model.Sections)
+        {
+<div dir="rtl" style="font-family:arial"><h1>@parentSection.Title</h1></div> if (parentSection.Content != null && Html.Raw(parentSection.Content).ToString().Trim() != "")
+{
+<div dir="rtl" style="font-family:arial">@Html.Raw(parentSection.Content)</div> }
+
+foreach (Section childSection in parentSection.Childs.Where(x => x.IsActive))
+{
+<div dir="rtl" style="font-family:arial"><h2>@childSection.Title</h2></div> if (childSection.Content != null && Html.Raw(childSection.Content).ToString().Trim() != "")
+{
+<div dir="rtl" style="font-family:arial">@Html.Raw(childSection.Content)</div>}
+}
+}
+    </div>
+</body>
+</html>

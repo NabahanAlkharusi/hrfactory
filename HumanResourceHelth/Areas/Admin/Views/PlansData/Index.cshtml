@@ -1,0 +1,47 @@
+﻿@using HumanResourceHelth.Web.Areas.Admin.Data
+@using HumanResourceHelth.Model
+@model List<Plan>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Plans Data</h4>
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int counter = 1;}
+                    @foreach (Plan plan in Model)
+                    {
+                        <tr>
+                            <td>@(counter++)</td>
+                            <td>@plan.Name</td>
+                            <td>
+                                <a title="Edit  Plan" href="@(Url.Action("EditPlan", "PlansData", new {plan = plan.Name}))"><i class="fa fa-edit" style="color: blue;"></i></a>
+                                <a title="Price" href="@(Url.Action("Price", "PlansData", new {planId = plan.Id}))"><i class="fa fa-dollar-sign" ></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+</div>
+

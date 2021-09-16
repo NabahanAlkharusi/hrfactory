@@ -1,0 +1,52 @@
+﻿@using HumanResourceHelth.Model
+@model List<User>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Last Login</th>
+            <td>Email</td>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int counter = 1;}
+        @foreach (User user in Model)
+        {
+            <tr>
+                <td>@(counter++)</td>
+                <td>@user.Name</td>
+                <td>@user.LastLoginDate</td>
+                <td>@user.Email</td>
+                <td>
+                    <a href="@(Url.Action("Plans", "User", new {userId = user.Id}))">Plans</a> |
+                    <a href="@(Url.Action("Details", "User", new {userId = user.Id}))">Details</a> |
+                    <a href="@(Url.Action("LoginAs", "User", new {userId = user.Id}))" target="_blank">Login As</a> |
+                    <a href="javascript:void(0);" data-UserId="@user.Id" class="lnkDelete" style="color:red;">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(".lnkDelete").on("click", function () {
+        var result = confirm("Are you Sure you want to Delete This User ?");
+        var userId = $(this).attr("data-UserId");
+        if (result) {
+            $.ajax({
+                url: "@Url.Action("Delete", "User")",
+                data: { "userId": userId },
+                type: "GET",
+                success: function (data) {
+                    toastr.success("Data Deleted Successffly")
+                    $("#divUsers").html(data);
+                },
+                error: function (err) {
+                    toastr.error(err.status)    
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,28 @@
+﻿@using HumanResourceHelth.Model
+@model User
+@{
+    ViewBag.Title = "Details";
+}
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="@Url.Action("Plans","User", new { userId = Model.Id})" class="btn btn-xs btn-icon btn-circle btn-warning" title="Plans"><i class="fas fa-box-open"></i></a>
+                <a href="@Url.Action("Index","User")" class="btn btn-xs btn-icon btn-circle btn-warning" title="All Users"><i class="fas fa-users"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">User Details</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col col-12">Name : <b>@Model.Name</b></div>
+            <div class="col col-12">Name Arabic : <b>@Model.NameAr</b></div>
+            <div class="col col-12">Email : <b>@Model.Email</b></div>
+            <div class="col col-12">Country : <b>@Model.Country.Name</b></div>
+            <div class="col col-12">Industry : <b>@Model.Industry.Name</b></div>
+            <div class="col col-12">Contact Information : <b>@Model.ContactInformation</b></div>
+            <div class="col col-12">Contact Person : <b>@Model.ContactPerson</b></div>
+            <div class="col col-12">Last Login Date : <b>@Model.LastLoginDate</b></div>
+        </div>
+    </div>
+</div>

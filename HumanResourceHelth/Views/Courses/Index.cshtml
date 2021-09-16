@@ -1,0 +1,106 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model IEnumerable<HumanResourceHelth.Model.ViewModels.CoursesViewModel>
+
+
+@{
+    ViewData["Title"] = AppResource.Courses;
+    //    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Courses</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a class="btn btn-sm  btn-success" href="@Url.Action("Create")">
+                            <i class="fa fa-plus fa-2x"></i>
+                            @AppResource.Add
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="active">
+                            <th>
+                                @Html.DisplayNameFor(model => model.Courses.CourseName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Courses.CoursePrice)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Courses.CourseDate)
+                            </th>
+
+                            <th hidden>
+                                @Html.DisplayNameFor(model => model.Courses.isfree)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Courses.Department)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Trainers.TrainerName)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Images/coursesAvatar/@item.Courses.Avatar" height="70" width="70"
+                                         class=" profile-img-container " />
+
+                                    @Html.DisplayFor(modelItem => item.Courses.CourseName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Courses.CoursePrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Courses.CourseDate)
+                                </td>
+                                <td hidden>
+                                    @Html.DisplayFor(modelItem => item.Courses.isfree)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Departments.Name)
+                                </td>
+                                <td>
+                                    <img src="~/Images/TrainerAvatar/@item.Trainers.TrainerAvatar" height="50" width="50"
+                                         class=" profile-img-container " />
+                                    @Html.DisplayFor(modelItem => item.Trainers.TrainerName)
+                                </td>
+                                <td>
+                                    <a class=" text-primary m-1 " href="@Url.Action("index", "Attach", new { CID=item.Courses.CourseID})">
+                                        @AppResource.Attachments <i class="fa fa-file fa-2x"></i>
+                                    </a> |
+                                    <a class=" text-warning m-1" href="@Url.Action("Create",new { id=item.Courses.CourseID})">
+                                        @AppResource.Edit <i class="fa fa-edit fa-2x"></i>
+                                    </a> |
+                                    <a class="text-danger m-1 " href="@Url.Action("Delete",new { id=item.Courses.CourseID})">
+                                        <i class="fa fa-trash fa-2x"></i> @AppResource.Delete
+                                    </a>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+</div>
+</div>
+</div>

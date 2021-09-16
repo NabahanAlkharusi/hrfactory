@@ -1,0 +1,653 @@
+﻿@using HumanResourceHelth.Web.Data
+@model SectionViewModel
+@{ ViewBag.Title = "Index"; }
+@{ var dir = "ltr";
+    var videoSrc = "";
+    if (Convert.ToInt32(ViewBag.vediosCount) > 0)
+    {
+        if (ViewBag.IsUploaded) { videoSrc = "../IntroVedio/" + ViewBag.EnglishUploaded; }
+        else
+        {
+            videoSrc = ViewBag.EnglishEmbaded;
+        }
+    } }
+
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    if (Convert.ToInt32(ViewBag.vediosCount) > 0)
+    {
+        if (ViewBag.IsUploaded) { videoSrc = "../IntroVedio/" + ViewBag.ArabicUploaded; }
+        else
+        {
+            videoSrc = ViewBag.ArabicEmbaded;
+        }
+    }
+}
+
+
+<section class="padding-top-80px padding-bottom-10px background-white" dir="@dir">
+    <div class="container">
+
+
+        @if (Session["CMS"] != null && (bool)Session["CMS"] == true && Convert.ToInt32(ViewBag.vediosCount) == 0)
+        {
+<div class="row p-2 justify-content-center">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        @Resources.General.AddIntroVideo
+    </button>
+</div>}
+        @if (Convert.ToInt32(ViewBag.vediosCount) > 0)
+        {
+    <fieldset>
+        <legend>How To use this builder</legend>
+        <div class="row p-2 justify-content-center">
+            <iframe width="980" height="350"
+                    src="@videoSrc">
+            </iframe>
+        </div>
+    </fieldset>}
+        <div class="row pb-4">
+            <div class="col-xl-2 col-lg-4 col-4 justify-content-lg-start">
+                <!-- lang dropdown -->
+                @if (Session["lang"].ToString() == "en-US")
+                {
+    <a class="btn btn-primary p-2" href="@Url.Action("ChangeLanguage","Home", new { lang = "ar-EG"})" id="dropdownMenuLink" dir="rtl"> الصانع باللغة العربية/Builder in Arabic</a> }
+else
+{
+<a class="btn btn-primary p-2" href="@Url.Action("ChangeLanguage","Home", new { lang = "en-US"})" id="dropdownMenuLink" dir="rtl">الصانع باللغة الإنجليزية/Builder in English</a>}
+
+                <!-- // lang dropdown -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 btn-acc">
+                <div class="releasesWrp" id="releases">
+                    <ul class="releases">
+                        <li>
+                            @if (Model.Sections.Count != 0)
+                            {
+
+                                for (int i = 0; i < Model.Sections.Count(); i++)
+                                {
+                                    if (Model.Sections[i].ParenId == null)
+                                    {<!-- Release Item -->
+                                                                <ul class="releaseRow row " data-SectionId="@Model.Sections[i].Id">
+                                                                    <div class="list_icon">
+                                                                    <li class="col-lg-1 col-1 rcol tc sort"><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                                                    <li class="col-lg-8 col-8 rcol tc showTracks"><span>@Model.Sections[i].Title</span></li>
+                                                                    <li class="col-lg-3 col-3 rcol actions_icon">
+                                                                        <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.Sections[i].Id"><i class="far fa-edit"></i></a>
+                                                                        <a href="javascript:void(0)" onclick="return deleteSection(@Model.Sections[i].Id);"><i class="far fa-trash-alt"></i></a>
+                                                                        <a href="#">
+                                                                            <label class="switch">
+                                                                                @if (Model.Sections[i].IsActive)
+                                                                                {
+                                                        <input class="chkActivate" checked data-SectionId="@Model.Sections[i].Id" type="checkbox"> }
+                                                    else
+                                                    {
+                            <input class="chkActivate" data-SectionId="@Model.Sections[i].Id" type="checkbox">}
+
+                                                                                <span class="slider round"></span>
+                                                                            </label>
+                                                                        </a>
+                                                                    </li>
+                                                    </div>
+                                                    <li class="releaseTracks">
+                                                        @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
+                                                        {
+                                <ul class="trackRow" data-SectionId="@Item.Id">
+                                    <li class="col-lg-1 col-1 rcol tc sort"><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                    <li class="col-lg-6 col-6 rcol">@Item.Title</li>
+                                    <li class="col-lg-4 col-4 fa-pull-right rcol tc">
+                                        <a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit"></i></a>
+                                        <a href="javascript:void(0)" onclick="return deleteSection(@Item.Id);"><i class="far fa-trash-alt red"></i></a>
+                                        <a href="#">
+                                            <label class="switch">
+                                                @if (Item.IsActive)
+                                                {
+                    <input checked class="chkActivate" data-SectionId="@Item.Id" type="checkbox"> }
+                else
+                {
+<input class="chkActivate" data-SectionId="@Item.Id" type="checkbox">}
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </a>
+                                    </li>
+                                </ul>}
+                                                    </li>
+                                                    </ul>}
+                                            }
+                                        }
+
+
+                            </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <a class="btn btn-primary" href="@Url.Action("Create", "Section")" role="button">@Resources.General.NewSection</a>
+                        <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section")" role="button">@Resources.General.Download</a>
+                        <hr>
+                        <a class="btn btn-primary" href="@Url.Action("Index", "Builder")" role="button">@Resources.General.Back</a>
+                        <hr>
+                    </div>
+                    <div class="col-lg-9" id="divEditSection" dir="@dir">
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-md-8 ml-auto wow fadeInUp">
+                        <img src="~/assets/img/BuilderFooter.png" alt="">
+                    </div>
+                </div>
+
+            </section> <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="control-group">
+
+                                <label for="vedioType" class="col-12">Vedio Type</label>
+
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="vedioType" class="onoffswitch-checkbox" id="vedioType" tabindex="0" checked onchange="onoffchange(this)">
+                                    <label class="onoffswitch-label" for="vedioType">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" name="vedioTypeh" id="vedioTypeh" value="1">
+
+                            </div>
+                            <div class="control-group" id="UploadEnglishVedio">
+                                <label for="vedioType" class="col-12">Upload English Vedio From PC</label>
+                                <input type="file" class="form-control-file" id="vedioUploadEn">
+                            </div>
+                            <div class="control-group" id="UploadArbicVedio">
+                                <label for="vedioType" class="col-12">Upload Arabic Vedio From PC</label>
+                                <input type="file" class="form-control-file" id="vedioUploadAr">
+                            </div>
+                            <div class="control-group d-none" id="EmbadEnglishVedio">
+                                <label for="vedioType" class="col-12">Embad Vedio From YouTube English</label>
+                                <textarea class="form-control" id="vedioEmbadEn" rows="3"></textarea>
+                            </div>
+                            <div class="control-group d-none" id="EmbadArabicVedio">
+                                <label for="vedioType" class="col-12">Embad Vedio From YouTube Arabic</label>
+                                <textarea class="form-control" id="vedioEmbadAr" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" id="SaveVedio" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <script>
+    $(function () {
+        $("#accordion")
+            .accordion({
+            header: "> div > .test",
+                heightStyle: true,
+                collapsible: true,
+                active: false,
+                activate: function () {
+                    //alert("Hello Edit");
+                    @*var id = sectionId;
+                    var result = confirm("Are you Sure you want to Delete This item ?");
+                    if (result) {
+                        $.ajax({
+                            url: "@Url.Action("Edit", "Section")",
+                            data: { id: id },
+                            type: "GET",
+                            success: function () {
+                                toastr.success("Data Deleted Successffly")
+                                location.reload();
+                            },
+                            error: function () {
+                                toastr.error("Error")
+                            }
+                        });
+                    }*@
+                }
+            })
+            .sortable({
+                axis: "y",
+                handle: ".test",
+                stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children(".test").triggerHandler("focusout");
+                    newOrder = (ui.item.index()+1);
+                    console.log(ui.item);
+                    sectionId=ui.item[0].children[0].id;
+                    // Refresh accordion to handle new order
+                    $(this).accordion("refresh");
+                    $.ajax({
+
+                        url: "@Url.Action("SaveSectionOrder", "Section")",
+                        data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                        type: "GET",
+                        success: function () {
+                            toastr.success("Section New Location Saved")
+                            //location.reload();
+                        },
+                        error: function () {
+                            //toastr.error("Error");
+                        }
+                    });
+                }
+            });
+    });
+
+    $(function () {
+        $(".cities").sortable({
+            revert: true,
+            stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children(".test").triggerHandler("focusout");
+                newOrder = (ui.item.index() + 1);
+                //console.log(ui.item[0].id);
+                sectionId = ui.item[0].id
+                    // Refresh accordion to handle new order
+
+                    $.ajax({
+
+                        url: "@Url.Action("SaveSubSectionOrder", "Section")",
+                        data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                        type: "GET",
+                        success: function () {
+                            toastr.success("Section New Location Saved")
+                            //location.reload();
+                        },
+                        error: function () {
+                            //toastr.success(" Success")
+                        }
+                    });
+                }
+        })
+    });
+
+            </script>
+            <script>
+    function deleteSection(sectionId) {
+        var id = sectionId;
+        var result = confirm("Are you Sure you want to Delete This item ?");
+        if (result) {
+            $.ajax({
+                url: "@Url.Action("Delete", "Section")",
+                data: { id: id },
+                type: "GET",
+                success: function () {
+                    toastr.success("Data Deleted Successffly")
+                    location.reload();
+                },
+                error: function () {
+                    toastr.error("Error")
+                }
+            });
+        }
+    };
+
+            </script>
+
+            <script>
+
+    $(".chkActivate").on("change", function () {
+        var myChk = $(this);
+         var isActive = false;
+        if (this.checked) isActive = true;
+        var sectionId = $(this).attr("data-SectionId");
+        $.ajax({
+            url: "@Url.Action("Activate", "Section")",
+            data: { sectionId: sectionId, isActive: isActive },
+            type: "GET",
+            success: function () {
+                if (isActive) {
+                    toastr.success("@Resources.General.SectionActivated")
+                }
+                else {
+                    toastr.warning("@Resources.General.SectionDeactivated")
+                }
+            },
+            error: function () {
+                toastr.error("Error")
+                if (isActive) {
+                    $(myChk).prop("checked", false);
+                }
+                else {
+                    $(myChk).prop("checked", true);
+                }
+            }
+        });
+    });
+
+
+            </script>
+
+            <script>
+    $(".editSection").on("click", function () {
+        var sectionId = $(this).attr("data-SectionId")
+        $(".list_icon").removeClass("activee");
+        $(".trackRow").removeClass("activee");
+        $(this).parent().parent().addClass("activee");
+        $.ajax({
+            url: "@Url.Action("Edit", "Section")",
+            data: { "sectionId": sectionId },
+            type: "GET",
+            async: false,
+            success: function (data) {
+                $("#divEditSection").html(data);
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    });
+            </script>
+            <script>
+    $("#btnUploadLogo").on("click", function () {
+        var myForm = new FormData();
+        var fileUpload = $("#fileLogo")[0].files[0];
+        myForm.append("Logo", fileUpload);
+
+        $.ajax({
+            url: '@Url.Action("UploadLogo", "Section")',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            sync: false,
+            data: myForm ,
+            success: function (result) {
+                toastr.success("Logo Saved Successffly")
+                $(".fileUpload").val('');
+                d = new Date();
+                $("#imgLogo").attr("src", "@Url.Content(string.Format("~/CompanyLogo/{0}.png?", ((int)Session["UserId"]).ToString()))" + d.getTime());
+            },
+            error: function (err) {
+                toastr.error("Error");
+                $(".fileUpload").val('');
+            }
+        });
+    });
+            </script>
+
+            <script id="rendered-js">
+    $(function () {
+        $('#releases ul li').sortable({ // #releases ul li
+            containment: "document",
+            items: '> ul',
+            handle: '.sort',
+            cursor: 'move',
+            connectWith: '.releaseRow', // #releases ul
+            placeholder: 'holder',
+            tolerance: "pointer",
+            revert: 300,
+            forcePlaceholderSize: true,
+            opacity: 0.5,
+            helper: "clone",
+            scroll: false,
+            dropOnEmpty: true,
+            stop: function (event, ui) {
+                var sectionId = ui.item.attr("data-SectionId");
+                console.log("Section Id : " + sectionId);
+                var newOrder = (ui.item.index() + 1);
+                console.log("new Order : " + newOrder);
+                $.ajax({
+                    url: "@Url.Action("SaveSectionOrder", "Section")",
+                    data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                    type: "GET",
+                    success: function () {
+                        toastr.success("Section New Location Saved")
+                        //location.reload();
+                    },
+                    error: function () {
+                        //toastr.error("Error");
+                    }
+                });
+            },
+            //change: function (event, ui) {
+            //    // do your stuff here.
+            //    alert("Ok");
+            //}
+        });
+
+
+        $('.releaseTracks').sortable({ // #releases ul li
+            containment: "document",
+            items: '> ul',
+            handle: '.sort',
+            cursor: 'move',
+            helper: "clone",
+            revert: 300,
+            connectWith: '.releaseTracks', // #releases ul
+            placeholder: 'holder',
+            tolerance: "pointer",
+            forcePlaceholderSize: true,
+            opacity: 0.5,
+            scroll: true,
+            dropOnEmpty: true,
+            containment: "parent",
+            stop: function (event, ui) {
+                debugger;
+                var sectionId = ui.item.attr("data-SectionId");
+                console.log("Section Id : " + sectionId);
+                var newOrder = (ui.item.index() + 1);
+                console.log("new Order : " + newOrder);
+                $.ajax({
+                    url: "@Url.Action("SaveSubSectionOrder", "Section")",
+                    data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                    type: "GET",
+                    success: function () {
+                        toastr.success("Section New Location Saved")
+                        //location.reload();
+                    },
+                    error: function () {
+                        //toastr.error("Error");
+                    }
+                });
+            },
+        });
+
+        $('.showTracks').on('click', function () {
+            $(this).closest('.releaseRow').find('.releaseTracks').slideToggle();
+        });
+
+        $(".tooltip_bottom_center").tooltip({
+            tooltipClass: "tooltipBox",
+            show: {
+                effect: "slideDown",
+                delay: 100
+            },
+
+            position: {
+                my: "center",
+                at: "bottom+10"
+            }
+        });
+
+
+
+
+
+
+
+        var releaseItem = $('.releases li ul.releaseRow');
+        releaseItem = releaseItem.slice(1);
+        var container = $('.releases > li ul.releaseRow:gt(0)');
+        var order = [3, 4];
+        var release_id = null;
+
+        $(document).one('ready', function () {
+            setOrder(order);
+        });
+
+        // Set releases order
+        function setOrder(order) {
+            // console.log(order);
+            if (order !== undefined && order !== null && order.length !== 0) {
+                // console.log('A - ' + 'Order: ' + order);
+                render(order);
+            } else {
+                // TODO update to be actual release id's of default value being used on page load.
+                $.each(releaseItem, function (i, v) {
+
+                    // var release_id = i; // update to use actual release ID.
+                    // $(this).attr('data-soResourceseGeneralsourcesurcesurcest', release_id);
+                    order.push($(this).data('sort'));
+                    var items = $(this).children('li');
+
+                    $.each(items, function (i, v) {
+                        $(this).attr('data-sort', $(this).parent().data('sort') + '.' + i++);
+                    });
+
+                });
+                // console.log('B');
+                render(order);
+            }
+        }
+
+
+        // Get releases order
+        function getOrder() {
+            if (order !== undefined && order !== null && order.length !== 0) {
+                return order;
+            } else {
+                return 0;
+            }
+        }
+
+        // Sort releases order based on sort selction
+        function sortReleases(sortby) // string
+        {
+            // Get current order
+            var currentOrder = getOrder();
+            // console.log(currentOrder);
+
+            var dataValue = [];
+            var sortValue = Array();
+            var toSort = [];
+            var newOrder = [];
+
+            $.each(releaseItem, function () {
+                dataValue.push($(this).children('li').not('li.releaseTracks'));
+            });
+
+            $.each(dataValue, function (k, v) {
+                $.each(v, function () {
+                    if ($(this).data('sortby') === sortby) {
+                        var rId = 'release_' + $(this).parent().data('sort');
+                        // console.log(rId + ' ' + $(this).text());
+                        sortValue[rId] = $(this).text();
+                    }
+                });
+            });
+            // console.log(sortValue);
+
+            var alpha = /[^a-zA-Z]/g;
+            var numeric = /[^0-9]/g;
+
+            function sortAlphaNum(a, b) {
+                console.log(a);
+                console.log(b);
+                var aA = a.replace(alpha, "");
+                var bA = b.replace(alpha, "");
+                if (aA === bA) {
+                    var aN = parseInt(a.replace(numeric, ""), 10);
+                    var bN = parseInt(b.replace(numeric, ""), 10);
+                    return aN === bN ? 0 : aN > bN ? 1 : -1;
+                } else {
+                    return aA > bA ? 1 : -1;
+                }
+            }
+            // console.log(sortValue);
+            sortValue.sort(sortAlphaNum);
+            // sortAlphaNum(sortValue);
+            console.log(sortValue);
+            render(sortValue);
+        }
+
+        // Event, listen for releases order selection
+        $('.releaseHeadings .fa-sort').on('click', function () {
+            var sortby = $(this).parent().data('sortby');
+            sortReleases(sortby);
+        });
+
+        function render(order) {
+            console.log('Output HTML of releases in new order: ' + order);
+        }
+
+
+    }); // end of document.ready
+//# sourceURL=pen.js
+            </script>
+            <script>
+                function onoffchange(ctrl) {
+                    ctrl.checked ? $('#vedioTypeh').val('1') : $('#vedioTypeh').val('0');
+                    if (ctrl.checked) {
+                        if ($('#UploadEnglishVedio').hasClass('d-none')) {
+                            $('#UploadEnglishVedio').removeClass('d-none');
+                            $('#UploadArbicVedio').removeClass('d-none');
+                            $('#EmbadEnglishVedio').addClass('d-none');
+                            $('#EmbadArabicVedio').addClass('d-none');
+                        }
+                    }
+                    else {
+                        if (!$('#UploadEnglishVedio').hasClass('d-none')) {
+                            $('#UploadEnglishVedio').addClass('d-none');
+                            $('#UploadArbicVedio').addClass('d-none');
+                            $('#EmbadEnglishVedio').removeClass('d-none');
+                            $('#EmbadArabicVedio').removeClass('d-none');
+                        }
+                    }
+
+                }
+                $("#SaveVedio").on("click", function () {
+
+                    var myForm = new FormData();
+                    var vedioUploadEn = $("#vedioUploadEn")[0].files[0];
+                    var vedioUploadAr = $("#vedioUploadAr")[0].files[0];
+                    var vedioEmbadEn = $("#vedioEmbadEn").val();
+                    var vedioEmbadAr = $("#vedioEmbadAr").val();
+                    var isUploaded = $("#vedioTypeh").val();
+                    var Englishdoc = new DOMParser().parseFromString(vedioEmbadEn, "text/html");
+                    vedioEmbadEn = Englishdoc.children[0].children[1].children[0].getAttribute('src');
+                    var Arabicdoc = new DOMParser().parseFromString(vedioEmbadAr, "text/html");
+                    vedioEmbadAr = Arabicdoc.children[0].children[1].children[0].getAttribute('src');
+
+                    myForm.append("vedioUploadEn", vedioUploadEn);
+                    myForm.append("vedioUploadAr", vedioUploadAr);
+                    myForm.append("vedioEmbadEn", vedioEmbadEn);
+                    myForm.append("vedioEmbadAr", vedioEmbadAr);
+                    myForm.append("isUploaded", isUploaded);
+
+        $.ajax({
+            url: '@Url.Action("SaveIntroVedio", "Section")',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            sync: false,
+            data: myForm ,
+            success: function (result) {
+                toastr.success("Logo Saved Successffly")
+                //$(".fileUpload").val('');
+                //d = new Date();
+                //$("#imgLogo").attr("src", "@Url.Content(string.Format("~/CompanyLogo/{0}.png?",((int)Session["UserId"]).ToString()))" + d.getTime());
+            },
+            error: function (err) {
+                toastr.error("Error");
+                $(".fileUpload").val('');
+            }
+        });
+    });
+            </script>

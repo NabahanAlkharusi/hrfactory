@@ -1,0 +1,143 @@
+﻿@using HumanResourceHelth.Web.Areas.Admin.Data
+@using HumanResourceHelth.Model
+@model CourseViewModel
+
+
+@{
+    ViewBag.Title = "_Save";
+   
+}
+
+
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                @*<a href="@Url.Action("Create", "Calibration", new {deviceId = ViewBag.DeviceId, calibrationTypeId = 2})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>*@
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+            </div>
+            <h4 class="panel-title">Courses</h4>
+        </div>
+        <div class="panel-body">
+
+
+            <fieldset>
+                <form id="myForm">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <input  type="hidden" id="txtId" class="form-control" name="id" value="@Model.Id">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input type="hidden" id="txtId" class="form-control" name="PublishDate" value="@Model.PublishDate">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <div>
+                                <input type="text" id="Name" name="name" class="form-control" value="@Model.Name">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>User Name</label>
+                            <div>
+                                <input type="text" id="userName" name="userName" class="form-control" value="@Model.UserName">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Description</label>
+                            <div>
+                                <input type="text" id="txtdescription" name="description" class="form-control" value="@Model.Description">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Price</label>
+                            <div>
+                                <input type="text" id="txtPrice" name="price" class="form-control" value="@Model.Price">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Password</label>
+                            <div>
+                                <input type="text" id="txtPassword" name="password" class="form-control" value="@Model.Password">
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <input id="btnSaveCourse" type="button" class="btn btn-primary" value="Save" />
+
+
+
+                                <a href="@Url.Action("Index", "Course")" class="btn btn-primary">Back</a>
+                            </div>
+                        </div>
+</form>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnSaveCourse").on("click", function () {
+        @if(Model.Id == 0)
+        {
+            <text>
+                save();
+
+            </text>
+        }
+        else
+        {
+            <text>
+                update();
+            </text>
+        }
+
+    });
+
+    function save() {
+        //var name = $("#txtName").val();
+        //var userName = $("#txtUserNamr").val();
+        //var description = $("#txtdescription").val();
+        //var price = $("#txtPrice").val();
+        //var password = $("#txtPassword").val();
+        var form = $("#myForm");
+        console.log(form);
+        //var formData = new FormData();
+        //formData.append(`name`, `name`);
+        //formData.append(`userName`, `userName`);
+        //formData.append(`description`, `description`);
+        //formData.append(`price`, `price`);
+        //formData.append(`password`, `password`);
+        $.ajax({
+            url: "@Url.Action("Save", "Course")",
+            data: form.serialize(),
+            type: "GET",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+    function update() {
+        var form = $("#myForm");
+
+        $.ajax({
+            url: "@Url.Action("Update", "Course")",
+            data: form.serialize(),
+            type: "POST",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+</script>
+
+

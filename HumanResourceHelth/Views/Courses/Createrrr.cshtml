@@ -1,0 +1,201 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model HumanResourceHelth.Model.Courses
+
+@{
+    ViewData["Title"] = AppResource.AddCourse;
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">@AppResource.AddCourse</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group mr-2">
+            <a class="btn btn-sm btn-outline-secondary" href="@Url.Action("Index")">
+                @AppResource.ShowAll
+            </a>
+        </div>
+
+    </div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form action="@Url.Action("Create")" method="post"
+              enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @Html.HiddenFor(m => m.CourseID, new { @class = "form-control" })
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CourseName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CourseName)
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.DepartmentID, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.DepartmentID, (SelectList)ViewBag.DepartmentsList, new { @class = "form-control" })
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TrainerID, new { @class = "control-label" })
+                        @Html.DropDownListFor(m => m.TrainerID, (SelectList)ViewBag.TrainersList, new { @class = "form-control" })
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CoursePrice, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CoursePrice, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CoursePrice)
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Requirements, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.Requirements, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Requirements)
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IntroText, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.IntroText, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.IntroText)
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IntroVideo, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.IntroVideo, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.IntroVideo)
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CourseDate" class="control-label"></label>
+                        <input asp-for="CourseDate" value="@ViewBag.crsDt" type="date" placeholder="yyyy-MM-dd"
+                               class="form-control date-input" />
+                        <span asp-validation-for="CourseDate" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" name="Description" id="Description"
+                                  data-val-required="The Description field is required."
+                                  data-val-maxlength-max="500"
+                                  data-val-maxlength="The field Description must be a string or array type with a maximum length of '5000'."
+                                  data-val="true" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="isfree" /> @Html.DisplayNameFor(model => model.isfree)
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Avatar" class="control-label"></label>
+                        <input asp-for="Avatar" type="file" name="file" />
+                        @{
+                            if (ViewBag.coursesAvatar != null)
+                            {
+                                <img src="~/Images/coursesAvatar/@ViewBag.coursesAvatar" height="100" />
+                            }
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="submit" value="@AppResource.Save" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            @*<div class="form-group" hidden>
+                    <label asp-for="CourseType" class="control-label"></label>
+                    <input id="CorseType" value="@Model.CourseType" class="form-control" />
+                    <span asp-validation-for="CourseType" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="form-group" hidden>
+                    <label asp-for="CreatedDate" class="control-label"></label>
+                    <input id="CreatedDate" value="@Model.CreatedDate" class="form-control" />
+                    <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="CreatedBy" class="control-label"></label>
+                    <input id="CreatedBy" value="@Model.CreatedBy" class="form-control" />
+                    <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="ModifiedDate" class="control-label"></label>
+                    <input id="ModifiedDate" value="@Model.ModifiedDate" class="form-control" />
+                    <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+                </div>
+                <div class="form-group" hidden>
+                    <label asp-for="ModifiedBy" class="control-label"></label>
+                    <input id="ModifiedBy" value="@Model.ModifiedBy" class="form-control" />
+                    <span asp-validation-for="ModifiedBy" class="text-danger"></span>
+                </div>*@
+            <div class="form-group form-check" hidden>
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="isActive" /> @Html.DisplayNameFor(model => model.isActive)
+                </label>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+
+    <a href="@Url.Action("Index")" class="badge badge-primary">@AppResource.BackToList</a>
+</div>
+
+@section Scripts {
+    @{ Html.RenderPartial("_ValidationScriptsPartial");}
+}

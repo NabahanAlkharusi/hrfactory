@@ -1,0 +1,68 @@
+﻿@using HumanResourceHelth.Model.Resources
+@*@inject LocalizationService LocalizationService*@
+
+@model IEnumerable<HumanResourceHelth.Model.ViewModels.CoursesViewModel>
+
+@{
+    ViewData["Title"] = "All Courses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/assets/TrCss/SomePart.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="~/assets/TrCss/CoursCard.css" rel="stylesheet" />
+<link href="~/assets/TrCss/slider.css" rel="stylesheet" />
+
+<div class="container">
+    <center class="mt-lg-5">
+        <h1>
+            @HumanResourceHelth.Model.Resources.AppResource.SelectCourse
+
+        </h1>
+        <br />
+    </center>
+
+    <div class="row">
+        <div class="col-md-12">
+            <center>
+
+
+                <div class="cours-card">
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="slide card" style="padding: 0px;">
+
+                            <a href="@Url.Action("CourseDetails","TrainingHome",new { CID=@item.Courses.CourseID})">
+                                <div style="width: 100%; height: 100%;">
+                                    <img class="imgSlide" height="150" src='~/Images/coursesAvatar/@item.Courses.Avatar'>
+                                    <img src="~/Images/TrainerAvatar/@item.Trainers.TrainerAvatar" class="rounded-circle avatar">
+
+                                    <div class="Course-info">
+                                        <p class="text-grey-2">@item.Trainers.TrainerName</p>
+
+                                        <h5 class="CourseName">
+                                            @Html.DisplayFor(modelItem => item.Courses.CourseName)
+                                        </h5>
+                                    </div>
+                                    <div class="slide-footer mt-4">
+                                        <span class="pull-right text-orange pr-2">
+                                            @Html.DisplayFor(modelItem => item.Courses.CoursePrice)
+                                        </span>
+                                        <span class="pull-left pl-2">
+                                            <i class="fa fa-user text-grey-2"></i>
+                                            <i class="fa fa-comment text-grey-2"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                    }
+
+                </div>
+            </center>
+        </div>
+    </div>
+</div>
+

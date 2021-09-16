@@ -1,0 +1,90 @@
+﻿@using HumanResourceHelth.Model
+@model HumanResourceHelth.Web.Data.SectionViewModel
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+
+        <div class="panel-body">
+
+
+            <fieldset>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>@Resources.General.Title</label>
+                        <div>
+                            <input type="text" id="txtTitle" class="form-control" value="@Model.Title">
+                        </div>
+                    </div>
+                </div>
+                @if (((User)Session["User"]).IsAdmin)
+                {
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>@Resources.General.Description</label>
+                            <div>
+                                @*<input type="text" maxlength="50" id="txtDescription" class="form-control" value="@Model.Description">*@
+                                <textarea id="txtDescription" class="form-control">@Model.Description</textarea>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>@Resources.General.Section</label>
+                        <div>
+                            <select class="form-control" id="SectionId">
+                                <option value="Null">@Resources.General.Select</option>
+
+
+                                @foreach (Section item in Model.Sections)
+                                {
+
+
+                                    <option value="@item.Id">@item.Title</option>
+
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input id="btnSave" type="button" class="btn btn-primary" value="@Resources.General.Save" />
+                        <a href="@Url.Action("Index")" class="btn btn-primary">@Resources.General.Back</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnSave").on("click", function () {
+        var title = $("#txtTitle").val();
+        @if (((User)Session["User"]).IsAdmin)
+        {
+            <text>var description = $("#txtDescription").val(); </text>
+        }
+        else
+        {
+            <text>var description = ""; </text>
+        }
+        var parenId = $("#SectionId").val();
+        $.ajax({
+            url: "@Url.Action("Save", "Section")",
+            data: { title: title, description: description, parenId: parenId},
+            type: "GET",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    });
+</script>
+

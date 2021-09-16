@@ -1,0 +1,1 @@
+﻿positionForPages[18]=[{word:"HR Health",left:0.075806,top:0.036211,width:0.426578,height:0.034960},{word:"Check",left:0.079598,top:0.037602,width:0.511186,height:0.037361}];

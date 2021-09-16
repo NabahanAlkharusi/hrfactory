@@ -1,0 +1,34 @@
+﻿@using HumanResourceHelth.Model.Resources
+@model HumanResourceHelth.Model.Specialties
+
+@{
+    ViewData["Title"] = AppResource.Delete;
+        Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+
+<h1>
+    @AppResource.Delete
+</h1>
+
+<h3>@AppResource.sure</h3>
+<div>
+    <h4>
+        @AppResource.Specialties
+    </h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SpecialtyName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SpecialtyName)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SpecialtyID" />
+        <input type="submit" value="@AppResource.Delete" class="btn btn-danger" /> |
+        <a href="@Url.Action("Index")">@AppResource.BackToList</a>
+    </form>
+</div>

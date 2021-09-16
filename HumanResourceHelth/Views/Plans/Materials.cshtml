@@ -1,0 +1,29 @@
+﻿@model DirectoryInfo[]
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    string plan = ViewBag.Plan;
+}
+<br />
+<br />
+@foreach (DirectoryInfo directoryInfo in Model)
+{
+    <div class="col col-md-4">
+        <h4>@directoryInfo.Name</h4>
+    </div>
+
+    foreach (FileInfo file in directoryInfo.GetFiles())
+    {
+        <div class="col col-md-4">
+            <a href="@Url.Content(string.Format("~/Areas/plansData/{0}/Categories{1}/{2}/{3}",plan, ViewBag.Lang , directoryInfo.Name, file.Name))" download>@file.Name</a>
+        </div>
+    }
+    <div class="col col-md-4">
+        <hr />
+    </div>
+
+
+}
+<br />
+<br />

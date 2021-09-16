@@ -1,0 +1,105 @@
+﻿@using HumanResourceHelth.Model
+@model Section
+
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet" defer>
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js" defer></script>
+<div class="row">
+    <button type="button" class="btn btn-danger" onclick="deleteSection(@(Model.Id))">Delete Section</button>&nbsp;
+    @if (Model.IsActive)
+    {
+        <button type="button" class="btn btn-warning" id="btnActivate" onclick="activateSection(@(Model.Id))">Dectivate Section</button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-success" id="btnActivate" onclick="activateSection(@(Model.Id))">Activate Section</button>
+    }
+    @*<input type="checkbox" onchange="activateSection(@(Model.Id))" data-toggle="toggle" data-on="Activated" data-off="Dectivated" id="chk" name="isForPriview" class="form-control checkbox" value="true" checked />*@
+
+</div>
+<div class="row">
+    <div class="form-group col-md-10">
+        <label>Title</label>
+        <div>
+            <input type="text" id="txtTitle" class="form-control" value="@Model.Title">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-md-10">
+        <label>Description</label>
+        <div>
+            <input type="text" id="txtDescription" class="form-control" value="@Model.Description">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <textarea name="editor1">@Model.Content</textarea>
+    <script>
+        CKEDITOR.replace('editor1', {
+            extraPlugins: 'editorplaceholder',
+            editorplaceholder: 'Start typing here Hello...',
+        });
+    </script>
+</div>
+
+<div class="row">
+    <button id="btnSaveSection" class="btn btn-primary">
+        Save
+    </button>
+</div>
+<script>
+    $("#btnSaveSection").on("click", function () {
+        var content = CKEDITOR.instances['editor1'].getData();
+        $.ajax({
+            url: "@Url.Action("SaveContent", "Builder")",
+            data: {
+                'sectionId': @Model.Id, 'title': $("#txtTitle").val(), 'description': $("#txtDescription").val(), 'content': content },
+            type: "GET",
+            success: function () {
+                toastr.success("Success")
+            },
+            error: function () {
+                toastr.error("Error");
+            }
+        });
+    });
+</script>
+
+<script>
+    function activateSection(sectionId) {
+        var isActive = false;
+        if ($("#btnActivate").html() == "Activate Section")
+            isActive = true;
+        else
+            isActive = false;
+
+
+        $.ajax({
+            url: "@Url.Action("Activate", "Builder")",
+            data: { sectionId: sectionId, isActive: isActive },
+            type: "GET",
+            success: function () {
+                if (isActive) {
+                    toastr.success("@Resources.General.SectionActivated")
+                    $("#btnActivate").html("Dectivate Section");
+
+                    $("#btnActivate").addClass("btn-warning");
+                    $("#btnActivate").removeClass("btn-success");
+
+                }
+                else {
+                    toastr.warning("@Resources.General.SectionDeactivated")
+                    $("#btnActivate").html("Activate Section");
+
+                    $("#btnActivate").addClass("btn-success");
+                    $("#btnActivate").removeClass("btn-warning");
+
+                }
+
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    };
+</script>

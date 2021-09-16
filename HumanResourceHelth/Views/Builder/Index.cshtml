@@ -1,0 +1,93 @@
+﻿@model HumanResourceHelth.Model.User
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<br />
+<div class="col-12">
+
+    <label>@Resources.General.ChooseLogo </label>
+    <input type="file" id="fileLogo" />
+    <button id="btnUploadLogo" type="button">@Resources.General.Upload</button>
+    @if (Session["UserId"] != null)
+    {
+        int userId = (int)Session["UserId"];
+        if (File.Exists(Server.MapPath("~/CompanyLogo/" + userId + ".png")))
+        {
+            <img style="margin-left:10px;" width="100" id="imgLogo" src="@Url.Content(string.Format("~/CompanyLogo/{0}.png", userId))"  />
+        }
+        else
+        {
+            <img id="imgLogo" src="@Url.Content("~/CompanyLogo/default.png")" width="100" />
+        }
+    }
+</div>
+<div class="col-5">
+    @{
+        string documentName;
+        if (Session["lang"].ToString() == "en-US")
+        {
+            documentName = Model.DocumentName;
+        }
+        else
+        {
+            documentName = Model.DocumentNameAr;
+        }
+
+    }
+    <label>@Resources.General.DocumentName</label>
+    <input type="text" id="txtDocName" class="form-control" value="@documentName" />
+</div>
+<br />
+<div class=" col-12">
+    <button id="btnSave" class="btn btn-primary">@Resources.General.Next</button>
+</div>
+<br />
+<br />
+
+<script>
+    $("#btnUploadLogo").on("click", function () {
+        var myForm = new FormData();
+        var fileUpload = $("#fileLogo")[0].files[0];
+        myForm.append("Logo", fileUpload);
+
+        $.ajax({
+            url: '@Url.Action("UploadLogo", "Section")',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            sync: false,
+            data: myForm ,
+            success: function (result) {
+                toastr.success("Logo Saved Successffly")
+                $(".fileUpload").val('');
+                d = new Date();
+                $("#imgLogo").attr("src", "@Url.Content(string.Format("~/CompanyLogo/{0}.png?",((int)Session["UserId"]).ToString()))" + d.getTime());
+            },
+            error: function (err) {
+                toastr.error("Error");
+                $(".fileUpload").val('');
+            }
+        });
+    });
+</script>
+<script>
+    $("#btnSave").on("click", function () {
+        if ($("#txtDocName").val() == "") {
+            toastr.error("@Resources.General.RequiredDocumentName");
+            return;
+        }
+        $.ajax({
+            url: '@Url.Action("SaveDocName", "Builder")',
+            data: { "docName": $("#txtDocName").val() },
+            success: function () {
+                window.location = "@Url.Action("Index","Section")";
+            },
+            error: function (err) {
+                toastr.error("Error");
+                $(".fileUpload").val('');
+            }
+        });
+    });
+</script>
+

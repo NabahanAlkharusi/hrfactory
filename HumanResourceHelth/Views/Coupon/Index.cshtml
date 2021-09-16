@@ -1,0 +1,133 @@
+﻿@using System.Threading
+@using HumanResourceHelth.Model.Resources
+
+@model IEnumerable<HumanResourceHelth.Model.Coupons>
+
+@{
+    ViewData["Title"] = AppResource.Coupons;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+}
+@{
+    var dir = "ltr";
+    var alignclass = "pull-left";
+}
+@if (@Thread.CurrentThread.CurrentCulture.DisplayName.Contains("العربية"))
+{
+    dir = "rtl";
+    alignclass = "pull-right";
+}
+
+<div class="container">
+    <div class="panel panel-info" dir="@dir">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Coupons</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2 @alignclass">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Create")">
+                            @AppResource.Create
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th class="text-center">
+                            
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_code)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_discount_rate)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_stat)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_satrt_date)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_end_date)
+                        </th>
+                        <th class="text-center">
+                              @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_for)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().coupon_created_at)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+
+                                @Html.DisplayFor(modelItem => item.coupon_code)
+                            </td>
+                            <td class="text-center" dir="@dir">
+                                @Html.DisplayFor(modelItem => item.coupon_discount_rate)
+                            </td>
+                            <td class="text-center">
+                                @{ 
+                                    var t = Html.DisplayFor(modelItem => item.coupon_stat).ToString();
+                                    var text = HumanResourceHelth.Model.Resources.Coupons.Coupons.InActiveCoupon;
+                                }
+                                @if (t == "1")
+                                {
+                                    text = HumanResourceHelth.Model.Resources.Coupons.Coupons.ActiveCoupon;
+                                }
+                                @text
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.coupon_satrt_date)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.coupon_end_date)
+                            </td>
+                            <td class="text-center">
+                                @{
+                                    var CouponFor = Html.DisplayFor(modelItem => item.coupon_for);
+                                    var CouponForText = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO1;
+
+
+                                }
+                                @if (CouponFor.ToString() == "2")
+                                {
+                                    CouponForText = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO2;
+                                }
+                                @if (CouponFor.ToString() == "3")
+                                {
+                                    CouponForText = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO3;
+                                }
+                                @if (CouponFor.ToString() == "4")
+                                {
+                                    CouponForText = HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponForPromptDDO4;
+                                }
+                                @CouponForText
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.coupon_created_at)
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink(HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponListEdit, "Edit", new { id = item.ID }) |
+                                
+                                @Html.ActionLink(HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponListDelete, "Delete", new { id = item.ID })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

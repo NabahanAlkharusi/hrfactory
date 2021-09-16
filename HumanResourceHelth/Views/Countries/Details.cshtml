@@ -1,0 +1,32 @@
+﻿@model HumanResourceHelth.Model.Countries
+
+@{
+    ViewData["Title"] = "Details";
+            Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Countries</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CountryNameAr)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CountryNameAr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CountryNameEn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CountryNameEn)
+        </dd>
+    </dl>
+</div>
+<div>
+    
+    <a href="@Url.Action("Edit",new { id=Model.CountryID})">Edit</a>
+    <a href="@Url.Action("Index")">BackToList</a>
+</div>

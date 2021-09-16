@@ -1,0 +1,264 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@*@inject LocalizationService LocalizationService*@
+
+@model IEnumerable<HumanResourceHelth.Model.Attachments>
+
+@{
+    ViewData["Title"] = "Course content";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userReviews = (List<HumanResourceHelth.Model.UserReview>)ViewBag.reviewDetails;
+}
+<link href="~/assets/TrCss/SomePart.css" rel="stylesheet" />
+<link href="~/assets/TrCss/StarCount.css" rel="stylesheet" />
+
+<script type="text/javascript">
+    function Renderframe(theURL,AttachID) {
+
+        document.getElementById("Hriframe").src = theURL;
+
+        var url =  "@Url.Action("UpdateViewDetails", "TrainingHome")";
+        $.post(url, { AttachID: AttachID }, function (result, status) {
+
+            if (status == "success") {
+                $(".progress-bar").css('width', result+'%')
+
+            }
+        });
+    }
+
+</script>
+
+<div class="container">
+    <div class="row">
+        @*<div class="col-sm-8 first-column">*@
+        @*<div class="row">*@
+        <div class="col-xl-8 col-md-12 col-12 mt-3">
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" id="Hriframe"
+                        src="@ViewBag.IntroVideo"
+                        allowfullscreen></iframe>
+            </div>
+            <br />
+            <div class="progress">
+                @{ string prgBar = ViewBag.Viewpercentage + "%";}
+                <div class="progress-bar" id="progressbar" role="progressbar" style="width:@prgBar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-12 col-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h3>
+                        @AppResource.Videos
+
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead hidden>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.AttachName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.AttachType)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.ExternalLink)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Isfree)
+                                </th>
+
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Course)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (item.AttachType == "youtube" || item.AttachType == "vimeo")
+                                {
+                                    <tr>
+                                        <td>
+                                            <a style="cursor: pointer; " onclick='Renderframe("@item.ExternalLink","@item.AttachID");'>
+                                                <b> @item.AttachName</b>
+                                            </a>
+
+                                            <br />
+                                            <small class="text-grey-2">
+                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            </small>
+                                        </td>
+                                        <td hidden>
+                                            @Html.DisplayFor(modelItem => item.AttachType)
+                                            <i class="fa fa-youtube-play"></i>
+                                        </td>
+                                        <td>@item.AttachType</td>
+
+                                        <td hidden>
+                                            @{
+                                                if (item.AttachType == "youtube" || item.AttachType == "vimeo")
+                                                {
+                                                    <iframe width="80" height="80"
+                                                            src="@item.ExternalLink"
+                                                            frameborder="0"
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.FilePath)
+
+                                                }
+                                            }
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-xl-7 col-md-12 col-12 ">
+
+            <div class="p-3 m-3">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"> @AppResource.Attachments</a>
+                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> @AppResource.Comments</a>
+                        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> @AppResource.instructors</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+
+                        <table>
+                            @foreach (var item in Model)
+                            {
+                                if (item.AttachType == "PDF" || item.AttachType == "docx")
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="~/CoursesAttachments/@item.FilePath" style="cursor: pointer; " onclick='Renderframe("@item.ExternalLink");'>
+                                                <b> @item.AttachName</b>
+                                            </a>
+
+                                            <br />
+                                            <small class="text-grey-2">
+                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("GetBlobDownload", "TrainingHome", new { link =item.FilePath })">
+                                                @*@AppResource.Download*@
+                                                Download
+                                                <i class="fa fa-download"></i>
+                                            </a>
+
+
+                                        </td>
+                                        <td>@item.AttachType</td>
+
+
+                                    </tr>
+                                }
+                            }
+                        </table>
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                </div>
+
+                <hr class="Hr-copy border-info mt-lg-5" />
+
+                <div name="userReview" class="card-deck">
+                    @foreach (var item in userReviews)
+                    {
+                        <div class="alert alert-info width-full">
+                            @item.ReviewUser :
+                            @item.ReviewText
+                            <br />
+                            @for (int i = 0; i < @item.FeedBackCount; i++)
+                            {
+                                <input checked="" class="sr-only" style="color:#000!important" type="radio" disabled />
+                                <label class="radio-star" style="color:#000!important; font-size:16px;" disabled></label>
+                            }
+                        </div><br />
+                    }
+                </div>
+                <div id="Review">
+                    <textarea id="Review" class="form-control" placeholder="Review" rows="3" cols="50" required></textarea>
+
+                </div>
+                <br />
+                <div class="radio-stars">
+                    <input class="sr-only" id="radio-5" name="radio-star" type="radio" value="5" required />
+                    <label class="radio-star" for="radio-5">5</label>
+                    <input class="sr-only" id="radio-4" name="radio-star" type="radio" value="4" />
+                    <label class="radio-star" for="radio-4">4</label>
+                    <input class="sr-only" id="radio-3" name="radio-star" type="radio" value="3" />
+                    <label class="radio-star" for="radio-3">3</label>
+                    <input class="sr-only" id="radio-2" name="radio-star" type="radio" value="2" />
+                    <label class="radio-star" for="radio-2">2</label>
+                    <input class="sr-only" id="radio-1" name="radio-star" type="radio" value="1" required />
+                    <label class="radio-star" for="radio-1">1</label>
+                    <span id="Sp_startotal" class="radio-star-total"></span>
+                </div>
+                <br />
+                <input id="btnSend" type="button" class="btn btn-primary"
+                       value=" @AppResource.Save"
+                       onclick="SubmitFeedBack()" />
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SubmitFeedBack() {
+        var url = "@Url.Action("UpdateReview", "TrainingHome")";
+        var courseID = "@ViewBag.CourseID"
+        var reviewText = $("textarea#Review").val();
+        var radioStar = $("input[name='radio-star']:checked").val();
+        if (reviewText.length == 0) {
+            alert("Please write your comment first");
+            return false;
+        }
+
+        if (radioStar == undefined || radioStar == 0) {
+            alert("Please specify the number of stars");
+            return false;
+        }
+        var startotal = $("Sp_startotal").css("content"); // $('startotal').val(); // document.getElementById('').innerHTML;
+
+       // var feedBackcnt = $('input[name=star]:checked').val(); // $("input[name=star").val();
+        $.post(url, { reviewText: reviewText, starCount: radioStar, courseID: courseID }, function (result, status) {
+
+            if (status == "success") {
+                location.reload();
+                $("textarea#Review").prop('disabled', true)
+                $("textarea#Review").prop('text', "")
+                $("button#btnSend").prop('disabled', true)
+            }
+        });
+
+    }
+</script>

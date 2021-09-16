@@ -1,0 +1,130 @@
+﻿@model HumanResourceHelth.Model.Coupons
+@using HumanResourceHelth.Model.Resources
+@using System.Threading
+
+@{
+    ViewBag.Title = AppResource.Delete;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var dir = "ltr";
+    var alignclass = "pull-left";
+    var buttonalignclass = "col-md-offset-10 col-md-2";
+}
+@if (@Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    alignclass = "pull-right";
+    buttonalignclass = "col-md-2";
+}
+
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @AppResource.EditCoupon</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2 @alignclass">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Index")">
+                            @HumanResourceHelth.Model.Resources.Coupons.Coupons.ShowAllList
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <h2>@AppResource.Delete</h2>
+
+            <h3>@HumanResourceHelth.Model.Resources.Coupons.Coupons.DeleteCoupon</h3>
+            <div>
+
+                <hr />
+                <div class="table-responsive-sm">
+                    <div class="col-6 col-lg-offset-6">
+                        <table class="table text-center table-bordered">
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_code)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_code)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_discount_rate)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_discount_rate)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_stat)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_stat)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_satrt_date)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_satrt_date)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_end_date)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_end_date)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_for)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_for)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-center">
+                                    @Html.DisplayNameFor(model => model.coupon_created_at)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(model => model.coupon_created_at)
+                                </td>
+
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="form-actions no-color @buttonalignclass">
+                            <input type="submit" value="@AppResource.Delete" class="btn btn-warning" /> |
+                            @Html.ActionLink(HumanResourceHelth.Model.Resources.Coupons.Coupons.BackToList, "Index")
+                        </div>
+                    }
+                </div>
+
+            </div>
+    </div>
+</div>

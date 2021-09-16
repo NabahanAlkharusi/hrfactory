@@ -1,0 +1,44 @@
+﻿@using HumanResourceHelth.Model.Resources
+@model HumanResourceHelth.Model.HrSetting
+
+@{
+    ViewData["Title"] = "HrSetting";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> HrSetting </h1>
+               
+            </div>
+        </div>
+        <div class="panel-body">
+            <h4>Learn Online</h4>
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            @Html.DisplayNameFor(model => model.LearnOnlineVideo)
+                        </dt>
+                        <dd class="col-sm-9 ">
+                                <iframe src="@Model.LearnOnlineVideo" width="300" height="200" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                        </dd>
+                        </dl>
+            <br />
+            <dl class="row">
+
+                <dt class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.LearnOnlineText)
+                </dt>
+                <dd class="col-sm-9  ">
+                    @Html.DisplayFor(model => model.LearnOnlineText)
+                </dd>
+            </dl>
+</div>
+                <div class=" panel-footer ">
+                    <a href="@Url.Action("Edit",new { id=Model.ID})" class="btn btn-warning">@AppResource.Edit</a> |
+                    <a href="../admin">@AppResource.BackToList</a>
+                </div>
+            </div>
+        </div>
+

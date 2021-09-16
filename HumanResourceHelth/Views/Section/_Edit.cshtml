@@ -1,0 +1,101 @@
+﻿@using HumanResourceHelth.Model
+@model Section
+@{ var dir = "ltr";
+    var alignText = "text-left";}
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    alignText = "text-right";
+}
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<div class="row @alignText" dir="@dir">
+    <div class="form-group col-md-12">
+        <label>
+            @Resources.General.Title
+            @if (!((User)Session["User"]).IsAdmin)
+            {
+<a href="#" class="text-blue" data-toggle="modal" data-target="#explainModal">@Resources.General.Explain</a>            }
+        </label>
+        <input type="text" id="txtTitle" class="form-control" value="@Model.Title">
+    </div>
+    @if (((User)Session["User"]).IsAdmin)
+    {
+<div class="form-group col-md-12">
+    <label>@Resources.General.Explain</label>
+    @*<input type="text" id="txtDescription" class="form-control" value="@Model.Description">*@
+    <textarea id="txtDescription" class="form-control">@Model.Description</textarea>
+</div>}
+    <div class="form-group col-md-12">
+        Show In New Page
+        @if (Model.IsHaveLineBefore == true)
+        {
+<input type="checkbox" id="ckhIsNewPage" checked /> }
+            else
+            {
+<input type="checkbox" id="ckhIsNewPage" />}
+
+    </div>
+    <div class="form-group col-md-12">
+        <label>@Resources.General.Details</label>
+        <textarea name="editor1">@Model.Content</textarea>
+        <script>
+            CKEDITOR.replace('editor1', {
+                extraPlugins: 'editorplaceholder',
+                editorplaceholder: 'Start typing here Hello...',
+            });
+        </script>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="form-group col-md-12">
+        <button id="btnSaveSection" class="btn btn-primary">
+            @Resources.General.Save
+        </button>
+    </div>
+</div>
+
+<div class="modal fade" id="explainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
+    <div class="modal-dialog" role="document" style="max-width: max-content">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="changeImageModalLabel">@Resources.General.Explain</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Model.Description
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#btnSaveSection").on("click", function () {
+        var content = CKEDITOR.instances['editor1'].getData();
+        var isNewPage = false;
+        if ($("#ckhIsNewPage").prop('checked') == true){
+            isNewPage = true;
+        }
+
+
+        $.ajax({
+            url: "@Url.Action("SaveContent", "Section")",
+            data: {
+                'sectionId': @Model.Id, 'title': $("#txtTitle").val(), 'description': $("#txtDescription").val(), 'content': content, 'isNewPage': isNewPage },
+            type: "POST",
+            sync: false,
+            success: function () {
+                toastr.success("Success")
+            },
+            error: function () {
+                toastr.error("Error");
+            }
+        });
+    });
+</script>
+

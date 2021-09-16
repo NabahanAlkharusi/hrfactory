@@ -1,0 +1,27 @@
+﻿@using HumanResourceHelth.Model
+@model List<Survey>
+@{
+    ViewBag.Title = "List";
+}
+<table class="table-striped">
+    <thead>
+        <tr>
+            <td>#</td>
+            <td>Health Check Date</td>
+            <td>Final Result</td>
+            <td>Details</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Survey survey in Model)
+        {
+            <tr>
+                <td>#</td>
+                <td>Health Check Date</td>
+                <td>Final Result</td>
+                <td>Details</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

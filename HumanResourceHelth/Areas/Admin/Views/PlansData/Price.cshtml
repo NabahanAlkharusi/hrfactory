@@ -1,0 +1,45 @@
+﻿@using HumanResourceHelth.Model
+@model Plan
+@{
+    ViewBag.Title = "Price";
+}
+
+<div class="row">
+    <div class="col col-md-1">
+        Annual Price
+    </div>
+    <div class="col col-md-4">
+        <input type="number" id="txtAnnualPrice" value="@Model.AnnualPrice" class="form-control" />
+    </div>
+    <div class="col col-md-1">
+        Monthly Price
+    </div>
+    <div class="col col-md-4">
+        <input type="number" id="txtMonthlyPrice" value="@Model.ManthlyPrice" class="form-control" />
+    </div>
+    <div class="col col-md-2">
+        <input type="button" id="btnSave" value="Save" class="btn btn-primary" />
+    </div>
+</div>
+<script>
+    $("#btnSave").on("click", function () {
+        debugger;
+        var planId = @Model.Id;
+        var annualPrice = $("#txtAnnualPrice").val();
+        var monthlyPrice = $("#txtMonthlyPrice").val();;
+        $.ajax({
+            url: "@Url.Action("SavePrice", "PlansData")",
+            data: { planId: planId, annualPrice: annualPrice, monthlyPrice: monthlyPrice},
+            type: "GET",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    });
+
+
+</script>
+

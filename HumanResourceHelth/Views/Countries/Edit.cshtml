@@ -1,0 +1,39 @@
+﻿@model HumanResourceHelth.Model.Countries
+
+@{
+    ViewData["Title"] = "Edit";
+            Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Countries</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CountryID" />
+            <div class="form-group">
+                @Html.LabelFor(m=>m.CountryNameAr,new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CountryNameAr, new { @class = "form-control" })
+               @Html.ValidationMessageFor(m => m.CountryNameAr)
+                
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CountryNameEn, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CountryNameEn, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CountryNameEn)
+               
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index")">BackToList</a>
+</div>
+

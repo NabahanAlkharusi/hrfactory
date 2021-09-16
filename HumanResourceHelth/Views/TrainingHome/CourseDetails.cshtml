@@ -1,0 +1,277 @@
+﻿@using HumanResourceHelth.Model.Resources
+@*@inject LocalizationService LocalizationService*@
+
+
+@model HumanResourceHelth.Model.Courses
+
+@{
+    ViewData["Title"] = "CourseDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userReviews = (List<HumanResourceHelth.Model.UserReview>)ViewBag.reviewDetails;
+}
+@{ var dir = "ltr";
+    var textAlign = "text-left";
+    var pullAlign = "pull-left"; }
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    textAlign = "text-right";
+    pullAlign = "pull-right";
+}
+<style>
+    .first-column {
+        /*box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.26);*/
+    }
+
+    .second-column {
+        /*border-style:groove;
+            border-width: 1px;*/
+    }
+</style>
+<link href="~/assets/TrCss/SomePart.css" rel="stylesheet" />
+<link href="~/assets/TrCss/StarCount.css" rel="stylesheet" />
+
+
+<main role="main">
+
+    <section class="jumbotron "
+             style="background-image: url('../../assets/TrCss/img/girl.jpg');
+          background-repeat:no-repeat; background-size:cover;
+          background-position:center center; min-height:30vw; border-top:3px solid orange!important">
+        <div class="container">
+            <h1 class="jumbotron-heading text-white">
+                HR Learning
+            </h1>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 first-column">
+                <h2>
+                    @Html.DisplayFor(model => model.CourseName)
+                </h2>
+
+                <div class="row">
+                    <div class="col-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active">
+                                    <img class="rounded border-radius-100"
+                                         src="~/Images/TrainerAvatar/@ViewBag.TrainerAvatar" height="60" />
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewBag.TrainerName
+                                </li>
+                                @*<li class="breadcrumb-item active">
+                                        <label>@ViewBag.SpecialtyName</label>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Review
+                                    </li>*@
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="@Model.IntroVideo"
+                                    allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="p-3 m-3">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"> @AppResource.CourseContents</a>
+                                    <a class="nav-item nav-link" id="userReviews-tab" data-toggle="tab" href="#userReviews" role="tab" aria-controls="userReviews" aria-selected="false"> @AppResource.Reviews</a>
+                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> @AppResource.instructors</a>
+                                </div>
+                            </nav>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                    <dl>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Requirements)
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Requirements)
+                                        </dd>
+                                        <dt>
+                                            @Html.DisplayNameFor(model => model.Description)
+                                        </dt>
+                                        <dd>
+                                            @Html.DisplayFor(model => model.Description)
+                                        </dd>
+
+                                    </dl>
+                                </div>
+                                <div class="tab-pane fade" id="userReviews" role="tabpanel" aria-labelledby="userReviews-tab">
+                                    <div name="userReview" class="card-deck">
+                                        @foreach (var item in userReviews)
+                                        {
+                                            <div class="alert alert-info width-full">
+                                                @item.ReviewUser :
+                                                @item.ReviewText
+                                                <br />
+                                                @for (int i = 0; i < @item.FeedBackCount; i++)
+                                                {
+                                                    <input checked="" class="sr-only" style="color:#000!important" type="radio" disabled />
+                                                    <label class="radio-star" style="color:#000!important; font-size:16px;" disabled></label>
+                                                }
+                                            </div><br />
+                                        }
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <img class="rounded border-radius-100"
+                                                 src="~/Images/TrainerAvatar/@ViewBag.TrainerAvatar" height="60" />
+                                        </li>
+                                        <li class="breadcrumb-item">
+                                            @ViewBag.TrainerName
+                                        </li>
+                                        <li>
+                                            @ViewBag.TrainerBio
+                                        </li>
+                                    </ol>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" hidden>
+                    <div class="col-md-6">
+                        <label class="btn background-brown-1 text-white ">Instructor Bio</label>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+            <div class="col-sm-3 group_ov_hidden second-column">
+                <div class="row">
+                    <div class="col-12">
+                        <caption><h2> @AppResource.AllCourses</h2></caption>
+
+                        <table>
+                            <tbody>
+                                @foreach (var Course in (IEnumerable<HumanResourceHelth.Model.Courses>)TempData["Courses"])
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("CourseDetails",new {CID=@Course.CourseID })">
+
+                                                @Course.CourseName
+                                            </a>
+                                        </td>
+                                        <td>@Course.CoursePrice</td>
+
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-lg-5">
+                    <div class="col-12">
+                        <h2>
+                            @Html.DisplayFor(model => model.CourseName)
+                        </h2>
+                        <dl>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CoursePrice)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.CoursePrice)
+
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CourseDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.CourseDate)
+                            </dd>
+                        </dl>
+                        @{
+                            var hidden = "d-none";
+
+
+                        }
+                        @if (Convert.ToInt32(ViewBag.CoursePrice) > 0)
+                        {
+                            hidden = "";
+                        }
+                        <div class="row pull-right padding-bottom-22px col-md-12 @textAlign @hidden" dir="@dir">
+                            <div class="col-md-9 @pullAlign">
+                                <label for="CourseCouponCode" class="form-label">@HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCode</label>
+                                <input type="text" class="form-control" id="CourseCouponCode" aria-describedby="CourseCouponCodeMSG" onkeyup="getCouponDiscount('CourseCouponCode', 'CourseSubLink', '4',@ViewBag.CoursePrice)" required>
+                                <div id="CourseCouponCodeMSG" class="invalid-feedback d-none">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="CourseDiscountDiv" class="row @pullAlign padding-bottom-22px col-md-12 d-none @textAlign" dir="@dir">
+                            <div class="col-md-11 @pullAlign row">
+                                <label>@AppResource.PlanPriceCD</label>
+                                <label id="CoursePlanPriceCD" class="font-weight-700">55 </label>&nbsp;&nbsp; @AppResource.OMRCurrncy
+                            </div>
+                            <div class="col-md-11 @pullAlign row">
+                                <label>@AppResource.CouponDiscRateCD</label>
+                                <label id="CourseCouponDiscRateCD" class="font-weight-700">55 </label>
+                            </div>
+                            <div class="col-md-11 @pullAlign row">
+                                <label>@AppResource.PlanPriceAftDisCD</label>
+                                <label id="CoursePriceAftDisCD" class="font-weight-700">55 </label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+                            </div>
+                            <div class="col-md-11 @pullAlign row">
+                                <label>@AppResource.PlanPriceSaveCD</label>
+                                <label id="CoursePriceSaveCD" class="font-weight-700"><del> 55 </del></label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+
+                            </div>
+                        </div>
+
+                        @{
+                            if (ViewBag.checkPayment == 0 && Model.CoursePrice != 0 && Model.isfree == false)
+                            {
+                                <a id="CourseSubLink" href="@Url.Action("Learn", "Thawani",new {CID=Model.CourseID,Price=ViewBag.CoursePrice })" class="btn btn-success btn-lg ">
+                                    @AppResource.Buy
+                                    <i class="fa fa-play"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("CourseMaterial", "TrainingHome",new {CID=Model.CourseID })" class="btn btn-success btn-lg ">
+                                    @AppResource.Start
+                                    <i class="fa fa-play"></i>
+                                </a>
+                            }
+                        }
+
+
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</main>

@@ -1,0 +1,190 @@
+﻿@using HumanResourceHelth.Model
+@{ ViewBag.Title = "Index"; }
+
+@functions{ IHtmlString GetContent(int contentId)
+    {
+        string content = "";
+        List<Content> contents = (List<Content>)Session["Content"];
+        if ((string)Session["lang"] == "en-US")
+        {
+            content = contents.Where(x => x.Id == contentId).Single().EnglishText;
+            if (content.Trim() == "") content = "Please Insert Text";
+        }
+        else
+        {
+            content = contents.Where(x => x.Id == contentId).Single().ArabicText;
+            if (content.Trim() == "") content = "برجاء ادخال نص";
+        }
+
+        return Html.Raw(content);
+    } }
+@{ 
+    var dir = "ltr";    var pullText = "text-left";
+    var pullIcon = "text-right";    var checkInput = "pr-3";
+    var Checklable = "pl-3";}
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft){
+    dir = "rtl";
+    pullText = "text-right";
+    pullIcon = "text-left";
+    checkInput = "pl-4";
+    Checklable = "pr-4";
+}
+
+<div id="page-title" class="text-grey background-overlay " style="background-image: url('@Url.Content("~/assets/img/aboutus.jpg")');">
+    <div>
+        <div class="container padding-tb-185px z-index-2 position-relative">
+            <h1 class="font-weight-700 text-capitalize page-title-about cms" data-contentId="63">@GetContent(63)</h1>
+            <div class="row ">
+                <div class="col-lg-7">
+                    <h1 class="font-weight-700 pageSubTitle-about padding-tb-15px cms" data-contentId="64">@GetContent(64)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page title --->
+
+
+<section class="background-light-grey padding-tb-100px text-center" dir="@dir">
+    <div class="container">
+        <div class="row justify-content-md-center">
+
+            <div class="col-lg-4">
+                <div class="padding-30px background-white border-1 border-grey-1">
+                    <form>
+                        <div class="form-group @pullText" style="font-family: cairo">
+
+                            <label for="txtEmail" class="col-form-label"><strong> @Resources.General.Email</strong></label>
+                            <input type="email" class="form-control rounded-0" id="txtEmail" placeholder="@Resources.General.Email">
+                        </div>
+                        <div class="form-group @pullText">
+                            <label for="txtPassword" class="col-form-label"><strong>@Resources.General.Password</strong></label>
+                            <input type="password" class="form-control rounded-0" id="txtPassword" placeholder="@Resources.General.Password">
+                        </div>
+                        <div class="form-group @pullText">
+                            <div class="form-check font-weight-700">
+                                <label class="form-check-label">
+                                    <input class="form-check-input @checkInput" type="checkbox"> 
+                                    <span class="@Checklable">@Resources.General.RememberMe</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a href="#" id="btnSave" class="btn btn-primary btn-block rounded-0 background-main-color">@Resources.General.SignIn</a>
+                        </div>
+                    </form>
+                </div>
+               
+                <div class="padding-30px background-white border-1 border-grey-1 pb-0">
+                    <div class="form-group" dir="@dir">
+                        <div class="margin-bottom-20px margin-top-20px">
+                            <a href="@Url.Action("Register","Login")" class="btn btn-primary btn-block rounded-0 background-main-color"> <span class="text-uppercase @pullText">@Resources.General.SignUpNow</span><i class="fa fa-user margin-right-10px @pullIcon" aria-hidden="true"></i></a>
+                            <span class="d-block text-grey-2  mt-3 text-center">
+                                @Resources.General.BySigningUpYouAcceptOur
+                                <a href="#" class="text-blue" data-toggle="modal" data-target="#exampleModal">
+                                    @Resources.General.TermsOfService
+                                </a>
+                            </span>
+                        </div>
+
+                        <div class="border-grey-2 text-center">
+                            <a href="javascript:void(0)" id="lnkForgetPassword"><i class="fa fa-lock margin-right-10px" aria-hidden="true"></i> <strong class="text-uppercase">@Resources.General.RecoverMyPassword</strong></a>
+                            <span class="d-block"><a href="#" class="text-grey-2">@Resources.General.HaveYouFoundAnError</a></span>
+                        </div>
+                        @*<p class="text-grey-2 cms" data-contentId="65">@GetContent(65)</p>*@
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <!-- // row -->
+    </div>
+    <!-- // container -->
+</section>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title cms" data-contentId="66">@GetContent(66)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cms" data-contentId="67">@GetContent(67)</div>
+        </div>
+    </div>
+</div>
+
+
+
+@{ string referrer = "";
+    if (ViewBag.Referrer != null)
+    {
+        referrer = ViewBag.Referrer;
+    } }
+<script>
+    $("#btnSave").on("click", function () {
+        var email = $("#txtEmail").val();
+        var password = $("#txtPassword").val();
+        var referrer = "@(referrer)";
+        if (email == "") {
+            toastr.error("Please Enter Email");
+            return;
+        }
+
+        if (password === "") {
+            toastr.error("Please Enter Password");
+            return;
+        }
+        $.ajax({
+            url: "@Url.Action("Login", "Login")",
+            data: { "email": email, "password": password, "referrer": referrer },
+            type: "POST",
+            success: function (msg, msg2, msg3) {
+
+                if (msg3.statusText == "Survey")
+                    window.location = '@Url.Action("Index","Survey")';
+                else if (msg3.statusText == "WarmUp")
+                    window.location = '@Url.Action("WarmUp", "Plans")';
+                else if (msg3.statusText == "StartUp")
+                    window.location = '@Url.Action("StartUp", "Plans")';
+                else if (msg3.statusText == "ManualBuilder")
+                    window.location = '@Url.Action("ManualBuilder", "Plans")';
+                else if (msg3.statusText == "Section")
+                    window.location = '@Url.Action("Index", "Section")';
+                else
+                    window.location = '@Url.Action("Index","Home")';
+            },
+            error: function () {
+                toastr.error("User Name or Password not correct")
+            }
+        });
+    });
+
+    $("#lnkForgetPassword").on("click", function () {
+        if (!window.confirm('Are you sure you want to reset your password and send new password to your Email')) {
+            return;
+        }
+
+        var email = $("#txtEmail").val();
+
+        if (email === "") {
+            toastr.error("Please Enter Your Email");
+        }
+
+        $.ajax({
+            url: "@Url.Action("ForgetPassword", "Login")",
+            data: { "email": email },
+            success: function () {
+                toastr.success("Password Reset, Please Check your Email")
+            },
+            error: function (err, status, error) {
+                toastr.error(err.statusText)
+            }
+        })
+
+    });
+</script>

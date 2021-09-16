@@ -1,0 +1,124 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model HumanResourceHelth.Model.Trainers
+
+
+@{
+    ViewData["Title"] = AppResource.CreateTrainer;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.CreateTrainer</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a class="btn btn-sm btn-warning" href="@Url.Action("Index")">
+                            @AppResource.ShowAll
+                            <i class="fa  fa-list "></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body">
+
+            @using (Html.BeginForm("Create", "Trainers", FormMethod.Post, new
+            {
+                enctype = "multipart/form-data"
+            }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.TrainerID, new { htmlAttributes = new { @class = "form-control" } })
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TrainerName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TrainerName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TrainerName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SpecialtyID, "SpecialtyID", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(model => model.SpecialtyID, (SelectList)ViewBag.SpecialtiesList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SpecialtyID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TrainerBio, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.TrainerBio, 5, 30, htmlAttributes: new { style = "width: 100%; max-width: 100%;" })
+                            @Html.ValidationMessageFor(model => model.TrainerBio, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TrainerAvatar, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.TrainerAvatar, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <input id="TrainerAvatar" type="file" name="file" value="@Model.TrainerAvatar" class="form-control-file" />
+                            @Html.ValidationMessageFor(model => model.TrainerAvatar, "", new { @class = "text-danger" })
+
+                            <div class="img-bordered d-inline-block">
+                                @{
+                                    string imageDataURL = ""; }
+                                @{if (Model.TrainerAvatar != null && Model.TrainerAvatar != "")
+                                    {
+                                        imageDataURL = Model.TrainerAvatar;
+                                        <img src="~/Images/TrainerAvatar/@imageDataURL" id="preview" height="150" width="150"
+                                             class=" profile-img-container @(imageDataURL!= "" ? "show":"hidden")" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.isActive, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <div class="checkbox">
+                                @Html.EditorFor(model => model.isActive)
+                                @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                @AppResource.Save
+                                <i class="fa fa-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @*<div class="panel-footer">
+                    @Html.ActionLink(AppResource.BackToList, "Index")
+                </div>*@
+
+
+            <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+            </div>
+</div>
+</div>

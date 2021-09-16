@@ -1,0 +1,88 @@
+﻿@using HumanResourceHelth.Model
+@model HumanResourceHelth.Web.Data.SectionViewModel
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+<div class="col-md-12 col-sm-12 col-lg-12">
+    <div class="panel panel-inverse" data-sortable-id="index-1">
+        
+        <div class="panel-body">
+
+
+            <fieldset>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Title</label>
+                        <div>
+                            <input type="text" id="txtTitle" class="form-control" value="@Model.Title">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Description</label>
+                        <div>
+                            <input type="text" id="txtDescription" class="form-control" value="@Model.Description">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>Section</label>
+                        <div>
+                            <select class="form-control" id="SectionId">
+                                <option value="Null">Select</option>
+
+                                
+                                @foreach (Section item in Model.Sections)
+                                {
+                                    
+                                    
+                                        <option value="@item.Id">@item.Title</option>
+                                    
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <input id="btnSave" type="button" class="btn btn-primary" value="Save" />
+                        <a href="@Url.Action("Index")" class="btn btn-primary">Back</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script>
+    $("#btnSave").on("click", function () {
+        
+
+   
+
+   
+        var title = $("#txtTitle").val();
+        var description = $("#txtDescription").val();
+        var parenId = $("#SectionId").val();
+        $.ajax({
+            url: "@Url.Action("Save", "Builder")",
+            data: { title: title, description: description, parenId: parenId},
+            type: "GET",
+            success: function () {
+                toastr.success("Data Saved Successffly")
+            },
+            error: function () {
+                toastr.error("Error")
+            }
+        });
+    });
+
+    
+</script>
+

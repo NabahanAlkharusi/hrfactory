@@ -1,0 +1,25 @@
+﻿@model IEnumerable<HumanResourceHelth.Model.ViewModels.CoursesViewModel>
+
+<div class="container">
+    <h2 class="title">Trainers</h2>
+
+    <div class="fa-resistance">
+        <div id="cardColumns" class="card-columns ">
+
+            @foreach (var item in Model)
+            {
+                <div class='card  border-0'>
+                    <img class='card-img-top border-radius-90 img-thumbnail' width='60'
+                         src='~/Images/TrainerAvatar/@item.Trainers.TrainerAvatar' />
+                    <div class='card-body'>
+                        <h5 class='card-title'>@item.Trainers.TrainerName</h5>
+                        <p class='card-text'>@item.Trainers.TrainerBio</p>
+                    </div>
+                </div>
+
+
+            }
+
+</div>
+</div>
+</div>

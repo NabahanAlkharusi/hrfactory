@@ -1,0 +1,89 @@
+﻿@using HumanResourceHelth.Model.Resources
+
+@model HumanResourceHelth.Model.Pyments
+
+@{
+    ViewData["Title"] = "CheckOut";
+   //         Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CheckOut</h1>
+
+<h4>Pyments</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="@Url.Action("CheckOut")">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CourseID, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.CourseID, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.CourseID)
+              
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.UserID, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.UserID, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.UserID)
+               
+            </div>
+            <div class="form-group">
+                 @Html.LabelFor(m => m.PymentDate, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.PymentDate, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PymentDate)
+               
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Amount, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Amount, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Amount)
+             
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PaymentMethod, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.PaymentMethod, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PaymentMethod)
+              
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.cardname, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.cardname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.cardname)
+              
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.cardnumber, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.cardnumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.cardnumber)
+
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.expmonth, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.expmonth, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.expmonth)
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.expyear, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.expyear, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.expyear)
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.cvv, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.cvv, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.cvv)
+          
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index")">@AppResource.BackToList</a>
+</div>
+
