@@ -19,9 +19,12 @@
         return Html.Raw(content);
     } }
 @{ 
-    var dir = "ltr";    var pullText = "text-left";
-    var pullIcon = "text-right";    var checkInput = "pr-3";
-    var Checklable = "pl-3";}
+    var dir = "ltr";
+    var pullText = "text-left";
+    var pullIcon = "text-right";
+    var checkInput = "pr-3";
+    var Checklable = "pl-3";
+}
 @if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft){
     dir = "rtl";
     pullText = "text-right";
