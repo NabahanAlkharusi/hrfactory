@@ -309,6 +309,9 @@
   <data name="PerYear" xml:space="preserve">
     <value>Per Year</value>
   </data>
+  <data name="Plans" xml:space="preserve">
+    <value>My Plans</value>
+  </data>
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
   </data>

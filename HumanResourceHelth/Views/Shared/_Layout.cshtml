@@ -50,8 +50,6 @@
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/assets/css/flag-icon.min.css"></noscript>
     <!-- <link rel="stylesheet" href="~/assets/css/flag-icon.min.css"> -->
-
-
     @*<link rel="stylesheet" href="~/assets/css/skew.css">*@
     <!-- main style -->
     <link rel="preload" href="~/assets/css/flag-icon.min.css" as="style"
@@ -59,7 +57,7 @@
     <noscript><link rel="stylesheet" href="~/assets/css/flag-icon.min.css"></noscript>
     <link rel="stylesheet" href="~/assets/css/style.css">
     <!-- colors -->
-        <link rel="preload" href="~/assets/css/colors/main.css" as="style"
+    <link rel="preload" href="~/assets/css/colors/main.css" as="style"
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/assets/css/colors/main.css"></noscript>
     <!-- <link rel="stylesheet" href="~/assets/css/colors/main.css"> -->
@@ -69,11 +67,11 @@
     <noscript><link rel="stylesheet" href="~/assets/css/elegant_icon.css"></noscript>
     <!-- <link rel="stylesheet" href="~/assets/css/elegant_icon.css"> -->
     <!-- jquery  UI style  -->
-     <link rel="preload" href="~/Content/themes/base/jquery-ui.css" as="style"
+    <link rel="preload" href="~/Content/themes/base/jquery-ui.css" as="style"
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css"></noscript>
     <!-- <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" /> -->
-     <link rel="preload" href="~/Content/themes/base/jquery-ui.min.css" as="style"
+    <link rel="preload" href="~/Content/themes/base/jquery-ui.min.css" as="style"
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/Content/themes/base/jquery-ui.min.css"></noscript>
     <!-- <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" /> -->
@@ -89,7 +87,7 @@
     <script type="text/javascript" src="~/assets/js/jquery.gomap-1.3.3.min.js"></script>
     <script src="~/Scripts/jquery-gauge.min.js"></script>
     <script src="~/Scripts/toastr.min.js"></script>
-     <link rel="preload" href="~/Content/jquery-gauge.css" as="style"
+    <link rel="preload" href="~/Content/jquery-gauge.css" as="style"
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/Content/jquery-gauge.css"></noscript>
     <!-- <link href="~/Content/jquery-gauge.css" rel="stylesheet" /> -->
@@ -182,22 +180,22 @@
                                     if ((bool)Session["CMS"] == true)
                                     {
                                         <li class="list-inline-item"><a href="@Url.Action("DisableCms","Home")" style="color:lawngreen;">CMS</a></li>
- }
+                                    }
                                     else
                                     {
                                         <li class="list-inline-item"><a href="@Url.Action("EnableCms","Home")" style="color:lightgray;">CMS</a></li>
-}
+                                    }
                                 }
                             }
                             @if (Session["UserId"] == null || Session["User"] == null)
                             {
                                 <li class="list-inline-item  padding-right-10px"><a href="@Url.Action("Index","Login")"><i class="fa fa-lock padding-right-5px"></i>@Resources.General.Login</a></li>
- }
+                            }
                             else
                             {
                                 <li class="list-inline-item  padding-right-10px"><a href="@Url.Action("Logout","Login")"><i class="fa fa-lock padding-right-5px"></i>@Resources.General.Logout</a></li>
                                 <li class="list-inline-item"><a href="@Url.Action("UserProfile","Home")"><i class="fa fa-user-plus padding-right-5px"></i>@Resources.General.Welcome @(((HumanResourceHelth.Model.User)Session["User"]).Name)</a></li>
-}
+                            }
                         </ul>
                     </div>
                 </div>
@@ -211,7 +209,15 @@
                         <div class="float-lg-right">
                             <ul id="menu-main" class="float-lg-left nav-menu dropdown-dark">
                                 <li><a href="@Url.Action("Index","Home")">@Resources.General.Home</a></li>
-                                <li><a href="@(Url.Action("Index","Home"))#subscriptionPlans">@Resources.General.Subscribe</a> </li>
+                                @if (Session["UserId"] == null || Session["User"] == null)
+                                {
+                                    <li><a href="@(Url.Action("Index", "Home"))#subscriptionPlans">@Resources.General.Subscribe</a> </li>
+
+                                }
+                                else
+                                {
+                                    <li><a href="@(Url.Action("Index", "Home"))#subscriptionPlans">@Resources.General.Plans</a> </li>
+                                }
                                 <li><a href="@Url.Action("Index","TrainingHome")#learnOnline">@Resources.General.Learn</a> </li>
                                 <li><a href="@Url.Action("Index","Home")#consultHR">@Resources.General.Consult</a> </li>
                                 <li><a href="@Url.Action("AboutUs","Home")">@Resources.General.AboutUs</a> </li>
@@ -299,14 +305,14 @@
 
 
     <!--  <script type="text/javascript" src="~/assets/js/numscroller-1.0.js"></script> -->
-    <script type="text/javascript" src="~/assets/js/sticky-sidebar.js" ></script>
-    <script type="text/javascript" src="~/assets/js/YouTubePopUp.jquery.js" ></script>
-    <script type="text/javascript" src="~/assets/js/owl.carousel.min.js" ></script>
-    <script type="text/javascript" src="~/assets/js/imagesloaded.min.js" ></script>
-    <script type="text/javascript" src="~/assets/js/wow.min.js" ></script>
-    <script type="text/javascript" src="~/assets/js/custom.js" ></script>
-    <script type="text/javascript" src="~/assets/js/popper.min.js" ></script>
-    <script type="text/javascript" src="~/assets/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="~/assets/js/sticky-sidebar.js"></script>
+    <script type="text/javascript" src="~/assets/js/YouTubePopUp.jquery.js"></script>
+    <script type="text/javascript" src="~/assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/imagesloaded.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/wow.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/custom.js"></script>
+    <script type="text/javascript" src="~/assets/js/popper.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
     @*==========================================================================*@
 
     <script>
@@ -335,7 +341,7 @@
                             $('#CoursePriceAftDisCD').html((CourseintCost / 1000).toFixed(3));
                             var CourseLink = $('#' + link).attr('href');
                             console.log(CourseintCost);
-                            console.log(CourseLink +'');
+                            console.log(CourseLink + '');
                             var SiplitedCourseLink = CourseLink.split('&')
                             if (CourseintCost == 0) {
                                 var coursesplitedlink = SiplitedCourseLink[0].split('?');
@@ -350,7 +356,7 @@
                                 var CourseLinkafter = CourseLink.replace(priceSpilted[1], (CourseintCost / 1000).toFixed(3))
                                 $('#' + link).attr('href', CourseLinkafter);
                             }
-                            
+
                             $('#CoursePriceSaveCD').html('<del>' + ((priceBeforDiscount - CourseintCost) / 1000).toFixed(3) + '</del>');
 
                             if ($('#CourseDiscountDiv').hasClass('d-none')) {
@@ -684,7 +690,7 @@
         var d = document;
         s = d.createElement("script");
         s.type = "text/javascript";
-        s.id = "zsiqscript"; 
+        s.id = "zsiqscript";
         s.src = "https://salesiq.zoho.com/widget";
         t = d.getElementsByTagName("script")[0];
         t.parentNode.insertBefore(s, t);

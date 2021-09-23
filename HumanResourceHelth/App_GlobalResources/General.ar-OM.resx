@@ -310,6 +310,9 @@
   <data name="PerYear" xml:space="preserve">
     <value>اشتراك سنوى</value>
   </data>
+  <data name="Plans" xml:space="preserve">
+    <value>باقاتي</value>
+  </data>
   <data name="Previous" xml:space="preserve">
     <value>السابق</value>
   </data>

@@ -637,6 +637,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to My Plans.
+        /// </summary>
+        internal static string Plans {
+            get {
+                return ResourceManager.GetString("Plans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous.
         /// </summary>
         internal static string Previous {

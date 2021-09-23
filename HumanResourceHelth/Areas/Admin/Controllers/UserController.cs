@@ -26,7 +26,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 User = _uow.UserRepo.FindById(userId),
                 Plans = _uow.PlanRepo.Search(x => x.Id == 2 || x.Id == 3).ToList()
             };
-            
+
             return View(userPlansViewModel);
         }
 
@@ -45,21 +45,21 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        public ActionResult AddPlan(int userId, int planId, int fromDay, int fromMonth, int fromYear,  int toDay, int toMonth, int toYear, double price)
+        public ActionResult AddPlan(int userId, int planId, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear, double price)
         {
             User user = _uow.UserRepo.FindById(userId);
             List<UserPlan> userPlans = _uow.UserPlanRepo.Search(x => x.UserId == userId).ToList();
-            if(userPlans.Where(x => x.PlanId == planId && x.IsActive).SingleOrDefault() != null)
+            if (userPlans.Where(x => x.PlanId == planId && x.IsActive).SingleOrDefault() != null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "User Already Have Active Subscription On This Plan");
 
             DateTime fromDate = new DateTime(fromYear, fromMonth, fromDay);
             DateTime toDate = new DateTime(toYear, toMonth, toDay);
-            int userPlanid = _uow.UserPlanRepo.GetAll().Last().Id+1;
+            int userPlanid = _uow.UserPlanRepo.GetAll().Last().Id + 1;
             Plan plan = _uow.PlanRepo.FindById(planId);
             UserPlan myPlan = new UserPlan()
             {
-                Id=userPlanid,
-                Plan=plan,
+                Id = userPlanid,
+                Plan = plan,
                 StartDate = fromDate,
                 EndDate = toDate,
                 IsActive = true,
@@ -71,14 +71,16 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             _uow.UserPlanRepo.Add(myPlan);
             try
             {
+                CopySections(userId);
                 _uow.UserPlanRepo.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest , ex.Message);
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
             }
-            Web.Controllers.PlansController toAddSections = new Web.Controllers.PlansController();
-            toAddSections.CopySections(userId);
+            //Web.Controllers.PlansController toAddSections = new Web.Controllers.PlansController();
+            //toAddSections.CopySections(userId);
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
@@ -92,6 +94,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
+                var exxxx = ex.Message;
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.InnerException.Message);
             }
             List<User> users = _uow.UserRepo.Search(x => x.IsAdmin == false && x.IsDeleted == false).ToList();
@@ -102,6 +105,57 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         {
             List<User> users = _uow.UserRepo.Search(x => x.IsAdmin == false && x.IsDeleted == false).ToList();
             return PartialView("_Users", users);
+        }
+        public void CopySections(int userId)
+        {
+            List<Section> userSections = new List<Section>();
+            if (_uow.SectionRepo.Search(x => x.UserId == userId).Count() > 0) return;
+            int adminId = _uow.UserRepo.Search(x => x.IsAdmin).Single().Id;
+            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId).ToList();
+            List<Section> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
+            foreach (Section parent in parentAdminSections)
+            {
+                Section parentUserSection = new Section()
+                {
+                    Description = parent.Description,
+                    Title = parent.Title,
+                    Ordering = parent.Ordering,
+                    UserId = userId,
+                    LanguageId = parent.LanguageId,
+                    IsActive = parent.IsActive,
+                    Content = parent.Content,
+                    Childs = new List<Section>(),
+                };
+
+                foreach (Section child in parent.Childs)
+                {
+                    Section childUserSection = new Section()
+                    {
+                        Description = child.Description,
+                        Title = child.Title,
+                        Ordering = child.Ordering,
+                        UserId = int.Parse(Session["UserId"].ToString()),
+                        LanguageId = parent.LanguageId,
+                        IsActive = parent.IsActive,
+                        Content = child.Content,
+                    };
+                    parentUserSection.Childs.Add(childUserSection);
+                }
+                userSections.Add(parentUserSection);
+            }
+            foreach (Section section in userSections)
+            {
+                _uow.SectionRepo.Add(section);
+            }
+            try
+            {
+                _uow.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                var test = ex.InnerException.InnerException;
+                int x = 0;
+            }
         }
     }
 }

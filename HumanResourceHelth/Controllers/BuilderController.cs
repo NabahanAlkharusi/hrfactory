@@ -12,7 +12,7 @@ namespace HumanResourceHelth.Web.Controllers
     public class BuilderController : Controller
     {
         UnitOfWork _uow = new UnitOfWork();
-       
+
         public ActionResult Index()
         {
             if (Session["UserId"] == null)
@@ -26,11 +26,33 @@ namespace HumanResourceHelth.Web.Controllers
             if (Session["UserId"] == null)
                 return RedirectToAction("Index", "Login");
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
+            
             if (Session["lang"].ToString() == "en-US")
                 user.DocumentName = docName;
             else
                 user.DocumentNameAr = docName;
-            _uow.UserRepo.SaveChanges();
+            try
+            {
+                _uow.UserRepo.SaveChanges();
+            }
+
+            catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+            {
+                Exception raise = dbEx;
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        string message = string.Format("{0}:{1}",
+                            validationErrors.Entry.Entity.ToString(),
+                            validationError.ErrorMessage);
+                        // raise a new exception nesting
+                        // the current instance as InnerException
+                        raise = new InvalidOperationException(message, raise);
+                    }
+                }
+                throw raise;
+            }
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
