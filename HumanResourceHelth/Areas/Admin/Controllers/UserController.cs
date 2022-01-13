@@ -42,15 +42,17 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             Session["UserId"] = user.Id;
             Session["User"] = user;
             Session["CMS"] = false;
+            GetSubscription(user);
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 
-        public ActionResult AddPlan(int userId, int planId, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear, double price)
+        public ActionResult AddPlan(int userId, int planId, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear, double price, bool isTrail = false)
         {
             User user = _uow.UserRepo.FindById(userId);
             List<UserPlan> userPlans = _uow.UserPlanRepo.Search(x => x.UserId == userId).ToList();
             if (userPlans.Where(x => x.PlanId == planId && x.IsActive).SingleOrDefault() != null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "User Already Have Active Subscription On This Plan");
+                if (userPlans.Where(x => x.IsFreeActive == true).SingleOrDefault() == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "User Already Have Active Subscription On This Plan");
 
             DateTime fromDate = new DateTime(fromYear, fromMonth, fromDay);
             DateTime toDate = new DateTime(toYear, toMonth, toDay);
@@ -66,13 +68,19 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 PlanId = planId,
                 Price = price,
                 UserId = userId,
+                IsFreeActive = isTrail,
+                IsFreeUsed = false,
             };
 
             _uow.UserPlanRepo.Add(myPlan);
             try
             {
-                CopySections(userId);
+                if (planId == (int)SubscriptionPlan.ManualBuilder)
+                {
+                    CopySections(userId);
+                }
                 _uow.UserPlanRepo.SaveChanges();
+                GetSubscription(user);
             }
             catch (Exception ex)
             {
@@ -147,15 +155,56 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             {
                 _uow.SectionRepo.Add(section);
             }
-            try
+            _uow.SaveChanges();
+        }
+        public void GetSubscription(User user)
+        {
+            bool havingMBSub = false;
+            bool havingSUSub = false;
+            Session["eligableForFreeSU"] = false;
+            Session["eligableForFreeMB"] = false;
+            List<UserPlan> subscriptionPlan = _uow.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
+            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id ).ToList();
+            if (subscriptionPlan1.Count == 0)
             {
-                _uow.SaveChanges();
+                Session["eligableForFree"] = true;
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
             }
-            catch(Exception ex)
+            else
             {
-                var test = ex.InnerException.InnerException;
-                int x = 0;
+                foreach (UserPlan Plansub in subscriptionPlan1)
+                {
+                    if (Plansub.IsFreeActive)
+                    {
+                        DateTime dateToday = DateTime.Now;
+                        if ((Plansub.EndDate.Date - dateToday.Date).Days <= 0)
+                        {
+                            Plansub.IsActive = false;
+                            Plansub.IsFreeActive = false;
+                            _uow.SaveChanges();
+                        }
+                    }
+                    if (Plansub.PlanId == (int)SubscriptionPlan.Startup)
+                        havingSUSub = true;
+                    if (Plansub.PlanId == (int)SubscriptionPlan.ManualBuilder)
+                        havingMBSub = true;
+                }
+                if (!havingMBSub)
+                    Session["eligableForFreeMB"] = true;
+                else
+                    Session["eligableForFreeMB"] = false;
+                if (!havingSUSub)
+                    Session["eligableForFreeSU"] = true;
+                else
+                    Session["eligableForFreeSU"] = false;
+                if (!havingMBSub || !havingSUSub)
+                    Session["eligableForFree"] = true;
+                else
+                    Session["eligableForFree"] = false;
             }
+            Session["userPlans"] = subscriptionPlan;
+
         }
     }
 }

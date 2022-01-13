@@ -21,7 +21,7 @@
     {
         string content = "";
         List<Content> contents = (List<Content>)Session["Content"];
-        if ((string)Session["lang"] == "en-US")
+        if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
         {
             content = contents.Where(x => x.Id == contentId).Single().EnglishText;
             if (content.Trim() == "") content = "Please Insert Text";
@@ -113,7 +113,7 @@
 <!-- Page title --->
 @{
     string langText = "";
-    if (Session["lang"] == "ar-EG")
+    if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
     {
         langText = "Arabic";
     }
@@ -244,23 +244,24 @@
 
                                 <div>
                                     @{
-                                        int counter = 1;
+                                        int counter = 0;
                                     }
                                     @foreach (DirectoryInfo directoryInfo in Model)
                                     {
+                                        if (counter > 1) { continue; }
                                         <div class="col col-md-12">
                                             <h4>@directoryInfo.Name</h4>
                                         </div>
-                                        counter = 0;
+                                        
                                         foreach (FileInfo file in directoryInfo.GetFiles())
                                         {
-                                            if (counter > 1) { continue; }
+
                                             counter++;
 
 
 
                                             <div class="col col-md-12">
-                                                @if (ViewBag.isHaveStartupPlan)
+                                                @if (ViewBag.isHaveStartupPlan && !ViewBag.isFreePlan)
                                                 {
                                                     <a href="@Url.Content(string.Format("~/Areas/plansData/StartUp/Categories{0}/{1}/{2}", ViewBag.Lang, directoryInfo.Name, file.Name))" download>@file.Name</a>
                                                 }
@@ -353,13 +354,27 @@
 </section>
 @if (Session["UserId"] != null)
 {
-    if (!ViewBag.isHaveStartupPlan || ((User)Session["User"]).IsAdmin)
+    if (!ViewBag.isHaveStartupPlan || ((User)Session["User"]).IsAdmin || ViewBag.isFreePlan)
     {
+        var showbtn = "d-none";
+        var showCost = "";
+        if (ViewBag.isFreePlan)
+        {
+            showbtn = "";
+            showCost = "d-none";
+        }
         <section>
             <div id="builder_s" class="section">
                 <div class="sectionInner">
                     <div class="container">
-                        <div class="row">
+                        <div class="row @showbtn" id="btnShowUpGrade">
+                            <div class="col-lg-12 col-md-12 sm-mb-30px wow fadeInUp">
+                                <div class="blog-item thum-hover hvr-float hvr-sh2">
+                                    <button id="btnUpgrade" class="btn background-main-color text-white">@Resources.General.Upgrade</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divCost" class="row @showCost">
                             <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                                 <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
                                     <div class="position-relative background-beig">
@@ -411,8 +426,15 @@
                                                     <a id="MonthlyStartUpSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a>
-                                                    <a id="freeSubscribeStartUPMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>}
-
+                                                    <a id="freeSubscribeStartUPMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                }
+                                                @if (ViewBag.isFreePlan)
+                                                {
+                                                    <a id="MonthlyStartUpSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                        @Resources.General.Subscribe
+                                                    </a>
+                                                    <a id="freeSubscribeStartUPMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -472,13 +494,20 @@
                                                     </a>
                                                     <a id="freeSubscribeStartUPAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
                                                 }
+                                                @if (ViewBag.isFreePlan)
+                                                {
+                                                    <a id="StartUpSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                        @Resources.General.Subscribe
+                                                    </a>
+                                                    <a id="freeSubscribeStartUPAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                }
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -515,27 +544,32 @@
 </div>
 <script>
     $("#freeSubscribeStartUPAnnual").on("click", function () {
-        var d = new Date();
 
-        var month = d.getMonth() + 1;
-        var day = d.getDate();
-        var year = d.getFullYear()
+        let startDate = new Date();
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate() + 365);
+        var startmonth = ((startDate.getMonth() + 1));
+        var Endmonth = ((endDate.getMonth() + 1));
+        startDay = startDate.getDate();
+        startYear = startDate.getFullYear();
+        endDay = endDate.getDate();
+        endYear = endDate.getFullYear();
         var userId =@Session["UserId"];
         var planId = "2";
-        var fromDay = day;
-        var fromMonth = month;
-        var fromYear = year;
-        var toDay = day;
-        var toMonth = month;
-        var toYear = parseInt(year) + 1;
+        var fromDay = startDay;
+        var fromMonth = startmonth;
+        var fromYear = startYear;
+        var toDay = endDay;
+        var toMonth = Endmonth;
+        var toYear = endYear;
         var price = 0;
          $.ajax({
-            url: "@Url.Action("AddPlan", "User")",
+            url: "@Url.Action("SubscribeFree", "Plans")",
             data: {
                 "userId": userId, "planId": planId,
                 "fromDay": fromDay, "fromMonth": fromMonth, "fromYear": fromYear,
                 "toDay": toDay, "toMonth": toMonth, "toYear": toYear,
-                "price": price
+                "price": price, "isTrail": false
             },
             type: "GET",
             success: function () {
@@ -549,27 +583,31 @@
     });
 
     $("#freeSubscribeStartUPMonthly").on("click", function () {
-        var d = new Date();
-
-        var month = d.getMonth() + 1;
-        var day = d.getDate();
-        var year = d.getFullYear()
+       let startDate = new Date();
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate() + 30);
+        var startmonth = ((startDate.getMonth() + 1));
+        var Endmonth = ((endDate.getMonth() + 1));
+        startDay = startDate.getDate();
+        startYear = startDate.getFullYear();
+        endDay = endDate.getDate();
+        endYear = endDate.getFullYear();
         var userId =@Session["UserId"];
         var planId = "2";
-        var fromDay = day;
-        var fromMonth = month;
-        var fromYear = year;
-        var toDay = day;
-        var toMonth = parseInt( month)+1;
-        var toYear = year;
+        var fromDay = startDay;
+        var fromMonth = startmonth;
+        var fromYear = startYear;
+        var toDay = endDay;
+        var toMonth = Endmonth;
+        var toYear = endYear;
         var price = 0;
          $.ajax({
-            url: "@Url.Action("AddPlan", "User")",
+            url: "@Url.Action("SubscribeFree", "Plans")",
             data: {
                 "userId": userId, "planId": planId,
                 "fromDay": fromDay, "fromMonth": fromMonth, "fromYear": fromYear,
                 "toDay": toDay, "toMonth": toMonth, "toYear": toYear,
-                "price": price
+                "price": price, "isTrail": false
             },
             type: "GET",
             success: function () {
@@ -580,5 +618,16 @@
                 toastr.error(err.statusText)
             }
         });
+    });
+    $("#btnUpgrade").on("click", function () {
+        if ($("#divCost").hasClass("d-none")) {
+            $("#divCost").removeClass("d-none");
+            $("#btnUpgrade").html("@Resources.General.Cancel");
+        }
+        else {
+            $("#divCost").addClass("d-none");
+            $("#btnUpgrade").html("@Resources.General.Upgrade");
+        }
+
     });
 </script>

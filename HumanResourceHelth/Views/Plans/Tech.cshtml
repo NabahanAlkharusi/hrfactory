@@ -10,7 +10,7 @@
     {
         string content = "";
         List<Content> contents = (List<Content>)Session["Content"];
-        if ((string)Session["lang"] == "en-US")
+        if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
         {
             content = contents.Where(x => x.Id == contentId).Single().EnglishText;
             if (content.Trim() == "") content = "Please Insert Text";
@@ -60,7 +60,7 @@
 <!-- Page title --->
 @{
     string langText = "";
-    if ((string)Session["lang"] == "ar-EG")
+    if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
     {
         langText = "Arabic";
     }

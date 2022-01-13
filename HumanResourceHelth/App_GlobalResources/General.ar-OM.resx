@@ -147,11 +147,17 @@
   <data name="Cancel" xml:space="preserve">
     <value>الغاء</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>تغيير كلمة المرور</value>
+  </data>
   <data name="ChooseLogo" xml:space="preserve">
     <value>اختر صورة</value>
   </data>
   <data name="ClickHere" xml:space="preserve">
     <value>انقر هنا</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>ملاحظات</value>
   </data>
   <data name="Company" xml:space="preserve">
     <value>اسم الشركة / المنظمة</value>
@@ -201,6 +207,9 @@
   <data name="Email" xml:space="preserve">
     <value>البريد الالكترونى</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاريخ الإنتهاء</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>انجليزى</value>
   </data>
@@ -212,6 +221,12 @@
   </data>
   <data name="Finish" xml:space="preserve">
     <value>انهاء</value>
+  </data>
+  <data name="FreeSubscription" xml:space="preserve">
+    <value>إشتراك مجاني</value>
+  </data>
+  <data name="GetFreeSub" xml:space="preserve">
+    <value>اشترك مجانا لمدة 7 أيام</value>
   </data>
   <data name="Go" xml:space="preserve">
     <value>انطلق</value>
@@ -286,11 +301,17 @@
   <data name="Next" xml:space="preserve">
     <value>التالى</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>م.</value>
+  </data>
   <data name="NotApplicable" xml:space="preserve">
     <value>لا ينطبق</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>عدد الموظفين</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
   </data>
   <data name="OMR" xml:space="preserve">
     <value>ريال عمانى</value>
@@ -309,6 +330,9 @@
   </data>
   <data name="PerYear" xml:space="preserve">
     <value>اشتراك سنوى</value>
+  </data>
+  <data name="PlanName" xml:space="preserve">
+    <value>اسم الباقة</value>
   </data>
   <data name="Plans" xml:space="preserve">
     <value>باقاتي</value>
@@ -394,6 +418,9 @@
   <data name="Start" xml:space="preserve">
     <value>ابدأ</value>
   </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>تاريخ البدء</value>
+  </data>
   <data name="StartTheDiagnosis" xml:space="preserve">
     <value>ابدأ التشخيص</value>
   </data>
@@ -409,11 +436,41 @@
   <data name="SubscribeFree" xml:space="preserve">
     <value>اشترك مجانا</value>
   </data>
+  <data name="SubscribeFreeBtn" xml:space="preserve">
+    <value>إشترك مجانا</value>
+  </data>
+  <data name="SubscribeFreeMBPlanDes" xml:space="preserve">
+    <value>وهي باقة تهدف إلى تزويد رواد الأعمال بنموذج ديناميكي في إنشاء سياسات وأنظمة العمل في المشروع.</value>
+  </data>
+  <data name="SubscribeFreeMBPlanName" xml:space="preserve">
+    <value>صانع سياسات العمل</value>
+  </data>
+  <data name="SubscribeFreeParagraph" xml:space="preserve">
+    <value>بالنقر على زر "إشترك مجانا" ، ستحصل على نسخة تجريبية مجانية مدتها سبعة أيام في الخطط التالية:</value>
+  </data>
+  <data name="SubscribeFreeStartUpPlanDes" xml:space="preserve">
+    <value>وهي باقة مدفوعة تهدف إلى تزويد رواد الأعمال بأهم الأدوات والممارسات الأساسية بشكل أعمق وأشمل في إدارة الموارد البشرية.</value>
+  </data>
+  <data name="SubscribeFreeStartUpPlanName" xml:space="preserve">
+    <value>الانطلاق</value>
+  </data>
+  <data name="SubscribeFreeSucess" xml:space="preserve">
+    <value>تم تسجيل أشتراكك المجاني بنجاح</value>
+  </data>
+  <data name="SubscribeFreeTitle" xml:space="preserve">
+    <value>الإشتراك المجاني التجريبي</value>
+  </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>شروط الاستخدام</value>
   </data>
   <data name="TermsOfService" xml:space="preserve">
     <value>شروط الاستخدام</value>
+  </data>
+  <data name="ThePlans" xml:space="preserve">
+    <value>الباقات</value>
+  </data>
+  <data name="ThisPlanWillEndSoon" xml:space="preserve">
+    <value>سينتهي إشتراكك في هذه الباقة قريبا</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>العنوان</value>
@@ -430,6 +487,12 @@
   <data name="Upgrade" xml:space="preserve">
     <value>ترقية</value>
   </data>
+  <data name="upGradeHRMB" xml:space="preserve">
+    <value>قم بترقية إشتراكك للإستخدام الكامل لصانع لائحة سياسة العمل</value>
+  </data>
+  <data name="upGradeHRSU" xml:space="preserve">
+    <value>قم بترقية إشتراكك لإستخدام هذه الملفات</value>
+  </data>
   <data name="Upload" xml:space="preserve">
     <value>تحميل</value>
   </data>
@@ -438,5 +501,8 @@
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>مرحبا</value>
+  </data>
+  <data name="YouAreNotSubscribed" xml:space="preserve">
+    <value>لم تشترك في أي باقة بعد</value>
   </data>
 </root>

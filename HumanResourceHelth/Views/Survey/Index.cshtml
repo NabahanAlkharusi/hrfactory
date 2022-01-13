@@ -3,16 +3,245 @@
 @model HumanResourceHelth.Web.Data.SurveyViewModel
 
 
-@{
-    ViewBag.Title = "Index";
+@{ ViewBag.Title = "Index";
     var indicators = Model.indicators.ToList();
+    var width = 100 / indicators.Count;
+    string widthstr = width.ToString() + '%';
+    var dir = "ltr";
+    var progressbarfloat = "left";
+    var Q_textAlign = "text-left";
+    var number_align = "float-left margin-right-20px";
+    }
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft) {
+    dir="rtl";
+    progressbarfloat = "right";
+    Q_textAlign = "text-right";
+    number_align = "float-right margin-left-20px";
 }
+
 <style>
     .page-title-surv {
         font-size: 25px !important;
         padding: 20px;
         color: #ffffff;
         text-align: center;
+    }
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    html {
+        height: 100%
+    }
+
+    p {
+        color: grey
+    }
+
+    #heading {
+        text-transform: uppercase;
+        color: #673AB7;
+        font-weight: normal
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 20px;
+            position: relative
+        }
+
+    .form-card {
+        text-align: left
+    }
+
+    #msform fieldset:not(:first-of-type) {
+        display: none
+    }
+
+    #msform input,
+    #msform textarea {
+        padding: 8px 15px 8px 15px;
+        border: 1px solid #ccc;
+        border-radius: 0px;
+        margin-bottom: 25px;
+        margin-top: 2px;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: montserrat;
+        color: #2C3E50;
+        background-color: #ECEFF1;
+        font-size: 16px;
+        letter-spacing: 1px
+    }
+
+        #msform input:focus,
+        #msform textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #673AB7;
+            outline-width: 0
+        }
+
+    #msform .action-button {
+        width: 100px;
+        background: #673AB7;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 0px 10px 5px;
+        float: right
+    }
+
+        #msform .action-button:hover,
+        #msform .action-button:focus {
+            background-color: #311B92
+        }
+
+    #msform .action-button-previous {
+        width: 100px;
+        background: #616161;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 0px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px 10px 0px;
+        float: right
+    }
+
+        #msform .action-button-previous:hover,
+        #msform .action-button-previous:focus {
+            background-color: #000000
+        }
+
+    .card {
+        z-index: 0;
+        border: none;
+        position: relative
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #673AB7;
+        margin-bottom: 15px;
+        font-weight: normal;
+        text-align: left
+    }
+
+    .purple-text {
+        color: #e4a32b;
+        font-weight: normal
+    }
+
+    .steps {
+        font-size: 25px;
+        color: #ffffff;
+        margin-bottom: 10px;
+        font-weight: normal;
+        text-align: center
+    }
+
+    .fieldlabels {
+        color: #ffffff;
+        text-align: left
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+        #progressbar .active {
+            color: #e4a32b
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: 15px;
+            width: @widthstr;
+            float: @progressbarfloat;
+            position: relative;
+            font-weight: 400
+        }
+
+        #progressbar #account:before {
+            font-family: FontAwesome;
+            content: "\f13e"
+        }
+
+        #progressbar #personal:before {
+            font-family: FontAwesome;
+            content: "\f007"
+        }
+
+        #progressbar #payment:before {
+            font-family: FontAwesome;
+            content: "\f030"
+        }
+
+        #progressbar #confirm:before {
+            font-family: FontAwesome;
+            content: "\f00c"
+        }
+
+        #progressbar li:before {
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 20px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1
+        }
+
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: #e4a32b
+        }
+
+    .progress {
+        height: 20px
+    }
+
+    .progress-bar {
+        background-color: #e4a32b
+    }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover
     }
 </style>
 
@@ -47,102 +276,137 @@
 <!-- Page title --->
 
 <section>
-    <div id="sectioninner" class="section">
+    <div id="sectioninner" class="section" dir="@dir">
         <div class="sectionInner">
-            <div class="container">
+            <ul id="progressbar" >
                 @foreach (Indicator indicator in indicators)
                 {
-                    <div class="row">
-                        <div class="col-lg-2 col-md-2 sm-mb-30px wow fadeInUp"></div>
-                        <div class="col-lg-8 col-md-8 sm-mb-30px wow fadeInUp">
-                            <div class="blog-item thum-hover background-white">
-                                <div class="position-relative background-beig">
-                                    <h4 class="font-weight-700 text-capitalize page-title-surv">
-                                        @if ((string)Session["Lang"] != "ar-EG")
-                                        {
-                                            @indicator.Name
-                                        }
-                                        else
-                                        {
-                                            @indicator.NameAr
-                                        }
+    <li class="active" id="@indicator.Id">
+        <strong>
+            @if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+            {
+@indicator.Name }
+else
+{
+@indicator.NameAr}
+        </strong>
+    </li>}
+            </ul>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+            </div> <br>
+            <div class="container">
+                @{ int stepcounter = 0;}
+                @foreach (Indicator indicator in indicators)
+                {
+                    var dnone = "";
+                    if (stepcounter > 0)
+                    {
+                        dnone = "d-none";
+                    }
+                    stepcounter++;
+                <fieldset class="@dnone">
+                    <div class="form-card">
+                        <div class="row">
 
-                                    </h4>
-                                </div>
-                                @{ int counter = 1;}
-                                @foreach (Question question in indicator.Questions)
-                                {
-                                    <div class="blog-item padding-lr-30px text-center">
-                                        <div class="container">
-                                            <div class="row questions" id="q@(question.Id)" data-QuestionId="@question.Id" data-IndicatorId="@indicator.Id">
-                                                <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
-                                                    <div class="item margin-lr-15px">
-                                                        <div class="background-white opacity-hover-7 padding-30px">
-                                                            <div class="float-left margin-right-20px"><h1 class="surv-quest">@(counter++)</h1></div>
-                                                            <p class="margin-bottom-0px text-left">
-                                                                @if ((string)Session["Lang"] != "ar-EG")
-                                                                {
-                                                                    @question.Name
-                                                                }
-                                                                else
-                                                                {
-                                                                    @question.NameAr
-                                                                }
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @for (int i = 1; i < 5; i++)
-                                                {
-                                                    <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
-                                                        <img src="@Url.Content("~/assets/img/emotion_0" + i + ".png")" alt="">
-                                                    </div>
-                                                }
-                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            @Html.RadioButton("rdoQuestion" + question.Id, 100) @Resources.General.Agree
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            @Html.RadioButton("rdoQuestion" + question.Id, 50) @Resources.General.Maybe
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            @Html.RadioButton("rdoQuestion" + question.Id, 0) @Resources.General.Disagree
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
-                                                    <div class="form-check">
-                                                        <label class="form-check-label">
-                                                            @Html.RadioButton("rdoQuestion" + question.Id, -1) @Resources.General.NotApplicable
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
-                                                    <hr>
-                                                </div>
-                                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 sm-mb-30px wow fadeInUp"></div>
+                            <div class="col-lg-8 col-md-8 sm-mb-30px wow fadeInUp">
+                                <div class="blog-item thum-hover background-white">
+                                    <div class="position-relative background-beig">
+                                        <h4 class="font-weight-700 text-capitalize page-title-surv">
+                                            @if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+                                            {@indicator.Name }
+                                            else
+                                            {@indicator.NameAr }
+                                        </h4>
+                                        <div class="">
+                                            <h2 class="steps">Step @stepcounter - @indicators.Count</h2>
                                         </div>
                                     </div>
-                                }
+
+                                    @{ int counter = 1;}
+                                    @foreach (Question question in indicator.Questions)
+                                    {
+                    <div class="blog-item padding-lr-30px text-center">
+                        <div class="container">
+                            <div class="row questions" id="q@(question.Id)" data-QuestionId="@question.Id" data-IndicatorId="@indicator.Id">
+                                <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
+                                    <div class="item margin-lr-15px">
+                                        <div class="background-white opacity-hover-7 padding-30px">
+                                            <div class="@number_align"><h1 class="surv-quest">@(counter++)</h1></div>
+                                            <p class="margin-bottom-0px @Q_textAlign">
+                                                @if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+                                                {
+                            @question.Name }
+                        else
+                        {
+                @question.NameAr}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                @for (int i = 1; i < 5; i++)
+                                {
+                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                    <img src="@Url.Content("~/assets/img/emotion_0" + i + ".png")" alt="">
+                </div>}
+                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.RadioButton("rdoQuestion" + question.Id, 100) @Resources.General.Agree
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.RadioButton("rdoQuestion" + question.Id, 50) @Resources.General.Maybe
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.RadioButton("rdoQuestion" + question.Id, 0) @Resources.General.Disagree
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 margin-bottom-30px wow fadeInUp">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            @Html.RadioButton("rdoQuestion" + question.Id, -1) @Resources.General.NotApplicable
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
+                                    <hr>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-md-2 sm-mb-30px wow fadeInUp"></div>
+                    </div>}
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 sm-mb-30px wow fadeInUp"></div>
+                        </div>
                     </div>
+                    @if (stepcounter < (indicators.Count))
+                    {
+                <input type="button" name="next" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 next action-button" value="@Resources.General.Next" />}
+                    @if (stepcounter > 1)
+                    {
+                <input type="button" name="previous" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 previous action-button-previous" value="@Resources.General.Previous" />}
+                    @if (stepcounter == indicators.Count)
+                    {
+                    @*<div class="padding-bottom-22px padding-top-60px">*@
+                        <button type="button" id="btnSave" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Finish</button>
+                    @*</div>*@
+                    }
+                </fieldset>}
 
-                }
-
-                <div class="padding-bottom-22px padding-top-60px">
-                    <button type="button" id="btnSave" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Finish</button>
-                </div>
+                
 
             </div>
         </div>
@@ -231,6 +495,169 @@
                 toastr.error("Error")
             }
         });
+    });
+
+    //=========================================================
+    //jQuery time
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var left, opacity, scale; //fieldset properties which we will animate
+    var animating; //flag to prevent quick multi-click glitches
+
+    $(".next").click(function () {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        next_fs = $(this).parent().next();
+
+        //activate next step on progressbar using the index of next_fs
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale current_fs down to 80%
+                scale = 1 - (1 - now) * 0.2;
+                //2. bring next_fs from the right(50%)
+                left = (now * 50) + "%";
+                //3. increase opacity of next_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({
+                    'transform': 'scale(' + scale + ')',
+                    'position': 'absolute'
+                });
+                next_fs.css({ 'left': left, 'opacity': opacity });
+            },
+            duration: 800,
+            complete: function () {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".previous").click(function () {
+        if (animating) return false;
+        animating = true;
+
+        current_fs = $(this).parent();
+        previous_fs = $(this).parent().prev();
+
+        //de-activate current step on progressbar
+        $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+        //show the previous fieldset
+        previous_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({ opacity: 0 }, {
+            step: function (now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale previous_fs from 80% to 100%
+                scale = 0.8 + (1 - now) * 0.2;
+                //2. take current_fs to the right(50%) - from 0%
+                left = ((1 - now) * 50) + "%";
+                //3. increase opacity of previous_fs to 1 as it moves in
+                opacity = 1 - now;
+                current_fs.css({ 'left': left });
+                previous_fs.css({ 'transform': 'scale(' + scale + ')', 'opacity': opacity });
+            },
+            duration: 800,
+            complete: function () {
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInOutBack'
+        });
+    });
+
+    $(".submit").click(function () {
+        return false;
+    })
+    //..................................................
+    $(document).ready(function () {
+
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+        var current = 1;
+        var steps = $("fieldset").length;
+
+        setProgressBar(current);
+
+        $(".next").click(function () {
+
+            current_fs = $(this).parent();
+            next_fs = $(this).parent().next();
+
+            //Add Class Active
+            $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+            current_fs.addClass('d-none');
+            next_fs.removeClass('d-none');
+            
+            //show the next fieldset
+            next_fs.show();
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({ 'opacity': opacity });
+                },
+                duration: 500
+            });
+            setProgressBar(++current);
+        });
+
+        $(".previous").click(function () {
+
+            current_fs = $(this).parent();
+            previous_fs = $(this).parent().prev();
+
+            //Remove class active
+            $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+            current_fs.addClass('d-none');
+            previous_fs.removeClass('d-none');
+            //show the previous fieldset
+            previous_fs.show();
+
+            //hide the current fieldset with style
+            current_fs.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    previous_fs.css({ 'opacity': opacity });
+                },
+                duration: 500
+            });
+            setProgressBar(--current);
+        });
+
+        function setProgressBar(curStep) {
+            var percent = parseFloat(100 / steps) * curStep;
+            percent = percent.toFixed();
+            $(".progress-bar")
+                .css("width", percent + "%")
+        }
+
+        $(".submit").click(function () {
+            return false;
+        })
+
     });
 </script>
 

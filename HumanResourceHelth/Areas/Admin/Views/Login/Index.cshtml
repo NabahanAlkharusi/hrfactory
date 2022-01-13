@@ -1,8 +1,6 @@
 ﻿
-@{
-    ViewBag.Title = "Login";
-    Layout = null;
-}
+@{ ViewBag.Title = "Login";
+    Layout = null; }
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if !IE]><!-->
@@ -107,9 +105,9 @@
     <script src="~/Scripts/toastr.min.js"></script>
     <!-- ================== END PAGE LEVEL JS ================== -->
     <script>
-    $(document).ready(function() {
-        App.init();
-    });
+        $(document).ready(function () {
+            App.init();
+        });
     </script>
 </body>
 </html>
@@ -122,7 +120,12 @@
             url: "@Url.Action("Login", "Login", new { Area= "Admin"})",
             data: { "email": email, "password" : password},
             type: "POST",
-            success: function () {
+            success: function (msg, msg2, msg3) {
+                if (msg3.statusText == "CreateExpert")
+                    window.location = '@Url.Action("Create", "ExpertsProfiles", new { Area = "Admin" })';
+                else if (msg3.statusText == "IndexExpert")
+                    window.location = '@Url.Action("Index", "ExpertsProfiles", new { Area = "Admin" })';
+                else
                 window.location = '@Url.Action("Index","Home", new { Area = "Admin"})';
             },
             error: function () {

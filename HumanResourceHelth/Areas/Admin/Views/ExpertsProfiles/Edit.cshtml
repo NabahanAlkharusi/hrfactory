@@ -1,0 +1,365 @@
+﻿@using System.Threading
+@using HumanResourceHelth.Model.Resources
+@model HumanResourceHelth.Model.ExpertsProfile
+
+@{
+    ViewBag.Title = "Edit";
+    Session["Backto"] = "EditExpert";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var dir = "ltr";
+    var alignclass = "pull-right";
+    var labelClass = "pull-left";
+}
+@if (Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    alignclass = "pull-left";
+    labelClass = "pull-right";
+
+}
+
+
+<div class="container">
+    <div class="panel panel-info" dir="@dir">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">@AppResource.Experts</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2 @alignclass">
+                        <h2>@AppResource.Edit</h2>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Edit", "ExpertsProfiles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal h4" dir="@dir">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="row">
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.ImageUrl, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { type = "file" } })
+                @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.InstagramUrl, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.InstagramUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.InstagramUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.LinkedInUrl, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.LinkedInUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LinkedInUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.YouToubeUrl, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.YouToubeUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.YouToubeUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.NamePromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.NameEn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NameEn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.NamePromptAR, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.NameAr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NameAr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.DescriptionPromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DescriptionEn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescriptionEn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group col-md-6 @labelClass">
+            @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.DescriptionPromptAR, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DescriptionAr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescriptionAr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.SummaryPromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.SummaryEn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SummaryEn, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.EducationPromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.EducationEn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EducationEn, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.ExperiencesPromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.ExperiencesEN, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExperiencesEN, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.CertificatesPromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.CertificatesEN, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CertificatesEN, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.LanguagesPromptEn, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.LanguagesEn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LanguagesEn, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        @*======================*@
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.SummaryPromptAR, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.SummaryAr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SummaryAr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.EducationPromptAR, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.EducationAr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EducationAr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.ExperiencesPromptAR, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.ExperiencesAr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExperiencesAr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.CertificatesPromptAR, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.CertificatesAr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CertificatesAr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label(HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.LanguagesPromptAr, htmlAttributes: new { @class = "control-label col-md-4 " + labelClass })
+                <div class="col-md-8">
+                    @Html.TextAreaFor(model => model.LanguagesAr, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.LanguagesAr, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-8">
+            <input type="submit" value="@Resources.General.Edit" class="btn btn-lg btn-success @alignclass" />
+            @Html.ActionLink(Resources.General.Back, "Index", new object { },
+new { @class = "btn btn-lg btn-primary" })
+        </div>
+    </div>
+</div>
+    }
+
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#SummaryAr').summernote({
+        placeholder: 'Expert Summary In Arabic',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#SummaryEn').summernote({
+        placeholder: 'Expert Summary In English',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#EducationEn').summernote({
+        placeholder: 'Expert Education In English',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#EducationAr').summernote({
+        placeholder: 'Expert Education In Arabic',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#ExperiencesEN').summernote({
+        placeholder: 'Expert Experiences In English',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#ExperiencesAr').summernote({
+        placeholder: 'Expert Experiences In Arabic',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#CertificatesEN').summernote({
+        placeholder: 'Expert Certificates In English',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#CertificatesAr').summernote({
+        placeholder: 'Expert Certificates In Arabic',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#LanguagesAr').summernote({
+        placeholder: 'Expert Languages In Arabic',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#LanguagesEn').summernote({
+        placeholder: 'Expert Languages In English',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+
+</script>

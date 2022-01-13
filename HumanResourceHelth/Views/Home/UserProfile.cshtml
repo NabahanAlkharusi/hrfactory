@@ -2,7 +2,14 @@
 @using HumanResourceHelth.Model
 @model RegisterViewModels
 <!-- Page title --->
-<div id="page-title" class="text-grey background-overlay " style="background-image: url('assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;">
+@{ string dir = "ltr";
+    Session["Backto"] = "UserProfile";
+    }
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+}
+<div id="page-title" class="text-grey background-overlay " style="background-image: url('assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;" dir="@dir">
     <div>
         <div class="container padding-tb-35px z-index-2 position-relative">
             <div class="row">
@@ -76,121 +83,86 @@
 </div>
 <!-- Page title --->
 
-<section class="padding-tb-100px">
+<section class="padding-tb-100px" dir="@dir">
     <div class="container">
+        <div class="row justify-content-md-center padding-tb-20px">
+            <div class="btn btn-primary text-white padding-left-10px padding-right-10px"> @Html.ActionLink(Resources.General.ChangePassword, "ChangePassword")</div>
+            <div class="col-4"></div>
+            <div class="btn btn-primary text-white padding-left-10px padding-right-10px"> @Html.ActionLink(Resources.General.Plans, "UserSubscriptions")</div>
+        </div>
         <div class="row justify-content-md-center">
-            <div class="col-lg-8 text-uppercase">
-                <form autocomplete="off">
-                    <input autocomplete="off" name="hidden" type="text" style="display:none;">
-                    <input type="text" style="display:none">
-                    <input type="password" style="display:none">
+            <div class="col-lg-11 text-uppercase">
+                @*<form autocomplete="off">
+                <input autocomplete="off" name="hidden" type="text" style="display:none;">
+                <input type="text" style="display:none">
+                <input type="password" style="display:none">*@
+                <table class="table table-active table-hover text-center">
+                    <tr>
+                        <th colspan="2">@Resources.General.Company @Resources.General.InEnglish</th>
+                        <th>@Resources.General.Company @Resources.General.InArabic</th>
+                        <th>@Resources.General.Country</th>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="2" class="text-center">@Model.Name</td>
+                        <td class="text-center">@Model.NameAr</td>
+                        <td class="text-center">
+                            @foreach (Country country in Model.Countries)
+                            {
+                                if (country.Id == Model.CompanyId)
+                                {
+                @country.Name}
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>@Resources.General.Company @Resources.General.InEnglish</label>
-                                <input id="txtName" type="text" maxlength="255" value="@Model.Name" required class="form-control" placeholder="@Resources.General.Company" />
-                            </div>
-                            <div class="col">
-                                <label>@Resources.General.Company @Resources.General.InArabic</label>
-                                <input id="txtNameAr" type="text" maxlength="255" value="@Model.NameAr" required class="form-control" placeholder="@Resources.General.Company" />
-                            </div>
-                            <div class="col">
-                                <label>@Resources.General.Email</label>
-                                <input disabled autocomplete="off" id="txtEmail" type="email" value="@Model.Email" class="form-control" placeholder="@Resources.General.Email" required />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>@Resources.General.Country</label>
-                                <select id="selectCountry" required class="form-control">
-                                    @foreach (Country country in Model.Countries)
-                                    {
-                                        if (country.Id == Model.CompanyId)
-                                        {
-                                            <option value="@country.Id" selected>@country.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@country.Id">@country.Name</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
+        }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">@Resources.General.Email</th>
+                        <th colspan="2">@Resources.General.Industry</th>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="2" class="text-center">
+                            @Model.Email
+                        </td>
+                        <td colspan="2" class="text-center">
+                            @foreach (Industry industry in Model.Industries)
+                            {
 
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>@Resources.General.Industry</label>
-                                <select id="selectIndustry" required class="form-control">
-                                    @foreach (Industry industry in Model.Industries)
-                                    {
-
-                                        if (industry.Id == Model.IndustryId)
-                                        {
-                                            <option value="@industry.Id" selected>@industry.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@industry.Id">@industry.Name</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>@Resources.General.NumberOfEmployees</label>
-                                <select id="employees" required class="form-control">
-                                    @foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
-                                    {
-                                        if (item.Key == Model.NumberOFEmployees)
-                                        {
-                                            <option value="@item.Key" selected>@item.Value</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.Key">@item.Value</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                                if (industry.Id == Model.IndustryId)
+                                {
+                @industry.Name}
+        }
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">@Resources.General.NumberOfEmployees</th>
+                        <th>@Resources.General.ContactPerson</th>
+                        <th>@Resources.General.ContactInformation</th>
+                    </tr>
+                    <tr class="text-center">
+                        <td colspan="2" class="text-center">
+                            @foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                            {
+                                if (item.Key == Model.NumberOFEmployees)
+                                {
+                @item.Value}
+        }
+                        </td>
+                        <td class="text-center">@Model.ContactPerson</td>
+                        <td class="text-center">
+                            @Model.ContactInformation
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <a href="@Url.Content(string.Format("~/Home/EditProfile"))" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Edit</a>
+                        </td>
+                    </tr>
+                </table>
 
 
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>@Resources.General.Password</label>
-                                <input id="txtPassword" value="@Model.Password" type="password" class="form-control" placeholder="@Resources.General.Password">
-                            </div>
-                            <div class="col">
-                                <label>@Resources.General.ConfirmPassword</label>
-                                <input id="txtConfirmPassword" value="@Model.Password" type="password" class="form-control" placeholder="@Resources.General.ConfirmPassword">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col">
-                                <label>@Resources.General.ContactInformation</label>
-                                <input id="txtInformation" value="@Model.ContactInformation"  type="text" maxlength="255" class="form-control" placeholder="@Resources.General.ContactInformation" />
-                            </div>
-                            <div class="col">
-                                <label>@Resources.General.ContactPerson</label>
-                                <input id="txtPerson" value="@Model.ContactPerson"  class="form-control" placeholder="@Resources.General.ContactPerson" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="padding-bottom-22px"><button type="button" id="btnSaveProfile" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Save</button></div>
-                </form>
+
+
+                @*</form>*@
             </div>
         </div>
     </div>
@@ -198,7 +170,7 @@
 
 <script>
     $("#btnSaveProfile").on("click", function () {
-        debugger;
+        
         var name = $("#txtName").val();
         var nameAr = $("#txtNameAr").val();
         var country = $("#selectCountry").val();

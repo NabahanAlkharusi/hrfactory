@@ -19,21 +19,69 @@ namespace HumanResourceHelth.Web.Controllers
  
         public ActionResult Index()
         {
+            if(Session["UserId"] == null)
+            {
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+                Session["eligableForFree"] = true;
+            }
+            else
+            {
+                int UserId = (int)Session["UserId"];
+                User user = _uow.UserRepo.FindById(UserId);
+                GetSubscription(user);
+            }
             return View();
         }
 
         public ActionResult ContactUs()
         {
+            if (Session["UserId"] == null)
+            {
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+                Session["eligableForFree"] = true;
+            }
+            else
+            {
+                int UserId = (int)Session["UserId"];
+                User user = _uow.UserRepo.FindById(UserId);
+                GetSubscription(user);
+            }
             return View();
         }
 
         public ActionResult AboutUs()
         {
+            if (Session["UserId"] == null)
+            {
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+                Session["eligableForFree"] = true;
+            }
+            else
+            {
+                int UserId = (int)Session["UserId"];
+                User user = _uow.UserRepo.FindById(UserId);
+                GetSubscription(user);
+            }
             return View();
         }
 
         public ActionResult ChangeLanguage(string lang)
         {
+            if (Session["UserId"] == null)
+            {
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+                Session["eligableForFree"] = true;
+            }
+            else
+            {
+                int UserId = (int)Session["UserId"];
+                User user = _uow.UserRepo.FindById(UserId);
+                GetSubscription(user);
+            }
             Session["Lang"] = lang;
             var url = Request.UrlReferrer.ToString();
             var splitedURl = url.Split('/');
@@ -215,5 +263,141 @@ namespace HumanResourceHelth.Web.Controllers
 
 
         //}
+
+        public ActionResult EditProfile()
+        {
+            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            int userId = (int)Session["UserId"];
+            User user = _uow.UserRepo.FindById(userId);
+
+            RegisterViewModels registerViewModels = new RegisterViewModels
+            {
+                ContactInformation = user.ContactInformation,
+                ContactPerson = user.ContactPerson,
+                Email = user.Email,
+                IsAdmin = user.IsAdmin,
+                LastLoginDate = user.LastLoginDate,
+                Name = user.Name,
+                Countries = _uow.CountryRepo.GetAll(),
+                Industries = _uow.IndustryRepo.GetAll(),
+                NameAr = user.NameAr,
+                NumberOFEmployees = user.NumberOFEmployees,
+                Password = user.Password,
+                CompanyId = user.CountryId,
+                IndustryId = user.IndustryId
+            };
+            return View(registerViewModels);
+        }
+        public ActionResult ChangePassword()
+        {
+            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            int userId = (int)Session["UserId"];
+            User user = _uow.UserRepo.FindById(userId);
+
+            RegisterViewModels registerViewModels = new RegisterViewModels
+            {
+                
+                Email = user.Email,
+                
+            };
+            return View(registerViewModels);
+        }
+
+        public ActionResult SavePassword(string Email, string OldPassword, string Password)
+        {
+
+            User user = _uow.UserRepo.Search(x => x.Email == Email && x.Password == OldPassword).SingleOrDefault();
+
+            if (user != null)
+            {
+                user.Password = Password;
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Wrong Mail or Password");
+            }
+            try
+            {
+                _uow.SaveChanges();
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                string error = ex.Message;
+                if (ex.InnerException != null)
+                    error += ex.InnerException.Message;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, error);
+            }
+        }
+        
+        public ActionResult UserSubscriptions()
+        {
+            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            int userId = (int)Session["UserId"];
+            try
+            {
+                var subscriptionPlan = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsActive);
+                Session["thisUserPlans"] = subscriptionPlan.ToList();
+
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError("error",ex.Message);
+                
+
+            }
+            return View();
+
+
+        }
+        public void GetSubscription(User user)
+        {
+            bool havingMBSub = false;
+            bool havingSUSub = false;
+            Session["eligableForFreeSU"] = false;
+            Session["eligableForFreeMB"] = false;
+            List<UserPlan> subscriptionPlan = _uow.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
+            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id ).ToList();
+            if (subscriptionPlan1.Count == 0)
+            {
+                Session["eligableForFree"] = true;
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+            }
+            else
+            {
+                foreach (UserPlan Plansub in subscriptionPlan1)
+                {
+                    if (Plansub.IsFreeActive)
+                    {
+                        DateTime dateToday = DateTime.Now;
+                        if ((Plansub.EndDate.Date - dateToday.Date).Days <= 0)
+                        {
+                            Plansub.IsActive = false;
+                            Plansub.IsFreeActive = false;
+                            _uow.SaveChanges();
+                        }
+                    }
+                    if (Plansub.PlanId == (int)SubscriptionPlan.Startup)
+                        havingSUSub = true;
+                    if (Plansub.PlanId == (int)SubscriptionPlan.ManualBuilder)
+                        havingMBSub = true;
+                }
+                if (!havingMBSub)
+                    Session["eligableForFreeMB"] = true;
+                else
+                    Session["eligableForFreeMB"] = false;
+                if (!havingSUSub)
+                    Session["eligableForFreeSU"] = true;
+                else
+                    Session["eligableForFreeSU"] = false;
+                if (!havingMBSub || !havingSUSub)
+                    Session["eligableForFree"] = true;
+                else
+                    Session["eligableForFree"] = false;
+            }
+            Session["userPlans"] = subscriptionPlan;
+
+        }
     }
 }

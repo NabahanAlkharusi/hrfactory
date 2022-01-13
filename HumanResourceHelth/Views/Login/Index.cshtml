@@ -5,7 +5,7 @@
     {
         string content = "";
         List<Content> contents = (List<Content>)Session["Content"];
-        if ((string)Session["lang"] == "en-US")
+        if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
         {
             content = contents.Where(x => x.Id == contentId).Single().EnglishText;
             if (content.Trim() == "") content = "Please Insert Text";
@@ -18,14 +18,15 @@
 
         return Html.Raw(content);
     } }
-@{ 
+@{
     var dir = "ltr";
     var pullText = "text-left";
     var pullIcon = "text-right";
     var checkInput = "pr-3";
     var Checklable = "pl-3";
 }
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft){
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
     dir = "rtl";
     pullText = "text-right";
     pullIcon = "text-left";
@@ -50,7 +51,7 @@
 
 <section class="background-light-grey padding-tb-100px text-center" dir="@dir">
     <div class="container">
-        <div class="row justify-content-md-center">
+        <div class="row justify-content-md-center" id="LoginArea">
 
             <div class="col-lg-4">
                 <div class="padding-30px background-white border-1 border-grey-1">
@@ -67,7 +68,7 @@
                         <div class="form-group @pullText">
                             <div class="form-check font-weight-700">
                                 <label class="form-check-label">
-                                    <input class="form-check-input @checkInput" type="checkbox"> 
+                                    <input class="form-check-input @checkInput" type="checkbox">
                                     <span class="@Checklable">@Resources.General.RememberMe</span>
                                 </label>
                             </div>
@@ -77,7 +78,7 @@
                         </div>
                     </form>
                 </div>
-               
+
                 <div class="padding-30px background-white border-1 border-grey-1 pb-0">
                     <div class="form-group" dir="@dir">
                         <div class="margin-bottom-20px margin-top-20px">
@@ -131,7 +132,7 @@
 <script>
     $("#btnSave").on("click", function () {
         var email = $("#txtEmail").val();
-        
+
         var password = $("#txtPassword").val();
         var referrer = "@(referrer)";
         if (email == "") {
@@ -159,6 +160,12 @@
                     window.location = '@Url.Action("ManualBuilder", "Plans")';
                 else if (msg3.statusText == "Section")
                     window.location = '@Url.Action("Index", "Section")';
+                else if (msg3.statusText == "ChangePassword")
+                    window.location = '@Url.Action("ChangePassword", "Home")';
+                else if (msg3.statusText == "EditProfile")
+                    window.location = '@Url.Action("EditProfile", "Home")';
+                else if (msg3.statusText == "UserProfile")
+                    window.location = '@Url.Action("UserProfile", "Home")';
                 else
                     window.location = '@Url.Action("Index","Home")';
             },

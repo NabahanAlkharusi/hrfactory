@@ -1,0 +1,190 @@
+﻿@model HumanResourceHelth.Model.ExpertsProfile
+@using System.Threading
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    var dir = "ltr";
+    var alignclass = "text-left";
+    int isArabic = 0;
+    var langDir = "pull-right";
+}
+@if (Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    alignclass = "text-right";
+    isArabic = 1;
+    langDir = "pull-left";
+}
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div dir="@dir">
+    <h2>@Resources.General.Delete</h2>
+
+    <h3>@HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.DeleteConfirm</h3>
+    <div class="width-500">
+        <h4>@HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Experts</h4>
+        <hr />
+        <table class="table table-hover w-auto table-bordered @alignclass">
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.ImageUrl
+                </th>
+
+                <td>
+                    <img class="card-img-top expert-avatar" src="~/ExpertImages/@Html.DisplayFor(model => model.ImageUrl)" alt="Card image cap">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.LinkedInUrl
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.LinkedInUrl)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.YouToubeUrl
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.YouToubeUrl)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.InstagramUrl
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.InstagramUrl)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Name
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.NameEn)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Name
+                </th>
+
+                <td>
+                    @Html.DisplayFor(model => model.NameAr)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Summary
+                </th>
+
+                <td>
+                    @Html.Raw(Model.SummaryEn)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Education
+                </th>
+
+                <td>
+                    @Html.Raw(Model.EducationEn)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Experiences
+                </th>
+
+                <td>
+                    @Html.Raw(Model.ExperiencesEN)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Certificates
+                </th>
+
+                <td>
+                    @Html.Raw(Model.CertificatesEN)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Languages
+                </th>
+
+                <td>
+                    @Html.Raw(Model.LanguagesEn)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Summary
+                </th>
+
+                <td>
+                    @Html.Raw(Model.SummaryAr)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Education
+                </th>
+
+                <td>
+                    @Html.Raw(Model.EducationAr)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Experiences
+                </th>
+
+                <td>
+                    @Html.Raw(Model.ExperiencesAr)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Certificates
+                </th>
+
+                <td>
+                    @Html.Raw(Model.CertificatesAr)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @HumanResourceHelth.Model.Resources.ExpertsProfiles.ExpertsProfiles.Languages
+                </th>
+
+                <td>
+                    @Html.Raw(Model.LanguagesAr)
+                </td>
+            </tr>
+        </table>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="@Resources.General.Delete" class="btn btn-danger @langDir" />
+                @Html.ActionLink(Resources.General.Back, "Index" , new object { },
+new { @class = "btn btn-lg btn-primary p-r-15" })
+            </div>
+        }
+    </div>
+</div>

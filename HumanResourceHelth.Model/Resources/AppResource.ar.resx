@@ -246,6 +246,9 @@
   <data name="Email" xml:space="preserve">
     <value>البريد الإلكتروني</value>
   </data>
+  <data name="Experts" xml:space="preserve">
+    <value>خبراء المنصة</value>
+  </data>
   <data name="For_Name" xml:space="preserve">
     <value>الإسم </value>
   </data>

@@ -1,0 +1,147 @@
+﻿@model HumanResourceHelth.Model.ExpertsProfile
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExpertsProfile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkedInUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LinkedInUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YouToubeUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YouToubeUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InstagramUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InstagramUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NameAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SummaryEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SummaryEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EducationEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EducationEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExperiencesEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExperiencesEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CertificatesEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CertificatesEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LanguagesEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LanguagesEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SummaryAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SummaryAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EducationAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EducationAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExperiencesAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExperiencesAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CertificatesAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CertificatesAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LanguagesAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LanguagesAr)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

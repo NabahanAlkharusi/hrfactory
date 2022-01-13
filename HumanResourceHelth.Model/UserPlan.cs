@@ -17,5 +17,8 @@ namespace HumanResourceHelth.Model
         public bool IsActive { get; set; }
         public double Price { get; set; } = 0;
 
+        public bool IsFreeUsed { get; set; }
+        public bool IsFreeActive { get; set; }
+
     }
 }

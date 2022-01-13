@@ -243,6 +243,9 @@
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
   </data>
+  <data name="Experts" xml:space="preserve">
+    <value>HR Factory App Experts</value>
+  </data>
   <data name="For_Name" xml:space="preserve">
     <value>Name</value>
   </data>

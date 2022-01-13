@@ -245,7 +245,8 @@
 
     }
 
-    $('#txtInformation').keyup(function () {
+    $('#txtInformation').change(function () {
+        
         var code = $('#countryPhoneKey').html();
         var phone=code + $(this).val();
         $.ajax({
@@ -274,7 +275,7 @@
         });
     });
     $('#SetCountryCode').click(function () {
-        alert("dd");
+        
         var Code = $('#txtCountryCode').val();
         $.ajax({
             type: 'get',

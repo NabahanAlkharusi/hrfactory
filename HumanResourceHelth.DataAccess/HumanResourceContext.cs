@@ -49,6 +49,7 @@ namespace HumanResourceHelth.DataAccess
         public DbSet<HrSetting> HrSetting { get; set; }
         public DbSet<Coupons> coupons { get; set; }
         public DbSet<IntroVedio> introVedios { get; set; }
+        public DbSet<ExpertsProfile> Experts { get; set; }
 
         public HumanResourceContext() : base("HumanResourceContext")
         {

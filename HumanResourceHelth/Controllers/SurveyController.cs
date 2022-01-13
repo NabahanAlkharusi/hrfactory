@@ -61,7 +61,8 @@ namespace HumanResourceHelth.Web.Controllers
             survey.SurveyResults = CreateSurveyResultList(answers, surveyTypeId);
 
             _uow.SurveyRepo.Add(survey);
-            _uow.SaveChanges();
+            _uow.SurveyRepo.SaveChanges();
+            //_uow.SaveChanges();
 
 
             return Json(new { Success = true, Result = survey.Id }, JsonRequestBehavior.AllowGet);

@@ -25,7 +25,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 PluginRequests = _uow.PluginRequestRepo.Count(),
                 Builders = _uow.SectionRepo.NumberOfBuilders() - 1,
                 Courses = 0,
-                Experts = 0
+                Experts = _uow.ExpertsProfileRepo.Count()
             };
 
             return View(homeViewModel);

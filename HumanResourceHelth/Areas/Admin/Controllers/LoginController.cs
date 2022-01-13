@@ -28,6 +28,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 Session["User"] = user;
                 Session["CMS"] = true;
                 Session["IsAdmin"] = true;
+                if (Session["Backto"] != null)
+                    return new HttpStatusCodeResult(HttpStatusCode.OK, Session["Backto"].ToString());
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             else

@@ -34881,6 +34881,16 @@ ul.releaseRow {
     margin-top: -15px
 }
 
+.blink_me {
+    animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        color: red;
+    }
+}
+
 .bg-gray {
     background: #f5f5f5;
     width: 100%
@@ -34977,4 +34987,14 @@ ul.releaseRow {
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
     right: 0px;
+}
+.modal-footer-expert {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: end;
+    justify-content: center;
+    padding: 15px;
+    border-top: 1px solid #e9ecef;
 }

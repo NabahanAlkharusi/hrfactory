@@ -78,7 +78,7 @@
     {
         string content = "";
         List<Content> contents = (List<Content>)Session["Content"];
-        if ((string)Session["lang"] == "en-US")
+        if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
         {
             content = contents.Where(x => x.Id == contentId).Single().EnglishText;
             if (content.Trim() == "") content = "Please Insert Text";
@@ -472,14 +472,14 @@
                                 }
                                 else
                                 {
-                                    <a href="#" class="btn btn-sm padding-lr-15px border-1">@GetContent(62)</a>
+                                    <a href="Expert" class="btn btn-sm padding-lr-15px border-1">@GetContent(62)</a>
                                 }
 
                             </div>
 
-                            <div>
-                                <a href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 ">@Resources.General.BookAnAppointment</a>
-                            </div>
+                            @*<div>
+                                <a href="~/Expert" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 ">@Resources.General.BookAnAppointment</a>
+                            </div>*@
                         </div>
                     </div>
                 </div>

@@ -228,32 +228,40 @@ namespace HumanResourceHelth.DataAccess.Repositories
 
         public virtual void Parse(Stream stream, string xHtml, string compName, string docName, int userId, string logoFilePath, string cssPath)
         {
-            xHtml = SimpleAjaxImgFix(xHtml);
-            docName = "هاند بوك";
-            using (var stringReader = new StringReader(xHtml))
+            try
             {
-                using (Document document = new Document())
+                xHtml = SimpleAjaxImgFix(xHtml);
+                docName = "هاند بوك";
+                using (var stringReader = new StringReader(xHtml))
                 {
-                    PdfWriter writer = PdfWriter.GetInstance(document, stream);
-                    document.Open();
-                    document.NewPage();
-                    FontFactory.Register("C:\\Windows\\Fonts\\ARIAL.TTF", "arial unicode ms");
-                    ///////
-                    HtmlPipelineContext
-                        .SetTagFactory(Tags.GetHtmlTagProcessorFactory())
-                        .SetLinkProvider(LinkProvider)
-                        .SetImageProvider(ImageProvider)
-                    ;
-                    var pdfWriterPipeline = new PdfWriterPipeline(document, writer);
-                    var htmlPipeline = new HtmlPipeline(HtmlPipelineContext, pdfWriterPipeline);
-                    var cssResolverPipeline = new CssResolverPipeline(CssResolver, htmlPipeline);
+                    using (Document document = new Document())
+                    {
+                        PdfWriter writer = PdfWriter.GetInstance(document, stream);
+                        document.Open();
+                        document.NewPage();
+                        FontFactory.Register("C:\\Windows\\Fonts\\ARIAL.TTF", "arial unicode ms");
+                        ///////
+                        HtmlPipelineContext
+                            .SetTagFactory(Tags.GetHtmlTagProcessorFactory())
+                            .SetLinkProvider(LinkProvider)
+                            .SetImageProvider(ImageProvider)
+                        ;
+                        var pdfWriterPipeline = new PdfWriterPipeline(document, writer);
+                        var htmlPipeline = new HtmlPipeline(HtmlPipelineContext, pdfWriterPipeline);
+                        var cssResolverPipeline = new CssResolverPipeline(CssResolver, htmlPipeline);
 
-                    XMLWorker worker = new XMLWorker(cssResolverPipeline, true);
-                    XMLParser parser = new XMLParser(worker);
-                    parser.Parse(stringReader);
+                        XMLWorker worker = new XMLWorker(cssResolverPipeline, true);
+                        XMLParser parser = new XMLParser(worker);
+                        parser.Parse(stringReader);
+                    }
                 }
-            }
         }
+            catch (Exception ex)
+            {
+               string error = ex.Message;
+
+    }
+}
 
         // write on end of each page
     }

@@ -1,29 +1,49 @@
 ﻿@model DirectoryInfo[]
-@{
-    ViewBag.Title = "Index";
-}
-@{
-    string plan = ViewBag.Plan;
-}
+@{ ViewBag.Title = "Index"; }
+@{ string plan = ViewBag.Plan; }
 <br />
 <br />
+@{int looper = 0; }
 @foreach (DirectoryInfo directoryInfo in Model)
 {
-    <div class="col col-md-4">
-        <h4>@directoryInfo.Name</h4>
-    </div>
+<div class="col col-md-4">
+    <h4>@directoryInfo.Name</h4>
+</div> foreach (FileInfo file in directoryInfo.GetFiles())
+                {
+                    if (looper >= 3 && ViewBag.Isfree)
+                    {
+<div class="col col-md-4">
 
-    foreach (FileInfo file in directoryInfo.GetFiles())
-    {
-        <div class="col col-md-4">
-            <a href="@Url.Content(string.Format("~/Areas/plansData/{0}/Categories{1}/{2}/{3}",plan, ViewBag.Lang , directoryInfo.Name, file.Name))" download>@file.Name</a>
-        </div>
-    }
-    <div class="col col-md-4">
-        <hr />
-    </div>
-
-
+    <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan">@file.Name  <i class="fa fa-lock red text-danger"></i></a>
+</div> }
+else
+{
+<div class="col col-md-4">
+    <a href="@Url.Content(string.Format("~/Areas/plansData/{0}/Categories{1}/{2}/{3}", plan, ViewBag.Lang, directoryInfo.Name, file.Name))" download>@file.Name</a>
+</div> }
+looper = looper + 1;
 }
+<div class="col col-md-4">
+    <hr />
+</div>}
 <br />
 <br />
+<div class="modal fade" id="toUnlockPlan" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="toUnlockPlanLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="toUnlockPlanLabel">@Resources.General.Upgrade</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Resources.General.upGradeHRSU
+            </div>
+            <div class="modal-footer">
+
+                <a href="~/Plans/StartUp#btnShowUpGrade" class="btn btn-primary">@Resources.General.Upgrade</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -26,7 +26,18 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult Materials(string plan)
         {
-            string lang = (string)Session["lang"] == "ar-EG" ? "Arabic" : "English";
+            int userId = 0;
+            int planId = 0;
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "Login");
+            else
+                 userId = (int)Session["UserId"];
+            if (plan == "StartUp")
+                planId = (int)SubscriptionPlan.Startup;
+            else
+                return RedirectToAction("StartUp", "Plans");
+            ViewBag.Isfree = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsActive && x.PlanId == planId).SingleOrDefault().IsFreeActive;
+            string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
             DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/{plan}/Categories{lang}"));
             ViewBag.Plan = plan;
             ViewBag.Lang = lang;
@@ -38,7 +49,7 @@ namespace HumanResourceHelth.Web.Controllers
             //if (Session["UserId"] == null)
             //    return RedirectToAction("Index", "Login");
 
-            string lang = (string)Session["lang"] == "ar-EG" ? "Arabic" : "English";
+            string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
             DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/WarmUp/Categories{lang}/"));
             if (Session["UserId"] != null)
             {
@@ -55,23 +66,27 @@ namespace HumanResourceHelth.Web.Controllers
         {
             int userId = 0;
             ViewBag.isHaveStartupPlan = false;
+            ViewBag.isFreePlan = false;
             if (Session["UserId"] != null)
-                
+
             {
                 userId = (int)Session["UserId"];
                 UserPlan startUpPlan = _uow.UserPlanRepo.Search(x => x.IsActive && x.UserId == userId && x.PlanId == (int)SubscriptionPlan.Startup).SingleOrDefault();
                 if (startUpPlan == null)
                     ViewBag.isHaveStartupPlan = false;
                 else
+                {
                     ViewBag.isHaveStartupPlan = true;
+                    ViewBag.isFreePlan = startUpPlan.IsFreeActive;
+                }
             }
-            string lang = (string)Session["lang"] == "ar-EG" ? "Arabic" : "English";
-            
+            string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
+
 
             DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/StartUp/Categories{lang}/"));
 
- 
-            
+
+
 
             Plan plan = _uow.PlanRepo.FindById((int)SubscriptionPlan.Startup);
             ViewBag.AnnualPrice = plan.AnnualPrice;
@@ -82,6 +97,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult ManualBuilder()
         {
+            ViewBag.isFreePlan = false;
             if (Session["UserId"] == null)
                 ViewBag.PlanType = 0;
             else
@@ -90,6 +106,7 @@ namespace HumanResourceHelth.Web.Controllers
                 UserPlan builderPlan = _uow.UserPlanRepo.Search(x => x.IsActive && x.UserId == userId && x.PlanId == (int)SubscriptionPlan.ManualBuilder).SingleOrDefault();
                 if (builderPlan != null)
                 {
+                    ViewBag.isFreePlan = builderPlan.IsFreeActive ? true : false;
                     TimeSpan planPeriod = builderPlan.EndDate - builderPlan.StartDate;
                     if (planPeriod.TotalDays > 60)
                         ViewBag.PlanType = 2;
@@ -126,7 +143,7 @@ namespace HumanResourceHelth.Web.Controllers
             return View();
         }
 
-        public void CopySections(int userId)
+        public void CopySections(int userId, bool isTrial = false)
         {
             List<Section> userSections = new List<Section>();
             if (_uow.SectionRepo.Search(x => x.UserId == userId).Count() > 0) return;
@@ -146,7 +163,7 @@ namespace HumanResourceHelth.Web.Controllers
                     Content = parent.Content,
                     Childs = new List<Section>(),
                 };
-                
+
                 foreach (Section child in parent.Childs)
                 {
                     Section childUserSection = new Section()
@@ -163,7 +180,7 @@ namespace HumanResourceHelth.Web.Controllers
                 }
                 userSections.Add(parentUserSection);
             }
-            foreach(Section section in userSections)
+            foreach (Section section in userSections)
             {
                 _uow.SectionRepo.Add(section);
             }
@@ -198,30 +215,46 @@ namespace HumanResourceHelth.Web.Controllers
         {
             RequestServiceViewModel requestServiceViewModel = new RequestServiceViewModel()
             {
-               
-                Countries=_uow.CountryRepo.GetAll(),
-                Industries=_uow.IndustryRepo.GetAll()
+
+                Countries = _uow.CountryRepo.GetAll(),
+                Industries = _uow.IndustryRepo.GetAll()
 
             };
             return View(requestServiceViewModel);
         }
 
-        public ActionResult Subscribe(int planId, SubscriptionPeriod subscriptionPeriod,int UserId)
+        public ActionResult Subscribe(int planId, SubscriptionPeriod subscriptionPeriod, int UserId, bool isTrail = false)
         {
+            bool isUpgrade = false;
             Session["UserId"] = UserId;
-                
+
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
 
             int userId = (int)Session["UserId"];
 
-            if(user.UserPlans.Where(x => x.PlanId == planId && x.IsActive).Count() == 1)
+            if (user.UserPlans.Where(x => x.PlanId == planId && x.IsActive).Count() == 1)
+            {
+                UserPlan userPlan =
+                    user.UserPlans.Where(x => x.PlanId == planId && x.IsActive && x.IsFreeActive).Count() == 1 ?
+                    user.UserPlans.Where(x => x.PlanId == planId && x.IsActive && x.IsFreeActive).FirstOrDefault() : null;
+                if (userPlan != null)
+                {
+                    isUpgrade = true;
+                    userPlan.IsFreeActive = false;
+                    userPlan.IsActive = false;
+                    _uow.UserPlanRepo.Update(userPlan);
+                    _uow.UserPlanRepo.SaveChanges();
+                }
                 return RedirectToAction("Index", "Section");
+            }
 
             if (planId == (int)SubscriptionPlan.ManualBuilder)
+            {
                 CopySections(user.Id);
-
+                SetUpManual(user.Id, isTrail, isUpgrade);
+            }
             double subscriptionPrice = 0;
-            Plan plan = _uow.PlanRepo.FindById(planId); 
+            Plan plan = _uow.PlanRepo.FindById(planId);
             DateTime subscriptionEndDate = DateTime.Today;
             switch (subscriptionPeriod)
             {
@@ -259,11 +292,12 @@ namespace HumanResourceHelth.Web.Controllers
             {
                 Plan = _uow.PlanRepo.FindById(planId),
                 UserPlan = myPlan,
-                SubscriptionPeriod =  subscriptionPeriod
+                SubscriptionPeriod = subscriptionPeriod
             };
             Session["User"] = _uow.UserRepo.FindById((int)Session["UserId"]);
 
-
+            GetSubscription(user);
+            Session["eligableForFree"] = false;
             return View(mySubscription);
         }
 
@@ -286,7 +320,7 @@ namespace HumanResourceHelth.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             }
             else
-            { 
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
@@ -294,8 +328,8 @@ namespace HumanResourceHelth.Web.Controllers
         [HttpPost]
         public ActionResult TechRequest(TechRequest techRequest)
         {
-            
-            if(Session["UserId"] == null)
+
+            if (Session["UserId"] == null)
             {
                 User user = _uow.UserRepo.Search(x => x.IsAdmin).Single();
                 techRequest.UserId = user.Id;
@@ -340,6 +374,157 @@ namespace HumanResourceHelth.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
         }
+        public void GetSubscription(User user)
+        {
+            bool havingMBSub = false;
+            bool havingSUSub = false;
+            Session["eligableForFreeSU"] = false;
+            Session["eligableForFreeMB"] = false;
+            List<UserPlan> subscriptionPlan = _uow.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
+            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id).ToList();
+            if (subscriptionPlan1.Count == 0)
+            {
+                Session["eligableForFree"] = true;
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+            }
+            else
+            {
+                foreach (UserPlan Plansub in subscriptionPlan1)
+                {
+                    if (Plansub.IsFreeActive)
+                    {
+                        DateTime dateToday = DateTime.Now;
+                        if ((Plansub.EndDate.Date - dateToday.Date).Days <= 0)
+                        {
+                            Plansub.IsActive = false;
+                            Plansub.IsFreeActive = false;
+                            _uow.SaveChanges();
+                        }
+                    }
+                    if (Plansub.PlanId == (int)SubscriptionPlan.Startup)
+                        havingSUSub = true;
+                    if (Plansub.PlanId == (int)SubscriptionPlan.ManualBuilder)
+                        havingMBSub = true;
+                }
+                if (!havingMBSub)
+                    Session["eligableForFreeMB"] = true;
+                else
+                    Session["eligableForFreeMB"] = false;
+                if (!havingSUSub)
+                    Session["eligableForFreeSU"] = true;
+                else
+                    Session["eligableForFreeSU"] = false;
+                if (!havingMBSub || !havingSUSub)
+                    Session["eligableForFree"] = true;
+                else
+                    Session["eligableForFree"] = false;
+            }
+            Session["userPlans"] = subscriptionPlan;
 
+        }
+
+        public ActionResult SubscribeFree(int userId, int planId, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear, double price, bool isTrail = false)
+        {
+            bool isUpgrade = false;
+            User user = _uow.UserRepo.FindById(userId);
+            List<UserPlan> userPlans = _uow.UserPlanRepo.Search(x => x.UserId == userId).ToList();
+            if (userPlans.Where(x => x.PlanId == planId && x.IsActive).FirstOrDefault() != null)
+                if (userPlans.Where(x => x.IsFreeActive).Count() == 0)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "User Already Have Active Subscription On This Plan");
+            UserPlan userPlan =
+                    user.UserPlans.Where(x => x.PlanId == planId && x.IsActive && x.IsFreeActive).Count() > 0 ?
+                    user.UserPlans.Where(x => x.PlanId == planId && x.IsActive && x.IsFreeActive).FirstOrDefault() : null;
+            if (userPlan != null)
+            {
+
+                isUpgrade = true;
+                userPlan.IsFreeActive = false;
+                userPlan.IsActive = false;
+                _uow.UserPlanRepo.Update(userPlan);
+                _uow.UserPlanRepo.SaveChanges();
+            }
+            DateTime fromDate = new DateTime(fromYear, fromMonth, fromDay);
+            DateTime toDate = new DateTime(toYear, toMonth, toDay);
+            int userPlanid = _uow.UserPlanRepo.GetAll().Last().Id + 1;
+            Plan plan = _uow.PlanRepo.FindById(planId);
+            UserPlan myPlan = new UserPlan()
+            {
+                Id = userPlanid,
+                Plan = plan,
+                StartDate = fromDate,
+                EndDate = toDate,
+                IsActive = true,
+                PlanId = planId,
+                Price = price,
+                UserId = userId,
+                IsFreeActive = isTrail,
+                IsFreeUsed = false,
+            };
+
+            _uow.UserPlanRepo.Add(myPlan);
+            try
+            {
+                if (planId == (int)SubscriptionPlan.ManualBuilder)
+                {
+                    CopySections(userId);
+                    SetUpManual(userId, isTrail, isUpgrade);
+                }
+                _uow.UserPlanRepo.SaveChanges();
+                GetSubscription(user);
+            }
+            catch (Exception ex)
+            {
+
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ex.Message);
+            }
+            //Web.Controllers.PlansController toAddSections = new Web.Controllers.PlansController();
+            //toAddSections.CopySections(userId);
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+
+        private void SetUpManual(int userId, bool isTrail, bool isUpgrade = false)
+        {
+            List<Section> sections = _uow.SectionRepo.Search(a => a.UserId == userId).ToList();
+            int looper;
+            if (isTrail && !isUpgrade)
+            {
+                foreach (Section section in sections)
+                {
+                    if (section.ParenId == null)
+                    {
+                        looper = 1;
+                        foreach (Section ChildSection in section.Childs.OrderBy(x => x.Ordering))
+                        {
+                            if (looper > 3)
+                            {
+                                ChildSection.IsActive = false;
+                                _uow.SectionRepo.Update(ChildSection);
+                                _uow.SectionRepo.SaveChanges();
+                            }
+                            looper++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (Section section in sections)
+                {
+                    if (section.ParenId == null)
+                    {
+
+                        foreach (Section ChildSection in section.Childs.OrderBy(x => x.Ordering))
+                        {
+
+                            ChildSection.IsActive = section.IsActive;
+                            _uow.SectionRepo.Update(ChildSection);
+                            _uow.SectionRepo.SaveChanges();
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }

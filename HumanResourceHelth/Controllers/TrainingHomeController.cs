@@ -25,7 +25,7 @@ namespace HumanResourceHelth.Web.Controllers
 
 
         //[Authorize(Roles = "User")]
-       [SessionAuthorizeAttribute]
+        [SessionAuthorizeAttribute]
         public ActionResult Checkout(int CID)
         {
             //string UserId = "";
@@ -60,7 +60,7 @@ namespace HumanResourceHelth.Web.Controllers
         public ActionResult CheckOut(Pyments pyments)
         {
             string UserId = "";
-                        if (Session["UserId"] != null)
+            if (Session["UserId"] != null)
                 UserId = Session["UserId"].ToString();
 
             if (ModelState.IsValid)
@@ -93,8 +93,19 @@ namespace HumanResourceHelth.Web.Controllers
 
             var hrSetting = _unitOfWork.HrSettingRepo.FindById(1);
             ViewBag.LearnOnlineText = hrSetting.LearnOnlineText;
-            ViewBag.LearnOnlineVideo = hrSetting.LearnOnlineVideo ;
-
+            ViewBag.LearnOnlineVideo = hrSetting.LearnOnlineVideo;
+            if (Session["UserId"] == null)
+            {
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+                Session["eligableForFree"] = true;
+            }
+            else
+            {
+                int UserId = (int)Session["UserId"];
+                User user = _unitOfWork.UserRepo.FindById(UserId);
+                GetSubscription(user);
+            }
             return View(joinList);
 
         }
@@ -114,7 +125,7 @@ namespace HumanResourceHelth.Web.Controllers
         public ActionResult CourseDetails(int CID)
         {
             string UserId = "";
-                        if (Session["UserId"] != null)
+            if (Session["UserId"] != null)
                 UserId = Session["UserId"].ToString();
 
             if (CID == 0)
@@ -208,7 +219,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult GetTrainers()
         {
-           var  trainers = _unitOfWork.TrainersRepo.GetAll();
+            var trainers = _unitOfWork.TrainersRepo.GetAll();
 
             return View(trainers);
         }
@@ -218,7 +229,7 @@ namespace HumanResourceHelth.Web.Controllers
             IList<Trainers> trainers = null;
             // trainers = _unitOfWork.TrainersRepo.GetAll();
 
-      trainers = (IList<Trainers>)_unitOfWork.TrainersRepo.GetAll();
+            trainers = (IList<Trainers>)_unitOfWork.TrainersRepo.GetAll();
             if (trainers.Count == 0)
             {
                 return Json("NotFound");
@@ -249,12 +260,12 @@ namespace HumanResourceHelth.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetBlobDownload( string link)
+        public ActionResult GetBlobDownload(string link)
         {
             var fileName = link;
             link = Path.Combine(Server.MapPath("~/CoursesAttachments/"), link);
 
-          //  link = @"~/CoursesAttachments/" + link;
+            //  link = @"~/CoursesAttachments/" + link;
             var net = new System.Net.WebClient();
             var data = net.DownloadData(link);
             var content = new System.IO.MemoryStream(data);
@@ -265,7 +276,7 @@ namespace HumanResourceHelth.Web.Controllers
         [HttpPost]
         public double UpdateViewDetails(int AttachID)
         {
-            string  UserId = Session["UserId"].ToString();
+            string UserId = Session["UserId"].ToString();
 
             var course = _unitOfWork.attachmentsRepo.FindById(AttachID);
             var courseViewed = _unitOfWork.UserCourceViewRepo.GetAll().Where(x => x.CourseID == course.CourseID
@@ -294,7 +305,7 @@ namespace HumanResourceHelth.Web.Controllers
         private double ViewPercentage(int courseID)
         {
             string UserId = "";
-                        if (Session["UserId"] != null)
+            if (Session["UserId"] != null)
                 UserId = Session["UserId"].ToString();
 
 
@@ -310,14 +321,14 @@ namespace HumanResourceHelth.Web.Controllers
             var viewPercentage = 0;
             if (totalVedios != 0)
             {
-                 viewPercentage = (viewCount * 100) / totalVedios;
+                viewPercentage = (viewCount * 100) / totalVedios;
             }
             return viewPercentage;
         }
         [HttpPost]
         public bool UpdateReview(string reviewText, int starCount, int courseID)
         {
-            
+
             var user_id = (User)HttpContext.Session["User"];
 
             int uid = (int)Session["UserId"];
@@ -349,7 +360,51 @@ namespace HumanResourceHelth.Web.Controllers
             var review = _unitOfWork.UserviewRepo.GetAll().Where(x => x.CourseID == couseID).ToList();
             return review;
         }
+        public void GetSubscription(User user)
+        {
+            bool havingMBSub = false;
+            bool havingSUSub = false;
+            Session["eligableForFreeSU"] = false;
+            Session["eligableForFreeMB"] = false;
+            List<UserPlan> subscriptionPlan = _unitOfWork.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
+            List<UserPlan> subscriptionPlan1 = _unitOfWork.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
+            if (subscriptionPlan1.Count == 0)
+            {
+                Session["eligableForFree"] = true;
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+            }
+            else
+            {
+                foreach (UserPlan Plansub in subscriptionPlan1)
+                {
+                    if (Plansub.IsFreeActive)
+                    {
+                        DateTime dateToday = DateTime.Now;
+                        if ((Plansub.EndDate.Date - dateToday.Date).Days <= 0)
+                        {
+                            Plansub.IsActive = false;
+                            Plansub.IsFreeActive = false;
+                            _unitOfWork.SaveChanges();
+                        }
+                    }
+                    if (Plansub.PlanId == (int)SubscriptionPlan.Startup)
+                        havingSUSub = true;
+                    if (Plansub.PlanId == (int)SubscriptionPlan.ManualBuilder)
+                        havingMBSub = true;
+                }
+                if (!havingMBSub)
+                    Session["eligableForFreeMB"] = true;
+                if (!havingSUSub)
+                    Session["eligableForFreeSU"] = true;
+                if (!havingMBSub || !havingSUSub)
+                    Session["eligableForFree"] = true;
+                else
+                    Session["eligableForFree"] = false;
+            }
+            Session["userPlans"] = subscriptionPlan;
 
+        }
 
     }
 }

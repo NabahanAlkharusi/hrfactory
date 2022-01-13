@@ -147,11 +147,17 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
   <data name="ChooseLogo" xml:space="preserve">
     <value>Choose Logo</value>
   </data>
   <data name="ClickHere" xml:space="preserve">
     <value>Click Here</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
   </data>
   <data name="Company" xml:space="preserve">
     <value>Company / Org Name</value>
@@ -201,6 +207,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -212,6 +221,12 @@
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
+  </data>
+  <data name="FreeSubscription" xml:space="preserve">
+    <value>Free Subscription</value>
+  </data>
+  <data name="GetFreeSub" xml:space="preserve">
+    <value>7 Days Free Trial</value>
   </data>
   <data name="Go" xml:space="preserve">
     <value>Go</value>
@@ -285,11 +300,17 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No.</value>
+  </data>
   <data name="NotApplicable" xml:space="preserve">
     <value>Not Applicable</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>Number Of Employees</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Current Password</value>
   </data>
   <data name="OMR" xml:space="preserve">
     <value>OMR</value>
@@ -308,6 +329,9 @@
   </data>
   <data name="PerYear" xml:space="preserve">
     <value>Per Year</value>
+  </data>
+  <data name="PlanName" xml:space="preserve">
+    <value>Plan Name</value>
   </data>
   <data name="Plans" xml:space="preserve">
     <value>My Plans</value>
@@ -393,6 +417,9 @@
   <data name="Start" xml:space="preserve">
     <value>Start</value>
   </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
   <data name="StartTheDiagnosis" xml:space="preserve">
     <value>START THE DIAGNOSIS</value>
   </data>
@@ -408,11 +435,41 @@
   <data name="SubscribeFree" xml:space="preserve">
     <value>Subscribe Free</value>
   </data>
+  <data name="SubscribeFreeBtn" xml:space="preserve">
+    <value>Subscribe for Free</value>
+  </data>
+  <data name="SubscribeFreeMBPlanDes" xml:space="preserve">
+    <value>Is package Which aims to help startups create their own HR policy manual and employee handbook.</value>
+  </data>
+  <data name="SubscribeFreeMBPlanName" xml:space="preserve">
+    <value>HR Manual Builder</value>
+  </data>
+  <data name="SubscribeFreeParagraph" xml:space="preserve">
+    <value>By clicking on subscribe free button you will get free seven days trial in the following plans:</value>
+  </data>
+  <data name="SubscribeFreeStartUpPlanDes" xml:space="preserve">
+    <value>Is a package in-depth knowledge, tools, and HR resources. Ongoing HR nudges &amp; advices.</value>
+  </data>
+  <data name="SubscribeFreeStartUpPlanName" xml:space="preserve">
+    <value>HR Start Up</value>
+  </data>
+  <data name="SubscribeFreeSucess" xml:space="preserve">
+    <value>You Have Successfully Subscribed Free</value>
+  </data>
+  <data name="SubscribeFreeTitle" xml:space="preserve">
+    <value>Free Trial Subscription</value>
+  </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>Terms and Conditions</value>
   </data>
   <data name="TermsOfService" xml:space="preserve">
     <value>Terms of service</value>
+  </data>
+  <data name="ThePlans" xml:space="preserve">
+    <value>Plans</value>
+  </data>
+  <data name="ThisPlanWillEndSoon" xml:space="preserve">
+    <value>Your subscription in this will expire soon</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
@@ -429,6 +486,12 @@
   <data name="Upgrade" xml:space="preserve">
     <value>Upgrade</value>
   </data>
+  <data name="upGradeHRMB" xml:space="preserve">
+    <value>Up-grade to access the full HR Manual Builder</value>
+  </data>
+  <data name="upGradeHRSU" xml:space="preserve">
+    <value>Up-grade to access these files</value>
+  </data>
   <data name="Upload" xml:space="preserve">
     <value>Upload</value>
   </data>
@@ -437,5 +500,8 @@
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
+  </data>
+  <data name="YouAreNotSubscribed" xml:space="preserve">
+    <value>You are not subscribed in any plan</value>
   </data>
 </root>

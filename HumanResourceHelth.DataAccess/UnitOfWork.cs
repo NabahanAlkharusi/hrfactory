@@ -43,6 +43,7 @@ namespace HumanResourceHelth.DataAccess
 
         public CouponsRepo couponsRepo { get; set; }
         public IntroVedioRepo introVedioRepo { get; set; }
+        public ExpertsProfileRepo ExpertsProfileRepo { get; set; }
 
         #region Constructor
         public UnitOfWork() : this(null) { }
@@ -85,6 +86,7 @@ namespace HumanResourceHelth.DataAccess
             HrSettingRepo = new HrSettingRepository(_entities);
             couponsRepo = new CouponsRepo(_entities);
             introVedioRepo = new IntroVedioRepo(_entities);
+            ExpertsProfileRepo = new ExpertsProfileRepo(_entities);
         }
         #endregion
 

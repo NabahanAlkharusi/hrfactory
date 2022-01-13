@@ -113,6 +113,17 @@
     border: 2px outset #FFF;
     border-radius: 50%;
 }
+.expert-avatar {
+    background-color: white;
+    /*position: absolute;
+     left: 40%;
+     right:40%;*/
+    /*top: 40%;*/
+    width: 200px;
+    height: 200px;
+    border: 2px outset #FFF;
+    border-radius: 50%;
+}
 
 .slider > .slide-footer {
     position: relative;

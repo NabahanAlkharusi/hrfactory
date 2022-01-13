@@ -151,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        internal static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Choose Logo.
         /// </summary>
         internal static string ChooseLogo {
@@ -165,6 +174,15 @@ namespace Resources {
         internal static string ClickHere {
             get {
                 return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comment.
+        /// </summary>
+        internal static string Comment {
+            get {
+                return ResourceManager.GetString("Comment", resourceCulture);
             }
         }
         
@@ -313,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        internal static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         internal static string English {
@@ -345,6 +372,24 @@ namespace Resources {
         internal static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free Subscription.
+        /// </summary>
+        internal static string FreeSubscription {
+            get {
+                return ResourceManager.GetString("FreeSubscription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7 Days Free Trial.
+        /// </summary>
+        internal static string GetFreeSub {
+            get {
+                return ResourceManager.GetString("GetFreeSub", resourceCulture);
             }
         }
         
@@ -565,6 +610,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No..
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Applicable.
         /// </summary>
         internal static string NotApplicable {
@@ -579,6 +633,15 @@ namespace Resources {
         internal static string NumberOfEmployees {
             get {
                 return ResourceManager.GetString("NumberOfEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Password.
+        /// </summary>
+        internal static string OldPassword {
+            get {
+                return ResourceManager.GetString("OldPassword", resourceCulture);
             }
         }
         
@@ -633,6 +696,15 @@ namespace Resources {
         internal static string PerYear {
             get {
                 return ResourceManager.GetString("PerYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plan Name.
+        /// </summary>
+        internal static string PlanName {
+            get {
+                return ResourceManager.GetString("PlanName", resourceCulture);
             }
         }
         
@@ -889,6 +961,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        internal static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to START THE DIAGNOSIS.
         /// </summary>
         internal static string StartTheDiagnosis {
@@ -934,6 +1015,78 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscribe for Free.
+        /// </summary>
+        internal static string SubscribeFreeBtn {
+            get {
+                return ResourceManager.GetString("SubscribeFreeBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is package Which aims to help startups create their own HR policy manual and employee handbook..
+        /// </summary>
+        internal static string SubscribeFreeMBPlanDes {
+            get {
+                return ResourceManager.GetString("SubscribeFreeMBPlanDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HR Manual Builder.
+        /// </summary>
+        internal static string SubscribeFreeMBPlanName {
+            get {
+                return ResourceManager.GetString("SubscribeFreeMBPlanName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By clicking on subscribe free button you will get free seven days trial in the following plans:.
+        /// </summary>
+        internal static string SubscribeFreeParagraph {
+            get {
+                return ResourceManager.GetString("SubscribeFreeParagraph", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is a package in-depth knowledge, tools, and HR resources. Ongoing HR nudges &amp; advices..
+        /// </summary>
+        internal static string SubscribeFreeStartUpPlanDes {
+            get {
+                return ResourceManager.GetString("SubscribeFreeStartUpPlanDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HR Start Up.
+        /// </summary>
+        internal static string SubscribeFreeStartUpPlanName {
+            get {
+                return ResourceManager.GetString("SubscribeFreeStartUpPlanName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Have Successfully Subscribed Free.
+        /// </summary>
+        internal static string SubscribeFreeSucess {
+            get {
+                return ResourceManager.GetString("SubscribeFreeSucess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free Trial Subscription.
+        /// </summary>
+        internal static string SubscribeFreeTitle {
+            get {
+                return ResourceManager.GetString("SubscribeFreeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terms and Conditions.
         /// </summary>
         internal static string TermsAndConditions {
@@ -948,6 +1101,24 @@ namespace Resources {
         internal static string TermsOfService {
             get {
                 return ResourceManager.GetString("TermsOfService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plans.
+        /// </summary>
+        internal static string ThePlans {
+            get {
+                return ResourceManager.GetString("ThePlans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your subscription in this will expire soon.
+        /// </summary>
+        internal static string ThisPlanWillEndSoon {
+            get {
+                return ResourceManager.GetString("ThisPlanWillEndSoon", resourceCulture);
             }
         }
         
@@ -997,6 +1168,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Up-grade to access the full HR Manual Builder.
+        /// </summary>
+        internal static string upGradeHRMB {
+            get {
+                return ResourceManager.GetString("upGradeHRMB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up-grade to access these files.
+        /// </summary>
+        internal static string upGradeHRSU {
+            get {
+                return ResourceManager.GetString("upGradeHRSU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upload.
         /// </summary>
         internal static string Upload {
@@ -1020,6 +1209,15 @@ namespace Resources {
         internal static string Welcome {
             get {
                 return ResourceManager.GetString("Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not subscribed in any plan.
+        /// </summary>
+        internal static string YouAreNotSubscribed {
+            get {
+                return ResourceManager.GetString("YouAreNotSubscribed", resourceCulture);
             }
         }
     }

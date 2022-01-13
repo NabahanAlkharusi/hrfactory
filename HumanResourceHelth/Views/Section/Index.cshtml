@@ -39,14 +39,14 @@
 </div>}
         @if (Convert.ToInt32(ViewBag.vediosCount) > 0)
         {
-    <fieldset>
-        <legend>How To use this builder</legend>
-        <div class="row p-2 justify-content-center">
-            <iframe width="980" height="350"
-                    src="@videoSrc">
-            </iframe>
-        </div>
-    </fieldset>}
+<fieldset>
+    <legend>How To use this builder</legend>
+    <div class="row p-2 justify-content-center">
+        <iframe width="980" height="350"
+                src="@videoSrc">
+        </iframe>
+    </div>
+</fieldset>}
         <div class="row pb-4">
             <div class="col-xl-2 col-lg-4 col-4 justify-content-lg-start">
                 <!-- lang dropdown -->
@@ -63,6 +63,7 @@ else
         <div class="row">
             <div class="col-lg-3 btn-acc">
                 <div class="releasesWrp" id="releases">
+                    @{ string hidden = (bool)ViewBag.IsFreeTrial ? "hidden" : "";}
                     <ul class="releases">
                         <li>
                             @if (Model.Sections.Count != 0)
@@ -74,7 +75,7 @@ else
                                     {<!-- Release Item -->
                                                                 <ul class="releaseRow row " data-SectionId="@Model.Sections[i].Id">
                                                                     <div class="list_icon">
-                                                                    <li class="col-lg-1 col-1 rcol tc sort"><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                                                    <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
                                                                     <li class="col-lg-8 col-8 rcol tc showTracks"><span>@Model.Sections[i].Title</span></li>
                                                                     <li class="col-lg-3 col-3 rcol actions_icon">
                                                                         <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.Sections[i].Id"><i class="far fa-edit"></i></a>
@@ -94,14 +95,28 @@ else
                                                                     </li>
                                                     </div>
                                                     <li class="releaseTracks">
+
                                                         @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
                                                         {
+
                                 <ul class="trackRow" data-SectionId="@Item.Id">
-                                    <li class="col-lg-1 col-1 rcol tc sort"><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                    
+                                    <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
                                     <li class="col-lg-6 col-6 rcol">@Item.Title</li>
                                     <li class="col-lg-4 col-4 fa-pull-right rcol tc">
-                                        <a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit"></i></a>
-                                        <a href="javascript:void(0)" onclick="return deleteSection(@Item.Id);"><i class="far fa-trash-alt red"></i></a>
+                                        @{ string showActions = "";
+                                            string disabled = "";}
+                                        @if (!Item.IsActive)
+                                        {
+                                            showActions = "d-none";
+                                        }
+                                        @if ((bool)ViewBag.IsFreeTrial && !Item.IsActive)
+                                        {
+            <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>}
+        else
+        {
+<a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit @showActions"></i></a>
+                                <a href="javascript:void(0)" onclick="return deleteSection(@Item.Id);"><i class="far fa-trash-alt red @showActions"></i></a>}
                                         <a href="#">
                                             <label class="switch">
                                                 @if (Item.IsActive)
@@ -109,7 +124,9 @@ else
                     <input checked class="chkActivate" data-SectionId="@Item.Id" type="checkbox"> }
                 else
                 {
-<input class="chkActivate" data-SectionId="@Item.Id" type="checkbox">}
+                    if ((bool)ViewBag.IsFreeTrial)
+                    { disabled = "disabled"; }
+<input class="chkActivate" data-SectionId="@Item.Id" type="checkbox" @disabled>}
                                                 <span class="slider round"></span>
                                             </label>
                                         </a>
@@ -125,10 +142,10 @@ else
                             </ul>
                         </div>
                         <hr>
-                        <a class="btn btn-primary" href="@Url.Action("Create", "Section")" role="button">@Resources.General.NewSection</a>
-                        <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section")" role="button">@Resources.General.Download</a>
+                        <a class="btn btn-primary" href="@Url.Action(" Create", "Section" )" role="button">@Resources.General.NewSection</a>
+                        <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section" )" role="button">@Resources.General.Download</a>
                         <hr>
-                        <a class="btn btn-primary" href="@Url.Action("Index", "Builder")" role="button">@Resources.General.Back</a>
+                        <a class="btn btn-primary" href="@Url.Action(" Index", "Builder" )" role="button">@Resources.General.Back</a>
                         <hr>
                     </div>
                     <div class="col-lg-9" id="divEditSection" dir="@dir">
@@ -190,7 +207,26 @@ else
                 </div>
             </div>
 
+            <div class="modal fade" id="toUnlockPlan" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="toUnlockPlanLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="toUnlockPlanLabel">@Resources.General.Upgrade</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @Resources.General.upGradeHRMB
+                        </div>
+                        <div class="modal-footer">
 
+                            <a href="~/Plans/ManualBuilder#btnShowUpGrade" class="btn btn-primary">@Resources.General.Upgrade</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
             <script>
     $(function () {

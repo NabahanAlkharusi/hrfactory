@@ -27,7 +27,7 @@ namespace HumanResourceHelth.Web.Controllers
             if (Session["UserId"] == null)
                 return RedirectToAction("Index", "Login");
             int userId = int.Parse(Session["UserId"].ToString());
-            Language language = (string)Session["lang"] == "en-US" ? Language.English : Language.Arabic;
+            Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
             SectionViewModel section = new SectionViewModel()
             {
                 Sections = _uow.SectionRepo.Search(x => x.UserId == userId && x.LanguageId == (int)language).OrderBy(a => a.Ordering).ToList()
@@ -44,7 +44,8 @@ namespace HumanResourceHelth.Web.Controllers
                 ViewBag.EnglishEmbaded = vedio.EmbadedEnglish;
                 ViewBag.IsUploaded = vedio.Uploaded;
             }
-
+            bool Isfree = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsFreeActive).Count() > 0 ? true : false;
+            ViewBag.IsFreeTrial = Isfree;
             return View(section);
         }
         public ActionResult Delete(int id)
@@ -97,7 +98,7 @@ namespace HumanResourceHelth.Web.Controllers
             if (Session["UserId"] == null)
                 return RedirectToAction("Index", "Login");
             int userId = int.Parse(Session["UserId"].ToString());
-            Language language = (string)Session["lang"] == "en-US" ? Language.English : Language.Arabic;
+            Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
             SectionViewModel sectionViewModel = new SectionViewModel()
             {
                 Sections = _uow.SectionRepo.Search(a => a.ParenId == null && a.UserId == userId && a.LanguageId == (int)language).ToList()
@@ -135,7 +136,7 @@ namespace HumanResourceHelth.Web.Controllers
 
             userId = (int)Session["UserId"];
 
-            Language language = (string)Session["lang"] == "en-US" ? Language.English : Language.Arabic;
+            Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
             section.LanguageId = (int)language;
             section.UserId = userId;
             _uow.SectionRepo.Add(section);
@@ -184,7 +185,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public void ConvertAr()
         {
-            Language language = (string)Session["lang"] == "en-US" ? Language.English : Language.Arabic;
+            Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
             string templateView = language == Language.English ? "~/Views/Section/Template.cshtml" : "~/Views/Section/TemplateAr.cshtml";
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);
@@ -345,15 +346,15 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult SaveIntroVedio(string vedioEmbadEn, string vedioEmbadAr, string isUploaded)
         {
-            
+
             HttpFileCollectionBase files = Request.Files;
             var EnglishVedioFileName = "";
             var ArabicVedioFileName = "";
             if (files.Count > 0)
             {
                 var test = isUploaded;
-                 EnglishVedioFileName = Path.GetFileName(files[0].FileName);
-                 ArabicVedioFileName = Path.GetFileName(files[1].FileName);
+                EnglishVedioFileName = Path.GetFileName(files[0].FileName);
+                ArabicVedioFileName = Path.GetFileName(files[1].FileName);
                 if (!Directory.Exists(Server.MapPath($"~/IntroVedio/")))
                     Directory.CreateDirectory(Server.MapPath($"~/IntroVedio/"));
                 files[0].SaveAs(Server.MapPath($"~/IntroVedio/{EnglishVedioFileName}"));

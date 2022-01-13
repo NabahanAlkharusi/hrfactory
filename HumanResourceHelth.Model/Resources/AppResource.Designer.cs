@@ -712,5 +712,12 @@ namespace HumanResourceHelth.Model.Resources {
                 return ResourceManager.GetString("OMRCurrncy", resourceCulture);
             }
         }
+        public static string Experts
+        {
+            get
+            {
+                return ResourceManager.GetString("Experts", resourceCulture);
+            }
+        }
     }
 }
