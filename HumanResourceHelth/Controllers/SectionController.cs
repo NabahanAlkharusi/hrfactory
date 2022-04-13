@@ -7,7 +7,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net;
 using System.IO;
-
 using System;
 using HumanResourceHelth.Web.Models;
 using System.Web.UI;
@@ -24,14 +23,33 @@ namespace HumanResourceHelth.Web.Controllers
         public ActionResult Index()
         {
             Session["Backto"] = "Section";
+            Session["ActiveCountry"] = 158;
             if (Session["UserId"] == null)
                 return RedirectToAction("Index", "Login");
             int userId = int.Parse(Session["UserId"].ToString());
+            User userinfo = _uow.UserRepo.FindById(userId);
+            if (_uow.UserPlanRepo.Search(a => a.PlanId == (int)SubscriptionPlan.ManualBuilder && a.UserId == userId && a.IsActive).FirstOrDefault() == null && !userinfo.IsAdmin)
+                return RedirectToAction("ManualBuilder", "Plans");
+            User user = _uow.UserRepo.FindById(userId);
+            int AdminUserID = _uow.UserRepo.Search(x => x.IsAdmin).FirstOrDefault().Id;
             Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
+            List<int> countriesID = _uow.SectionRepo.Search(x => x.UserId == userId).ToList().Select(x => x.CountryID).Distinct().ToList();
+            List<Country> countries = _uow.CountryRepo.GetAll().Where(z => countriesID.Contains(z.Id)).ToList();
+            List<Country> countriesNotAdded = user.IsAdmin ? _uow.CountryRepo.GetAll().Where(z => z.Name != null && !countriesID.Contains(z.Id)).ToList() : null;
+            List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == userId && x.LanguageId == (int)language && x.CountryID == user.CountryId).OrderBy(a => a.Ordering).ToList();
+            sections = sections.Count() == 0 ? _uow.SectionRepo.Search(x => x.UserId == userId && x.LanguageId == (int)language && x.CountryID == 158).OrderBy(a => a.Ordering).ToList() : sections;
+            sections = sections.Count() == 0 ? _uow.SectionRepo.Search(x => x.UserId == userId && x.LanguageId == (int)language).OrderBy(a => a.Ordering).ToList() : sections;
+            List<Model.Section> Defualtsections = _uow.SectionRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == user.CountryId).OrderBy(a => a.Ordering).ToList();
+            Defualtsections = Defualtsections.Count() == 0 ? _uow.SectionRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == 158).OrderBy(a => a.Ordering).ToList() : Defualtsections;
+            Defualtsections = Defualtsections.Count() == 0 ? _uow.SectionRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language).OrderBy(a => a.Ordering).ToList() : Defualtsections;
             SectionViewModel section = new SectionViewModel()
             {
-                Sections = _uow.SectionRepo.Search(x => x.UserId == userId && x.LanguageId == (int)language).OrderBy(a => a.Ordering).ToList()
+                Sections = sections,
+                Countries = countries,
+                CountriesNotAdded = countriesNotAdded,
+                DefualtSections = Defualtsections
             };
+
             var vedios = _uow.introVedioRepo.GetAll();
             int vediosCount = vedios.Count;
             ViewBag.vediosCount = vediosCount;
@@ -47,6 +65,42 @@ namespace HumanResourceHelth.Web.Controllers
             bool Isfree = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsFreeActive).Count() > 0 ? true : false;
             ViewBag.IsFreeTrial = Isfree;
             return View(section);
+        }
+
+        public ActionResult CountryBuilder(int Id)
+        {
+            Session["ActiveCountry"] = Id;
+            ViewBag.CurrentCID = Id;
+            Session["Backto"] = "Section";
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "Login");
+            int userId = int.Parse(Session["UserId"].ToString());
+            Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
+            List<int> countriesID = _uow.SectionRepo.Search(x => x.UserId == userId).ToList().Select(x => x.CountryID).Distinct().ToList();
+            List<Country> countries = _uow.CountryRepo.GetAll().Where(z => countriesID.Contains(z.Id)).ToList();
+            List<Country> countriesNotAdded = _uow.CountryRepo.GetAll().Where(z => z.Name != null && !countriesID.Contains(z.Id)).ToList();
+            SectionViewModel section = new SectionViewModel()
+            {
+                Sections = _uow.SectionRepo.Search(x => x.UserId == userId && x.LanguageId == (int)language && x.CountryID == Id).OrderBy(a => a.Ordering).ToList(),
+                Countries = countries,
+                CountriesNotAdded = countriesNotAdded
+            };
+
+            var vedios = _uow.introVedioRepo.GetAll();
+            int vediosCount = vedios.Count;
+            ViewBag.vediosCount = vediosCount;
+            if (vediosCount > 0)
+            {
+                IntroVedio vedio = vedios.FirstOrDefault();
+                ViewBag.ArabicUploaded = vedio.UploadedArabic;
+                ViewBag.EnglishUploaded = vedio.UploadedEnglish;
+                ViewBag.ArabicEmbaded = vedio.EmbadedArabic;
+                ViewBag.EnglishEmbaded = vedio.EmbadedEnglish;
+                ViewBag.IsUploaded = vedio.Uploaded;
+            }
+            bool Isfree = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsFreeActive).Count() > 0 ? true : false;
+            ViewBag.IsFreeTrial = Isfree;
+            return View("Index", section);
         }
         public ActionResult Delete(int id)
         {
@@ -95,13 +149,32 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult Create()
         {
+            int countryID = 0;
             if (Session["UserId"] == null)
                 return RedirectToAction("Index", "Login");
             int userId = int.Parse(Session["UserId"].ToString());
+            User user = _uow.UserRepo.FindById(userId);
+            if (user.IsAdmin)
+                countryID = (int)Session["ActiveCountry"];
+            else countryID = user.CountryId;
+            int AdminUserId = _uow.UserRepo.Search(x => x.IsAdmin).FirstOrDefault().Id;
+            List<Model.Section> Adminsections = _uow.SectionRepo.Search(a => a.UserId == AdminUserId && a.CountryID == countryID).ToList();
+
+            int CountryId = 158;
+            if (Adminsections.Count() > 0)
+                CountryId = countryID;
+            ViewBag.UserCountryID = CountryId;
             Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
+            List<Model.Section> sections = _uow.SectionRepo.Search(a => a.ParenId == null &&
+            a.UserId == userId && a.LanguageId == (int)language
+            && a.CountryID == CountryId).ToList();
+            if (sections.Count() == 0)
+                sections = _uow.SectionRepo.Search(a => a.ParenId == null
+                && a.UserId == userId && a.LanguageId == (int)language).ToList();
+
             SectionViewModel sectionViewModel = new SectionViewModel()
             {
-                Sections = _uow.SectionRepo.Search(a => a.ParenId == null && a.UserId == userId && a.LanguageId == (int)language).ToList()
+                Sections = sections
             };
 
 
@@ -113,25 +186,35 @@ namespace HumanResourceHelth.Web.Controllers
                 return RedirectToAction("Index", "Login");
             int userId = int.Parse(Session["UserId"].ToString());
             //get max order number
-            int? countryMaxOrder = _uow.SectionRepo.GetAll().Where(a => a.ParenId == null && a.UserId == userId).Max(a => a.Ordering);
-            int? cityMaxOrder = _uow.SectionRepo.GetAll().Where(a => a.ParenId == section.ParenId && a.UserId == userId).Max(a => a.Ordering);
+            //List<Model.Section> sections = _uow.SectionRepo.GetAll().ToList();
+            //int? ddd = _uow.SectionRepo.Search(a => a.ParenId == null && a.UserId == userId).Max(a => a.Ordering);
+            //int? countryMaxOrder = sections.Where(a => a.ParenId == null && a.UserId == userId).Max(a => a.Ordering);
+            //int? cityMaxOrder = sections.Where(a => a.ParenId == section.ParenId && a.UserId == userId).Max(a => a.Ordering);
+            //int? MaxSectionId = sections.Max(a => a.Ordering);
+            int? countryMaxOrder = _uow.SectionRepo.Search(a => a.ParenId == null && a.UserId == userId).Max(a => a.Ordering);
+            int? cityMaxOrder = _uow.SectionRepo.Search(a => a.ParenId == section.Id && a.UserId == userId).Max(a => a.Ordering);
+            int? MaxSectionId = _uow.SectionRepo.Count();
             //check if null
             if (countryMaxOrder == null)
                 countryMaxOrder = 0;
             if (cityMaxOrder == null)
                 cityMaxOrder = 0;
-
+            if (MaxSectionId == null)
+                MaxSectionId = 0;
             if (section.ParenId == null)
             {
                 section.Ordering = countryMaxOrder + 1;
                 section.UserId = int.Parse(Session["UserId"].ToString());
                 section.IsHaveLineBefore = true;
+
+                section.SectionId = (int)MaxSectionId + 1;
             }
             else
             {
                 section.Ordering = cityMaxOrder + 1;
                 section.UserId = int.Parse(Session["UserId"].ToString());
                 section.IsHaveLineBefore = false;
+                section.SectionId = (int)MaxSectionId + 1;
             }
 
             userId = (int)Session["UserId"];
@@ -139,6 +222,7 @@ namespace HumanResourceHelth.Web.Controllers
             Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
             section.LanguageId = (int)language;
             section.UserId = userId;
+            section.CountryID = (int)Session["ActiveCountry"];
             _uow.SectionRepo.Add(section);
             _uow.SaveChanges();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
@@ -369,6 +453,60 @@ namespace HumanResourceHelth.Web.Controllers
             _uow.introVedioRepo.Add(vedio);
             _uow.IndicatorRepo.SaveChanges();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
+        }
+        public ActionResult NBNC(int countryId)
+        {
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "Login");
+            List<Model.Section> NewSections = new List<Model.Section>();
+            int userId = int.Parse(Session["UserId"].ToString());
+            List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == userId && x.CountryID == 158).OrderBy(a => a.Ordering).ToList();
+            foreach (Model.Section parent in sections.Where(x => x.ParenId == null))
+            {
+                Model.Section NewParentSection = new Model.Section()
+                {
+                    Description = parent.Description,
+                    Title = parent.Title,
+                    Ordering = parent.Ordering,
+                    UserId = userId,
+                    LanguageId = parent.LanguageId,
+                    IsActive = parent.IsActive,
+                    Content = parent.Content,
+                    CountryID = countryId,
+                    SectionId = parent.SectionId,
+                    Childs = new List<Model.Section>(),
+                };
+                foreach (Model.Section child in parent.Childs)
+                {
+                    Model.Section NewChildSection = new Model.Section()
+                    {
+                        Description = child.Description,
+                        Title = child.Title,
+                        Ordering = child.Ordering,
+                        UserId = int.Parse(Session["UserId"].ToString()),
+                        LanguageId = parent.LanguageId,
+                        IsActive = parent.IsActive,
+                        CountryID = countryId,
+                        SectionId = child.SectionId,
+                        Content = child.Content,
+                    };
+                    NewParentSection.Childs.Add(NewChildSection);
+                }
+                NewSections.Add(NewParentSection);
+            }
+            try
+            {
+                foreach (Model.Section section in NewSections)
+                {
+                    _uow.SectionRepo.Add(section);
+                }
+                _uow.SaveChanges();
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Error Happend");
+            }
         }
     }
 }

@@ -2,33 +2,31 @@
 @using HumanResourceHelth.Model.Resources
 @model DirectoryInfo[]
 @{
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
     ViewBag.Title = "StartUp";
     Session["Backto"] = "StartUp";
+    var dir = isArabic ? "rtl" : "ltr";
+    var textAlign = isArabic ? "text-right" : "text-left";
+    var pullAlign = isArabic ? "pull-right" : "pull-left";
+    string langText = isArabic ? "Arabic" : "";
+    List<DocFile> Files = Session["PlanFiles"] == null ? null : (List<DocFile>)Session["PlanFiles"];
+    var align_table = isArabic ? "pr-5" : "";
 }
-@{
-    var dir = "ltr";
-    var textAlign = "text-left";
-    var pullAlign = "pull-left";
-}
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-{
-    dir = "rtl";
-    textAlign = "text-right";
-    pullAlign = "pull-right";
-}
+
 @functions{
     IHtmlString GetContent(int contentId)
     {
         string content = "";
         List<Content> contents = (List<Content>)Session["Content"];
+        Content content1 = contents.Where(x => x.Id == contentId).SingleOrDefault();
         if (!System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
         {
-            content = contents.Where(x => x.Id == contentId).Single().EnglishText;
+            content = content1 != null ? content1.EnglishText : "";
             if (content.Trim() == "") content = "Please Insert Text";
         }
         else
         {
-            content = contents.Where(x => x.Id == contentId).Single().ArabicText;
+            content = content1 != null ? content1.ArabicText : "";
             if (content.Trim() == "") content = "برجاء ادخال نص";
         }
 
@@ -104,24 +102,18 @@
                     </svg>
                 </div>
             </div>
-            <h3 class="font-weight-700 text-capitalize page-title-tech cms" data-contentId="68">@GetContent(68)</h3>
+            <h3 class="font-weight-700 text-capitalize page-title-tech cms pb-5" data-contentId="68">@GetContent(68)</h3>
         </div>
 
     </div>
 
 </div>
 <!-- Page title --->
-@{
-    string langText = "";
-    if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-    {
-        langText = "Arabic";
-    }
-}
-<section class="padding-tb-80px background-white">
+
+<section class="padding-tb-20px background-white">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 text-center" dir="@dir">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="clearfix margin-bottom-30px">
@@ -166,7 +158,7 @@
                     <h1 class="text-center cms" data-contentId="70">@GetContent(70)</h1>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
+                    <div class="col-lg-4 col-md-10 sm-mb-30px wow fadeInUp">
                         <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                             <div class="position-relative background-beig">
                                 <div class="date z-index-101 padding-10px"></div>
@@ -194,21 +186,21 @@
                             <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                 @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
                                 {
-                                    <a href="javascript:void(0);" class="text-extra-large d-block  cms" data-contentId="73">@GetContent(73)</a>
+                                    <a href="javascript:void(0);" class="text-extra-large d-block  cms" data-contentId="116">@GetContent(116)</a>
                                 }
                                 else
                                 {
-                                    <a href="#" class="text-extra-large d-block"> @GetContent(73)</a>
+                                    <a href="#" class="text-extra-large d-block"> @GetContent(116)</a>
                                 }
 
-                                <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="74">@GetContent(74)</div>
+                                <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="117">@GetContent(117)</div>
                                 <div class="padding-bottom-22px">
                                     <a href="../TrainingHome#learnOnline" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 @hideClass">@Resources.General.Subscribe</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
+                    <div class="col-lg-4 col-md-10 sm-mb-30px wow fadeInUp">
                         <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                             <div class="position-relative background-beig">
                                 <div class="date z-index-101 padding-10px"></div>
@@ -234,68 +226,72 @@
                             <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                 @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
                                 {
-                                    <a href="javascript:void(0);" class="text-extra-large d-block cms" data-contentId="72">@GetContent(72)</a>
+                                    <a href="javascript:void(0);" class="text-extra-large d-block cms" data-contentId="118">@GetContent(118)</a>
                                 }
                                 else
                                 {
-                                    <a href="@Url.Action("Materials","Plans", new { plan = "StartUp"})" class="text-extra-large d-block ">@GetContent(72)</a>
+                                    <a href="@Url.Action("Materials","Plans", new { plan = "Startup"})" class="text-extra-large d-block ">@GetContent(118)</a>
                                 }
-                                <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="75">@GetContent(75)</div>
+                                <div class="text-center padding-lr-30px padding-bottom-10px cms" data-contentId="119">@GetContent(119)</div>
 
                                 <div>
+
                                     @{
                                         int counter = 0;
                                     }
-                                    @foreach (DirectoryInfo directoryInfo in Model)
-                                    {
-                                        if (counter > 1) { continue; }
-                                        <div class="col col-md-12">
-                                            <h4>@directoryInfo.Name</h4>
-                                        </div>
-                                        
-                                        foreach (FileInfo file in directoryInfo.GetFiles())
-                                        {
-
-                                            counter++;
+                                    <table class="table border-0 @align_table" dir="@dir">
+                                        <tbody class="">
+                                            @foreach (DocFile docFile in Files)
+                                            {
+                                                if (counter >= 3) { break; }
+                                                <tr class="noborder">
 
 
+                                                    <td class="text-center"><i class="fa-solid fa-book-open"></i></td>
+                                                    <td class="text-center">
+                                                        @if (isArabic)
+                                                        {
+                                                            <h5 class="h5">@docFile.NameAr</h5>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5 class="h5">@docFile.Name</h5>
+                                                        }
+                                                    </td>
 
-                                            <div class="col col-md-12">
-                                                @if (ViewBag.isHaveStartupPlan && !ViewBag.isFreePlan)
-                                                {
-                                                    <a href="@Url.Content(string.Format("~/Areas/plansData/StartUp/Categories{0}/{1}/{2}", ViewBag.Lang, directoryInfo.Name, file.Name))" download>@file.Name</a>
-                                                }
-                                                else
-                                                {
-                                                    @file.Name
-                                                }
+                                                </tr>
 
-                                            </div>
-                                        }
-                                    }
-                                    <br />
+                                                counter++;
+
+                                            }
+                                            <tr>
+                                                <td colspan="2" class="text-center">
+                                                    @if (ViewBag.isHaveStartupPlan)
+                                                    {
+                                                        <a href="@Url.Action("Materials", "Plans", new { plan = "Startup" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                            @Resources.General.Around (@Files.Count) @Resources.General.MoreToolsAvailable
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="h6 text-danger col-12">@Resources.General.Around (@Files.Count) @Resources.General.MoreToolsAvailable</span>
+                                                        <a href="#builder_s" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 col-12 @hideClass">
+                                                            @Resources.General.Subscribe
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                   
                                 </div>
 
-                                <div class="padding-bottom-22px">
-                                    @if (ViewBag.isHaveStartupPlan)
-                                    {
-                                        <a href="@Url.Action("Materials", "Plans", new { plan = "StartUp" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
-                                            @Resources.General.SeeFiles
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a href="#builder_s" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 @hideClass">
-                                            @Resources.General.Subscribe
-                                        </a>
-                                    }
 
-                                </div>
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
+                    <div class="col-lg-4 col-md-10 sm-mb-30px wow fadeInUp">
                         <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                             <div class="position-relative background-beig">
                                 <div class="date z-index-101 padding-10px"></div>
@@ -321,13 +317,13 @@
                             <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                 @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
                                 {
-                                    <a href="javascript:void(0);" class="text-extra-large d-block cms" data-contentId="71">@GetContent(71)</a>
+                                    <a href="javascript:void(0);" class="text-extra-large d-block cms" data-contentId="120">@GetContent(120)</a>
                                 }
                                 else
                                 {
-                                    <a href="#" class="text-extra-large d-block ">@GetContent(71)</a>
+                                    <a href="#" class="text-extra-large d-block ">@GetContent(120)</a>
                                 }
-                                <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="76">@GetContent(76)</div><div class="padding-bottom-22px">
+                                <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="121">@GetContent(121)</div><div class="padding-bottom-22px">
                                     @if (ViewBag.isHaveStartupPlan)
                                     {
                                         <a href="@Url.Action("Intro", "Survey")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Start</a>
@@ -378,19 +374,19 @@
                             <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                                 <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
                                     <div class="position-relative background-beig">
-                                        <div class="item-thumbnail">@ViewBag.MonthlyPrice<span>@Resources.General.OMR</span></div>
+                                        <div class="item-thumbnail" style="font-size: 5rem;">@ViewBag.MonthlyPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span></div>
                                     </div>
                                     <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                         <h1 class="padding-bottom-20px">@Resources.General.PerMonth</h1>
                                         <div class="form-group ">
                                             <div class="form-check padding-bottom-20px">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" onchange="agree('MonthlyStartUpdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeMonthModal">@Resources.General.TermsAndConditions</a>
+                                                    <input class="form-check-input" type="checkbox" id="StrUPMonthlyCheckbox" onchange="agree('StrUPMonthlyCheckbox','MonthlyStartUpdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeMonthModal">@Resources.General.TermsAndConditions</a>
                                                 </label>
                                             </div>
 
                                         </div>
-                                        <div id="MonthlyStartUpdiv" class="d-none">
+                                        <div id="MonthlyStartUpdiv" style="display:none;">
 
                                             <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
                                                 <div class="col-md-6 @pullAlign">
@@ -423,7 +419,7 @@
                                             <div class="padding-bottom-22px">
                                                 @if (!ViewBag.isHaveStartupPlan)
                                                 {
-                                                    <a id="MonthlyStartUpSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                    <a id="MonthlyStartUpSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a>
                                                     <a id="freeSubscribeStartUPMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
@@ -443,18 +439,18 @@
                             <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                                 <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
                                     <div class="position-relative background-beig">
-                                        <div class="item-thumbnail">@ViewBag.AnnualPrice<span>@Resources.General.OMR</span></div>
+                                        <div class="item-thumbnail" style="font-size: 5rem;">@ViewBag.AnnualPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span></div>
                                     </div>
                                     <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                         <h1 class="padding-bottom-20px">@Resources.General.PerYear</h1>
                                         <div class="form-group ">
                                             <div class="form-check padding-bottom-20px">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" onchange="agree('AnnualStartUpdiv')" type="checkbox"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeYearModal">@Resources.General.TermsAndConditions</a>
+                                                    <input class="form-check-input" id="StrUPannualCheckbox" onchange="agree('StrUPannualCheckbox','AnnualStartUpdiv')" type="checkbox"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeYearModal">@Resources.General.TermsAndConditions</a>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div id="AnnualStartUpdiv" class="d-none">
+                                        <div id="AnnualStartUpdiv" style="display:none;">
                                             <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
                                                 <div class="col-md-6 @pullAlign">
                                                     <label for="SearchCouponCodeStartUp" class="form-label">@HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCode</label>
@@ -489,7 +485,7 @@
 
                                                 @if (!ViewBag.isHaveStartupPlan)
                                                 {
-                                                    <a id="StartUpSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                    <a id="StartUpSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.Startup, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a>
                                                     <a id="freeSubscribeStartUPAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
@@ -519,12 +515,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel2" class="modal-title cms" data-contentId="112">@GetContent(112)</h5>
+                <h5 id="exampleModalLabel2" class="modal-title" data-contentId="">@ViewBag.SUMTitle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body cms" data-contentId="113">@GetContent(113)</div>
+            <div class="modal-body" data-contentId="">@Html.Raw(ViewBag.SUMText)</div>
         </div>
     </div>
 </div>
@@ -533,12 +529,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel1" class="modal-title cms" data-contentId="114">@GetContent(114)</h5>
+                <h5 id="exampleModalLabel1" class="modal-title" data-contentId="">@ViewBag.SUATitle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body cms" data-contentId="115">@GetContent(115)</div>
+            <div class="modal-body" data-contentId="">@Html.Raw(ViewBag.SUAText)</div>
         </div>
     </div>
 </div>

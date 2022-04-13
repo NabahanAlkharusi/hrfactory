@@ -70,6 +70,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ACTIVE.
+        /// </summary>
+        internal static string active {
+            get {
+                return ResourceManager.GetString("active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add Introducing Video.
         /// </summary>
         internal static string AddIntroVideo {
@@ -93,6 +102,15 @@ namespace Resources {
         internal static string Arabic {
             get {
                 return ResourceManager.GetString("Arabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to And Around.
+        /// </summary>
+        internal static string Around {
+            get {
+                return ResourceManager.GetString("Around", resourceCulture);
             }
         }
         
@@ -124,11 +142,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HR Manual Builder.
+        /// </summary>
+        internal static string Builder {
+            get {
+                return ResourceManager.GetString("Builder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        internal static string BuilderAddCountryBtn {
+            get {
+                return ResourceManager.GetString("BuilderAddCountryBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Policy builder for a new country.
+        /// </summary>
+        internal static string BuilderAddCountryTitle {
+            get {
+                return ResourceManager.GetString("BuilderAddCountryTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Build Your Document.
         /// </summary>
         internal static string BuildYourDocument {
             get {
                 return ResourceManager.GetString("BuildYourDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Business Health Check.
+        /// </summary>
+        internal static string BusinessHealthCheck {
+            get {
+                return ResourceManager.GetString("BusinessHealthCheck", resourceCulture);
             }
         }
         
@@ -147,6 +201,105 @@ namespace Resources {
         internal static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Categories.
+        /// </summary>
+        internal static string Categories {
+            get {
+                return ResourceManager.GetString("Categories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Active.
+        /// </summary>
+        internal static string CategoryActive {
+            get {
+                return ResourceManager.GetString("CategoryActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Arabic Name.
+        /// </summary>
+        internal static string CategoryARName {
+            get {
+                return ResourceManager.GetString("CategoryARName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document For Category.
+        /// </summary>
+        internal static string CategoryDocFile {
+            get {
+                return ResourceManager.GetString("CategoryDocFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Files.
+        /// </summary>
+        internal static string CategoryDocFiles {
+            get {
+                return ResourceManager.GetString("CategoryDocFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category English Name.
+        /// </summary>
+        internal static string CategoryENName {
+            get {
+                return ResourceManager.GetString("CategoryENName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category In-Active.
+        /// </summary>
+        internal static string CategoryInActive {
+            get {
+                return ResourceManager.GetString("CategoryInActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        internal static string CategoryIsActive {
+            get {
+                return ResourceManager.GetString("CategoryIsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Active.
+        /// </summary>
+        internal static string CategoryIsNotActive {
+            get {
+                return ResourceManager.GetString("CategoryIsNotActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Plan.
+        /// </summary>
+        internal static string CategoryPlan {
+            get {
+                return ResourceManager.GetString("CategoryPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category Status.
+        /// </summary>
+        internal static string CategoryStatus {
+            get {
+                return ResourceManager.GetString("CategoryStatus", resourceCulture);
             }
         }
         
@@ -241,6 +394,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Policy builder compatible with labor laws in.
+        /// </summary>
+        internal static string CountriesBuilderTitle {
+            get {
+                return ResourceManager.GetString("CountriesBuilderTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Country.
         /// </summary>
         internal static string Country {
@@ -255,6 +417,24 @@ namespace Resources {
         internal static string Create {
             get {
                 return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customers.
+        /// </summary>
+        internal static string Customers {
+            get {
+                return ResourceManager.GetString("Customers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default HR Manual Content.
+        /// </summary>
+        internal static string DefaultMB {
+            get {
+                return ResourceManager.GetString("DefaultMB", resourceCulture);
             }
         }
         
@@ -291,6 +471,213 @@ namespace Resources {
         internal static string Disagree {
             get {
                 return ResourceManager.GetString("Disagree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Active.
+        /// </summary>
+        internal static string DocFileActive {
+            get {
+                return ResourceManager.GetString("DocFileActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arabic Document Video Link.
+        /// </summary>
+        internal static string DocFileArLinkVideo {
+            get {
+                return ResourceManager.GetString("DocFileArLinkVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document File Arabic Name.
+        /// </summary>
+        internal static string DocFileArName {
+            get {
+                return ResourceManager.GetString("DocFileArName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Arabic Document.
+        /// </summary>
+        internal static string DocFileArUpload {
+            get {
+                return ResourceManager.GetString("DocFileArUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload Arabic Document Video.
+        /// </summary>
+        internal static string DocFileArUploadVideo {
+            get {
+                return ResourceManager.GetString("DocFileArUploadVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Country Domain.
+        /// </summary>
+        internal static string DocFileCountryDomain {
+            get {
+                return ResourceManager.GetString("DocFileCountryDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English Document Video Link.
+        /// </summary>
+        internal static string DocFileEnLinkVideo {
+            get {
+                return ResourceManager.GetString("DocFileEnLinkVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document File English Name.
+        /// </summary>
+        internal static string DocFileEnName {
+            get {
+                return ResourceManager.GetString("DocFileEnName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload English Document.
+        /// </summary>
+        internal static string DocFileEnUpload {
+            get {
+                return ResourceManager.GetString("DocFileEnUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload English Document Video.
+        /// </summary>
+        internal static string DocFileEnUploadVideo {
+            get {
+                return ResourceManager.GetString("DocFileEnUploadVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document is Free.
+        /// </summary>
+        internal static string DocFileFree {
+            get {
+                return ResourceManager.GetString("DocFileFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Free Status.
+        /// </summary>
+        internal static string DocFileFreeStatus {
+            get {
+                return ResourceManager.GetString("DocFileFreeStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document In-Active.
+        /// </summary>
+        internal static string DocFileInActive {
+            get {
+                return ResourceManager.GetString("DocFileInActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Active.
+        /// </summary>
+        internal static string DocFileIsActive {
+            get {
+                return ResourceManager.GetString("DocFileIsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free.
+        /// </summary>
+        internal static string DocFileIsFree {
+            get {
+                return ResourceManager.GetString("DocFileIsFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Active.
+        /// </summary>
+        internal static string DocFileIsNotActive {
+            get {
+                return ResourceManager.GetString("DocFileIsNotActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Free.
+        /// </summary>
+        internal static string DocFileIsNotFree {
+            get {
+                return ResourceManager.GetString("DocFileIsNotFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Links.
+        /// </summary>
+        internal static string DocFileIsVedioLink {
+            get {
+                return ResourceManager.GetString("DocFileIsVedioLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        internal static string DocFileIsVedioUpload {
+            get {
+                return ResourceManager.GetString("DocFileIsVedioUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document is Not Free.
+        /// </summary>
+        internal static string DocFileNotFree {
+            get {
+                return ResourceManager.GetString("DocFileNotFree", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Status.
+        /// </summary>
+        internal static string DocFileStatus {
+            get {
+                return ResourceManager.GetString("DocFileStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Document Video.
+        /// </summary>
+        internal static string DocFileVideo {
+            get {
+                return ResourceManager.GetString("DocFileVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is Document from YouTube or Upload.
+        /// </summary>
+        internal static string DocFileVideoIsYU {
+            get {
+                return ResourceManager.GetString("DocFileVideoIsYU", resourceCulture);
             }
         }
         
@@ -340,6 +727,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ended Subscription.
+        /// </summary>
+        internal static string EndedSubscription {
+            get {
+                return ResourceManager.GetString("EndedSubscription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         internal static string English {
@@ -367,11 +763,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Video Explainer.
+        /// </summary>
+        internal static string ExplainerVideo {
+            get {
+                return ResourceManager.GetString("ExplainerVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
         internal static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free Plan.
+        /// </summary>
+        internal static string FreePlan {
+            get {
+                return ResourceManager.GetString("FreePlan", resourceCulture);
             }
         }
         
@@ -439,11 +853,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hide Default Manual Builder.
+        /// </summary>
+        internal static string HideDefaultMBbtn {
+            get {
+                return ResourceManager.GetString("HideDefaultMBbtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         internal static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hr Check-up Terms.
+        /// </summary>
+        internal static string HrCheckUpTerms {
+            get {
+                return ResourceManager.GetString("HrCheckUpTerms", resourceCulture);
             }
         }
         
@@ -457,11 +889,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HR Manual Builder Plan.
+        /// </summary>
+        internal static string HRManualBuilderPlan {
+            get {
+                return ResourceManager.GetString("HRManualBuilderPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I Agree With.
         /// </summary>
         internal static string IAgreeWith {
             get {
                 return ResourceManager.GetString("IAgreeWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IN-ACTIVE.
+        /// </summary>
+        internal static string inactive {
+            get {
+                return ResourceManager.GetString("inactive", resourceCulture);
             }
         }
         
@@ -502,6 +952,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last Login.
+        /// </summary>
+        internal static string LastLogin {
+            get {
+                return ResourceManager.GetString("LastLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learn.
         /// </summary>
         internal static string Learn {
@@ -529,6 +988,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Login as.
+        /// </summary>
+        internal static string LoginAS {
+            get {
+                return ResourceManager.GetString("LoginAS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login Please.
         /// </summary>
         internal static string LoginPlease {
@@ -543,6 +1011,24 @@ namespace Resources {
         internal static string Logout {
             get {
                 return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Countries.
+        /// </summary>
+        internal static string ManageCountries {
+            get {
+                return ResourceManager.GetString("ManageCountries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage Plans Files.
+        /// </summary>
+        internal static string ManagePlansFiles {
+            get {
+                return ResourceManager.GetString("ManagePlansFiles", resourceCulture);
             }
         }
         
@@ -565,11 +1051,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manual Builder Plan Annually Terms.
+        /// </summary>
+        internal static string ManualBuilderPlanAnnuallyTerms {
+            get {
+                return ResourceManager.GetString("ManualBuilderPlanAnnuallyTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual Builder Plan Monthly Terms.
+        /// </summary>
+        internal static string ManualBuilderPlanMonthlyTerms {
+            get {
+                return ResourceManager.GetString("ManualBuilderPlanMonthlyTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to May be.
         /// </summary>
         internal static string Maybe {
             get {
                 return ResourceManager.GetString("Maybe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tool(s) is/are Available.
+        /// </summary>
+        internal static string MoreToolsAvailable {
+            get {
+                return ResourceManager.GetString("MoreToolsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Dashboard.
+        /// </summary>
+        internal static string MyDashboard {
+            get {
+                return ResourceManager.GetString("MyDashboard", resourceCulture);
             }
         }
         
@@ -619,11 +1141,92 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Active Subscriptions.
+        /// </summary>
+        internal static string NoActiveSubscriptions {
+            get {
+                return ResourceManager.GetString("NoActiveSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Previous Subscriptions.
+        /// </summary>
+        internal static string NoPreviousSubscriptions {
+            get {
+                return ResourceManager.GetString("NoPreviousSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Applicable.
         /// </summary>
         internal static string NotApplicable {
             get {
                 return ResourceManager.GetString("NotApplicable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Free Plan.
+        /// </summary>
+        internal static string NotFreePlan {
+            get {
+                return ResourceManager.GetString("NotFreePlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Date.
+        /// </summary>
+        internal static string NotificationDate {
+            get {
+                return ResourceManager.GetString("NotificationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Details.
+        /// </summary>
+        internal static string NotificationDetails {
+            get {
+                return ResourceManager.GetString("NotificationDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a preview of email that will send to Users.
+        /// </summary>
+        internal static string NotificationEmailTip {
+            get {
+                return ResourceManager.GetString("NotificationEmailTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        internal static string Notifications {
+            get {
+                return ResourceManager.GetString("Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Text.
+        /// </summary>
+        internal static string NotificationText {
+            get {
+                return ResourceManager.GetString("NotificationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notification Title.
+        /// </summary>
+        internal static string NotificationTitle {
+            get {
+                return ResourceManager.GetString("NotificationTitle", resourceCulture);
             }
         }
         
@@ -664,6 +1267,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paid.
+        /// </summary>
+        internal static string Paid {
+            get {
+                return ResourceManager.GetString("Paid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
         internal static string Password {
@@ -700,6 +1312,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Document For Plan.
+        /// </summary>
+        internal static string PlanDocFile {
+            get {
+                return ResourceManager.GetString("PlanDocFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plan Name.
         /// </summary>
         internal static string PlanName {
@@ -714,6 +1335,15 @@ namespace Resources {
         internal static string Plans {
             get {
                 return ResourceManager.GetString("Plans", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview.
+        /// </summary>
+        internal static string Preview {
+            get {
+                return ResourceManager.GetString("Preview", resourceCulture);
             }
         }
         
@@ -736,11 +1366,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous Subscriptions.
+        /// </summary>
+        internal static string PreviousSubscriptions {
+            get {
+                return ResourceManager.GetString("PreviousSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         internal static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General Terms and Conditions.
+        /// </summary>
+        internal static string PublicTerms {
+            get {
+                return ResourceManager.GetString("PublicTerms", resourceCulture);
             }
         }
         
@@ -759,6 +1407,24 @@ namespace Resources {
         internal static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registeration.
+        /// </summary>
+        internal static string Registeration {
+            get {
+                return ResourceManager.GetString("Registeration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registeration Terms.
+        /// </summary>
+        internal static string RegisterationTerms {
+            get {
+                return ResourceManager.GetString("RegisterationTerms", resourceCulture);
             }
         }
         
@@ -889,7 +1555,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to See Files.
+        ///   Looks up a localized string similar to Plan Files.
         /// </summary>
         internal static string SeeFiles {
             get {
@@ -925,6 +1591,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Default Manual Builder.
+        /// </summary>
+        internal static string ShowDefaultMBbtn {
+            get {
+                return ResourceManager.GetString("ShowDefaultMBbtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show Results.
         /// </summary>
         internal static string ShowResults {
@@ -948,6 +1623,15 @@ namespace Resources {
         internal static string SignUpNow {
             get {
                 return ResourceManager.GetString("SignUpNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sing up.
+        /// </summary>
+        internal static string singup {
+            get {
+                return ResourceManager.GetString("singup", resourceCulture);
             }
         }
         
@@ -993,6 +1677,42 @@ namespace Resources {
         internal static string StartUpMonthlyRegisterd {
             get {
                 return ResourceManager.GetString("StartUpMonthlyRegisterd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start-up Plan.
+        /// </summary>
+        internal static string StartUpPlan {
+            get {
+                return ResourceManager.GetString("StartUpPlan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start-up Plan Annually Terms.
+        /// </summary>
+        internal static string StartUpPlanAnnuallyTerms {
+            get {
+                return ResourceManager.GetString("StartUpPlanAnnuallyTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start-up Plan Monthly Terms.
+        /// </summary>
+        internal static string StartUpPlanMonthlyTerms {
+            get {
+                return ResourceManager.GetString("StartUpPlanMonthlyTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subject.
+        /// </summary>
+        internal static string Subject {
+            get {
+                return ResourceManager.GetString("Subject", resourceCulture);
             }
         }
         
@@ -1096,6 +1816,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Conditions Domain.
+        /// </summary>
+        internal static string TermsConditionDomain {
+            get {
+                return ResourceManager.GetString("TermsConditionDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms and Conditions.
+        /// </summary>
+        internal static string TermsConditions {
+            get {
+                return ResourceManager.GetString("TermsConditions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Conditions Text.
+        /// </summary>
+        internal static string TermsConditionText {
+            get {
+                return ResourceManager.GetString("TermsConditionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Conditions Title.
+        /// </summary>
+        internal static string TermsConditionTitle {
+            get {
+                return ResourceManager.GetString("TermsConditionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terms &amp; Condition for.
+        /// </summary>
+        internal static string TermsConditionType {
+            get {
+                return ResourceManager.GetString("TermsConditionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Terms of service.
         /// </summary>
         internal static string TermsOfService {
@@ -1159,6 +1924,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Updates.
+        /// </summary>
+        internal static string Updates {
+            get {
+                return ResourceManager.GetString("Updates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upgrade.
         /// </summary>
         internal static string Upgrade {
@@ -1200,6 +1974,60 @@ namespace Resources {
         internal static string UploadFile {
             get {
                 return ResourceManager.GetString("UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User will receive notification upon any changes in this manual..
+        /// </summary>
+        internal static string UserManulNotif {
+            get {
+                return ResourceManager.GetString("UserManulNotif", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        internal static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Details.
+        /// </summary>
+        internal static string ViewDetails {
+            get {
+                return ResourceManager.GetString("ViewDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Can View Your Profile And Edit it..
+        /// </summary>
+        internal static string ViewProfile {
+            get {
+                return ResourceManager.GetString("ViewProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Can View Your Subscriptions..
+        /// </summary>
+        internal static string ViewSubscriptions {
+            get {
+                return ResourceManager.GetString("ViewSubscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You Can View any updates sent by HRFactory..
+        /// </summary>
+        internal static string ViewUpdates {
+            get {
+                return ResourceManager.GetString("ViewUpdates", resourceCulture);
             }
         }
         

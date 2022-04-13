@@ -10,6 +10,9 @@ namespace HumanResourceHelth.Model
     {
         public string Name { get; set; }
         public string NameAr { get; set; }
+        public string CountryCode { get; set; }
+        public bool IsArabCountry { get; set; }
         public virtual List<User> Users { get; set; }
+
     }
 }

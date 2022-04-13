@@ -18,6 +18,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             {
                 FreeIndicators = _uow.IndicatorRepo.Search(x => x.SurveyTypeId == 1).Count(),
                 PaidIndicators = _uow.IndicatorRepo.Search(x => x.SurveyTypeId == 2).Count(),
+                BusinessIndicators = _uow.IndicatorRepo.Search(x => x.SurveyTypeId == 3).Count(),
                 Users = _uow.UserRepo.Search(x => x.IsAdmin == false && x.IsDeleted == false).Count(),
                 Countries = _uow.CountryRepo.Count(),
                 Industreis = _uow.IndustryRepo.Count(),
@@ -25,7 +26,12 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 PluginRequests = _uow.PluginRequestRepo.Count(),
                 Builders = _uow.SectionRepo.NumberOfBuilders() - 1,
                 Courses = 0,
-                Experts = _uow.ExpertsProfileRepo.Count()
+                Experts = _uow.ExpertsProfileRepo.Count(),
+                SurveyTypes = _uow.SurveyTypeRepo.Count(),
+                Terms = _uow.TermsConditionsRepo.Count(),
+                Updates=_uow.UpdatesRepo.Count(),
+                Files=_uow.DocFileRepo.Count()
+
             };
 
             return View(homeViewModel);

@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <input id="btnSave" type="button" class="btn btn-primary" value="@Resources.General.Save" />
-                        <a href="@Url.Action("Index")" class="btn btn-primary">@Resources.General.Back</a>
+                        <a href="@Url.Action("CountryBuilder","Section", new { Id=(int) Session["ActiveCountry"]})" class="btn btn-primary">@Resources.General.Back</a>
                     </div>
                 </div>
             </fieldset>
@@ -65,18 +65,24 @@
 <script>
     $("#btnSave").on("click", function () {
         var title = $("#txtTitle").val();
+        var country = 0;
         @if (((User)Session["User"]).IsAdmin)
         {
-            <text>var description = $("#txtDescription").val(); </text>
+            <text>var description = $("#txtDescription").val();
+        country = @Session["ActiveCountry"];
+        </text>
+
         }
         else
         {
-            <text>var description = ""; </text>
+            <text>var description = "";
+        country = @ViewBag.UserCountryID;
+        </text>
         }
         var parenId = $("#SectionId").val();
         $.ajax({
             url: "@Url.Action("Save", "Section")",
-            data: { title: title, description: description, parenId: parenId},
+            data: { title: title, description: description, parenId: parenId, CountryID: country},
             type: "GET",
             success: function () {
                 toastr.success("Data Saved Successffly")

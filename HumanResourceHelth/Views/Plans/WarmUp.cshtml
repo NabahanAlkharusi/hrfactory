@@ -3,8 +3,20 @@
 @{
     ViewBag.Title = "WarmUp";
     Session["Backto"] = "WarmUp";
+    //var hideClass = "";
+    //var hideloginbtnClass = "d-none";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string langText = isArabic ? "Arabic" : "";
+    bool isLogedin = Session["UserId"] == null ? false : true;
+    var dir = isArabic ? "rtl" : "ltr";
+    List<DocFile> Files = Session["PlanFiles"] == null ? null : (List<DocFile>)Session["PlanFiles"];
+    var align_table = isArabic ? "pr-5" : "";
 }
-
+@*@if (Session["UserId"] == null)
+    {
+        //hideClass = "d-none";
+        //hideloginbtnClass = "";
+    }*@
 @functions{
     IHtmlString GetContent(int contentId)
     {
@@ -24,17 +36,6 @@
         return Html.Raw(content);
     }
 }
-@{
-    var hideClass = "";
-    var hideloginbtnClass = "d-none";
-
-}
-@if (Session["UserId"] == null)
-{
-    hideClass = "d-none";
-    hideloginbtnClass = "";
-}
-
 <!-- Page title --->
 <div id="page-title" class="text-grey background-overlay " style="background-image: url('@Url.Content("~/assets/img/warmup.jpg")');background-size: cover;background-repeat: no-repeat;">
     <div>
@@ -69,21 +70,11 @@
 
 </div>
 <!-- Page title --->
-@{
-    string langText = "";
-
-
-
-    if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-    {
-        langText = "Arabic";
-    }
-}
 
 <section class="padding-tb-80px background-white">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 make-div-middle text-center">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="clearfix margin-bottom-30px">
@@ -129,7 +120,7 @@
                     <h1 class="text-center cms" data-contentId="70">@GetContent(70)</h1>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
+                    <div class="col-lg-4 col-md-10 sm-mb-30px wow fadeInUp pb-3">
                         <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                             <div class="position-relative background-beig">
                                 <div class="date z-index-101 padding-10px"></div>
@@ -167,14 +158,15 @@
 
                                 <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="74">@GetContent(74)</div>
                                 <div class="padding-bottom-22px">
-                                    <a href="../TrainingHome#learnOnline" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 @hideClass">@Resources.General.OrderHere</a>
-
-                                    
+                                    @if (isLogedin)
+                                    {
+                                        <a href="../TrainingHome#learnOnline" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.OrderHere</a>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
+                    <div class="col-lg-4 col-md-10 sm-mb-30px wow fadeInUp pb-3">
                         <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                             <div class="position-relative background-beig">
                                 <div class="date z-index-101 padding-10px"></div>
@@ -207,41 +199,61 @@
                                     <a href="@Url.Action("Materials","Plans", new { plan = "WarmUp"})" class="text-extra-large d-block ">@GetContent(72)</a>
                                 }
 
-                                <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="75">@GetContent(75)</div>
+                                <div class="text-center padding-lr-30px padding-bottom-10px cms" data-contentId="75">@GetContent(75)</div>
 
                                 <div>
                                     @{
                                         int counter = 1;
                                     }
-                                    @foreach (DirectoryInfo directoryInfo in Model)
-                                    {
-                                        <div class="col col-md-12">
-                                            <h4>@directoryInfo.Name</h4>
-                                        </div>
-                                        counter = 0;
-                                        foreach (FileInfo file in directoryInfo.GetFiles())
-                                        {
-                                            if (counter > 1) { continue; }
-                                            counter++;
+                                    <table class="table border-0 @align_table" dir="@dir">
+                                        <tbody class="">
 
-                                            <div class="col col-md-12">
-                                                <a href="@Url.Content(string.Format("~/Areas/plansData/WarmUp/Categories{0}/{1}/{2}",ViewBag.Lang, directoryInfo.Name,file.Name ))" download>@file.Name</a>
-                                            </div>
-                                        }
-                                    }
-                                    <br />
+                                            @foreach (DocFile docFile in Files)
+                                            {
+                                                if (counter > 3) { break; }
+                                                counter++;
+                                                <tr class="noborder">
+
+
+                                                    <td class="text-center"><i class="fa-solid fa-book-open"></i></td>
+                                                    <td class="text-center">
+                                                        @if (isArabic)
+                                                        {
+                                                            <h5>@docFile.NameAr </h5>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5>@docFile.Name</h5>
+                                                        }
+                                                    </td>
+
+                                                </tr>
+
+                                            }
+                                            <tr>
+                                                <td colspan="2" class="text-center">
+                                                    @if (isLogedin)
+                                                    {
+                                                        <a href="@Url.Action("Materials", "Plans", new { plan = "WarmUp" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                            @Resources.General.Around (@Files.Count) @Resources.General.MoreToolsAvailable
+                                                        </a>}
+                                                    else
+                                                    {
+                                                        <span class="h6 text-danger underline">@Resources.General.Around (@Files.Count) @Resources.General.MoreToolsAvailable</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
                                 </div>
 
-                                <div class="padding-bottom-22px">
-                                    <a href="@Url.Action("Materials","Plans", new { plan = "WarmUp"})" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8  @hideClass">
-                                        @Resources.General.SeeFiles
-                                    </a>
-                                </div>
+
 
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp">
+                    <div class="col-lg-4 col-md-10 sm-mb-30px wow fadeInUp pb-3">
                         <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                             <div class="position-relative background-beig">
                                 <div class="date z-index-101 padding-10px"></div>
@@ -281,11 +293,20 @@
                                             @Resources.General.Start
                                         </a>
                                     }
+                                    else if (ViewBag.numberOfBHChecks == 0)
+                                    {
+                                        <a href="@Url.Action("BusinessHC","Survey")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                            @Resources.General.BusinessHealthCheck
+                                        </a>
+                                    }
                                     else
                                     {
-                                        <a href="../Plans/StartUp#builder_s" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 @hideClass">
-                                            @Resources.General.Upgrade
-                                        </a>
+                                        if (isLogedin)
+                                        {
+                                            <a href="../Plans/StartUp#builder_s" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                @Resources.General.Upgrade
+                                            </a>
+                                        }
                                     }
 
                                 </div>
@@ -295,10 +316,11 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <div class="padding-bottom-22px col-lg-12">
-
-
-                        <a href="../Login/Index" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 @hideloginbtnClass">@Resources.General.Login</a>
+                    <div class="padding-tb-22px col-lg-12">
+                        @if (!isLogedin)
+                        {
+                            <a href="../Login/Index" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Login</a>
+                        }
                     </div>
                 </div>
             </div>

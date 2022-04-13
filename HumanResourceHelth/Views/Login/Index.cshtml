@@ -17,24 +17,20 @@
         }
 
         return Html.Raw(content);
-    } }
-@{
-    var dir = "ltr";
-    var pullText = "text-left";
-    var pullIcon = "text-right";
-    var checkInput = "pr-3";
-    var Checklable = "pl-3";
+    }
+
 }
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-{
-    dir = "rtl";
-    pullText = "text-right";
-    pullIcon = "text-left";
-    checkInput = "pl-4";
-    Checklable = "pr-4";
+@{
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir =isArabic? "rtl": "ltr";
+    var pullText =isArabic? "text-right": "text-left";
+    var pullIcon = isArabic? "text-left":"text-right";
+    var checkInput = isArabic? "pl-4":"pr-3";
+    var Checklable = isArabic? "pr-4":"pl-3";
 }
 
-<div id="page-title" class="text-grey background-overlay " style="background-image: url('@Url.Content("~/assets/img/aboutus.jpg")');">
+
+<div id="page-title" class="text-grey background-overlay " style="background-image: url('@Url.Content("~/assets/img/aboutus.jpg")');" dir="@dir">
     <div>
         <div class="container padding-tb-185px z-index-2 position-relative">
             <h1 class="font-weight-700 text-capitalize page-title-about cms" data-contentId="63">@GetContent(63)</h1>
@@ -63,7 +59,10 @@
                         </div>
                         <div class="form-group @pullText">
                             <label for="txtPassword" class="col-form-label"><strong>@Resources.General.Password</strong></label>
-                            <input type="password" class="form-control rounded-0" id="txtPassword" placeholder="@Resources.General.Password">
+                            <div class="input-group" dir="ltr">
+                                <span class="input-group-addon"> <i id="iofpass" class="fa fa-eye-slash" onclick="showPss('txtPassword','iofpass')"></i></span>
+                                <input type="password" class="form-control rounded-0" id="txtPassword" placeholder="@Resources.General.Password">
+                            </div>
                         </div>
                         <div class="form-group @pullText">
                             <div class="form-check font-weight-700">
@@ -82,7 +81,7 @@
                 <div class="padding-30px background-white border-1 border-grey-1 pb-0">
                     <div class="form-group" dir="@dir">
                         <div class="margin-bottom-20px margin-top-20px">
-                            <a href="@Url.Action("Register","Login")" class="btn btn-primary btn-block rounded-0 background-main-color"> <span class="text-uppercase @pullText">@Resources.General.SignUpNow</span><i class="fa fa-user margin-right-10px @pullIcon" aria-hidden="true"></i></a>
+                            <a href="@Url.Action("Register","Login")" class="btn btn-primary btn-block rounded-0 background-main-color"> <span class="text-uppercase @pullText">@Resources.General.singup</span><i class="fa fa-user margin-right-10px @pullIcon" aria-hidden="true"></i></a>
                             <span class="d-block text-grey-2  mt-3 text-center">
                                 @Resources.General.BySigningUpYouAcceptOur
                                 <a href="#" class="text-blue" data-toggle="modal" data-target="#exampleModal">
@@ -112,12 +111,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel" class="modal-title cms" data-contentId="66">@GetContent(66)</h5>
+                <h5 id="exampleModalLabel" class="modal-title cms" data-contentId="00000">@ViewBag.RegistrationTitle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body cms" data-contentId="67">@GetContent(67)</div>
+            <div class="modal-body cms" data-contentId="67">@Html.Raw(ViewBag.Registration)</div>
         </div>
     </div>
 </div>

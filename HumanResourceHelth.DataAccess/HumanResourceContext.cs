@@ -50,7 +50,10 @@ namespace HumanResourceHelth.DataAccess
         public DbSet<Coupons> coupons { get; set; }
         public DbSet<IntroVedio> introVedios { get; set; }
         public DbSet<ExpertsProfile> Experts { get; set; }
-
+        public DbSet<TermsConditions> TermsConditions { get; set; }
+        public DbSet<Updates> Updates { get; set; }
+        public DbSet<SemiNotifications> SemiNotifications { get; set; }
+        //public DbSet<Category> Categories { get; set; }
         public HumanResourceContext() : base("HumanResourceContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<HumanResourceContext, Migrations.Configuration>());

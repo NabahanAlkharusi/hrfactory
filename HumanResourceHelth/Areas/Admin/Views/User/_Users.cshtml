@@ -1,34 +1,44 @@
 ﻿@using HumanResourceHelth.Model
 @model List<User>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Last Login</th>
-            <td>Email</td>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ int counter = 1;}
-        @foreach (User user in Model)
-        {
-            <tr>
-                <td>@(counter++)</td>
-                <td>@user.Name</td>
-                <td>@user.LastLoginDate</td>
-                <td>@user.Email</td>
-                <td>
-                    <a href="@(Url.Action("Plans", "User", new {userId = user.Id}))">Plans</a> |
-                    <a href="@(Url.Action("Details", "User", new {userId = user.Id}))">Details</a> |
-                    <a href="@(Url.Action("LoginAs", "User", new {userId = user.Id}))" target="_blank">Login As</a> |
-                    <a href="javascript:void(0);" data-UserId="@user.Id" class="lnkDelete" style="color:red;">Delete</a>
-                </td>
+@{ bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "ltr";
+    var table_header_text = isArabic ? "text-right" : "";}
+<div class="table-responsive" dir="@dir">
+    <table class="table table-hover table-striped h4">
+        <thead>
+            <tr >
+                <th class="@table_header_text">#</th>
+                <th class="@table_header_text">@Resources.General.Name</th>
+                <th class="@table_header_text">@Resources.General.LastLogin</th>
+                <th class="@table_header_text">@Resources.General.Email</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{ int counter = 1;}
+            @foreach (User user in Model)
+            {
+<tr >
+    <td>@(counter++)</td>
+    <td>
+        @if (isArabic)
+        {@user.NameAr}
+    else
+    {
+    @user.Name}
+    </td>
+    <td>@user.LastLoginDate</td>
+    <td>@user.Email</td>
+    <td>
+        <a href="@(Url.Action("Plans", "User", new {userId = user.Id}))">@Resources.General.ThePlans</a> |
+        <a href="@(Url.Action("Details", "User", new {userId = user.Id}))">@Resources.General.Details</a> |
+        <a href="@(Url.Action("LoginAs", "User", new {userId = user.Id}))" target="_blank">@Resources.General.LoginAS</a> |
+        <a href="javascript:void(0);" data-UserId="@user.Id" class="lnkDelete" style="color:red;">@Resources.General.Delete</a>
+    </td>
+</tr>}
+        </tbody>
+    </table>
+</div>
 
 <script>
     $(".lnkDelete").on("click", function () {
@@ -44,7 +54,7 @@
                     $("#divUsers").html(data);
                 },
                 error: function (err) {
-                    toastr.error(err.status)    
+                    toastr.error(err.status)
                 }
             });
         }

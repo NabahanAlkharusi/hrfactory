@@ -40,10 +40,11 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         }
         public ActionResult Create(int indicatorId)
         {
+            int surveyID = _uow.IndicatorRepo.FindById(indicatorId).SurveyTypeId;
             QuestionViewModel questionViewModel = new QuestionViewModel()
             {
                 IndicatorId= indicatorId,
-                indicators = _uow.IndicatorRepo.GetAll()
+                indicators = _uow.IndicatorRepo.GetAll().Where(z=>z.SurveyTypeId==surveyID).ToList()
             };
             return View("_Save", questionViewModel);
         }

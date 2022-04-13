@@ -7,6 +7,7 @@ using System.Net;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using Newtonsoft.Json;
 
 namespace HumanResourceHelth.Web.Areas.Admin.Controllers
 {
@@ -39,6 +40,13 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         public ActionResult LoginAs(int userId)
         {
             User user = _uow.UserRepo.FindById(userId);
+            SemiNotifications notification = _uow.SemiNotificationRepo.Search(a => a.UserId == userId).FirstOrDefault();
+            string unreadNotification = notification == null ? "" : notification.UnReadNotifi;
+            if (unreadNotification != "" && unreadNotification != null)
+            {
+                List<int> unreadNotificationList = JsonConvert.DeserializeObject<List<int>>(unreadNotification);
+                Session["Notification"] = unreadNotificationList.Count();
+            }
             Session["UserId"] = user.Id;
             Session["User"] = user;
             Session["CMS"] = false;
@@ -119,7 +127,11 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             List<Section> userSections = new List<Section>();
             if (_uow.SectionRepo.Search(x => x.UserId == userId).Count() > 0) return;
             int adminId = _uow.UserRepo.Search(x => x.IsAdmin).Single().Id;
-            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId).ToList();
+
+            User user = _uow.UserRepo.FindById(userId);
+            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId).ToList();
+            if (adminSections == null)
+                adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == 158).ToList();
             List<Section> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
             foreach (Section parent in parentAdminSections)
             {
@@ -132,6 +144,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                     LanguageId = parent.LanguageId,
                     IsActive = parent.IsActive,
                     Content = parent.Content,
+                    CountryID = parent.CountryID,
+                    SectionId = parent.SectionId,
                     Childs = new List<Section>(),
                 };
 
@@ -146,6 +160,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                         LanguageId = parent.LanguageId,
                         IsActive = parent.IsActive,
                         Content = child.Content,
+                        CountryID = child.CountryID,
+                        SectionId = child.SectionId,
                     };
                     parentUserSection.Childs.Add(childUserSection);
                 }
@@ -164,7 +180,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             Session["eligableForFreeSU"] = false;
             Session["eligableForFreeMB"] = false;
             List<UserPlan> subscriptionPlan = _uow.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
-            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id ).ToList();
+            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id).ToList();
             if (subscriptionPlan1.Count == 0)
             {
                 Session["eligableForFree"] = true;
@@ -204,7 +220,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                     Session["eligableForFree"] = false;
             }
             Session["userPlans"] = subscriptionPlan;
-
+            Session["userPlansCount"] = subscriptionPlan.Count > 0 ? subscriptionPlan.Count.ToString() : null;
         }
     }
 }

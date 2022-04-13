@@ -457,7 +457,6 @@ else
         debugger;
         console.log("Save Started");
         var answers = [];
-
         var isNotAnswered = false;
 
         $('.questions').each(function () {
@@ -468,16 +467,21 @@ else
             var answer = $("input[name='rdoQuestion" + questionId + "']:checked").val();
             if (answer == undefined) {
                 isNotAnswered = true;
+                toastr.error("this Question is not answered");
+                console.log("ttttttt" + indicatorId + "  ========  " + @ViewBag.SurveyTypeId);
+                $("input[name='rdoQuestion" + questionId + "']").focus();
             }
             console.log("questionId : " + questionId + ", answer : " + answer);
             var item = {};
             item["QuestionId"] = questionId;
             item["Answer"] = answer;
             item["IndicatorId"] = indicatorId;
+
             answers.push(item);
         });
 
         if (isNotAnswered) {
+            
             toastr.error("Please Answer All Questions");
             return;
         }
@@ -508,6 +512,8 @@ else
         animating = true;
 
         current_fs = $(this).parent();
+
+        console.log(current_fs);
         next_fs = $(this).parent().next();
 
         //activate next step on progressbar using the index of next_fs
@@ -592,6 +598,7 @@ else
         $(".next").click(function () {
 
             current_fs = $(this).parent();
+            
             next_fs = $(this).parent().next();
 
             //Add Class Active

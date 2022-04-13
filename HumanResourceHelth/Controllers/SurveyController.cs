@@ -156,7 +156,38 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult Intro()
         {
+            bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+            int UserCountryId=158;
+            if (Session["UserId"] != null)
+            {
+                int userId = (int)Session["UserId"];
+                UserCountryId = _uow.UserRepo.FindById(userId).CountryId;
+            }
+            List<TermsConditions> terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId).ToList();
+            terms = terms.Count == 0 ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158).ToList() : terms;
+            TermsConditions conditions = terms.Where(x => x.TermsConditionType == (int)TermsConditionType.HrCheckUp).FirstOrDefault();
+            ViewBag.SurveyTermsTitle = isArabic ? conditions.ArabicTitle : conditions.EnglishTitle;
+            ViewBag.SurveyTermsText = isArabic ? conditions.ArabicText : conditions.EnglishText;
             return View();
+        }
+        public ActionResult BusinessHC()
+        {
+
+            int surveyTypeId = 3;
+            if (Session["UserId"] == null)
+                return RedirectToAction("Index", "Login");
+
+            int userId = (int)Session["UserId"];
+            User user = _uow.UserRepo.FindById(userId);
+          
+
+            List<Indicator> indicators = _uow.IndicatorRepo.Search(x => x.SurveyTypeId == surveyTypeId).ToList();
+            SurveyViewModel surveyViewModel = new SurveyViewModel()
+            {
+                indicators = indicators
+            };
+            ViewBag.SurveyTypeId = surveyTypeId;
+            return View(surveyViewModel);
         }
     }
 }

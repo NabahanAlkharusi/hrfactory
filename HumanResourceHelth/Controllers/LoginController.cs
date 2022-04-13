@@ -1,6 +1,7 @@
 ﻿using HumanResourceHelth.DataAccess;
 using HumanResourceHelth.Model;
 using HumanResourceHelth.Web.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace HumanResourceHelth.Web.Controllers
         {
             Session["Content"] = _uow.ContentRepo.GetAll();
             //ViewBag.Referrer = Request.UrlReferrer.ToString();
+            bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+            TermsConditions terms = _uow.TermsConditionsRepo.Search(
+                z => z.TermsConditionType == (int)TermsConditionType.Registeration &&
+                z.CountryId == 0).FirstOrDefault();
+            ViewBag.RegistrationTitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+            ViewBag.Registration = isArabic ? terms.ArabicText : terms.EnglishText;
             return View();
         }
 
@@ -39,6 +46,13 @@ namespace HumanResourceHelth.Web.Controllers
                      return new HttpStatusCodeResult(HttpStatusCode.OK, "Survey");
  */
                 //return Redirect(Request.UrlReferrer.ToString());
+                SemiNotifications notification = _uow.SemiNotificationRepo.Search(a => a.UserId == user.Id).FirstOrDefault();
+                string unreadNotification = notification == null ? "" : notification.UnReadNotifi;
+                if (unreadNotification != "" && unreadNotification != null)
+                {
+                    List<int> unreadNotificationList = JsonConvert.DeserializeObject<List<int>>(unreadNotification);
+                    Session["Notification"] = unreadNotificationList.Count();
+                }
                 if (Session["Backto"] != null)
                     return new HttpStatusCodeResult(HttpStatusCode.OK, Session["Backto"].ToString());
                 return new HttpStatusCodeResult(HttpStatusCode.OK, "Home");
@@ -84,7 +98,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
             RegisterViewModels registerViewModels = new RegisterViewModels
             {
-                Countries = _uow.CountryRepo.GetAll(),
+                Countries = _uow.CountryRepo.GetAll().OrderBy(x => x.NameAr).OrderByDescending(s => s.IsArabCountry).ToList(),
                 Industries = _uow.IndustryRepo.GetAll()
             };
             return View(registerViewModels);
@@ -93,13 +107,17 @@ namespace HumanResourceHelth.Web.Controllers
         [HttpPost]
         public ActionResult Save(User myUser)
         {
-            ViewBag.Country = _uow.CountryRepo.GetAll();
+            List<Country> countries = _uow.CountryRepo.GetAll();
+            ViewBag.Country = countries;
             ViewBag.Industry = _uow.IndustryRepo.GetAll();
-
+            var countryCode = Request["CountryId"];
             User user = _uow.UserRepo.Search(x => x.Email == myUser.Email).SingleOrDefault();
             myUser.LastLoginDate = DateTime.Now;
+            myUser.CountryId = countries.Find(x => x.CountryCode == countryCode).Id;
             if (user != null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Email Already Exist");
+            ModelState["CountryId"].Errors.Clear();
+            ModelState.SetModelValue("CountryId", new ValueProviderResult(myUser.CountryId, "", System.Globalization.CultureInfo.CurrentCulture));
 
             if (!ModelState.IsValid)
             {
@@ -161,12 +179,14 @@ namespace HumanResourceHelth.Web.Controllers
                 msgs.Body = htmlBody;
                 msgs.IsBodyHtml = true;
                 SmtpClient client = new SmtpClient();
+                //client.Host = "smtpout.asia.secureserver.net";
                 client.Host = "relay-hosting.secureserver.net";
+                //client.Port = 80;
                 client.Port = 25;
                 client.Timeout = 100000;
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = false;
-                client.Credentials = new System.Net.NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
+                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
                 //Send the msgs  
                 client.Send(msgs);
                 ViewBag.Status = "Email Sent Successfully.";
@@ -210,12 +230,14 @@ namespace HumanResourceHelth.Web.Controllers
                 msgs.IsBodyHtml = true;
                 SmtpClient client = new SmtpClient();
                 client.Host = "relay-hosting.secureserver.net";
+                //client.Host = "smtpout.asia.secureserver.net";
                 //client.Host = "smtpout.secureserver.net";
+                //client.Port = 80;
                 client.Port = 25;
                 client.Timeout = 100000;
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = false;
-                client.Credentials = new System.Net.NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
+                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
                 //Send the msgs  
                 client.Send(msgs);
                 ViewBag.Status = "Email Sent Successfully.";
@@ -260,7 +282,7 @@ namespace HumanResourceHelth.Web.Controllers
                 client.Timeout = 100000;
                 client.UseDefaultCredentials = false;
                 client.EnableSsl = false;
-                client.Credentials = new System.Net.NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
+                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
                 //Send the msgs  
                 client.Send(msgs);
                 ViewBag.Status = "Email Sent Successfully.";
@@ -298,7 +320,7 @@ namespace HumanResourceHelth.Web.Controllers
             Session["eligableForFreeSU"] = false;
             Session["eligableForFreeMB"] = false;
             List<UserPlan> subscriptionPlan = _uow.UserPlanRepo.Search(x => x.UserId == user.Id && x.IsActive).ToList();
-            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id ).ToList();
+            List<UserPlan> subscriptionPlan1 = _uow.UserPlanRepo.Search(x => x.UserId == user.Id).ToList();
             if (subscriptionPlan1.Count == 0)
             {
                 Session["eligableForFree"] = true;
@@ -338,7 +360,7 @@ namespace HumanResourceHelth.Web.Controllers
                     Session["eligableForFree"] = false;
             }
             Session["userPlans"] = subscriptionPlan;
-
+            Session["userPlansCount"] = subscriptionPlan.Count > 0 ? subscriptionPlan.Count.ToString() : null;
         }
     }
 }

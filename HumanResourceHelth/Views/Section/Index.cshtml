@@ -3,6 +3,10 @@
 @{ ViewBag.Title = "Index"; }
 @{ var dir = "ltr";
     var videoSrc = "";
+    var AddMore = "pull-right";
+    var CCountrybtnC = "";
+    var EditDisplayClass = "display:none";
+    string ShowDefualtMBbtn = "text-right";
     if (Convert.ToInt32(ViewBag.vediosCount) > 0)
     {
         if (ViewBag.IsUploaded) { videoSrc = "../IntroVedio/" + ViewBag.EnglishUploaded; }
@@ -15,6 +19,8 @@
 @if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
 {
     dir = "rtl";
+    AddMore = "pull-left";
+    ShowDefualtMBbtn = "";
     if (Convert.ToInt32(ViewBag.vediosCount) > 0)
     {
         if (ViewBag.IsUploaded) { videoSrc = "../IntroVedio/" + ViewBag.ArabicUploaded; }
@@ -26,39 +32,101 @@
 }
 
 
-<section class="padding-top-80px padding-bottom-10px background-white" dir="@dir">
+<section class="padding-top-80px  padding-bottom-10px background-white" dir="@dir">
     <div class="container">
 
 
         @if (Session["CMS"] != null && (bool)Session["CMS"] == true && Convert.ToInt32(ViewBag.vediosCount) == 0)
         {
-<div class="row p-2 justify-content-center">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-        @Resources.General.AddIntroVideo
-    </button>
-</div>}
+            <div class="row p-2 justify-content-center">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    @Resources.General.AddIntroVideo
+                </button>
+            </div>}
         @if (Convert.ToInt32(ViewBag.vediosCount) > 0)
         {
-<fieldset>
-    <legend>How To use this builder</legend>
-    <div class="row p-2 justify-content-center">
-        <iframe width="980" height="350"
-                src="@videoSrc">
-        </iframe>
-    </div>
-</fieldset>}
+            <fieldset>
+                <legend>How To use this builder</legend>
+                <div class="row p-2 justify-content-center">
+                    <iframe width="980" height="350"
+                            src="@videoSrc">
+                    </iframe>
+                </div>
+            </fieldset>}
+        @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
+        {
+            EditDisplayClass = "";
+            <div class="row pb-4" dir="@dir">
+                <div class="card w-100">
+                    <div class="card-header text-right">
+                        @Resources.General.CountriesBuilderTitle
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach (HumanResourceHelth.Model.Country country in Model.Countries)
+                            {
+                                if (ViewBag.CurrentCID == null)
+                                {
+                                    if (country.Id == 158)
+                                    {
+                                        CCountrybtnC = "btn-success";
+                                    }
+                                    else
+                                    {
+                                        CCountrybtnC = "btn-primary";
+                                    }
+                                }
+                                else
+                                {
+                                    if (country.Id == ViewBag.CurrentCID)
+                                    {
+                                        CCountrybtnC = "btn-success";
+                                    }
+                                    else
+                                    {
+                                        CCountrybtnC = "btn-primary";
+                                    }
+                                }
+                                <div class="col-xl-2 col-lg-2 col-2 justify-content-lg-start">
+                                    @if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+                                    {
+                                        @Html.ActionLink(country.NameAr, "CountryBuilder", "Section", new { Id = country.Id }, new { @class = "btn " + @CCountrybtnC });
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink(country.Name, "CountryBuilder", "Section", new { Id = country.Id }, new { @class = "btn " + @CCountrybtnC });
+                                    }
+                                </div>}
+                        </div>
+
+                        <a href="#" class="btn btn-primary @AddMore" data-toggle="modal" data-target="#AddNewCountry">@Resources.General.New</a>
+
+                    </div>
+                </div>
+            </div>}
         <div class="row pb-4">
-            <div class="col-xl-2 col-lg-4 col-4 justify-content-lg-start">
+
+            <div class="col-4">
                 <!-- lang dropdown -->
                 @if (Session["lang"].ToString() == "en-US")
                 {
-    <a class="btn btn-primary p-2" href="@Url.Action("ChangeLanguage","Home", new { lang = "ar-EG"})" id="dropdownMenuLink" dir="rtl"> الصانع باللغة العربية/Builder in Arabic</a> }
-else
-{
-<a class="btn btn-primary p-2" href="@Url.Action("ChangeLanguage","Home", new { lang = "en-US"})" id="dropdownMenuLink" dir="rtl">الصانع باللغة الإنجليزية/Builder in English</a>}
+                    <a class="btn btn-primary p-2" href="@Url.Action("ChangeLanguage","Home", new { lang = "ar-EG"})" id="dropdownMenuLink" dir="rtl"> الصانع باللغة العربية/Builder in Arabic</a> }
+                else
+                {
+                    <a class="btn btn-primary p-2" href="@Url.Action("ChangeLanguage","Home", new { lang = "en-US"})" id="dropdownMenuLink" dir="rtl">الصانع باللغة الإنجليزية/Builder in English</a>}
 
                 <!-- // lang dropdown -->
             </div>
+
+            @*==========================================*@
+            @if (Session["CMS"] == null || (bool)Session["CMS"] != true)
+            {
+                <div class="col-7 @ShowDefualtMBbtn">
+                    <button class="btn btn-primary p-2" id="ShowDefualtMBbtn">@Resources.General.ShowDefaultMBbtn</button>
+                    
+                </div>
+            }
+            @*==================================*@
         </div>
         <div class="row">
             <div class="col-lg-3 btn-acc">
@@ -73,82 +141,153 @@ else
                                 {
                                     if (Model.Sections[i].ParenId == null)
                                     {<!-- Release Item -->
-                                                                <ul class="releaseRow row " data-SectionId="@Model.Sections[i].Id">
-                                                                    <div class="list_icon">
-                                                                    <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
-                                                                    <li class="col-lg-8 col-8 rcol tc showTracks"><span>@Model.Sections[i].Title</span></li>
-                                                                    <li class="col-lg-3 col-3 rcol actions_icon">
-                                                                        <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.Sections[i].Id"><i class="far fa-edit"></i></a>
-                                                                        <a href="javascript:void(0)" onclick="return deleteSection(@Model.Sections[i].Id);"><i class="far fa-trash-alt"></i></a>
-                                                                        <a href="#">
-                                                                            <label class="switch">
-                                                                                @if (Model.Sections[i].IsActive)
-                                                                                {
-                                                        <input class="chkActivate" checked data-SectionId="@Model.Sections[i].Id" type="checkbox"> }
+                                        <ul class="releaseRow row " data-SectionId="@Model.Sections[i].Id">
+                                            <div class="list_icon">
+                                            <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                            <li class="col-lg-8 col-8 rcol tc showTracks"><span>@Model.Sections[i].Title</span></li>
+                                            <li class="col-lg-3 col-3 rcol actions_icon">
+                                                <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.Sections[i].Id"><i class="far fa-edit"></i></a>
+                                                <a href="javascript:void(0)" onclick="return deleteSection(@Model.Sections[i].Id);"><i class="far fa-trash-alt"></i></a>
+                                                <a href="#">
+                                                    <label class="switch">
+                                                        @if (Model.Sections[i].IsActive)
+                                                        {
+                                                            <input class="chkActivate" checked data-SectionId="@Model.Sections[i].Id" type="checkbox"> }
+                                                        else
+                                                        {
+                                                            <input class="chkActivate" data-SectionId="@Model.Sections[i].Id" type="checkbox">}
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </a>
+                                            </li>
+                            </div>
+                            <li class="releaseTracks">
+
+                                @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
+                                {
+
+                                    <ul class="trackRow" data-SectionId="@Item.Id">
+
+                                        <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                        <li class="col-lg-6 col-6 rcol">@Item.Title</li>
+                                        <li class="col-lg-4 col-4 fa-pull-right rcol tc">
+                                            @{ string showActions = "";
+                                                string disabled = "";}
+                                            @if (!Item.IsActive)
+                                            {
+                                                showActions = "d-none";
+                                            }
+                                            @if ((bool)ViewBag.IsFreeTrial && !Item.IsActive)
+                                            {
+                                                <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>}
+                                            else
+                                            {
+                                                <a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit @showActions"></i></a>
+                                                <a href="javascript:void(0)" onclick="return deleteSection(@Item.Id);"><i class="far fa-trash-alt red @showActions"></i></a>}
+                                            <a href="#">
+                                                <label class="switch">
+                                                    @if (Item.IsActive)
+                                                    {
+                                                        <input checked class="chkActivate" data-SectionId="@Item.Id" type="checkbox"> }
                                                     else
                                                     {
-                            <input class="chkActivate" data-SectionId="@Model.Sections[i].Id" type="checkbox">}
-
-                                                                                <span class="slider round"></span>
-                                                                            </label>
-                                                                        </a>
-                                                                    </li>
-                                                    </div>
-                                                    <li class="releaseTracks">
-
-                                                        @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
-                                                        {
-
-                                <ul class="trackRow" data-SectionId="@Item.Id">
-                                    
-                                    <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
-                                    <li class="col-lg-6 col-6 rcol">@Item.Title</li>
-                                    <li class="col-lg-4 col-4 fa-pull-right rcol tc">
-                                        @{ string showActions = "";
-                                            string disabled = "";}
-                                        @if (!Item.IsActive)
-                                        {
-                                            showActions = "d-none";
-                                        }
-                                        @if ((bool)ViewBag.IsFreeTrial && !Item.IsActive)
-                                        {
-            <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>}
-        else
-        {
-<a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit @showActions"></i></a>
-                                <a href="javascript:void(0)" onclick="return deleteSection(@Item.Id);"><i class="far fa-trash-alt red @showActions"></i></a>}
-                                        <a href="#">
-                                            <label class="switch">
-                                                @if (Item.IsActive)
-                                                {
-                    <input checked class="chkActivate" data-SectionId="@Item.Id" type="checkbox"> }
-                else
-                {
-                    if ((bool)ViewBag.IsFreeTrial)
-                    { disabled = "disabled"; }
-<input class="chkActivate" data-SectionId="@Item.Id" type="checkbox" @disabled>}
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </a>
-                                    </li>
-                                </ul>}
-                                                    </li>
-                                                    </ul>}
-                                            }
-                                        }
+                                                        if ((bool)ViewBag.IsFreeTrial)
+                                                        { disabled = "disabled"; }
+                                                        <input class="chkActivate" data-SectionId="@Item.Id" type="checkbox" @disabled>}
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </a>
+                                        </li>
+                                    </ul>}
+                            </li>
+                            </ul>}
+                    }
+                }
 
 
                             </li>
                             </ul>
                         </div>
                         <hr>
-                        <a class="btn btn-primary" href="@Url.Action(" Create", "Section" )" role="button">@Resources.General.NewSection</a>
+                        <a class="btn btn-primary" href="@Url.Action("Create", "Section" )" role="button">@Resources.General.NewSection</a>
                         <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section" )" role="button">@Resources.General.Download</a>
                         <hr>
                         <a class="btn btn-primary" href="@Url.Action(" Index", "Builder" )" role="button">@Resources.General.Back</a>
                         <hr>
                     </div>
-                    <div class="col-lg-9" id="divEditSection" dir="@dir">
+                    @if (Session["CMS"] == null || (bool)Session["CMS"] == false)
+                    {
+                        int parent = 1;
+                        int Child = 1;
+                        var ParentCard = "";
+                        var Parentcollapse = "";
+                        var ChildCard = "";
+                        var Childcollapse = "";
+                        var textToRight = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "text-right" : "";
+                        <div class="col-lg-9" id="defult" dir="@dir">
+                            <div class="card @textToRight" id="DefaultMBCard" style="display:none">
+                                <div class="card-header">
+                                    <h5 class="mb-0 d-inline">
+                                        @Resources.General.DefaultMB
+                                    </h5>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-warning text-center"><h6>@Resources.General.UserManulNotif</h6></div>
+                                    <div id="accordion">
+
+                                        @foreach (HumanResourceHelth.Model.Section section in Model.DefualtSections.Where(x => x.ParenId == null))
+                                        {
+                                            ParentCard = "Parent" + parent.ToString();
+                                            Parentcollapse = "collapse" + parent.ToString();
+                                            parent = parent + 1;
+                                            <div class="card">
+                                                <div class="card-header" id="@ParentCard">
+                                                    <h5 class="mb-0 d-inline">
+                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#@Parentcollapse" aria-expanded="false" aria-controls="@Parentcollapse">
+                                                            @Html.Raw(section.Title)
+                                                        </button>
+                                                    </h5>
+
+                                                </div>
+                                                <div id="@Parentcollapse" class="collapse" aria-labelledby="@ParentCard" data-parent="#accordion">
+
+                                                    <div class="card-body">
+                                                        @if (section.Childs.Count == 0)
+                                                        {
+
+                                                            <p>@Html.Raw(section.Content)</p>
+
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach (HumanResourceHelth.Model.Section childSection in section.Childs)
+                                                            {
+                                                                ChildCard = "ChildCard" + Child.ToString();
+                                                                Childcollapse = "Childcollapse" + Child.ToString();
+                                                                Child = Child + 1;
+                                                                <div class="card" id="@ChildCard">
+                                                                    <div class="card-header">
+                                                                        <a href="#" data-toggle="collapse" data-target="#@Childcollapse">@childSection.Title</a>
+                                                                    </div>
+                                                                    <div class="card-body collapse" data-parent="#@ChildCard" id="@Childcollapse">
+                                                                        @Html.Raw(childSection.Content)
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-lg-9" id="divEditSection" dir="@dir" style="@EditDisplayClass">
 
                     </div>
                     <div class="clearfix"></div>
@@ -226,6 +365,63 @@ else
                     </div>
                 </div>
             </div>
+
+            @*=================================================*@
+            @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
+            {
+                <div class="modal fade" id="AddNewCountry" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="AddNewCountryLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="AddNewCountryLabel">@Resources.General.BuilderAddCountryTitle</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" dir="@dir">
+                                <div class="form-group w-100">
+                                    <div class="row">
+
+                                        <label class="col-4">@Resources.General.Country</label>
+                                        <select id="selectCountry" required class="form-control col-8">
+                                            <option value="">أختر الدولة</option>
+                                            @foreach (HumanResourceHelth.Model.Country NotAddedcountry in Model.CountriesNotAdded)
+                                            {
+                                                if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+                                                {
+                                                    <option value="@NotAddedcountry.Id">@NotAddedcountry.NameAr</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@NotAddedcountry.Id">@NotAddedcountry.Name</option>
+                                                }
+                                            }
+                                        </select>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button class="btn btn-primary" id="NewBuilderForNewCountry">@Resources.General.BuilderAddCountryBtn</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @*==============================================*@
+
+            @*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+            <script type="text/javascript">
+                $(function () {
+                    $("#selectCountry").select2();
+                });
+            </script>
+            @*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*@
             <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 
             <script>
@@ -384,7 +580,16 @@ else
             async: false,
             success: function (data) {
                 $("#divEditSection").html(data);
-            },
+                @if (Session["CMS"] == null || (bool)Session["CMS"] == false)
+                    {<text>
+                        var divEditSection = document.getElementById("divEditSection");
+                        var ix = divEditSection.style.display == "none" ? 0 : 1;
+
+                $('#defult').toggle(ix === 1);
+                $('#divEditSection').toggle(ix === 0);
+                </text>
+                    }
+                },
             error: function () {
                 toastr.error("Error")
             }
@@ -623,7 +828,31 @@ else
             console.log('Output HTML of releases in new order: ' + order);
         }
 
+        $("#NewBuilderForNewCountry").on("click", function () {
+            let countryId = $("#selectCountry").val();
 
+            if (countryId != "") {
+                $.ajax({
+                    url: "@Url.Action("NBNC", "Section")",
+                    data: { countryId: countryId },
+            type: "GET",
+            success: function (data) {
+
+                    toastr.success(data)
+
+            },
+                    error: function (data) {
+                        toastr.error(data)
+
+            }
+        });
+            }
+
+        });
+        $("#ShowDefualtMBbtn").on("click", function () {
+            $("#DefaultMBCard").toggle();
+            $("#ShowDefualtMBbtn").html($("#DefaultMBCard").css("display") == "none" ? "@Resources.General.ShowDefaultMBbtn" : "@Resources.General.HideDefaultMBbtn")
+        });
     }); // end of document.ready
 //# sourceURL=pen.js
             </script>

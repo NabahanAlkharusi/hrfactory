@@ -719,5 +719,110 @@ namespace HumanResourceHelth.Model.Resources {
                 return ResourceManager.GetString("Experts", resourceCulture);
             }
         }
+        public static string NewUpdate
+        {
+            get
+            {
+                return ResourceManager.GetString("NewUpdate", resourceCulture);
+            }
+        }
+        public static string ArabicTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("ArabicTitle", resourceCulture);
+            }
+        }
+        public static string EnglishTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("EnglishTitle", resourceCulture);
+            }
+        }
+        public static string ArabicText
+        {
+            get
+            {
+                return ResourceManager.GetString("ArabicText", resourceCulture);
+            }
+        }
+        public static string EnglishText
+        {
+            get
+            {
+                return ResourceManager.GetString("EnglishText", resourceCulture);
+            }
+        }
+        public static string EnterUpdateDet
+        {
+            get
+            {
+                return ResourceManager.GetString("EnterUpdateDet", resourceCulture);
+            }
+        }
+        public static string Serial
+        {
+            get
+            {
+                return ResourceManager.GetString("Serial", resourceCulture);
+            }
+        }
+        public static string TargetGroup
+        {
+            get
+            {
+                return ResourceManager.GetString("TargetGroup", resourceCulture);
+            }
+        }
+        public static string TargetGroupCountry
+        {
+            get
+            {
+                return ResourceManager.GetString("TargetGroupCountry", resourceCulture);
+            }
+        }
+        public static string TargetGroupPlan
+        {
+            get
+            {
+                return ResourceManager.GetString("TargetGroupPlan", resourceCulture);
+            }
+        }
+        public static string TargetGroupSubStat
+        {
+            get
+            {
+                return ResourceManager.GetString("TargetGroupSubStat", resourceCulture);
+            }
+        }
+        public static string TargetGroupSubStatActiv
+        {
+            get
+            {
+                return ResourceManager.GetString("TargetGroupSubStatActiv", resourceCulture);
+            }
+        }
+        public static string TargetGroupSubStatAll
+        {
+            get
+            {
+                return ResourceManager.GetString("TargetGroupSubStatAll", resourceCulture);
+            }
+        }
+        public static string EnglishText1
+        {
+            get
+            {
+                return ResourceManager.GetString("EnglishText1", resourceCulture);
+            }
+        }
+        public static string ArabicText1
+        {
+            get
+            {
+                return ResourceManager.GetString("ArabicText1", resourceCulture);
+            }
+        }
     }
 }

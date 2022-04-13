@@ -1,0 +1,60 @@
+﻿@{ bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    ViewBag.Title = "Index";
+    string plan = ViewBag.Plan;
+    int looper = 0;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    string Text_Align = isArabic ? "text-right" : "";
+
+}
+<div class="container mb-5 pt-1 pb-5" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> Payment</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" id="CategoriesContinar" dir="@dir">
+            <div class="row text-left" dir="ltr">
+                <h2>Pay with:</h2>
+            </div>
+            <div class="row" dir="ltr">
+                <div class="col-6 p-3 m-2">
+                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = ViewBag.plan, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = ViewBag.Amount })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
+                        <img src="https://thawani.om/wp-content/themes/thawani/images/logo.svg" style="width:200px; height:100px;">
+                    </a>
+
+                </div>
+                @*<div class="col-6 p-3 m-2">
+                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Paytabs", "Thawani", new { planId = ViewBag.plan, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = ViewBag.Amount })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
+                        <img src="~/assets/img/payTabs.png" style="width:200px; height:100px;">
+                    </a>
+
+                </div>*@
+            </div>
+            @*<div class="row text-left" dir="ltr">
+                <h2>Pay with:</h2>
+            </div>*@
+        <div class="row">
+            <div class="col-6 text-center">
+                <img src="https://images.all-free-download.com/images/graphicwebp/mastercard_logo_29764.webp" style="width:200px; height:100px;">
+            </div>
+            <div class="col-6 text-center">
+                <img src="https://images.all-free-download.com/images/graphicwebp/visa_logo_31102.webp" style="width:200px; height:100px;">
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

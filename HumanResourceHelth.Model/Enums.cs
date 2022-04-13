@@ -27,4 +27,13 @@ namespace HumanResourceHelth.Model
         English = 1,
         Arabic = 2
     }
+    public enum TermsConditionType
+    {
+        Registeration = 1,
+        StartUpPlanMonthly = 2,
+        StartUpPlanAnnually = 3,
+        ManualBuilderPlanMonthly =4,
+        ManualBuilderPlanAnnually = 5,
+        HrCheckUp =6,
+    }
 }
