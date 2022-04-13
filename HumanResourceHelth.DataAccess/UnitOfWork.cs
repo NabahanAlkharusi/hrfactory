@@ -44,6 +44,11 @@ namespace HumanResourceHelth.DataAccess
         public CouponsRepo couponsRepo { get; set; }
         public IntroVedioRepo introVedioRepo { get; set; }
         public ExpertsProfileRepo ExpertsProfileRepo { get; set; }
+        public TermsConditionsRepo TermsConditionsRepo { get; set; }
+        public UpdatesRepo UpdatesRepo { get; set; }
+        public SemiNotificationRepo  SemiNotificationRepo { get; set; }
+        public CategoryRepo CategoryRepo { get; set; }
+        public DocFileRepo DocFileRepo { get; set; }
 
         #region Constructor
         public UnitOfWork() : this(null) { }
@@ -87,6 +92,11 @@ namespace HumanResourceHelth.DataAccess
             couponsRepo = new CouponsRepo(_entities);
             introVedioRepo = new IntroVedioRepo(_entities);
             ExpertsProfileRepo = new ExpertsProfileRepo(_entities);
+            TermsConditionsRepo = new TermsConditionsRepo(_entities);
+            UpdatesRepo = new UpdatesRepo(_entities);
+            SemiNotificationRepo = new SemiNotificationRepo(_entities);
+            CategoryRepo = new CategoryRepo(_entities);
+            DocFileRepo = new DocFileRepo(_entities);
         }
         #endregion
 

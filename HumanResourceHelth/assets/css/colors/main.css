@@ -197,6 +197,8 @@
 }
 
 .page-title-about {
+    line-height: 1;
+    text-align:center;
     font-size: 76px;
     color: #000
 }
@@ -534,6 +536,8 @@ li.list-inline-item {
 }
 
 .pageSubTitle-about {
+    line-height:1.5;
+    text-align:justify;
     font-size: 33px;
     color: #fff
 }

@@ -125,6 +125,14 @@
                     window.location = '@Url.Action("Create", "ExpertsProfiles", new { Area = "Admin" })';
                 else if (msg3.statusText == "IndexExpert")
                     window.location = '@Url.Action("Index", "ExpertsProfiles", new { Area = "Admin" })';
+                else if (msg3.statusText == "TermsConditions")
+                    window.location = '@Url.Action("Index", "TermsConditions", new { Area = "Admin" })';
+                else if (msg3.statusText == "Updates")
+                    window.location = '@Url.Action("Index", "Updates", new { Area = "Admin" })';
+                else if (msg3.statusText == "DocFiles")
+                    window.location = '@Url.Action("Index", "DocFiles", new { Area = "Admin" })';
+                else if (msg3.statusText == "Categories")
+                    window.location = '@Url.Action("Index", "Categories", new { Area = "Admin" })';
                 else
                 window.location = '@Url.Action("Index","Home", new { Area = "Admin"})';
             },

@@ -2,8 +2,14 @@
 @{
     ViewBag.Title = "Intro";
     Session["Backto"] = "Survey";
+    var dir = "";
+    var text_right = "";
 }
-
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
+    dir = "rtl";
+    text_right = "text-right";
+}
 @functions{
     IHtmlString GetContent(int contentId)
     {
@@ -84,7 +90,7 @@
 
                     <div class="widget widget_recent_entries">
                         <ul>
-                            <li><a href="#" data-toggle="modal" data-target="#exampleModal" class="text-blue cms" data-contentId="58">@GetContent(58)</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#exampleModal" class="text-blue" data-contentId="58">@GetContent(58)</a></li>
                         </ul>
                         @if (Session["CMS"] != null && (bool)Session["CMS"] == true)
                         {
@@ -109,12 +115,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel" class="modal-title cms" data-contentId="59">@GetContent(59)</h5>
+                <h5 id="exampleModalLabel" class="modal-title cms" data-contentId="">@ViewBag.SurveyTermsTitle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body cms" data-contentId="60">@GetContent(60)</div>
+            <div class="modal-body cms @text_right" data-contentId="" dir="@dir">@Html.Raw(ViewBag.SurveyTermsText)</div>
         </div>
     </div>
 </div>

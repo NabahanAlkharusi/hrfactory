@@ -39,12 +39,13 @@
                         <input id="btnSave" type="button" class="btn btn-primary" value="Save" />
                         @if (ViewBag.SurveyTypeId == 1)
                         {
-                            <a href="@Url.Action("Free", "Indicator")" class="btn btn-primary">Back</a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("Paid", "Indicator")" class="btn btn-primary">Back</a>
-                        }
+                    <a href="@Url.Action("Free", "Indicator")" class="btn btn-primary">Back</a> }
+                                else if (ViewBag.SurveyTypeId == 2)
+                                {
+                    <a href="@Url.Action("Paid", "Indicator")" class="btn btn-primary">Back</a> }
+                                else
+                                {
+                    <a href="@Url.Action("Business", "Indicator")" class="btn btn-primary">Back</a>}
                     </div>
                 </div>
             </fieldset>
@@ -78,7 +79,8 @@
             data: { name: name, nameAr: nameAr, surveyTypeId: surveyTypeId },
             type: "GET",
             success: function () {
-                toastr.success("Data Saved Successffly")
+                toastr.success("Data Saved Successffly");
+
             },
             error: function () {
                 toastr.error("Error")

@@ -38,19 +38,30 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             ViewBag.SurveyTypeId = 2;
             return View("Index", indicators);
         }
-
+        public ActionResult Business()
+        {
+            List<Indicator> indicators = _uow.IndicatorRepo.Search(x => x.SurveyTypeId == 3).ToList();
+            ViewBag.SurveyType = "For Business Health Check";
+            ViewBag.SurveyTypeId = 3;
+            return View("Index", indicators);
+        }
         public ActionResult Edit(int indicatorId)
         {
             Indicator indicator = _uow.IndicatorRepo.FindById(indicatorId);
-            if(indicator.SurveyTypeId == 1)
+            if (indicator.SurveyTypeId == 1)
             {
                 ViewBag.SurveyTypeId = 1;
                 ViewBag.SurveyType = "For Free Plan";
             }
-            else
+            else if (indicator.SurveyTypeId == 2)
             {
                 ViewBag.SurveyTypeId = 2;
                 ViewBag.SurveyType = "For Paid Plan";
+            }
+            else
+            {
+                ViewBag.SurveyTypeId = 3;
+                ViewBag.SurveyType = "Business Health Check";
             }
             IndicatorViewModel indicatorViewModel = new IndicatorViewModel()
             {
@@ -61,10 +72,6 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             };
             return View("_Save", indicatorViewModel);
         }
-
-
-
-
         public ActionResult Create(int checkType)
         {
             if (checkType == 1)
@@ -72,10 +79,15 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 ViewBag.SurveyTypeId = 1;
                 ViewBag.SurveyType = "For Free Plan";
             }
-            else
+            else if (checkType == 1)
             {
                 ViewBag.SurveyTypeId = 2;
                 ViewBag.SurveyType = "For Paid Plan";
+            }
+            else
+            {
+                ViewBag.SurveyTypeId = 3;
+                ViewBag.SurveyType = "Business Health Check";
             }
             IndicatorViewModel indicatorViewModel = new IndicatorViewModel();
             return View("_Save", indicatorViewModel);
@@ -97,7 +109,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         public ActionResult Save(Indicator indicator)
         {
             _uow.IndicatorRepo.Add(indicator);
-            _uow.SaveChanges();
+            _uow.IndicatorRepo.SaveChanges();
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 

@@ -1,0 +1,130 @@
+﻿@model HumanResourceHelth.Model.DocFile
+
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "DocFiles";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    SelectList PlansSelectList = Session["PlansForFiles"] == null ? null : (SelectList)Session["PlansForFiles"];
+    SelectList CountriesSelectList = Session["CountriesForFiles"] == null ? null : (SelectList)Session["CountriesForFiles"];
+    //SelectList Categories = Session["Categories"] == null ? null : (SelectList)Session["Categories"];
+    List<SelectListItem> selectListItemList = new List<SelectListItem>();
+    selectListItemList.Add(new SelectListItem() { Value = "", Text = "Select" });
+
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> @Resources.General.CategoryDocFiles</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12 col-xs-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                        <a class="btn btn-lg btn-success @Opalignclass" href="/Admin/Categories">
+
+                            @Resources.General.Categories
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <dl class="dl-horizontal">
+                <dt class="@labelClass">
+                    @Resources.General.DocFileEnName
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt class="@labelClass">
+                    @Resources.General.DocFileArName
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.NameAr)
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileEnUpload
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.EngDocPath)
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileArUpload
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ArbDocPath)
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileEnLinkVideo
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EngVedio)
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileArLinkVideo
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ArbVedio)
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileFreeStatus
+                </dt>
+
+                <dd>
+                    @if (Model.isFileFree)
+                    {
+                        @Resources.General.DocFileIsFree
+                    }
+                    else
+                    {
+                        @Resources.General.DocFileIsNotFree
+                    }
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileStatus
+                </dt>
+                <dd>
+                    @if (Model.isFileActive)
+                    {
+                        @Resources.General.DocFileIsActive
+                    }
+                    else
+                    {
+                        @Resources.General.DocFileInActive
+                    }
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.DocFileCountryDomain
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CountryId)
+                </dd>
+                <dt class="@labelClass">
+                    @Resources.General.CategoryDocFile
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CategoryId)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+</div>

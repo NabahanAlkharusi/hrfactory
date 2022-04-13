@@ -1,0 +1,131 @@
+﻿@using HumanResourceHelth.Model
+@using HumanResourceHelth.Web.Data
+@using HumanResourceHelth.Model.Resources
+@model TermsConditionsViewModel
+@{
+    ViewBag.Title = "Index";
+    Session["Backto"] = "TermsConditions";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.TermsConditions</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-10">
+                        <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                            @AppResource.Create
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <table class="table w-50">
+                <tr>
+                    <th class="@Text_align">
+                        @Resources.General.TermsConditionType
+                    </th>
+                    <th class="@Text_align">
+                        @Resources.General.TermsConditionDomain
+                    </th>
+
+                    <th class="@Text_align">
+                        @Resources.General.TermsConditionTitle
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (TermsConditions item in Model.TermsConditions)
+                {
+                    <tr>
+                        <td>
+
+                            @{
+                                TermsName = (Html.Raw(Enum.GetName(typeof(TermsConditionType), item.TermsConditionType))).ToString();
+                                switch ((int)item.TermsConditionType)
+                                {
+                                    case 1:
+                                        <text>@Resources.General.RegisterationTerms</text>
+                                        break;
+                                    case 2:
+                                        <text>@Resources.General.StartUpPlanMonthlyTerms</text>
+                                        break;
+                                    case 3:
+                                        <text>@Resources.General.StartUpPlanAnnuallyTerms</text>
+                                        break;
+                                    case 4:
+                                        <text>@Resources.General.ManualBuilderPlanMonthlyTerms</text>
+                                        break;
+                                    case 5:
+                                        <text>@Resources.General.ManualBuilderPlanAnnuallyTerms</text>
+                                        break;
+                                    case 6:
+                                        <text>@Resources.General.HrCheckUpTerms</text>
+                                        break;
+                                }
+                            }
+
+                        </td>
+                        <td>
+
+                            @{countryId = item.CountryId;}
+                            @if (countryId == 0)
+                            {
+                                <span>@Resources.General.PublicTerms</span>
+                            }
+                            else
+                            {
+                                foreach (Country country in Model.Countries)
+                                {
+                                    if (country.Id == countryId)
+                                    {
+                                        countryName = isArabic ? country.NameAr : country.Name;
+                                        <span>@countryName</span>
+                                        break;
+                                    }
+                                }
+                            }
+                        </td>
+                        @if (isArabic)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ArabicTitle)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EnglishTitle)
+                            </td>
+                        }
+                        <td>
+                            @Html.ActionLink(Resources.General.Edit, "Edit", new { id = item.Id }, new { @class = "btn btn-warning" }) |
+                            @Html.ActionLink(Resources.General.Details, "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+                            @if (item.CountryId != 158 && item.CountryId != 0)
+                            {
+                                <span>|</span>@Html.ActionLink(Resources.General.Delete, "Delete", new { id = item.Id }, new { @class = "btn btn-danger" });
+                            }
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

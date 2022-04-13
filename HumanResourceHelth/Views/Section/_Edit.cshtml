@@ -90,7 +90,15 @@
             type: "POST",
             sync: false,
             success: function () {
-                toastr.success("Success")
+                toastr.success("Success");
+                @if (Session["CMS"] == null || (bool)Session["CMS"] == false)
+                    {<text>
+                var divEditSection = document.getElementById("divEditSection");
+                var ix = divEditSection.style.display == "none" ? 0 : 1;
+                $('#defult').toggle(ix === 1);
+                $('#divEditSection').toggle(ix === 0);
+                </text>
+            }
             },
             error: function () {
                 toastr.error("Error");

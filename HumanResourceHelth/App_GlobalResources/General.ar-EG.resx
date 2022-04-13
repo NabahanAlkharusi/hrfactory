@@ -141,6 +141,9 @@
   <data name="BuildYourDocument" xml:space="preserve">
     <value>انشاء الملف</value>
   </data>
+  <data name="BusinessHealthCheck" xml:space="preserve">
+    <value>تشخيص المشروع</value>
+  </data>
   <data name="BySigningUpYouAcceptOur" xml:space="preserve">
     <value>باشتراكك فانت موافق على</value>
   </data>
@@ -177,11 +180,17 @@
   <data name="ContactPerson" xml:space="preserve">
     <value>شخص الاتصال</value>
   </data>
+  <data name="CountriesBuilderTitle" xml:space="preserve">
+    <value>صانع سياسات العمل متوافق مع قوانين العمل في</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>انشاء</value>
+  </data>
+  <data name="DefaultMB" xml:space="preserve">
+    <value>صانع السياسات الافتراضي</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
@@ -498,6 +507,9 @@
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>تحميل ملف</value>
+  </data>
+  <data name="UserManulNotif" xml:space="preserve">
+    <value>سيتم إشعار المشترك بالتعديلات التي تطرأ على هذه اللائحة.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>مرحبا</value>

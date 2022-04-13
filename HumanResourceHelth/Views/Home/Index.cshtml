@@ -1,8 +1,16 @@
 ﻿@using HumanResourceHelth.Model
+
 @{
     ViewBag.Title = "Index";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "ltr";
+    var floatclass = isArabic ? "float-right" : "float-left";
+    var style = isArabic ? "margin-right:auto !important;margin-left:-15px !important;" : "";
+    //var Cancelbtnstyle = "";
+    var acceptbtnstyle = isArabic ? "margin-right: 0.25rem !important;" : "";
+    var textRight = isArabic ? "text-right" : "";
+    var health_check = isArabic ? "text-left pl-5 ml-5" : "text-right pr-5 mr-5";
 }
-
 
 <style type="text/css">
     video {
@@ -66,6 +74,7 @@
         .hermes .tp-bullet.selected:after {
             height: 100%
         }
+
     .blog-item p {
         margin-bottom: 0 !important;
     }
@@ -93,28 +102,30 @@
 }
 
 @*<img src="~/assets/img/Sethoscope.png"  class="overslider d-sm-none" style="z-index:99999;max-width:140px">*@
-<div class="overslider border-light-box"  >
-    <div class="dualcol-test padding-18px" >
-        <div class="margin-bottom-30px" >
+<div class="overslider border-light-box @textRight" dir="@dir">
+    <div class="dualcol-test padding-18px">
+        <div class="margin-bottom-30px">
             <h3 class="padding-textWhite cms" data-contentId="1">@GetContent(1)</h3>
         </div>
-        <div class="margin-bottom-20px" >
+        <div class="margin-bottom-20px">
             <br>
             <br>
             <span class="cms" data-contentId="2">@GetContent(2)</span>
         </div>
-        <a href="@Url.Action("Intro","Survey")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 capitalLetters" style="text-transform: capitalize;">@Resources.General.StartTheDiagnosis</a>
+        <div class="@health_check">
+            <a href="@Url.Action("Intro","Survey")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 capitalLetters" style="text-transform: capitalize;">@Resources.General.StartTheDiagnosis</a>
+        </div>
     </div>
 </div>
 
-        @{
-            string ar = "";
-            //if ((string)Session["lang"] == "ar-OM")
-            if(System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-            {
-                ar = "_ar";
-            }
-        } 
+@{
+    string ar = "";
+    //if ((string)Session["lang"] == "ar-OM")
+    if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+    {
+        ar = "_ar";
+    }
+}
 
 <video id="bgvid" playsinline autoplay muted loop>
     <!--
@@ -192,7 +203,7 @@
                                     <div class="item-thumbnail"><a href="@Url.Action("ManualBuilder","Plans")"><img src="@Url.Content("~/assets/img/subscription1.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                        <a href="@Url.Action("ManualBuilder","Plans")" class="text-extra-large d-block ">@GetContent(50)</a>
+                                    <a href="@Url.Action("ManualBuilder","Plans")" class="text-extra-large d-block ">@GetContent(50)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="11">@GetContent(11)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("ManualBuilder","Plans")">
@@ -212,7 +223,7 @@
                                     <div class="item-thumbnail"> <a href="@Url.Action("StartUp", "Plans")"><img src="@Url.Content("~/assets/img/HRStar-up.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                        <a href="@Url.Action("StartUp", "Plans")" class="text-extra-large d-block ">@GetContent(49)</a>
+                                    <a href="@Url.Action("StartUp", "Plans")" class="text-extra-large d-block ">@GetContent(49)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="12">@GetContent(12)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("StartUp", "Plans")">
@@ -220,13 +231,14 @@
                                         </a>
                                     </div>
                                     <div class="padding-bottom-22px">
-                                            <a href="@Url.Action("StartUp", "Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go
-                                            </a>
+                                        <a href="@Url.Action("StartUp", "Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                            @Resources.General.Go
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            
+
 
 
                         <div class="col-lg-4 col-md-6 sm-mb-30px wow fadeInUp padding-bottom-42px">
@@ -236,7 +248,7 @@
                                     <div class="item-thumbnail"><a href="@Url.Action("WarmUp","Plans")"><img src="@Url.Content("~/assets/img/HRWarm-up.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                        <a href="@Url.Action("WarmUp","Plans")" class="text-extra-large d-block cms" data-contentId="45">@GetContent(45)</a>
+                                    <a href="@Url.Action("WarmUp","Plans")" class="text-extra-large d-block cms" data-contentId="45">@GetContent(45)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="13">@GetContent(13)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("WarmUp","Plans")">
@@ -257,7 +269,7 @@
                                     <div class="item-thumbnail"><a href="@Url.Action("Doctor","Plans")"><img src="@Url.Content("~/assets/img/HRDoctor.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                        <a href="@Url.Action("Doctor","Plans")" class="text-extra-large d-block cms" data-contentId="46">@GetContent(46)</a>
+                                    <a href="@Url.Action("Doctor","Plans")" class="text-extra-large d-block cms" data-contentId="46">@GetContent(46)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="14">@GetContent(14)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("Doctor","Plans")">
@@ -277,7 +289,7 @@
                                     <div class="item-thumbnail"><a href="@Url.Action("Tech","Plans")"><img src="@Url.Content("~/assets/img/HRTech.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                        <a href="@Url.Action("Tech","Plans")" class="text-extra-large d-block ">@GetContent(47)</a>
+                                    <a href="@Url.Action("Tech","Plans")" class="text-extra-large d-block ">@GetContent(47)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="15">@GetContent(15)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("Tech","Plans")">
@@ -297,7 +309,7 @@
                                     <div class="item-thumbnail"><a href="@Url.Action("Plugin","Plans")"><img src="@Url.Content("~/assets/img/HRPlug-in.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                        <a href="@Url.Action("Plugin","Plans")" class="text-extra-large d-block ">@GetContent(48)</a>
+                                    <a href="@Url.Action("Plugin","Plans")" class="text-extra-large d-block ">@GetContent(48)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 margin-bottom-0px cms" data-contentId="16">@GetContent(16)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("Plugin","Plans")">
@@ -478,8 +490,8 @@
                             </div>
 
                             @*<div>
-                                <a href="~/Expert" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 ">@Resources.General.BookAnAppointment</a>
-                            </div>*@
+                                    <a href="~/Expert" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 ">@Resources.General.BookAnAppointment</a>
+                                </div>*@
                         </div>
                     </div>
                 </div>

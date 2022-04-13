@@ -120,6 +120,9 @@
   <data name="AboutUs" xml:space="preserve">
     <value>عنا</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>نشط</value>
+  </data>
   <data name="AddIntroVideo" xml:space="preserve">
     <value>إضافة فيديو تعريفي</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Arabic" xml:space="preserve">
     <value>عربى</value>
+  </data>
+  <data name="Around" xml:space="preserve">
+    <value>وحوالي</value>
   </data>
   <data name="Ask" xml:space="preserve">
     <value>إسال</value>
@@ -138,14 +144,59 @@
   <data name="BookAnAppointment" xml:space="preserve">
     <value>احجز ميعاد</value>
   </data>
+  <data name="Builder" xml:space="preserve">
+    <value>صانع سياسات العمل</value>
+  </data>
+  <data name="BuilderAddCountryBtn" xml:space="preserve">
+    <value>واصل</value>
+  </data>
+  <data name="BuilderAddCountryTitle" xml:space="preserve">
+    <value>بناء صانع السياسات لدولة جديدة</value>
+  </data>
   <data name="BuildYourDocument" xml:space="preserve">
     <value>انشاء الملف</value>
+  </data>
+  <data name="BusinessHealthCheck" xml:space="preserve">
+    <value>تشخيص المشروع</value>
   </data>
   <data name="BySigningUpYouAcceptOur" xml:space="preserve">
     <value>باشتراكك فانت موافق على</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>الغاء</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>تصنيفات المستندات</value>
+  </data>
+  <data name="CategoryActive" xml:space="preserve">
+    <value>تصنيف نشط</value>
+  </data>
+  <data name="CategoryARName" xml:space="preserve">
+    <value>اسم التصنيف بالعربية</value>
+  </data>
+  <data name="CategoryDocFile" xml:space="preserve">
+    <value>المستند للتصنيف</value>
+  </data>
+  <data name="CategoryDocFiles" xml:space="preserve">
+    <value>ملفات القسم</value>
+  </data>
+  <data name="CategoryENName" xml:space="preserve">
+    <value>اسم التصنيف الإنجليزية</value>
+  </data>
+  <data name="CategoryInActive" xml:space="preserve">
+    <value>تصنيف غير نشط</value>
+  </data>
+  <data name="CategoryIsActive" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="CategoryIsNotActive" xml:space="preserve">
+    <value>غير نشط</value>
+  </data>
+  <data name="CategoryPlan" xml:space="preserve">
+    <value>باقة التصنيف</value>
+  </data>
+  <data name="CategoryStatus" xml:space="preserve">
+    <value>حالة التصنيف</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>تغيير كلمة المرور</value>
@@ -177,11 +228,20 @@
   <data name="ContactPerson" xml:space="preserve">
     <value>شخص الاتصال</value>
   </data>
+  <data name="CountriesBuilderTitle" xml:space="preserve">
+    <value>صانع سياسات العمل متوافق مع قوانين العمل في</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>انشاء</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>العملاء</value>
+  </data>
+  <data name="DefaultMB" xml:space="preserve">
+    <value>المحتوى الإفتراضي للائحة سياسات العمل</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
@@ -194,6 +254,75 @@
   </data>
   <data name="Disagree" xml:space="preserve">
     <value>غير موافق</value>
+  </data>
+  <data name="DocFileActive" xml:space="preserve">
+    <value>مستند نشط</value>
+  </data>
+  <data name="DocFileArLinkVideo" xml:space="preserve">
+    <value>رابط فيديو المستند العربي</value>
+  </data>
+  <data name="DocFileArName" xml:space="preserve">
+    <value>اسم المستند بالعربية</value>
+  </data>
+  <data name="DocFileArUpload" xml:space="preserve">
+    <value>تحميل المسنتد العربي</value>
+  </data>
+  <data name="DocFileArUploadVideo" xml:space="preserve">
+    <value>تحميل فيديو المستند العربي</value>
+  </data>
+  <data name="DocFileCountryDomain" xml:space="preserve">
+    <value>النطاق الدولي للمستند</value>
+  </data>
+  <data name="DocFileEnLinkVideo" xml:space="preserve">
+    <value>رابط فيديو المستند الإنجليزي</value>
+  </data>
+  <data name="DocFileEnName" xml:space="preserve">
+    <value>اسم المستند الإنجليزية</value>
+  </data>
+  <data name="DocFileEnUpload" xml:space="preserve">
+    <value>تحميل المسنتد الإنجليزي</value>
+  </data>
+  <data name="DocFileEnUploadVideo" xml:space="preserve">
+    <value>تحميل فيديو المستند الإنجليزي</value>
+  </data>
+  <data name="DocFileFree" xml:space="preserve">
+    <value>مستند مجاني</value>
+  </data>
+  <data name="DocFileFreeStatus" xml:space="preserve">
+    <value>مجانية المستند</value>
+  </data>
+  <data name="DocFileInActive" xml:space="preserve">
+    <value>مستند غير نشط</value>
+  </data>
+  <data name="DocFileIsActive" xml:space="preserve">
+    <value>نشط</value>
+  </data>
+  <data name="DocFileIsFree" xml:space="preserve">
+    <value>مجاني</value>
+  </data>
+  <data name="DocFileIsNotActive" xml:space="preserve">
+    <value>غير نشط</value>
+  </data>
+  <data name="DocFileIsNotFree" xml:space="preserve">
+    <value>غير مجاني</value>
+  </data>
+  <data name="DocFileIsVedioLink" xml:space="preserve">
+    <value>روابط</value>
+  </data>
+  <data name="DocFileIsVedioUpload" xml:space="preserve">
+    <value>تحميل</value>
+  </data>
+  <data name="DocFileNotFree" xml:space="preserve">
+    <value>مستند غير مجاني</value>
+  </data>
+  <data name="DocFileStatus" xml:space="preserve">
+    <value>حالة المستند</value>
+  </data>
+  <data name="DocFileVideo" xml:space="preserve">
+    <value>فيديو المستند</value>
+  </data>
+  <data name="DocFileVideoIsYU" xml:space="preserve">
+    <value>هل فيديو المستند من اليوتيوب أم تود تحميله</value>
   </data>
   <data name="DocumentName" xml:space="preserve">
     <value>اسم الملف</value>
@@ -210,6 +339,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>تاريخ الإنتهاء</value>
   </data>
+  <data name="EndedSubscription" xml:space="preserve">
+    <value>إشتراك منتهي</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>انجليزى</value>
   </data>
@@ -219,11 +351,20 @@
   <data name="Explain" xml:space="preserve">
     <value>الشرح</value>
   </data>
+  <data name="ExplainerVideo" xml:space="preserve">
+    <value>فيديو شارح</value>
+  </data>
   <data name="Finish" xml:space="preserve">
     <value>انهاء</value>
   </data>
+  <data name="FreePlan" xml:space="preserve">
+    <value>باقة مجانية</value>
+  </data>
   <data name="FreeSubscription" xml:space="preserve">
     <value>إشتراك مجاني</value>
+  </data>
+  <data name="GeneratePayTabsPaymentLink" xml:space="preserve">
+    <value>إنشاء رابط الدفع الخاص بـ PayTabs</value>
   </data>
   <data name="GetFreeSub" xml:space="preserve">
     <value>اشترك مجانا لمدة 7 أيام</value>
@@ -243,15 +384,27 @@
   <data name="HealthCheckOnDate" xml:space="preserve">
     <value>التشخيص بتاريخ</value>
   </data>
+  <data name="HideDefaultMBbtn" xml:space="preserve">
+    <value>إخفاء لائحة السياسات الإفتراضية</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>الرئيسية</value>
+  </data>
+  <data name="HrCheckUpTerms" xml:space="preserve">
+    <value>شروط استخدام مشخص الموارد البشرية</value>
   </data>
   <data name="HRDoctorContent" xml:space="preserve">
     <value>احصل على توجيه من خبير موارد بشرية بشكل دوري.
 بإمكانك الآن الحصول على جلسات استشارية دورية بنظام الاشتراك لا يزيد عن ١٠ ساعات في الشهر..قم بسرد المطلوب في الإستمارة في الأسفل</value>
   </data>
+  <data name="HRManualBuilderPlan" xml:space="preserve">
+    <value>باقة صانع سياسة العمل</value>
+  </data>
   <data name="IAgreeWith" xml:space="preserve">
     <value>اوافق على</value>
+  </data>
+  <data name="inactive" xml:space="preserve">
+    <value>غير نشط</value>
   </data>
   <data name="InArabic" xml:space="preserve">
     <value>بالعربية</value>
@@ -265,6 +418,9 @@
   <data name="IntroVideo" xml:space="preserve">
     <value>بيانات الفيديو التعريفي</value>
   </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>أخر تسجيل دخول</value>
+  </data>
   <data name="Learn" xml:space="preserve">
     <value>تعلم</value>
   </data>
@@ -274,11 +430,20 @@
   <data name="Login" xml:space="preserve">
     <value>تسجيل الدخول</value>
   </data>
+  <data name="LoginAS" xml:space="preserve">
+    <value>تسجيل دخول كــ</value>
+  </data>
   <data name="LoginPlease" xml:space="preserve">
     <value>برجاء تسجيل الدخول</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>تسجيل الخروج</value>
+  </data>
+  <data name="ManageCountries" xml:space="preserve">
+    <value>إدارة الدول</value>
+  </data>
+  <data name="ManagePlansFiles" xml:space="preserve">
+    <value>إدارة ملفات الباقات</value>
   </data>
   <data name="ManualBuilderAnnualRegisterd" xml:space="preserve">
     <value>لقد تم تسجيلك في خطة صانع لائحة سياسات العمل لمدة سنة واحدة بنجاح</value>
@@ -286,8 +451,20 @@
   <data name="ManualBuilderMonthlyRegisterd" xml:space="preserve">
     <value>لقد تم تسجيلك في خطة صانع لائحة سياسات العمل لمدة شهر واحد بنجاح</value>
   </data>
+  <data name="ManualBuilderPlanAnnuallyTerms" xml:space="preserve">
+    <value>شروط الاشتراك السنوي في لائحة سياسات العمل</value>
+  </data>
+  <data name="ManualBuilderPlanMonthlyTerms" xml:space="preserve">
+    <value>شروط الاشتراك الشهري في لائحة سياسات العمل</value>
+  </data>
   <data name="Maybe" xml:space="preserve">
     <value>ربما</value>
+  </data>
+  <data name="MoreToolsAvailable" xml:space="preserve">
+    <value>أداة/أدوات أخرى </value>
+  </data>
+  <data name="MyDashboard" xml:space="preserve">
+    <value>لوحة التحكم</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
@@ -304,8 +481,35 @@
   <data name="No" xml:space="preserve">
     <value>م.</value>
   </data>
+  <data name="NoActiveSubscriptions" xml:space="preserve">
+    <value>لا توجد اشتراكات نشطة</value>
+  </data>
+  <data name="NoPreviousSubscriptions" xml:space="preserve">
+    <value>لا توجد اشتراكات سابقة</value>
+  </data>
   <data name="NotApplicable" xml:space="preserve">
     <value>لا ينطبق</value>
+  </data>
+  <data name="NotFreePlan" xml:space="preserve">
+    <value>باقة غير مجانية</value>
+  </data>
+  <data name="NotificationDate" xml:space="preserve">
+    <value>تاريخ الإخطار</value>
+  </data>
+  <data name="NotificationDetails" xml:space="preserve">
+    <value>تفاصيل الإخطار</value>
+  </data>
+  <data name="NotificationEmailTip" xml:space="preserve">
+    <value>هذه معاينة للبريد الإلكتروني الذي سيتم إرساله إلى المستخدمين</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>التنبيهات</value>
+  </data>
+  <data name="NotificationText" xml:space="preserve">
+    <value>نص الإخطار</value>
+  </data>
+  <data name="NotificationTitle" xml:space="preserve">
+    <value>عنوان الإخطار</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>عدد الموظفين</value>
@@ -319,11 +523,23 @@
   <data name="OrderHere" xml:space="preserve">
     <value>اشترك من هنا</value>
   </data>
+  <data name="Paid" xml:space="preserve">
+    <value>الباقة المدفوعة</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>كلمه المرور</value>
   </data>
   <data name="PasswordMissmatch" xml:space="preserve">
     <value>الرقم السري لا يتوافق</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>الدفع</value>
+  </data>
+  <data name="Paywith" xml:space="preserve">
+    <value>ادفع من خلال:</value>
+  </data>
+  <data name="PayWithPayTabs" xml:space="preserve">
+    <value>الدفع بـــ PayTabs</value>
   </data>
   <data name="PerMonth" xml:space="preserve">
     <value>اشتراك شهرى</value>
@@ -331,11 +547,17 @@
   <data name="PerYear" xml:space="preserve">
     <value>اشتراك سنوى</value>
   </data>
+  <data name="PlanDocFile" xml:space="preserve">
+    <value>المستند لباقة</value>
+  </data>
   <data name="PlanName" xml:space="preserve">
     <value>اسم الباقة</value>
   </data>
   <data name="Plans" xml:space="preserve">
     <value>باقاتي</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>معاينة</value>
   </data>
   <data name="Previous" xml:space="preserve">
     <value>السابق</value>
@@ -343,14 +565,29 @@
   <data name="PreviousChecks" xml:space="preserve">
     <value>التشخيصات السابقة</value>
   </data>
+  <data name="PreviousSubscriptions" xml:space="preserve">
+    <value>الاشتراكات السابقة</value>
+  </data>
+  <data name="ProceedPayment" xml:space="preserve">
+    <value>مواصلة الدفع</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>الملف الشخصى</value>
+  </data>
+  <data name="PublicTerms" xml:space="preserve">
+    <value>إشتراطات عامة</value>
   </data>
   <data name="RecoverMyPassword" xml:space="preserve">
     <value>استعادة كلمه المرور</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>تسجيل</value>
+  </data>
+  <data name="Registeration" xml:space="preserve">
+    <value>التسجيل</value>
+  </data>
+  <data name="RegisterationTerms" xml:space="preserve">
+    <value>إِشتراطات وأحكام التسجيل</value>
   </data>
   <data name="Registered" xml:space="preserve">
     <value>تم التسجيل بنجاح</value>
@@ -395,16 +632,22 @@
     <value>تم الحجب</value>
   </data>
   <data name="SeeFiles" xml:space="preserve">
-    <value>عرض الملفات</value>
+    <value>ملفات الباقة</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>اختر</value>
+  </data>
+  <data name="SelectCountry" xml:space="preserve">
+    <value>أختر الدولة</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>عرض</value>
+  </data>
+  <data name="ShowDefaultMBbtn" xml:space="preserve">
+    <value>الإطلاع على لائحة السياسات الإفتراضية</value>
   </data>
   <data name="ShowResults" xml:space="preserve">
     <value>عرض النتائج</value>
@@ -414,6 +657,9 @@
   </data>
   <data name="SignUpNow" xml:space="preserve">
     <value>اشترك الان</value>
+  </data>
+  <data name="singup" xml:space="preserve">
+    <value>تسجيل جديد</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>ابدأ</value>
@@ -429,6 +675,18 @@
   </data>
   <data name="StartUpMonthlyRegisterd" xml:space="preserve">
     <value>لقد تم تسجيلك في خطة الإنطلاق لمدة شهر واحد بنجاح</value>
+  </data>
+  <data name="StartUpPlan" xml:space="preserve">
+    <value>باقة الإنطلاق</value>
+  </data>
+  <data name="StartUpPlanAnnuallyTerms" xml:space="preserve">
+    <value>شروط الاشتراك السنوي في باقة الانطلاق</value>
+  </data>
+  <data name="StartUpPlanMonthlyTerms" xml:space="preserve">
+    <value>شروط الاشتراك الشهري في باقة الانطلاق</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>الموضوع</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>اشترك</value>
@@ -460,8 +718,41 @@
   <data name="SubscribeFreeTitle" xml:space="preserve">
     <value>الإشتراك المجاني التجريبي</value>
   </data>
+  <data name="Subscriptionfrom" xml:space="preserve">
+    <value>الاشتراك صالح من تاريخ</value>
+  </data>
+  <data name="SubscriptionPeriod" xml:space="preserve">
+    <value>مدة الأشتراك</value>
+  </data>
+  <data name="subscriptionPeriodMonth" xml:space="preserve">
+    <value>شهر</value>
+  </data>
+  <data name="subscriptionPeriodYear" xml:space="preserve">
+    <value>سنة</value>
+  </data>
+  <data name="SubscriptionPrice" xml:space="preserve">
+    <value>قيمة الاشتراك</value>
+  </data>
+  <data name="SubscriptionType" xml:space="preserve">
+    <value>نوع الإشتراك</value>
+  </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>شروط الاستخدام</value>
+  </data>
+  <data name="TermsConditionDomain" xml:space="preserve">
+    <value>نطاق الشروط والأحكام</value>
+  </data>
+  <data name="TermsConditions" xml:space="preserve">
+    <value>الشروط والأحكام</value>
+  </data>
+  <data name="TermsConditionText" xml:space="preserve">
+    <value>نص الشروط والأحكام</value>
+  </data>
+  <data name="TermsConditionTitle" xml:space="preserve">
+    <value>عنوان الشروط والأحكام</value>
+  </data>
+  <data name="TermsConditionType" xml:space="preserve">
+    <value>الشروط والأحكام هي لي</value>
   </data>
   <data name="TermsOfService" xml:space="preserve">
     <value>شروط الاستخدام</value>
@@ -475,6 +766,12 @@
   <data name="Title" xml:space="preserve">
     <value>العنوان</value>
   </data>
+  <data name="To" xml:space="preserve">
+    <value>إلى</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>المجموع</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>تحديث</value>
   </data>
@@ -483,6 +780,9 @@
   </data>
   <data name="UpdatedSuccessffuly" xml:space="preserve">
     <value>تم التعديل بنجاح</value>
+  </data>
+  <data name="Updates" xml:space="preserve">
+    <value>التحديثات</value>
   </data>
   <data name="Upgrade" xml:space="preserve">
     <value>ترقية</value>
@@ -498,6 +798,27 @@
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>تحميل ملف</value>
+  </data>
+  <data name="UserManulNotif" xml:space="preserve">
+    <value>سيتم إشعار المشترك بالتعديلات التي تطرأ على هذه اللائحة.</value>
+  </data>
+  <data name="VAT" xml:space="preserve">
+    <value>ضريبة القيمة المضافة</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>عرض</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>إطلع على التفاصيل</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>يمكنك عرض ملفك وتحريره.</value>
+  </data>
+  <data name="ViewSubscriptions" xml:space="preserve">
+    <value>يمكنك عرض إشتراكاتك.</value>
+  </data>
+  <data name="ViewUpdates" xml:space="preserve">
+    <value>يمكنك عرض أي تحديثات يتم إرسالها عن طريق HRFactory.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>مرحبا</value>

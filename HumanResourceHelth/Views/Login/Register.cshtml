@@ -3,15 +3,14 @@
 @model  RegisterViewModels
 @{ ViewBag.Title = "Register"; }
 
-@{ var dir = "ltr";
-    var labAlign = "pull-left"; }
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-{
-    dir = "rtl";
-    labAlign = "pull-right";
-}
+@{
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+
+    var dir = isArabic ? "rtl" : "ltr";
+    var labAlign = isArabic ? "pull-right" : "pull-left"; }
+
 <!-- Page title --->
-<div id="page-title" class="text-grey background-overlay " style="background-image: url('assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;" dir="@dir">
+<div id="page-title" class="text-grey background-overlay " style="background-image: url('../assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;" dir="@dir">
     <div>
         <div class="container padding-tb-35px z-index-2 position-relative">
             <div class="row">
@@ -85,7 +84,7 @@
 </div>
 <!-- Page title --->
 
-<section class="padding-tb-100px" dir="@dir">
+<section class="padding-tb-10px" dir="@dir">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-lg-8 text-uppercase">
@@ -96,15 +95,15 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-lg-4">
                                 <label class="@labAlign">@Resources.General.Company @Resources.General.InEnglish</label>
                                 <input id="txtName" type="text" maxlength="255" required class="form-control" placeholder="@Resources.General.Company" />
                             </div>
-                            <div class="col">
+                            <div class="col-lg-4">
                                 <label class="@labAlign">@Resources.General.Company @Resources.General.InArabic</label>
                                 <input id="txtNameAr" type="text" maxlength="255" required class="form-control" placeholder="@Resources.General.Company" />
                             </div>
-                            <div class="col">
+                            <div class="col-lg-4">
                                 <label class="@labAlign">@Resources.General.Email</label>
                                 <input autocomplete="off" required id="txtEmail" type="email" class="form-control" placeholder="@Resources.General.Email" required />
                             </div>
@@ -113,13 +112,21 @@
 
                     <div class="form-group">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-lg-12 col-xs-9">
                                 <label class="@labAlign">@Resources.General.Country</label>
                                 <select id="selectCountry" required class="form-control">
+                                    <option value="">@Resources.General.SelectCountry</option>
                                     @foreach (Country country in Model.Countries)
                                     {
-                        <option value="@country.Id">@country.Name</option>
-}
+                                        if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+                                        {
+                                            <option value="@country.CountryCode">@country.NameAr</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@country.CountryCode">@country.Name</option>
+                                        }
+                                    }
                                 </select>
                             </div>
 
@@ -127,53 +134,68 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-lg-12 col-xs-9">
                                 <label class="@labAlign">@Resources.General.Industry</label>
                                 <select id="selectIndustry" required class="form-control">
                                     @foreach (Industry industry in Model.Industries)
                                     {
-                        <option value="@industry.Id">@industry.Name</option>
-}
+                                        if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+                                        {
+                                            <option value="@industry.Id">@industry.NameAr</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@industry.Id">@industry.Name</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-lg-12 col-xs-9">
                                 <label class="@labAlign">@Resources.General.NumberOfEmployees</label>
                                 <select id="employees" required class="form-control">
-                                    @foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                                    @if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
                                     {
-                        <option value="@item.Key">@item.Value</option>
-}
+                                        foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployeesAr()).EmployeesAr)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                                        {
+                                            <option value="@item.Key">@item.Value</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
                     </div>
-
-
                     <div class="form-group">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.Password</label>
                                 <div class="input-group" dir="ltr">
                                     <span class="input-group-addon"> <i id="iofpass" class="fa fa-eye-slash" onclick="showPss('txtPassword','iofpass')"></i></span>
                                     <input id="txtPassword" type="password" class="form-control" required placeholder="@Resources.General.Password">
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.ConfirmPassword</label>
                                 <div class="input-group" dir="ltr">
                                     <span class="input-group-addon"> <i id="iofConfirmpass" class="fa fa-eye-slash" onclick="showPss('txtConfirmPassword','iofConfirmpass')"></i></span>
                                     <input id="txtConfirmPassword" type="password" class="form-control" required placeholder="@Resources.General.ConfirmPassword">
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.ContactInformation</label>
                                 <div class="input-group" dir="ltr">
                                     <span class="input-group-addon" id="flage"><img id="flagimg" width="26" height="20" src="https://restcountries.eu/data/usa.svg" /></span>
@@ -181,13 +203,13 @@
                                     <input id="txtInformation" type="number" maxlength="255" required class="form-control" placeholder="@Resources.General.ContactInformation" />
                                 </div>
                             </div>
-                            <div class="col">
+                            <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.ContactPerson</label>
                                 <input id="txtPerson" class="form-control" placeholder="@Resources.General.ContactPerson" />
                             </div>
                         </div>
                     </div>
-                    <div class="padding-bottom-22px"><button type="button" id="btnRegister" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Register</button></div>
+                    <div class="padding-bottom-22px"><button type="button" id="btnRegister" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 col-sm-12 col-lg-3">@Resources.General.Register</button></div>
                 </form>
             </div>
         </div>
@@ -229,24 +251,22 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#selectCountry").select2();
+    });
+    $(function () {
+        $("#selectIndustry").select2();
+    });
+</script>
 <script>
-    function showPss(control,id) {
-        // console.log($('.fa-eye-slash').attr('class'));
-        if ($('#' + id).hasClass('fa-eye-slash')) {
-            $('#' + id).addClass('fa-eye');
-            $('#' + id).removeClass('fa-eye-slash');
-            $('#' + control).attr('type', 'text');
-        }
-        else {
-            $('#' + id).addClass('fa-eye-slash');
-            $('#' + id).removeClass('fa-eye');
-            $('#' + control).attr('type', 'password');
-        }
 
-    }
 
     $('#txtInformation').change(function () {
-        
+
         var code = $('#countryPhoneKey').html();
         var phone=code + $(this).val();
         $.ajax({
@@ -275,7 +295,7 @@
         });
     });
     $('#SetCountryCode').click(function () {
-        
+
         var Code = $('#txtCountryCode').val();
         $.ajax({
             type: 'get',

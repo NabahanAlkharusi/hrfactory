@@ -4043,7 +4043,20 @@ tbody.collapse.show {
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem
 }
-
+.file-card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    min-height:185px;
+}
     .card > hr {
         margin-right: 0;
         margin-left: 0
@@ -4090,6 +4103,18 @@ tbody.collapse.show {
     padding: .75rem 1.25rem;
     margin-bottom: 0;
     background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125)
+}
+.category-card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #e3a32a;
+    border-bottom: 1px solid rgba(0,0,0,.125)
+}
+.file-card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #20C99E;
     border-bottom: 1px solid rgba(0,0,0,.125)
 }
 
@@ -4142,7 +4167,18 @@ tbody.collapse.show {
     border-top-left-radius: calc(.25rem - 1px);
     border-top-right-radius: calc(.25rem - 1px)
 }
-
+.card-img-top-custom {
+    width: 80%;
+    filter: invert(100%);
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px)
+}
+/*.card-img-top-customed {
+    width: 15%;
+    align-self: center;
+    border-top-left-radius: calc(0.25rem - 1px);
+    border-top-right-radius: calc(0.25rem - 1px);
+}*/
 .card-img-bottom {
     width: 100%;
     border-bottom-right-radius: calc(.25rem - 1px);

@@ -153,6 +153,15 @@
   <data name="AllUsers" xml:space="preserve">
     <value>كل المستخدمين</value>
   </data>
+  <data name="ArabicText" xml:space="preserve">
+    <value>أدخل نص التحديث باللغة العربية</value>
+  </data>
+  <data name="ArabicText1" xml:space="preserve">
+    <value>نص التحديث باللغة العربية</value>
+  </data>
+  <data name="ArabicTitle" xml:space="preserve">
+    <value>العنوان باللغة العربية</value>
+  </data>
   <data name="Ask" xml:space="preserve">
     <value>اسال</value>
   </data>
@@ -246,6 +255,18 @@
   <data name="Email" xml:space="preserve">
     <value>البريد الإلكتروني</value>
   </data>
+  <data name="EnglishText" xml:space="preserve">
+    <value>أدخل نص التحديث باللغة الإنجليزية</value>
+  </data>
+  <data name="EnglishText1" xml:space="preserve">
+    <value>نص التحديث باللغة الإنجليزية</value>
+  </data>
+  <data name="EnglishTitle" xml:space="preserve">
+    <value>العنوان باللغة الإنجليزية</value>
+  </data>
+  <data name="EnterUpdateDet" xml:space="preserve">
+    <value>أدخل تفاصيل التحديث</value>
+  </data>
   <data name="Experts" xml:space="preserve">
     <value>خبراء المنصة</value>
   </data>
@@ -285,6 +306,9 @@
   <data name="NewAccount" xml:space="preserve">
     <value>إنشاء حساب جديد</value>
   </data>
+  <data name="NewUpdate" xml:space="preserve">
+    <value>إرسال تحديث جديد</value>
+  </data>
   <data name="OMRCurrncy" xml:space="preserve">
     <value>ريال عماني</value>
   </data>
@@ -321,6 +345,9 @@
   <data name="SelectCourse" xml:space="preserve">
     <value>إختر الدورة التدريبية</value>
   </data>
+  <data name="Serial" xml:space="preserve">
+    <value>مسلسل</value>
+  </data>
   <data name="ShowAll" xml:space="preserve">
     <value>عرض الكل</value>
   </data>
@@ -335,6 +362,24 @@
   </data>
   <data name="sure" xml:space="preserve">
     <value>هل أنت متأكد أنك تريد حذف هذا؟</value>
+  </data>
+  <data name="TargetGroup" xml:space="preserve">
+    <value>الفئة المستهدفة</value>
+  </data>
+  <data name="TargetGroupCountry" xml:space="preserve">
+    <value>دول الفئة المستهدفة</value>
+  </data>
+  <data name="TargetGroupPlan" xml:space="preserve">
+    <value>باقة الفئة المستهدفة</value>
+  </data>
+  <data name="TargetGroupSubStat" xml:space="preserve">
+    <value>حالة إشتراك الفئة المستهدفة</value>
+  </data>
+  <data name="TargetGroupSubStatActiv" xml:space="preserve">
+    <value>إشتراك نشط</value>
+  </data>
+  <data name="TargetGroupSubStatAll" xml:space="preserve">
+    <value>الجميع</value>
   </data>
   <data name="Trainer" xml:space="preserve">
     <value>المدرب</value>

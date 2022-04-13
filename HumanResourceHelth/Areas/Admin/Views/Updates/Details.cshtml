@@ -1,0 +1,96 @@
+﻿@using HumanResourceHelth.Model.Resources
+@model HumanResourceHelth.Model.Updates
+
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var txtlignclass = isArabic ? "text-right" : "text-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @alignclass"> @Resources.General.Updates</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body h4" dir="@dir">
+            <div>
+                <div class="row">
+                    <div class="col-lg-3 @labelClass">
+
+                        @AppResource.ArabicTitle
+
+                    </div>
+
+
+                    <div class="col-lg-9 @labelClass">@Html.DisplayFor(model => model.ArabicTitle)</div>
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-3 @labelClass">
+                        @AppResource.EnglishTitle
+                    </div>
+
+
+                    <div class="col-lg-9 @labelClass">
+
+
+                        @Html.DisplayFor(model => model.EnglisTitle)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 @labelClass">
+                        @AppResource.ArabicText1
+                    </div>
+
+
+                    <div class="col-lg-9 @labelClass">
+                        @Html.Raw(Model.ArabicText)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 @labelClass">
+                        @AppResource.EnglishText1
+                    </div>
+
+
+                    <div class="col-lg-9 @labelClass">
+                        @Html.Raw(Model.EnglisText)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 @labelClass">
+                        @AppResource.CreatedDate
+                    </div>
+
+
+                    <div class="col-lg-9 @labelClass">
+                        @Html.DisplayFor(model => model.IssuedDate)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

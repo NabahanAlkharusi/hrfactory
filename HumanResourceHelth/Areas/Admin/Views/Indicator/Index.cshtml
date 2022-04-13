@@ -9,13 +9,13 @@
             <div class="panel-heading-btn">
                 @if (ViewBag.SurveyTypeId == 1)
                 {
-                    <a href="@Url.Action("Create", "Indicator", new { checkType = 1})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
-                }
-                else
-                {
-                    <a href="@Url.Action("Create", "Indicator", new { checkType = 2})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
-                }
-
+            <a href="@Url.Action("Create", "Indicator", new { checkType = 1})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a> }
+                        else if (ViewBag.SurveyTypeId == 2)
+                        {
+            <a href="@Url.Action("Create", "Indicator", new { checkType = 2})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a> }
+                        else
+                        {
+            <a href="@Url.Action("Create", "Indicator", new { checkType = 3})" title="Add Indicator" data-toggle="modal" class="btn btn-xs btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>}
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
                 <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
             </div>

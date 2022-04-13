@@ -65,7 +65,8 @@
                 $("#imgLogo").attr("src", "@Url.Content(string.Format("~/CompanyLogo/{0}.png?",((int)Session["UserId"]).ToString()))" + d.getTime());
             },
             error: function (err) {
-                toastr.error("Error");
+                toastr.error("Error " + err);
+                console.log(err);
                 $(".fileUpload").val('');
             }
         });

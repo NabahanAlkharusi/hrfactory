@@ -1,0 +1,117 @@
+﻿@using HumanResourceHelth.Web.Data
+@using HumanResourceHelth.Model
+@model TermsConditionsViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Session["Backto"] = "TermsConditions";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> @Resources.General.TermsConditions</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <div class="" dir="@dir">
+                <div class="row p-5" dir="@dir">
+                    <div class="col-lg-3 @labelClass">
+                        @Resources.General.TermsConditionType
+                    </div>
+                    <div class="col-lg-8">
+                        @Html.Raw(Enum.GetName(typeof(TermsConditionType), Model.TermCondition.TermsConditionType))
+                    </div>
+
+                </div>
+                <hr />
+                <div class="row p-5" dir="@dir">
+                    <div class="col-lg-3 @labelClass">
+                        @Resources.General.TermsConditionDomain
+                    </div>
+                    <div class="col-lg-8">
+                        @{countryId = Model.TermCondition.CountryId;}
+                        @if (countryId == 0)
+                        {
+                            <b>@Resources.General.PublicTerms</b>
+                        }
+                        else
+                        {
+                            foreach (Country country in Model.Countries)
+                            {
+                                if (country.Id == countryId)
+                                {
+                                    countryName = isArabic ? country.NameAr : country.Name;
+                                    <span>@countryName</span>
+                                    break;
+                                }
+                            }
+                        }
+                    </div>
+
+                </div>
+                <hr />
+                <div class="row p-5" dir="@dir">
+                    <div class="col-lg-3 @labelClass">
+                        @Resources.General.TermsConditionText
+                    </div>
+                    @if (isArabic)
+                    {
+                        <div class="col-lg-8">
+                            @Html.Raw(Model.TermCondition.ArabicText)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-8">
+                            @Html.Raw(Model.TermCondition.EnglishText)
+                        </div>
+                    }
+
+                </div>
+                <hr />
+                <div class="row p-5" dir="@dir">
+                    <div class="col-lg-3 @labelClass">
+                        @Resources.General.TermsConditionTitle
+                    </div>
+                    @if (isArabic)
+                    {
+                        <div class="col-lg-8 font-weight-bolder">
+                            <b> @Html.DisplayFor(model => model.TermCondition.ArabicTitle)</b>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-lg-8 font-weight-bolder">
+                            <b>@Html.DisplayFor(model => model.TermCondition.EnglishTitle)</b>
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

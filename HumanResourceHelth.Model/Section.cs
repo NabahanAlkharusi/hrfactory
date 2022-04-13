@@ -26,5 +26,7 @@ namespace HumanResourceHelth.Model
         public bool IsActive { get; set; }
         public int LanguageId { get; set; }
         public bool IsHaveLineBefore { get; set; } = false;
+        public int CountryID { get; set; }
+        public int SectionId { get; set; }
     }
 }

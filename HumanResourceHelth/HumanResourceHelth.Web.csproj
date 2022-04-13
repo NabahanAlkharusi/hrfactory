@@ -1,5 +1,4 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -50,10 +49,10 @@
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.39.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.39\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -70,17 +69,23 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.WebHooks.Common, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebHooks.Common.1.2.2\lib\net45\Microsoft.AspNet.WebHooks.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.WebHooks.Receivers, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebHooks.Receivers.1.2.2\lib\net45\Microsoft.AspNet.WebHooks.Receivers.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=106.15.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.15.0\lib\net452\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.8\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -92,6 +97,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.8\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -131,6 +139,8 @@
     <Content Include="Areas\Admin\assets\css\animate.min.css" />
     <Content Include="Areas\Admin\assets\css\invoice-print.css" />
     <Content Include="Areas\Admin\assets\css\invoice-print.min.css" />
+    <Content Include="Areas\PlansData1\Oman\Startup\ar\Videos\greenish_blue_butterfly_butterfly_523.mp4" />
+    <Content Include="Areas\PlansData1\Oman\Startup\en\Videos\western_bluebird_bird_perched_tree_684.mp4" />
     <Content Include="Areas\plansData\ManualBuilder.mp4" />
     <Content Include="Areas\plansData\WarmUp.mp4" />
     <Content Include="Areas\plansData\WarmUpArabic.mp4" />
@@ -4493,11 +4503,13 @@
     <Content Include="assets\img\aboutUsbanner.jpg" />
     <Content Include="assets\img\arrow.png" />
     <Content Include="assets\img\Banner 2.png" />
+    <Content Include="assets\img\bell.svg" />
     <Content Include="assets\img\BuilderFooter.png" />
     <Content Include="assets\img\buildericon.png" />
     <Content Include="assets\img\buildericon2.png" />
     <Content Include="assets\img\bulider.ico" />
     <Content Include="assets\img\bulider.png" />
+    <Content Include="assets\img\CompanyProfile.png" />
     <Content Include="assets\img\demo-screen.jpg" />
     <Content Include="assets\img\elearning.png" />
     <Content Include="assets\img\elephant.gif" />
@@ -4530,6 +4542,7 @@
     <Content Include="assets\img\features-icon\7.png" />
     <Content Include="assets\img\features-icon\8.png" />
     <Content Include="assets\img\features-icon\9.png" />
+    <Content Include="assets\img\file-text.svg" />
     <Content Include="assets\img\founder-bg-img.jpg" />
     <Content Include="assets\img\healthcheck.jpg" />
     <Content Include="assets\img\hr-warmup-bg.jpg" />
@@ -4569,6 +4582,7 @@
     <Content Include="assets\img\icon7.png" />
     <Content Include="assets\img\icon8.png" />
     <Content Include="assets\img\icon9.png" />
+    <Content Include="assets\img\controlPanel.gif" />
     <Content Include="assets\img\icon\barber-1.png" />
     <Content Include="assets\img\icon\barber-2.png" />
     <Content Include="assets\img\icon\barber-3.png" />
@@ -4579,6 +4593,8 @@
     <Content Include="assets\img\icon\charity-2.png" />
     <Content Include="assets\img\icon\charity-3.png" />
     <Content Include="assets\img\icon\charity-4.png" />
+    <Content Include="assets\img\icon\excel_icon.png" />
+    <Content Include="assets\img\icon\export-pdf-96.png" />
     <Content Include="assets\img\icon\gym-1.png" />
     <Content Include="assets\img\icon\gym-2.png" />
     <Content Include="assets\img\icon\gym-3.png" />
@@ -4586,6 +4602,7 @@
     <Content Include="assets\img\icon\hosting-1.png" />
     <Content Include="assets\img\icon\hosting-2.png" />
     <Content Include="assets\img\icon\hosting-3.png" />
+    <Content Include="assets\img\icon\image_icon.png" />
     <Content Include="assets\img\icon\logistics-1.png" />
     <Content Include="assets\img\icon\logistics-2.png" />
     <Content Include="assets\img\icon\logistics-3.png" />
@@ -4594,9 +4611,11 @@
     <Content Include="assets\img\icon\medical-2.png" />
     <Content Include="assets\img\icon\medical-3.png" />
     <Content Include="assets\img\icon\medical-4.png" />
+    <Content Include="assets\img\icon\pdf_icon.png" />
     <Content Include="assets\img\icon\pets-1.png" />
     <Content Include="assets\img\icon\pets-2.png" />
     <Content Include="assets\img\icon\pets-3.png" />
+    <Content Include="assets\img\icon\ppt_icon.png" />
     <Content Include="assets\img\icon\security-1.png" />
     <Content Include="assets\img\icon\security-2.png" />
     <Content Include="assets\img\icon\security-3.png" />
@@ -4604,12 +4623,15 @@
     <Content Include="assets\img\icon\security-5.png" />
     <Content Include="assets\img\icon\security-6.png" />
     <Content Include="assets\img\icon\wedding-couple.png" />
+    <Content Include="assets\img\icon\word_icon.png" />
     <Content Include="assets\img\icon\yoga-1.png" />
     <Content Include="assets\img\icon\yoga-2.png" />
     <Content Include="assets\img\icon\yoga-3.png" />
     <Content Include="assets\img\icon\yoga-4.png" />
     <Content Include="assets\img\icon\yoga-5.png" />
     <Content Include="assets\img\icon\yoga-6.png" />
+    <Content Include="assets\img\icon\youtube-480.png" />
+    <Content Include="assets\img\icon\youtube.svg" />
     <Content Include="assets\img\icon\zoo.png" />
     <Content Include="assets\img\icon_marker_1.png" />
     <Content Include="assets\img\learning-image.png" />
@@ -4646,6 +4668,7 @@
     <Content Include="assets\img\partner7.jpg" />
     <Content Include="assets\img\partner8.jpg" />
     <Content Include="assets\img\pattern-1.jpg" />
+    <Content Include="assets\img\payTabs.png" />
     <Content Include="assets\img\pdf-01.svg" />
     <Content Include="assets\img\PerMonth.jpg" />
     <Content Include="assets\img\PerYear.jpg" />
@@ -4693,11 +4716,14 @@
     <Content Include="assets\img\screenshoot\start-up.png" />
     <Content Include="assets\img\Sethoscope.png" />
     <Content Include="assets\img\shahrzad-name.png" />
+    <Content Include="assets\img\sliders.svg" />
     <Content Include="assets\img\slide_01.jpg" />
     <Content Include="assets\img\start-up.ico" />
     <Content Include="assets\img\start-up.png" />
     <Content Include="assets\img\startup.jpg" />
     <Content Include="assets\img\subscription1.png" />
+    <Content Include="assets\img\Subscrptions.png" />
+    <Content Include="assets\img\Updates.png" />
     <Content Include="assets\img\warmup.jpg" />
     <Content Include="assets\js\bootstrap.min.js" />
     <Content Include="assets\js\custom.js" />
@@ -4720,6 +4746,8 @@
     <Content Include="assets\revslider\assets\3d8f4-name.png" />
     <Content Include="assets\revslider\assets\c9393-nile.png" />
     <Content Include="assets\revslider\css\settings.css" />
+    <Content Include="assets\revslider\fonts\font-awesome\css\all.css" />
+    <Content Include="assets\revslider\fonts\font-awesome\css\all.min.css" />
     <Content Include="assets\revslider\fonts\font-awesome\css\font-awesome.css" />
     <Content Include="assets\revslider\fonts\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\revslider\fonts\pe-icon-7-stroke\css\helper.css" />
@@ -5457,9 +5485,6 @@
     <Content Include="Areas\plansData\Tech\category2\Mahmoud Ahmed CV.docx" />
     <Content Include="Areas\plansData\Tech\category2\New Microsoft Excel Worksheet.xlsx" />
     <Content Include="Areas\plansData\Tech\category2\SQL Report.pdf" />
-    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\ملفات 2\SQL Report.pdf" />
-    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\category3\SchoolWireFrame.pdf" />
-    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\My Category 2\SQL Report.pdf" />
     <Content Include="Areas\plansData\Amr-eleraky.pdf" />
     <Content Include="Areas\plansData\ManualBuilder.pdf" />
     <Content Include="Areas\plansData\Oxycare Whiteboard_2020_8_27 %281%29.pdf" />
@@ -5505,6 +5530,54 @@
     <Content Include="Areas\plansData\Startup\CategoriesArabic\أدوات\بطاقة تقييم المقابلات.xlsx" />
     <Content Include="Areas\plansData\Startup\CategoriesArabic\أدوات\خريطة الموارد البشرية.xlsx" />
     <Content Include="Areas\plansData\Startup\CategoriesArabic\أدوات\نموذج بطاقة المهمة الوظيفية.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\Candidates Evaluation Sheet.xlsx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\Detailed Employment Contract.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\Detailed Job Description Sample.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\Simple Employment Contract.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\سياسة العمل الجزئي في عمان.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\قانون العمل العماني.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesArabic\نماذج\لائحة الجزاءات-عمان.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\Candidates Evaluation Sheet.xlsx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\Detailed Employment Contract.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\Detailed Job Description Sample.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\HR Department Checklist for Startups.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\Omani Labour Law.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\Part Time Policy-Oman %28Arabic%29.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\Simple Employment Contract.docx" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\سياسة العمل الجزئي في عمان.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\قانون العمل العماني.pdf" />
+    <Content Include="Areas\plansData\WarmUp\CategoriesEnglish\Templates\لائحة الجزاءات-عمان.docx" />
+    <Content Include="Areas\Admin\Views\TermsConditions\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\TermsConditions\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\TermsConditions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\TermsConditions\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TermsConditions\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Updates\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Updates\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Updates\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Updates\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Updates\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DocFiles\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\DocFiles\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\DocFiles\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\DocFiles\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\DocFiles\Index.cshtml" />
+    <Content Include="Areas\PlansData1\Oman\Startup\ar\Docs\hr %284%29.pdf" />
+    <Content Include="Areas\PlansData1\Oman\Startup\en\Docs\1-s2.0-S0042698997004392-main.pdf" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-v4compatibility.woff2" />
+    <Content Include="Areas\Admin\assets\fonts\majalla.ttf" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -5654,7 +5727,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BuilderController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DocFilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExpertsProfilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IndicatorController.cs" />
@@ -5664,6 +5739,8 @@
     <Compile Include="Areas\Admin\Controllers\QuestionController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoctorRequestsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TechRequestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TermsConditionsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UpdatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Controllers\VideoController.cs" />
     <Compile Include="Areas\Admin\Data\CourseViewModel.cs" />
@@ -5699,6 +5776,7 @@
     <Compile Include="Controllers\TrainingHomeController.cs" />
     <Compile Include="Data\AnswersViewModel.cs" />
     <Compile Include="Areas\Admin\Data\FilesViewModel.cs" />
+    <Compile Include="Data\TermsConditionsViewModel.cs" />
     <Compile Include="Data\SectionViewModel.cs" />
     <Compile Include="Data\SubscriptionViewModel.cs" />
     <Compile Include="Data\SurveyViewModel.cs" />
@@ -5709,8 +5787,10 @@
     <Compile Include="Models\RequestServiceViewModel.cs" />
     <Compile Include="Models\SurveyResultViewModels.cs" />
     <Compile Include="Models\ThawaniParametersViewModel.cs" />
+    <Compile Include="PayTabs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RegisterViewModels.cs" />
+    <Compile Include="PTConnector.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -6156,6 +6236,11 @@
     <Content Include="Views\Expert\Index.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
+    <Content Include="Views\Survey\BusinessHC.cshtml" />
+    <Content Include="Views\Home\Updates.cshtml" />
+    <Content Include="Views\Thawani\Payment.cshtml" />
+    <Content Include="Views\Thawani\Paytabs1.cshtml" />
+    <Content Include="Views\Thawani\Paypage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -6164,6 +6249,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\assets\plugins\jquery-file-upload\server\node\public\files\thumbnail\" />
     <Folder Include="Areas\Admin\assets\plugins\jquery-file-upload\server\node\tmp\" />
     <Folder Include="Areas\Admin\assets\plugins\jquery-file-upload\server\php\files\thumbnail\" />
@@ -6172,6 +6258,13 @@
     <Folder Include="Areas\plansData\PlugIn\" />
     <Folder Include="Areas\plansData\Startup\CategoriesArabic\إرشادات\" />
     <Folder Include="Areas\plansData\Startup\CategoriesArabic\نماذج\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesArabic\أدوات\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesArabic\إرشادات\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesEnglish\+++\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesEnglish\++\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesEnglish\+22\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesEnglish\Guide\" />
+    <Folder Include="Areas\plansData\WarmUp\CategoriesEnglish\HR Tools\" />
     <Folder Include="assets\vedios\" />
     <Folder Include="profile\files\pageConfig\" />
     <Folder Include="Views\Culture\" />
@@ -6247,14 +6340,6 @@
     <MakeDir Directories="C:\Users\Taqi\Desktop\HumanResource\HumanResourceHelth\bin\roslyn" />
     <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="C:\Users\Taqi\Desktop\HumanResource\HumanResourceHelth\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
   </Target>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-  </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

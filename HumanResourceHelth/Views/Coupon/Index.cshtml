@@ -6,17 +6,14 @@
 @{
     ViewData["Title"] = AppResource.Coupons;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
 
 }
-@{
-    var dir = "ltr";
-    var alignclass = "pull-left";
-}
-@if (@Thread.CurrentThread.CurrentCulture.DisplayName.Contains("العربية"))
-{
-    dir = "rtl";
-    alignclass = "pull-right";
-}
+
+
+
 
 <div class="container">
     <div class="panel panel-info" dir="@dir">

@@ -2,19 +2,24 @@
 @using HumanResourceHelth.Model
 @model RegisterViewModels
 <!-- Page title --->
-@{ string dir = "ltr";
+@{
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    string Text_Align = isArabic ? "text-right" : "";
+    string auto_margin = isArabic ? "mr-3" : "ml-3";
     Session["Backto"] = "UserProfile";
-    }
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-{
-    dir = "rtl";
+    string countryName = "";
+    string countryCode = "";
+    var labAlign = isArabic ? "pull-right" : "pull-left";
+    var selected = "";
 }
+
 <div id="page-title" class="text-grey background-overlay " style="background-image: url('assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;" dir="@dir">
     <div>
-        <div class="container padding-tb-35px z-index-2 position-relative">
+        <div class="container padding-tb-10px z-index-2 position-relative">
             <div class="row">
-                <div class="col-xl-2">
-                    <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 98">
+                <div class="col-xl-2 margin-top-55px">
+                    @*<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 98">
                         <defs>
                             <style>
                                 .cls-1 {
@@ -70,7 +75,48 @@
                         <rect class="cls-3" x="53.66" y="60.18" width="2.8" height="11.18" />
                         <rect class="cls-3" x="42.51" y="54.59" width="2.8" height="2.8" />
                         <rect class="cls-3" x="42.51" y="60.18" width="2.8" height="11.18" />
-                    </svg>
+                    </svg>*@
+                </div>
+
+
+                <div class="col-xl-2 ml-4 margin-lr-30px pt-2">
+                    <a href="/Home/UserSubscriptions">
+                        <div class="card custom-card" style="width: 12.5rem;">
+                            <div class="backgroundEffect"></div>
+                            <img src="../assets/img/Subscrptions.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">@Resources.General.Plans</h6>
+                                <p class="card-text">@Resources.General.ViewSubscriptions</p>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-2 ml-4 margin-lr-30px pt-2">
+                    <a href="/Home/Updates">
+                        <div class="card custom-card" style="width: 12.5rem;">
+                            <div class="backgroundEffect"></div>
+                            <img src="../assets/img/Updates.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">@Resources.General.Updates</h6>
+                                <p class="card-text">@Resources.General.ViewUpdates</p>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xl-2 ml-4 margin-lr-30px pt-2">
+                    <a href="/Home/UserProfile">
+                        <div class="card custom-card active-card" style="width: 12.5rem;">
+                            <div class="backgroundEffect"></div>
+                            <img src="../assets/img/CompanyProfile.png" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">@Resources.General.Profile</h6>
+                                <p class="card-text">@Resources.General.ViewProfile</p>
+
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
             <div class="col-4"></div>
@@ -83,94 +129,415 @@
 </div>
 <!-- Page title --->
 
-<section class="padding-tb-100px" dir="@dir">
+<section class="padding-tb-10px" dir="@dir">
     <div class="container">
-        <div class="row justify-content-md-center padding-tb-20px">
+
+        <div class="card @Text_Align">
+            <h5 class="card-header">@Resources.General.Profile</h5>
+            <div class="card-body">
+                <div class="text-center">
+                    <p class="card-title">@Resources.General.Company</p>
+                    <hr />
+                    <div class="row text-center">
+                        <div class="col-lg-12">
+                            <div>
+                                <h5 class="card-text">
+                                    @if (isArabic)
+                                    {
+                                        if (Model.NameAr != "" && Model.NameAr != null)
+                                        {<text>@Model.NameAr / </text>}<text>@Model.Name</text>
+                                    }
+                                    else
+                                    {<text>@Model.Name</text>
+                                    if (Model.NameAr != "" && Model.NameAr != null)
+                                    {<text> / @Model.NameAr</text>}
+                            }
+                                </h5>
+                            </div>
+                            <div>
+                                @foreach (Country country in Model.Countries)
+                                {
+                                    if (country.Id == Model.CompanyId)
+                                    {
+                                        countryCode = "https://flagcdn.com/w320/" + country.CountryCode.ToLower() + ".png";
+                                        if (isArabic)
+                                        {
+                                            countryName = country.NameAr;
+                                            @country.NameAr
+                                        }
+                                        else
+                                        {
+                                            countryName = country.Name;
+                                            @country.Name
+                                        }
+                                    }
+
+                                }
+                                <img id="flagimgShow" width="26" height="20" src="@countryCode" alt="@countryName">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <p class="card-text">@Resources.General.Industry</p>
+                            <h5 class="card-title @auto_margin">
+                                @foreach (Industry industry in Model.Industries)
+                                {
+
+                                    if (industry.Id == Model.IndustryId)
+                                    {
+                                        if (isArabic)
+                                        {
+                                            @industry.NameAr
+                                        }
+                                        else
+                                        {
+
+                                            @industry.Name
+
+                                        }
+                                    }
+                                }
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <p class="card-text">@Resources.General.NumberOfEmployees</p>
+                            <h5 class="card-title @auto_margin">
+                                @if (isArabic)
+                                {
+                                    foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployeesAr()).EmployeesAr)
+                                    {
+                                        if (item.Key == Model.NumberOFEmployees)
+                                        {
+                                            @item.Value}
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                                    {
+                                        if (item.Key == Model.NumberOFEmployees)
+                                        {
+                                            @item.Value}
+                                    }
+                                }
+                            </h5>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <p class="card-text">@Resources.General.ContactPerson</p>
+                            <h5 class="card-title @auto_margin">
+                                @Model.ContactPerson
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <p class="card-text">@Resources.General.Email</p>
+                            <h5 class="card-title @auto_margin"> @Model.Email</h5>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <p class="card-text">@Resources.General.ContactInformation</p>
+                            <h5 class="card-title @auto_margin">
+                                @Model.ContactInformation
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row text-center padding-bottom-15px">
+                    <div class="col-lg-6">
+                        <button id="btnEditUserProfile" class="btn btn-info">@Resources.General.Edit <i class="fa fa-edit"></i></button>
+                    </div>
+                    <div class="col-lg-6">
+                        <button id="btnUserPassword" class="btn btn-warning">@Resources.General.ChangePassword <i class="fa fa-lock"></i></button>
+                    </div>
+                </div>
+
+
+                <div class="container" id="divEditUserProfile" style="display:none">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-8 text-uppercase">
+                            <form autocomplete="off">
+                                <input autocomplete="off" name="hidden" type="text" style="display:none;">
+                                <input type="text" style="display:none">
+                                <input type="password" style="display:none">
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="@labAlign">@Resources.General.Company @Resources.General.InEnglish</label>
+                                            <input id="txtName" type="text" maxlength="255" value="@Model.Name" required class="form-control" placeholder="@Resources.General.Company" />
+                                        </div>
+                                        <div class="col">
+                                            <label class="@labAlign">@Resources.General.Company @Resources.General.InArabic</label>
+                                            <input id="txtNameAr" type="text" maxlength="255" value="@Model.Name" required class="form-control" placeholder="@Resources.General.Company" />
+                                        </div>
+                                        <div class="col">
+                                            <label class="@labAlign">@Resources.General.Email</label>
+                                            <input autocomplete="off" required id="txtEmail" type="email" value="@Model.Email" class="form-control" placeholder="@Resources.General.Email" required />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <label class="@labAlign">@Resources.General.Country</label>
+                                            <select id="selectCountry" required class="form-control col-lg-6">
+                                                <option value="">أختر الدولة</option>
+                                                @foreach (Country country in Model.Countries)
+                                                {
+                                                    selected = "";
+                                                    if (Model.CompanyId == country.Id) { selected = "selected"; }
+                                                    if (isArabic)
+                                                    {
+                                                        <option value="@country.CountryCode" @selected>@country.NameAr</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@country.CountryCode" @selected>@country.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <label class="@labAlign">@Resources.General.Industry</label>
+                                            <select id="selectIndustry" required class="form-control">
+                                                @foreach (Industry industry in Model.Industries)
+                                                {
+                                                    selected = "";
+                                                    if (Model.IndustryId == industry.Id) { selected = "selected"; }
+                                                    if (isArabic)
+                                                    {
+                                                        <option value="@industry.Id" @selected>@industry.NameAr</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@industry.Id" @selected>@industry.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="@labAlign">@Resources.General.NumberOfEmployees</label>
+                                            <select id="employees" required class="form-control">
+                                                @if (isArabic)
+                                                {
+                                                    foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployeesAr()).EmployeesAr)
+                                                    {
+                                                        selected = "";
+                                                        if (Model.NumberOFEmployees == item.Key) { selected = "selected"; }
+                                                        <option value="@item.Key" @selected>@item.Value</option>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                                                    {
+                                                        selected = "";
+                                                        if (Model.NumberOFEmployees == item.Key) { selected = "selected"; }
+                                                        <option value="@item.Key" @selected>@item.Value</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label class="@labAlign">@Resources.General.ContactInformation</label>
+                                            <div class="input-group" dir="ltr">
+                                                <span class="input-group-addon" id="flage"><img id="flagimg" width="26" height="20" src="https://flagcdn.com/w320/om.png" /></span>
+                                                <span class="input-group-addon" id="countryPhoneKey" data-target="#exampleModal">dd</span>
+                                                <input id="txtInformation" type="number" maxlength="255" value="@Model.ContactInformation" required class="form-control" placeholder="@Resources.General.ContactInformation" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <label class="@labAlign">@Resources.General.ContactPerson</label>
+                                            <input id="txtPerson" class="form-control" value="@Model.ContactPerson" placeholder="@Resources.General.ContactPerson" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="padding-bottom-22px text-center"><button type="button" id="btnUpdateProfile" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Update</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="container" id="divChangePassword" style="display:none">
+                    <div class="row justify-content-md-center">
+                        <div class="col-lg-8 text-uppercase">
+
+                            <div class="form-group">
+                                <div class="row">
+
+                                    <div class="col">
+                                        <label>@Resources.General.Email</label>
+                                        <input disabled autocomplete="off" id="txtEmailChangePass" type="email" value="@Model.Email" class="form-control" placeholder="@Resources.General.Email" required />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label>@Resources.General.OldPassword</label>
+                                        <div class="input-group" dir="ltr">
+                                            <span btn="btnoldPasswordEye" class="input-group-addon" onclick="showPss('txtOldPassword','Ioldpass')"><i id="Ioldpass" class="fa fa-eye-slash"></i></span>
+                                            <input id="txtOldPassword" type="password" class="form-control" placeholder="@Resources.General.OldPassword" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>@Resources.General.Password</label>
+                                        <div class="input-group" dir="ltr">
+                                            <span class="input-group-addon"> <i id="Newpass" class="fa fa-eye-slash" onclick="showPss('txtPassword','Newpass')"></i></span>
+                                            <input id="txtPassword" type="password" class="form-control" placeholder="@Resources.General.Password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>@Resources.General.ConfirmPassword</label>
+                                        <div class="input-group" dir="ltr">
+                                            <span class="input-group-addon"> <i id="ConfirmPassword" class="fa fa-eye-slash" onclick="showPss('txtConfirmPassword','ConfirmPassword')"></i></span>
+                                            <input id="txtConfirmPassword" type="password" class="form-control" placeholder="@Resources.General.ConfirmPassword">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="padding-bottom-22px text-center"><button type="button" id="btnSavePassword" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Save</button></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="row justify-content-md-center padding-tb-20px">
             <div class="btn btn-primary text-white padding-left-10px padding-right-10px"> @Html.ActionLink(Resources.General.ChangePassword, "ChangePassword")</div>
             <div class="col-4"></div>
             <div class="btn btn-primary text-white padding-left-10px padding-right-10px"> @Html.ActionLink(Resources.General.Plans, "UserSubscriptions")</div>
-        </div>
-        <div class="row justify-content-md-center">
-            <div class="col-lg-11 text-uppercase">
-                @*<form autocomplete="off">
-                <input autocomplete="off" name="hidden" type="text" style="display:none;">
-                <input type="text" style="display:none">
-                <input type="password" style="display:none">*@
-                <table class="table table-active table-hover text-center">
-                    <tr>
-                        <th colspan="2">@Resources.General.Company @Resources.General.InEnglish</th>
-                        <th>@Resources.General.Company @Resources.General.InArabic</th>
-                        <th>@Resources.General.Country</th>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan="2" class="text-center">@Model.Name</td>
-                        <td class="text-center">@Model.NameAr</td>
-                        <td class="text-center">
-                            @foreach (Country country in Model.Countries)
-                            {
-                                if (country.Id == Model.CompanyId)
-                                {
-                @country.Name}
+        </div>*@
 
-        }
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">@Resources.General.Email</th>
-                        <th colspan="2">@Resources.General.Industry</th>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan="2" class="text-center">
-                            @Model.Email
-                        </td>
-                        <td colspan="2" class="text-center">
-                            @foreach (Industry industry in Model.Industries)
-                            {
-
-                                if (industry.Id == Model.IndustryId)
-                                {
-                @industry.Name}
-        }
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">@Resources.General.NumberOfEmployees</th>
-                        <th>@Resources.General.ContactPerson</th>
-                        <th>@Resources.General.ContactInformation</th>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan="2" class="text-center">
-                            @foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
-                            {
-                                if (item.Key == Model.NumberOFEmployees)
-                                {
-                @item.Value}
-        }
-                        </td>
-                        <td class="text-center">@Model.ContactPerson</td>
-                        <td class="text-center">
-                            @Model.ContactInformation
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <a href="@Url.Content(string.Format("~/Home/EditProfile"))" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Edit</a>
-                        </td>
-                    </tr>
-                </table>
-
-
-
-
-                @*</form>*@
-            </div>
-        </div>
     </div>
 </section>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#selectCountry").select2();
+    });
+    $(function () {
+        $("#selectIndustry").select2();
+    });
+</script>
 <script>
-    $("#btnSaveProfile").on("click", function () {
-        
+    function showPss(control,id) {
+        // console.log($('.fa-eye-slash').attr('class'));
+        if ($('#' + id).hasClass('fa-eye-slash')) {
+            $('#' + id).addClass('fa-eye');
+            $('#' + id).removeClass('fa-eye-slash');
+            $('#' + control).attr('type', 'text');
+        }
+        else {
+            $('#' + id).addClass('fa-eye-slash');
+            $('#' + id).removeClass('fa-eye');
+            $('#' + control).attr('type', 'password');
+        }
+
+    }
+
+    $('#txtInformation').change(function () {
+
+        var code = $('#countryPhoneKey').html();
+        var phone=code + $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: 'https://phonevalidation.abstractapi.com/v1/?api_key=af9830b65308460f8d8ff43f9e9f879a&phone=' + phone,
+            success: function (data) {
+                if (data['valid']) {
+                    if (!$('#txtInformation').hasClass('is-valid')) {
+                        $('#txtInformation').addClass('is-valid');
+                        if ($('#txtInformation').hasClass('is-invalid'))
+                            $('#txtInformation').removeClass('is-invalid');
+                    }
+                }
+                else {
+                    if (!$('#txtInformation').hasClass('is-invalid')) {
+                        $('#txtInformation').addClass('is-invalid');
+                        if ($('#txtInformation').hasClass('is-valid'))
+                            $('#txtInformation').removeClass('is-valid');
+                    }
+                }
+            },
+            error: function (data) {
+                console.log("there is an error");
+                //console.log(data);
+            }
+        });
+    });
+    $('#SetCountryCode').click(function () {
+
+        var Code = $('#txtCountryCode').val();
+        $.ajax({
+            type: 'get',
+            url: 'https://restcountries.eu/rest/v2/callingcode/' + Code ,
+            success: function (data) {
+                // console.log(data);
+                if (data.length > 0) {
+                    var stringified = JSON.stringify(data);
+                    var parsedObj = JSON.parse(stringified);
+                    $('#countryPhoneKey').html(parsedObj[0]['callingCodes']);
+
+                    $('#flagimg').attr('src', parsedObj[0]['flag']);
+                    $('#flagimg').attr('alt', parsedObj[0]['name']);
+                } else {
+
+                }
+
+            },
+            error: function (data) {
+                $('#countryPhoneKey').html('Double Click Here');
+
+                $('#flagimg').attr('src', 'None');
+                $('#flagimg').attr('alt', 'Not Availabel');
+            }
+
+        });
+    });
+    $('#countryPhoneKey').dblclick(function () {
+        $('#exampleModal').modal('toggle');
+    });
+    $("#btnRegister").on("click", function () {
+        //debugger;
         var name = $("#txtName").val();
         var nameAr = $("#txtNameAr").val();
         var country = $("#selectCountry").val();
@@ -184,6 +551,65 @@
 
 
         if (name == "") {
+            toastr.error("@Resources.General.RequiredCompanyName")
+            return;
+        }
+
+        if (email== "") {
+            toastr.error("@Resources.General.RequiredEmail")
+            return;
+        }
+
+        if (password == "") {
+            toastr.error("@Resources.General.RequiredPassword")
+            return;
+        }
+
+        if (information == "") {
+            toastr.error("@Resources.General.RequiredPhone")
+            return;
+        }
+
+        if (password != confirmPassword) {
+            toastr.error("@Resources.General.PasswordMissmatch");
+            return;
+        }
+
+        $.ajax({
+            url: "@Url.Action("Save", "Login")",
+            data: {
+                "Name": name, "NameAr" : nameAr, "Email": email, "Password": password, "ContactInformation": information, "ContactPerson": person,
+                "CountryId": country, "IndustryId": industry, "NumberOfEmployees": employees
+            },
+            type: "POST",
+            sync: false,
+            success: function () {
+                toastr.success("@Resources.General.Registered")
+                window.location = "@Url.Action("Index","Login")"
+            },
+            error: function (err, status, error) {
+                debugger;
+                toastr.error(err.statusText)
+            },
+
+        });
+    });
+</script>
+<script>
+    $("#btnUpdateProfile").on("click", function () {
+
+        var name = $("#txtName").val();
+        var nameAr = $("#txtNameAr").val();
+        var country = $("#selectCountry").val();
+        var industry = $("#selectIndustry").val();
+        var employees = $("#employees").val();
+        var information = $("#txtInformation").val();
+        var person = $("#txtPerson").val();
+        var email = $("#txtEmail").val();
+
+
+
+        if (name == "") {
             toastr.error("Please Enter Company Name")
             return;
         }
@@ -193,8 +619,83 @@
             return;
         }
 
+
+
+        $.ajax({
+            url: "@Url.Action("SaveProfile", "Home")",
+            data: {
+                "Name": name, "NameAr": nameAr, "Email": email,  "ContactInformation": information, "ContactPerson": person,
+                "CountryIdxx": country, "IndustryId": industry, "NumberOfEmployees": employees
+            },
+            type: "POST",
+            sync: false,
+            success: function () {
+                toastr.success('@Resources.General.SavedSuccessffuly');
+                 $("#divEditUserProfile").toggle("slow", function () {
+            $("#btnEditUserProfile").html($("#divEditUserProfile").css("display") == "none" ? "@Resources.General.Edit <i class='fa fa-edit'></i>" : "@Resources.General.Cancel <i class='fa fa-backward'></i>");
+                     $("#btnUserPassword").attr("disabled", $("#divEditUserProfile").css("display") == "none" ? false : true);
+                 });
+                location.reload();
+            },
+            error: function (err, status, error) {
+                debugger;
+                toastr.error(err.statusText)
+            },
+
+        });
+    });
+    $("#btnEditUserProfile").on("click", function () {
+        $("#divEditUserProfile").toggle("slow", function () {
+            $("#btnEditUserProfile").html($("#divEditUserProfile").css("display") == "none" ? "@Resources.General.Edit <i class='fa fa-edit'></i>" : "@Resources.General.Cancel <i class='fa fa-backward'></i>");
+        $("#btnUserPassword").attr("disabled", $("#divEditUserProfile").css("display") == "none" ? false : true);});
+
+    });
+    $("#btnUserPassword").on("click", function () {
+        $("#divChangePassword").toggle("slow", function () {
+
+            $("#btnUserPassword").html($("#divChangePassword").css("display") == "none" ? "@Resources.General.ChangePassword <i class='fa fa-lock'></i>" : "@Resources.General.Cancel <i class='fa fa-backward'></i>");
+        $("#btnEditUserProfile").attr("disabled", $("#divChangePassword").css("display") == "none" ? false : true);});
+
+    });
+
+
+    function showPss(control, id) {
+        let eyeContainer = $('#' + id);
+
+        if (eyeContainer[0].classList.contains("fa-eye-slash")) {
+
+            eyeContainer[0].classList.add('fa-eye');
+            eyeContainer[0].classList.remove('fa-eye-slash');
+            $('#' + control).attr('type', 'text');
+        }
+        else {
+
+            eyeContainer[0].classList.add('fa-eye-slash');
+            eyeContainer[0].classList.remove('fa-eye');
+            $('#' + control).attr('type', 'password');
+        }
+
+    }
+      $("#btnSavePassword").on("click", function () {
+
+
+          var email = $("#txtEmailChangePass").val();
+        var password = $("#txtPassword").val();
+        var oldpassword = $("#txtOldPassword").val();
+        var confirmPassword = $("#txtConfirmPassword").val();
+
+
+
+        if (email== "") {
+            toastr.error("Please Enter Email")
+            return;
+        }
+        if (oldpassword == "") {
+            toastr.error("Please Enter Current Password")
+            return;
+        }
         if (password == "") {
-            toastr.error("Please Enter Password")
+            toastr.error("Please Enter New Password")
             return;
         }
 
@@ -204,18 +705,24 @@
         }
 
         $.ajax({
-            url: "@Url.Action("SaveProfile", "Home")",
+            url: "@Url.Action("SavePassword", "Home")",
             data: {
-                "Name": name, "NameAr": nameAr, "Email": email, "Password": password, "ContactInformation": information, "ContactPerson": person,
-                "CountryId": country, "IndustryId": industry, "NumberOfEmployees": employees
+                "Email": email, "Password": password, "OldPassword": oldpassword
+
             },
             type: "POST",
             sync: false,
             success: function () {
                 toastr.success('@Resources.General.SavedSuccessffuly');
+                 $("#divChangePassword").toggle("slow", function () {
+
+            $("#btnUserPassword").html($("#divChangePassword").css("display") == "none" ? "@Resources.General.ChangePassword <i class='fa fa-lock'></i>" : "@Resources.General.Cancel <i class='fa fa-backward'></i>");
+                     $("#btnEditUserProfile").attr("disabled", $("#divChangePassword").css("display") == "none" ? false : true);
+                 });
+                location.reload();
             },
             error: function (err, status, error) {
-                debugger;
+
                 toastr.error(err.statusText)
             },
 

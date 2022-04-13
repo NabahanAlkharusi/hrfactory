@@ -150,6 +150,15 @@
   <data name="AllUsers" xml:space="preserve">
     <value>All Users</value>
   </data>
+  <data name="ArabicText" xml:space="preserve">
+    <value>Enter Arabic Text</value>
+  </data>
+  <data name="ArabicText1" xml:space="preserve">
+    <value>Arabic Text</value>
+  </data>
+  <data name="ArabicTitle" xml:space="preserve">
+    <value>Arabic Title</value>
+  </data>
   <data name="Ask" xml:space="preserve">
     <value>Ask</value>
   </data>
@@ -243,6 +252,18 @@
   <data name="Email" xml:space="preserve">
     <value>E-mail</value>
   </data>
+  <data name="EnglishText" xml:space="preserve">
+    <value>Enter EnglishText</value>
+  </data>
+  <data name="EnglishText1" xml:space="preserve">
+    <value>EnglishText</value>
+  </data>
+  <data name="EnglishTitle" xml:space="preserve">
+    <value>EnglishTitle</value>
+  </data>
+  <data name="EnterUpdateDet" xml:space="preserve">
+    <value>Enter Update Details</value>
+  </data>
   <data name="Experts" xml:space="preserve">
     <value>HR Factory App Experts</value>
   </data>
@@ -282,6 +303,9 @@
   <data name="NewAccount" xml:space="preserve">
     <value>Create a new account.</value>
   </data>
+  <data name="NewUpdate" xml:space="preserve">
+    <value>Send New Update</value>
+  </data>
   <data name="OMRCurrncy" xml:space="preserve">
     <value>OMR</value>
   </data>
@@ -318,6 +342,9 @@
   <data name="SelectCourse" xml:space="preserve">
     <value>Select your HR course</value>
   </data>
+  <data name="Serial" xml:space="preserve">
+    <value>No.</value>
+  </data>
   <data name="ShowAll" xml:space="preserve">
     <value>Show All Courses</value>
   </data>
@@ -332,6 +359,24 @@
   </data>
   <data name="sure" xml:space="preserve">
     <value>Are you sure you want to delete this?</value>
+  </data>
+  <data name="TargetGroup" xml:space="preserve">
+    <value>Target Group</value>
+  </data>
+  <data name="TargetGroupCountry" xml:space="preserve">
+    <value>Target Group Country</value>
+  </data>
+  <data name="TargetGroupPlan" xml:space="preserve">
+    <value>Target Group Plan</value>
+  </data>
+  <data name="TargetGroupSubStat" xml:space="preserve">
+    <value>Target Group Subscription Status</value>
+  </data>
+  <data name="TargetGroupSubStatActiv" xml:space="preserve">
+    <value>Active Subscription</value>
+  </data>
+  <data name="TargetGroupSubStatAll" xml:space="preserve">
+    <value>All</value>
   </data>
   <data name="Trainer" xml:space="preserve">
     <value>Trainer</value>

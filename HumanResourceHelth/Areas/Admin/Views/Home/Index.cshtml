@@ -45,16 +45,11 @@
     @*App.init();*@
 }
 @{ 
-    var dir = "ltr";
-    var icon_align = "pull-right";
-    var row_item_align = "";
-    var stats_icon_class = "stats-icon";
-}
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft){
-    dir = "rtl";
-    icon_align = "pull-left";
-    row_item_align = "pull-right";
-    stats_icon_class = "stats-icon-ar";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir =isArabic? "rtl": "ltr";
+    var icon_align = isArabic? "pull-left":"pull-right";
+    var row_item_align = isArabic? "pull-right":"";
+    var stats_icon_class =isArabic? "stats-icon-ar": "stats-icon";
 }
 <div dir="@dir">
     <h1 class="page-header">@AppResource.Dashboard @*<small>header small text goes here...</small>*@</h1>
@@ -66,7 +61,7 @@
         } }
 
     <div class="row" dir="@dir"> 
-        <div class="col-md-3 col-sm-6 @row_item_align">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-purple">
                 <div class="@stats_icon_class"><i class="fa fa-book"></i></div>
                 <div class="stats-info p-b-10">
@@ -77,7 +72,7 @@
 
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 @row_item_align">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-red">
                 <div class="@stats_icon_class"><i class="fa fa-user-check"></i></div>
                 <div class="stats-info p-b-10">
@@ -90,7 +85,7 @@
         </div>
         <!-- end col-3 -->
 
-        <div class="col-md-3 col-sm-6 @row_item_align">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-green">
                 <div class="@stats_icon_class"><i class="fa fa-certificate"></i></div>
                 <div class="stats-info p-b-10">
@@ -100,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 @row_item_align">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-orange">
                 <div class="@stats_icon_class"><i class="fa fa-parking"></i></div>
                 <div class="stats-info p-b-10">
@@ -110,7 +105,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6 @row_item_align">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-orange">
                 <div class="@stats_icon_class"><i class="fa fa-parking"></i></div>
                 <div class="stats-info p-b-10">
@@ -124,53 +119,53 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-md-3 col-sm-6">
+    <div class="row h4" dir="@dir">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-green">
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>Builder</h4>
+                    <h4>@Resources.General.Builder</h4>
                     <p>@Model.Builders</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","Section", new { Area = ""})">View Details</a>
+                    <a href="@Url.Action("Index","Section", new { Area = ""})">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-orange">
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>Customers</h4>
+                    <h4>@Resources.General.Customers</h4>
                     <p>@Model.Users</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","User")">View Details</a>
+                    <a href="@Url.Action("Index","User")">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-purple">
                 <div class="@stats_icon_class"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
-                    <h4>Courses</h4>
+                    <h4>@AppResource.Courses</h4>
                     <p>@Model.Courses</p>
                 </div>
                 <div class="stats-link">
-                    <a href="~/Courses">View Details</a>
+                    <a href="~/Courses">@Resources.General.ViewDetails</a>
 
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-red">
                 <div class="@stats_icon_class"><i class="fa fa-clock-o"></i></div>
                 <div class="stats-info">
-                    <h4>Experts</h4>
+                    <h4>@AppResource.Experts</h4>
                     <p>@Model.Experts</p>
                 </div>
                 <div class="stats-link">
-                    <a href="/Admin/ExpertsProfiles">View Details</a>
+                    <a href="/Admin/ExpertsProfiles">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
@@ -178,31 +173,43 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-yellow-darker">
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>Health Check Data "For Free Plan"</h4>
+                    <h4>Health Check Data "@Resources.General.FreePlan"</h4>
                     <p>@Model.FreeIndicators</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Free","Indicator")">View Details</a>
+                    <a href="@Url.Action("Free","Indicator")">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-aqua-darker">
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>Health Check Data "For Paid Plan"</h4>
+                    <h4>Health Check Data "@Resources.General.Paid"</h4>
                     <p>@Model.PaidIndicators</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Paid","Indicator")">View Details</a>
+                    <a href="@Url.Action("Paid","Indicator")">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-orange">
+                <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.BusinessHealthCheck</h4>
+                    <p>@Model.BusinessIndicators</p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Business","Indicator")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-blue-lighter">
                 <div class="@stats_icon_class"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
@@ -210,11 +217,11 @@
                     <p>@Model.TechRequests</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","TechRequests")">View Details</a>
+                    <a href="@Url.Action("Index","TechRequests")">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-grey">
                 <div class="@stats_icon_class"><i class="fa fa-clock-o"></i></div>
                 <div class="stats-info">
@@ -222,7 +229,43 @@
                     <p>@Model.PluginRequests</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","PluginRequests")">View Details</a>
+                    <a href="@Url.Action("Index","PluginRequests")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-red">
+                <div class="@stats_icon_class"><i class="fa fa-book"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.TermsConditions</h4>
+                    <p>@Model.Terms</p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","TermsConditions")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-yellow-darker">
+                <div class="@stats_icon_class"><i class="fa fa-user-check"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Updates</h4>
+                    <p>@Model.Updates</p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","Updates")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-aqua-darker">
+                <div class="@stats_icon_class"><i class="fa fa-folder"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.ManagePlansFiles</h4>
+                    <p>@Model.Files</p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","DocFiles")">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
@@ -230,43 +273,43 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-silver-darker">
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>Manage Files For Plans</h4>
+                    <h4>@Resources.General.ManagePlansFiles</h4>
                     <p>0</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","PlansData")">View Details</a>
+                    <a href="@Url.Action("Index","PlansData")">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-purple-lighter">
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
-                    <h4>Countries</h4>
+                    <h4>@Resources.General.ManageCountries</h4>
                     <p>@Model.Countries</p>
                 </div>
                 <div class="stats-link">
-                    <a href="#">View Details</a>
+                    <a href="#">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-green-darker">
                 <div class="@stats_icon_class"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
-                    <h4>Industires</h4>
+                    <h4>@Resources.General.Industry</h4>
                     <p>@Model.Industreis</p>
                 </div>
                 <div class="stats-link">
-                    <a href="#">View Details</a>
+                    <a href="#">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
             <div class="widget widget-stats bg-red">
                 <div class="@stats_icon_class"><i class="fa fa-clock-o"></i></div>
                 <div class="stats-info">
@@ -274,7 +317,7 @@
                     <p>&nbsp;</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","Home", new { Area = ""})" target="_blank">View Details</a>
+                    <a href="@Url.Action("Index","Home", new { Area = ""})" target="_blank">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>

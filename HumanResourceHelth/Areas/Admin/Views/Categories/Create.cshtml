@@ -1,0 +1,106 @@
+﻿@model HumanResourceHelth.Model.Category
+@using HumanResourceHelth.Model.Resources
+@{
+    ViewBag.Title = "Index";
+    Session["Backto"] = "Categories";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> @Resources.General.Categories</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group ml-2 col-lg-12 col-xs-12">
+                            <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                                <i class="fa fa-backward" style="@rotate"></i>
+                                @Resources.General.Back
+                            </a>
+                            <a class="btn btn-lg btn-success @alignclass" href="/Admin/DocFiles">
+                                @Resources.General.CategoryDocFiles
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="h4 m-15 p-l-40 m-r-40 p-r-40 m-l-40 p-t-10" dir="@dir">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-10 col-xs-12 col-md-10 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.CategoryPlan, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-lg-10 col-md-12 col-sm-12">
+                                @Html.DropDownListFor(model => model.CategoryPlan, ViewBag.Palns as SelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoryPlan, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-10 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.CategoryENName, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-lg-10 col-md-12 col-sm-12">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-10 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.CategoryARName, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-lg-10 col-md-12 col-sm-12">
+                                @Html.EditorFor(model => model.NameAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NameAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-10 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.CategoryStatus, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-lg-10 col-md-12 col-sm-12">
+                                <label class="switch">
+                                    <input class="switch-input" type="checkbox" name="isActiveToggel" id="isActiveToggel" checked onchange="onoffchange(this)" />
+                                    <span class="switch-label" data-on="@Resources.General.active" data-off="@Resources.General.inactive"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                                @Html.HiddenFor(model => model.isActive, new { Value = true })
+                                @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-6 col-lg-6">
+                            <input type="submit" value="@Resources.General.Create" class="btn btn-lg btn-success @alignclass" />
+                            @Html.ActionLink(Resources.General.Back, "Index", new object { }, new { @class = "btn btn-lg btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<script>
+    function onoffchange(ctrl) {
+        ctrl.checked ? $('#isActive').val(true) : $('#isActive').val(false);
+
+    }
+</script>

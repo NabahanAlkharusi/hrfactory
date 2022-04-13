@@ -1,0 +1,90 @@
+﻿@using HumanResourceHelth.Model.Resources
+@model IEnumerable<HumanResourceHelth.Model.Updates>
+
+@{
+    ViewBag.Title = "Index";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.Updates</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-10">
+                        <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                            @AppResource.NewUpdate
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            @if(Session["Successfull"] != null)
+            {
+            <div class="alert alert-success alert-dismissable">@Session["Successfull"]</div>
+            }
+            <table class="table">
+                <tr>
+                    <th>
+                        @AppResource.Serial
+                    </th>
+                    <th>
+                        @if (isArabic)
+                        {
+                            @AppResource.ArabicTitle
+                        }
+                        else{
+                        @AppResource.EnglishTitle
+                        }
+                    </th>
+                    <th>
+                        @AppResource.CreatedDate
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+
+
+                    <tr>
+                        <td>
+                            @if (isArabic)
+                            {
+                                @Html.DisplayFor(modelItem => item.ArabicTitle)
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.EnglisTitle)
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IssuedDate)
+                        </td>
+                        <td>
+
+                            @Html.ActionLink(AppResource.Details, "Details", new { id = item.Id })
+
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

@@ -120,6 +120,9 @@
   <data name="AboutUs" xml:space="preserve">
     <value>About Us</value>
   </data>
+  <data name="active" xml:space="preserve">
+    <value>ACTIVE</value>
+  </data>
   <data name="AddIntroVideo" xml:space="preserve">
     <value>Add Introducing Video</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Arabic" xml:space="preserve">
     <value>Arabic</value>
+  </data>
+  <data name="Around" xml:space="preserve">
+    <value>And Around</value>
   </data>
   <data name="Ask" xml:space="preserve">
     <value>Ask</value>
@@ -138,14 +144,59 @@
   <data name="BookAnAppointment" xml:space="preserve">
     <value>Book an appointment</value>
   </data>
+  <data name="Builder" xml:space="preserve">
+    <value>HR Manual Builder</value>
+  </data>
+  <data name="BuilderAddCountryBtn" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="BuilderAddCountryTitle" xml:space="preserve">
+    <value>Policy builder for a new country</value>
+  </data>
   <data name="BuildYourDocument" xml:space="preserve">
     <value>Build Your Document</value>
+  </data>
+  <data name="BusinessHealthCheck" xml:space="preserve">
+    <value>Business Health Check</value>
   </data>
   <data name="BySigningUpYouAcceptOur" xml:space="preserve">
     <value>By signing up you accept our</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CategoryActive" xml:space="preserve">
+    <value>Category Active</value>
+  </data>
+  <data name="CategoryARName" xml:space="preserve">
+    <value>Category Arabic Name</value>
+  </data>
+  <data name="CategoryDocFile" xml:space="preserve">
+    <value>Document For Category</value>
+  </data>
+  <data name="CategoryDocFiles" xml:space="preserve">
+    <value>Category Files</value>
+  </data>
+  <data name="CategoryENName" xml:space="preserve">
+    <value>Category English Name</value>
+  </data>
+  <data name="CategoryInActive" xml:space="preserve">
+    <value>Category In-Active</value>
+  </data>
+  <data name="CategoryIsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="CategoryIsNotActive" xml:space="preserve">
+    <value>Not Active</value>
+  </data>
+  <data name="CategoryPlan" xml:space="preserve">
+    <value>Category Plan</value>
+  </data>
+  <data name="CategoryStatus" xml:space="preserve">
+    <value>Category Status</value>
   </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>Change Password</value>
@@ -177,11 +228,20 @@
   <data name="ContactPerson" xml:space="preserve">
     <value>Contact Person</value>
   </data>
+  <data name="CountriesBuilderTitle" xml:space="preserve">
+    <value>Policy builder compatible with labor laws in</value>
+  </data>
   <data name="Country" xml:space="preserve">
     <value>Country</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Customers</value>
+  </data>
+  <data name="DefaultMB" xml:space="preserve">
+    <value>Default HR Manual Content</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
@@ -194,6 +254,75 @@
   </data>
   <data name="Disagree" xml:space="preserve">
     <value>Disagree</value>
+  </data>
+  <data name="DocFileActive" xml:space="preserve">
+    <value>Document Active</value>
+  </data>
+  <data name="DocFileArLinkVideo" xml:space="preserve">
+    <value>Arabic Document Video Link</value>
+  </data>
+  <data name="DocFileArName" xml:space="preserve">
+    <value>Document File Arabic Name</value>
+  </data>
+  <data name="DocFileArUpload" xml:space="preserve">
+    <value>Upload Arabic Document</value>
+  </data>
+  <data name="DocFileArUploadVideo" xml:space="preserve">
+    <value>Upload Arabic Document Video</value>
+  </data>
+  <data name="DocFileCountryDomain" xml:space="preserve">
+    <value>Document Country Domain</value>
+  </data>
+  <data name="DocFileEnLinkVideo" xml:space="preserve">
+    <value>English Document Video Link</value>
+  </data>
+  <data name="DocFileEnName" xml:space="preserve">
+    <value>Document File English Name</value>
+  </data>
+  <data name="DocFileEnUpload" xml:space="preserve">
+    <value>Upload English Document</value>
+  </data>
+  <data name="DocFileEnUploadVideo" xml:space="preserve">
+    <value>Upload English Document Video</value>
+  </data>
+  <data name="DocFileFree" xml:space="preserve">
+    <value>Document is Free</value>
+  </data>
+  <data name="DocFileFreeStatus" xml:space="preserve">
+    <value>Document Free Status</value>
+  </data>
+  <data name="DocFileInActive" xml:space="preserve">
+    <value>Document In-Active</value>
+  </data>
+  <data name="DocFileIsActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="DocFileIsFree" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="DocFileIsNotActive" xml:space="preserve">
+    <value>Not Active</value>
+  </data>
+  <data name="DocFileIsNotFree" xml:space="preserve">
+    <value>Not Free</value>
+  </data>
+  <data name="DocFileIsVedioLink" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="DocFileIsVedioUpload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="DocFileNotFree" xml:space="preserve">
+    <value>Document is Not Free</value>
+  </data>
+  <data name="DocFileStatus" xml:space="preserve">
+    <value>Document Status</value>
+  </data>
+  <data name="DocFileVideo" xml:space="preserve">
+    <value>Document Video</value>
+  </data>
+  <data name="DocFileVideoIsYU" xml:space="preserve">
+    <value>Is Document from YouTube or Upload</value>
   </data>
   <data name="DocumentName" xml:space="preserve">
     <value>Document Name</value>
@@ -210,6 +339,9 @@
   <data name="EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
+  <data name="EndedSubscription" xml:space="preserve">
+    <value>Ended Subscription</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -219,11 +351,20 @@
   <data name="Explain" xml:space="preserve">
     <value>Explain</value>
   </data>
+  <data name="ExplainerVideo" xml:space="preserve">
+    <value>Video Explainer</value>
+  </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
   </data>
+  <data name="FreePlan" xml:space="preserve">
+    <value>Free Plan</value>
+  </data>
   <data name="FreeSubscription" xml:space="preserve">
     <value>Free Subscription</value>
+  </data>
+  <data name="GeneratePayTabsPaymentLink" xml:space="preserve">
+    <value>Generate PayTabs Payment Link</value>
   </data>
   <data name="GetFreeSub" xml:space="preserve">
     <value>7 Days Free Trial</value>
@@ -243,14 +384,26 @@
   <data name="HealthCheckOnDate" xml:space="preserve">
     <value>Health Check On Date</value>
   </data>
+  <data name="HideDefaultMBbtn" xml:space="preserve">
+    <value>Hide Default Manual Builder</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="HrCheckUpTerms" xml:space="preserve">
+    <value>Hr Check-up Terms</value>
   </data>
   <data name="HRDoctorContent" xml:space="preserve">
     <value>Enjoy virtual HR expert advices to attend your pressing HR challenges. Subscribe monthly to a capped 10 hours per month. Please write below your specific requirements.</value>
   </data>
+  <data name="HRManualBuilderPlan" xml:space="preserve">
+    <value>HR Manual Builder Plan</value>
+  </data>
   <data name="IAgreeWith" xml:space="preserve">
     <value>I Agree With</value>
+  </data>
+  <data name="inactive" xml:space="preserve">
+    <value>IN-ACTIVE</value>
   </data>
   <data name="InArabic" xml:space="preserve">
     <value>In Arabic</value>
@@ -264,6 +417,9 @@
   <data name="IntroVideo" xml:space="preserve">
     <value>Introducing Video Details</value>
   </data>
+  <data name="LastLogin" xml:space="preserve">
+    <value>Last Login</value>
+  </data>
   <data name="Learn" xml:space="preserve">
     <value>Learn</value>
   </data>
@@ -273,11 +429,20 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
+  <data name="LoginAS" xml:space="preserve">
+    <value>Login as</value>
+  </data>
   <data name="LoginPlease" xml:space="preserve">
     <value>Login Please</value>
   </data>
   <data name="Logout" xml:space="preserve">
     <value>Logout</value>
+  </data>
+  <data name="ManageCountries" xml:space="preserve">
+    <value>Manage Countries</value>
+  </data>
+  <data name="ManagePlansFiles" xml:space="preserve">
+    <value>Manage Plans Files</value>
   </data>
   <data name="ManualBuilderAnnualRegisterd" xml:space="preserve">
     <value>You Are Registered On ManualBuilder Plan For One Year Successful</value>
@@ -285,8 +450,20 @@
   <data name="ManualBuilderMonthlyRegisterd" xml:space="preserve">
     <value>You Are Registered On ManualBuilder Plan For One Month Successful</value>
   </data>
+  <data name="ManualBuilderPlanAnnuallyTerms" xml:space="preserve">
+    <value>Manual Builder Plan Annually Terms</value>
+  </data>
+  <data name="ManualBuilderPlanMonthlyTerms" xml:space="preserve">
+    <value>Manual Builder Plan Monthly Terms</value>
+  </data>
   <data name="Maybe" xml:space="preserve">
     <value>May be</value>
+  </data>
+  <data name="MoreToolsAvailable" xml:space="preserve">
+    <value>Tool(s) is/are Available</value>
+  </data>
+  <data name="MyDashboard" xml:space="preserve">
+    <value>My Dashboard</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -303,8 +480,35 @@
   <data name="No" xml:space="preserve">
     <value>No.</value>
   </data>
+  <data name="NoActiveSubscriptions" xml:space="preserve">
+    <value>No Active Subscriptions</value>
+  </data>
+  <data name="NoPreviousSubscriptions" xml:space="preserve">
+    <value>No Previous Subscriptions</value>
+  </data>
   <data name="NotApplicable" xml:space="preserve">
     <value>Not Applicable</value>
+  </data>
+  <data name="NotFreePlan" xml:space="preserve">
+    <value>Not Free Plan</value>
+  </data>
+  <data name="NotificationDate" xml:space="preserve">
+    <value>Notification Date</value>
+  </data>
+  <data name="NotificationDetails" xml:space="preserve">
+    <value>Notification Details</value>
+  </data>
+  <data name="NotificationEmailTip" xml:space="preserve">
+    <value>This is a preview of email that will send to Users</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="NotificationText" xml:space="preserve">
+    <value>Notification Text</value>
+  </data>
+  <data name="NotificationTitle" xml:space="preserve">
+    <value>Notification Title</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>Number Of Employees</value>
@@ -318,11 +522,23 @@
   <data name="OrderHere" xml:space="preserve">
     <value>Order Here</value>
   </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="PasswordMissmatch" xml:space="preserve">
     <value>Password Miss-Match</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="Paywith" xml:space="preserve">
+    <value>Pay with:</value>
+  </data>
+  <data name="PayWithPayTabs" xml:space="preserve">
+    <value>Pay With PayTabs</value>
   </data>
   <data name="PerMonth" xml:space="preserve">
     <value>Per Month</value>
@@ -330,11 +546,17 @@
   <data name="PerYear" xml:space="preserve">
     <value>Per Year</value>
   </data>
+  <data name="PlanDocFile" xml:space="preserve">
+    <value>Document For Plan</value>
+  </data>
   <data name="PlanName" xml:space="preserve">
     <value>Plan Name</value>
   </data>
   <data name="Plans" xml:space="preserve">
     <value>My Plans</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
   </data>
   <data name="Previous" xml:space="preserve">
     <value>Previous</value>
@@ -342,14 +564,29 @@
   <data name="PreviousChecks" xml:space="preserve">
     <value>Previous Checks</value>
   </data>
+  <data name="PreviousSubscriptions" xml:space="preserve">
+    <value>Previous Subscriptions</value>
+  </data>
+  <data name="ProceedPayment" xml:space="preserve">
+    <value>Proceed Payment</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
+  </data>
+  <data name="PublicTerms" xml:space="preserve">
+    <value>General Terms and Conditions</value>
   </data>
   <data name="RecoverMyPassword" xml:space="preserve">
     <value>RECOVER MY PASSWORD</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
+  </data>
+  <data name="Registeration" xml:space="preserve">
+    <value>Registeration</value>
+  </data>
+  <data name="RegisterationTerms" xml:space="preserve">
+    <value>Registeration Terms</value>
   </data>
   <data name="Registered" xml:space="preserve">
     <value>Registered Successfully</value>
@@ -394,16 +631,22 @@
     <value>Section Deactivated</value>
   </data>
   <data name="SeeFiles" xml:space="preserve">
-    <value>See Files</value>
+    <value>Plan Files</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>
+  </data>
+  <data name="SelectCountry" xml:space="preserve">
+    <value>Select Country</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
+  </data>
+  <data name="ShowDefaultMBbtn" xml:space="preserve">
+    <value>Show Default Manual Builder</value>
   </data>
   <data name="ShowResults" xml:space="preserve">
     <value>Show Results</value>
@@ -413,6 +656,9 @@
   </data>
   <data name="SignUpNow" xml:space="preserve">
     <value>New Account</value>
+  </data>
+  <data name="singup" xml:space="preserve">
+    <value>Sing up</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
@@ -428,6 +674,18 @@
   </data>
   <data name="StartUpMonthlyRegisterd" xml:space="preserve">
     <value>You Are Registered On StartUp Plan For One Month Successful</value>
+  </data>
+  <data name="StartUpPlan" xml:space="preserve">
+    <value>Start-up Plan</value>
+  </data>
+  <data name="StartUpPlanAnnuallyTerms" xml:space="preserve">
+    <value>Start-up Plan Annually Terms</value>
+  </data>
+  <data name="StartUpPlanMonthlyTerms" xml:space="preserve">
+    <value>Start-up Plan Monthly Terms</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Subject</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>
@@ -459,8 +717,41 @@
   <data name="SubscribeFreeTitle" xml:space="preserve">
     <value>Free Trial Subscription</value>
   </data>
+  <data name="Subscriptionfrom" xml:space="preserve">
+    <value>Subscription from</value>
+  </data>
+  <data name="SubscriptionPeriod" xml:space="preserve">
+    <value>Subscription period</value>
+  </data>
+  <data name="subscriptionPeriodMonth" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="subscriptionPeriodYear" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="SubscriptionPrice" xml:space="preserve">
+    <value>Subscription Price</value>
+  </data>
+  <data name="SubscriptionType" xml:space="preserve">
+    <value>Subscription Type</value>
+  </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>Terms and Conditions</value>
+  </data>
+  <data name="TermsConditionDomain" xml:space="preserve">
+    <value>Terms &amp; Conditions Domain</value>
+  </data>
+  <data name="TermsConditions" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
+  <data name="TermsConditionText" xml:space="preserve">
+    <value>Terms &amp; Conditions Text</value>
+  </data>
+  <data name="TermsConditionTitle" xml:space="preserve">
+    <value>Terms &amp; Conditions Title</value>
+  </data>
+  <data name="TermsConditionType" xml:space="preserve">
+    <value>Terms &amp; Condition for</value>
   </data>
   <data name="TermsOfService" xml:space="preserve">
     <value>Terms of service</value>
@@ -474,6 +765,12 @@
   <data name="Title" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
@@ -482,6 +779,9 @@
   </data>
   <data name="UpdatedSuccessffuly" xml:space="preserve">
     <value>Updated Successfully</value>
+  </data>
+  <data name="Updates" xml:space="preserve">
+    <value>Updates</value>
   </data>
   <data name="Upgrade" xml:space="preserve">
     <value>Upgrade</value>
@@ -497,6 +797,27 @@
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Upload File</value>
+  </data>
+  <data name="UserManulNotif" xml:space="preserve">
+    <value>User will receive notification upon any changes in this manual.</value>
+  </data>
+  <data name="VAT" xml:space="preserve">
+    <value>VAT</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+  </data>
+  <data name="ViewProfile" xml:space="preserve">
+    <value>You Can View Your Profile And Edit it.</value>
+  </data>
+  <data name="ViewSubscriptions" xml:space="preserve">
+    <value>You Can View Your Subscriptions.</value>
+  </data>
+  <data name="ViewUpdates" xml:space="preserve">
+    <value>You Can View any updates sent by HRFactory.</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>

@@ -12,5 +12,6 @@ namespace HumanResourceHelth.Model
         public int CountryID { get; set; }
         public string CountryNameAr { get; set; }
         public string CountryNameEn { get; set; }
+
     }
 }

@@ -1,0 +1,152 @@
+﻿@using HumanResourceHelth.Model
+@model HumanResourceHelth.Model.TermsConditions
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Session["Backto"] = "TermsConditions";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> @Resources.General.TermsConditions</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            
+            <div class="dl-horizontal">
+                <div class="row">
+                    <div class="col-lg-6 h4 text-center bold @labelClass">
+                        @Resources.General.TermsConditionType
+                    </div>
+
+                    <div class="col-lg-6 h4 text-right @alignclass">
+                        @{
+                            switch ((int)Model.TermsConditionType)
+                            {
+                                case 1:
+                                    <text>@Resources.General.RegisterationTerms</text>
+                                    break;
+                                case 2:
+                                    <text>@Resources.General.StartUpPlanMonthlyTerms</text>
+                                    break;
+                                case 3:
+                                    <text>@Resources.General.StartUpPlanAnnuallyTerms</text>
+                                    break;
+                                case 4:
+                                    <text>@Resources.General.ManualBuilderPlanMonthlyTerms</text>
+                                    break;
+                                case 5:
+                                    <text>@Resources.General.ManualBuilderPlanAnnuallyTerms</text>
+                                    break;
+                                case 6:
+                                    <text>@Resources.General.HrCheckUpTerms</text>
+                                    break;
+                            }
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6 h4 text-center @labelClass">
+                        @Resources.General.TermsConditionDomain
+                    </div>
+
+                    <div class="col-lg-6 h4 text-right @alignclass">
+                        @foreach (Country country in ViewBag.Countries as List<Country>)
+                        {
+                            if (country.Id == Model.CountryId)
+                            {
+                                if (isArabic)
+                                {<text>@country.NameAr</text>
+                            }
+                            else
+                            {
+                                <text>@country.Name</text>
+                            }
+                        }
+                    }
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6 h4 text-center @labelClass">
+                        @Resources.General.TermsConditionText <text>In Arabic</text>
+                    </div>
+
+                    <div class="col-lg-6 h4 text-right @alignclass">
+                        @Html.Raw(Model.ArabicText)
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6 h4 text-center @labelClass">
+                        @Resources.General.TermsConditionText <text>In English</text>
+                    </div>
+
+                    <div class="col-lg-6 h4 text-right @alignclass">
+                        @Html.Raw(Model.EnglishText)
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6 h4 text-center @labelClass">
+                        @Resources.General.TermsConditionTitle <text>In Arabic</text>
+                    </div>
+
+                    <div class="col-lg-6 h4 text-right @alignclass">
+                        @Html.DisplayFor(model => model.ArabicTitle)
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-6 h4 text-center @labelClass">
+                        @Resources.General.TermsConditionTitle <text>In English</text>
+                    </div>
+
+                    <div class="col-lg-6 h4 text-right @alignclass">
+                        @Html.DisplayFor(model => model.EnglishTitle)
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="form-actions no-color">
+                        <div class="col-lg-6 @labelClass text-center">
+                            <input type="submit" value="@Resources.General.Delete" class="btn btn-lg btn-danger" />
+                        </div>
+                        <div class="col-lg-6 text-center @alignclass">
+                            @Html.ActionLink(Resources.General.Back, "Index", new object { }, new { @class = "btn btn-lg btn-primary" })
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

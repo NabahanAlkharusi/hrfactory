@@ -63,7 +63,7 @@
                     </svg>
                 </div>
             </div>
-            <h3 class="font-weight-700 text-capitalize page-title-tech cms" data-contentId="79">@GetContent(79)</h3>
+            <h3 class="font-weight-700 text-capitalize page-title-tech cms pb-3" style="line-height: 1.2;" data-contentId="79">@GetContent(79)</h3>
         </div>
     </div>
 </div>
@@ -88,10 +88,10 @@
     hideClass = "d-none";
     hideloginbtnClass = "";
 }
-<section class="padding-tb-80px background-white">
+<section class="padding-tb-20px background-white">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 text-center">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="clearfix margin-bottom-30px">
@@ -184,18 +184,18 @@
                             <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                                 <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
                                     <div class="position-relative background-beig">
-                                        <div class="item-thumbnail">@ViewBag.MonthlyPrice<span>@Resources.General.OMR</span></div>
+                                        <div class="item-thumbnail" style="font-size: 5rem;">@ViewBag.MonthlyPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span></div>
                                     </div>
                                     <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                         <h1 class="padding-bottom-20px">@Resources.General.PerMonth</h1>
                                         <div class="form-group ">
                                             <div class="form-check padding-bottom-20px">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" required type="checkbox" onchange="agree('MonthlyManualBuilderdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeMonthModal">@Resources.General.TermsAndConditions</a>
+                                                    <input class="form-check-input" required type="checkbox" id="ManualMonthlyCheckbox" onchange="agree('ManualMonthlyCheckbox','MonthlyManualBuilderdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeMonthModal">@Resources.General.TermsAndConditions</a>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div id="MonthlyManualBuilderdiv" class="d-none">
+                                        <div id="MonthlyManualBuilderdiv" style="display:none;">
 
                                             <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
                                                 <div class="col-md-6 @pullAlign">
@@ -229,7 +229,7 @@
                                                 @if (ViewBag.PlanType == 0)
                                                 {
 
-                                                    <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                    <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a> @*<a href="@Url.Action("Index", "Thawani", new {Product = "ManualBuilder",Amount=50000 })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                             @Resources.General.Subscribe
@@ -241,7 +241,7 @@
                                                 @if (ViewBag.isFreePlan)
                                                 {
 
-                                                    <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                    <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a> @*<a href="@Url.Action("Index", "Thawani", new {Product = "ManualBuilder",Amount=50000 })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                             @Resources.General.Subscribe
@@ -257,18 +257,18 @@
                             <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                                 <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
                                     <div class="position-relative background-beig">
-                                        <div class="item-thumbnail">@ViewBag.AnnualPrice<span>@Resources.General.OMR</span></div>
+                                        <div class="item-thumbnail" style="font-size: 5rem;">@ViewBag.AnnualPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span></div>
                                     </div>
                                     <div class="blog-item padding-lr-30px padding-top-60px text-center">
                                         <h1 class="padding-bottom-20px">@Resources.General.PerYear</h1>
                                         <div class="form-group ">
                                             <div class="form-check padding-bottom-20px">
                                                 <label class="form-check-label">
-                                                    <input class="form-check-input" type="checkbox" onchange="agree('AnnualManualBuilderdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeYearModal">@Resources.General.TermsAndConditions</a>
+                                                    <input class="form-check-input" type="checkbox" id="ManualAnnualCheckbox" onchange="agree('ManualAnnualCheckbox','AnnualManualBuilderdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeYearModal">@Resources.General.TermsAndConditions</a>
                                                 </label>
                                             </div>
                                         </div>
-                                        <div id="AnnualManualBuilderdiv" class="d-none">
+                                        <div id="AnnualManualBuilderdiv" style="display:none;">
 
                                             <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
                                                 <div class="col-md-6 @pullAlign">
@@ -302,14 +302,14 @@
                                             <div class="padding-bottom-22px">
                                                 @if (ViewBag.PlanType == 0)
                                                 {
-                                                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a>
                                                     <a id="freeSubscribeManualBuilderAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
                                                 }
                                                 @if (ViewBag.isFreePlan)
                                                 {
-                                                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice + "000" })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                                         @Resources.General.Subscribe
                                                     </a>
                                                     <a id="freeSubscribeManualBuilderAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
@@ -332,12 +332,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel2" class="modal-title cms" data-contentId="108">@GetContent(108)</h5>
+                <h5 id="exampleModalLabel2" class="modal-title" data-contentId="">@ViewBag.MBMTitle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body cms" data-contentId="109">@GetContent(109)</div>
+            <div class="modal-body" data-contentId="">@Html.Raw(ViewBag.MBMText)</div>
         </div>
     </div>
 </div>
@@ -346,12 +346,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="exampleModalLabel1" class="modal-title cms" data-contentId="110">@GetContent(110)</h5>
+                <h5 id="exampleModalLabel1" class="modal-title" data-contentId="">@ViewBag.MBATitle</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body cms" data-contentId="111">@GetContent(111)</div>
+            <div class="modal-body" data-contentId="">@Html.Raw(ViewBag.MBAText)</div>
         </div>
     </div>
 </div>

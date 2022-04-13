@@ -1,0 +1,277 @@
+﻿@model HumanResourceHelth.Model.DocFile
+
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "DocFiles";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    SelectList PlansSelectList = Session["PlansForFiles"] == null ? null : (SelectList)Session["PlansForFiles"];
+    SelectList CountriesSelectList = Session["CountriesForFiles"] == null ? null : (SelectList)Session["CountriesForFiles"];
+    //SelectList Categories = Session["Categories"] == null ? null : (SelectList)Session["Categories"];
+    List<SelectListItem> selectListItemList = new List<SelectListItem>();
+    selectListItemList.Add(new SelectListItem() { Value = "", Text = "Select" });
+
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> @Resources.General.CategoryDocFiles</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12 col-xs-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                        <a class="btn btn-lg btn-success @Opalignclass" href="/Admin/Categories">
+                            
+                            @Resources.General.Categories
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            @using (Html.BeginForm("Create", "DocFiles", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="h4 m-15 p-l-5" dir="@dir">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.PlanDocFile, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                @Html.DropDownList("plans", PlansSelectList, htmlAttributes: new { @class = "form-control", @required="required" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.CategoryDocFile, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                @Html.DropDownListFor(model => model.CategoryId, new SelectList(selectListItemList, "Value", "Text"), new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            @Html.Label(Resources.General.DocFileCountryDomain, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.CountryId, CountriesSelectList, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                            </div>
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.DocFileEnName, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 col-xs-12">
+                            @Html.Label(Resources.General.DocFileArName, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                @Html.EditorFor(model => model.NameAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.NameAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.DocFileEnUpload, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <input type="file" name="EngDoc" id="EngDoc" class="form-control-file" onchange="FileSelected(this,'EngDocPath')" />
+                                @Html.HiddenFor(model => model.EngDocPath, new { Value = "" })
+                                @Html.ValidationMessageFor(model => model.EngDocPath, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 col-xs-12">
+                            @Html.Label(Resources.General.DocFileArUpload, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <input type="file" name="ArbDoc" id="ArbDoc" class="form-control-file" onchange="FileSelected(this,'ArbDocPath')" />
+                                @Html.HiddenFor(model => model.ArbDocPath, new { Value = "" })
+                                @Html.ValidationMessageFor(model => model.ArbDocPath, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.DocFileVideoIsYU, htmlAttributes: new { @class = "control-label col-lg-6 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <label class="switchYT">
+                                    <input class="switchYT-input" type="checkbox" name="isvedioYouTubeToggel" id="isvedioYouTubeToggel" checked onchange="onoffchange(this,'#isvedioYouTube')" />
+                                    <span class="switchYT-label" data-on="@Resources.General.DocFileIsVedioLink" data-off="@Resources.General.DocFileIsVedioUpload"></span>
+                                    <span class="switchYT-handle"></span>
+                                </label>
+                                @Html.HiddenFor(model => model.isvedioYouTube, new { Value = true })
+                                @Html.ValidationMessageFor(model => model.isvedioYouTube, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @Html.HiddenFor(model => model.ArbVedio,new { Value="none"})
+                    @Html.HiddenFor(model => model.EngVedio, new { Value = "none" })
+                    <div class="row" id="links">
+
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.DocFileEnLinkVideo, htmlAttributes: new { @class = "control-label col-lg-5 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                @Html.TextArea("EngVedioTxtArea", new { @class = "form-control", @cols = 55, @rows = 5, @onchange = "SetUrl('#EngVedioTxtArea','#EngVedio')" })
+                                @Html.ValidationMessageFor(model => model.EngVedio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 col-xs-12">
+                            @Html.Label(Resources.General.DocFileArLinkVideo, htmlAttributes: new { @class = "control-label col-lg-5 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                @Html.TextArea("ArbVedioTxtArea", htmlAttributes: new { @class = "form-control", @cols = 55, @rows = 5, @onchange = "SetUrl('#ArbVedioTxtArea','#ArbVedio')" })
+                                @Html.ValidationMessageFor(model => model.ArbVedio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="uploads" style="display:none;">
+                        <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.DocFileArUploadVideo, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <input type="file" name="EngVedioUp" id="EngVedioUp" class="form-control-file" onchange="FileSelected(this,'EngVedio')" />
+                                @Html.ValidationMessageFor(model => model.EngVedio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 col-xs-12">
+                            @Html.Label(Resources.General.DocFileArUploadVideo, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <input type="file" name="ArbVedioUp" id="ArbVedioUp" class="form-control-file" onchange="FileSelected(this,'ArbVedio')" />
+                                @Html.ValidationMessageFor(model => model.ArbVedio, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12 @labelClass">
+                            @Html.Label(Resources.General.DocFileFreeStatus, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <label class="switch">
+                                    <input class="switch-input" type="checkbox" name="isFileFreeToggel" id="isFileFreeToggel" checked onchange="onoffchange(this,'#isFileFree')" />
+                                    <span class="switch-label" data-on="@Resources.General.DocFileIsFree" data-off="@Resources.General.DocFileIsNotFree"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                                @Html.HiddenFor(model => model.isFileFree, new { Value = true })
+                                @Html.ValidationMessageFor(model => model.isFileFree, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 col-md-6 col-xs-12">
+                            @Html.Label(Resources.General.DocFileStatus, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                            <div class="col-md-10 col-xs-12">
+                                <label class="switch">
+                                    <input class="switch-input" type="checkbox" name="isActiveToggel" id="isActiveToggel" checked onchange="onoffchange(this,'#isFileActive')" />
+                                    <span class="switch-label" data-on="@Resources.General.DocFileIsActive" data-off="@Resources.General.DocFileIsNotActive"></span>
+                                    <span class="switch-handle"></span>
+                                </label>
+                                @Html.HiddenFor(model => model.isFileActive, new { Value = true })
+                                @Html.ValidationMessageFor(model => model.isFileActive, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-10 col-xs-12">
+                            <input type="submit" value="@Resources.General.Create" class="btn btn-lg btn-success @alignclass" />
+                            @Html.ActionLink(Resources.General.Back, "Index", new object { }, new { @class = "btn btn-lg btn-primary" })
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<script>
+    function FileSelected(file, id) {
+        document.getElementById(id).value = file.files.length > 0 ? "hasfile" : "none";
+    }
+    function onoffchange(ctrl, id) {
+        ctrl.checked ? $(id).val(true) : $(id).val(false);
+        if (id == "#isvedioYouTube") {
+
+            $('#uploads').toggle("slow", function () {
+              
+                
+            });
+            $("#links").toggle("slow", function () {
+                
+            });
+
+        }
+
+    }
+    function SetUrl(id, target) {
+        $(target).val(getUrl($(id).val()))
+    }
+    function getindex(MainString, SubString) {
+        for (i = 0; i < MainString.length; i++) {
+            if (MainString[i].includes(SubString)) {
+                return i;
+            }
+        }
+    }
+    function getUrl(value) {
+        let finalUrl = "";
+        if (value.includes('iframe')) {
+            valueArry = value.split(' ');
+            RawUrl = valueArry[getindex(valueArry, 'src')];
+            RawUrlArray = RawUrl.split("\"");
+            finalUrl = RawUrlArray[getindex(RawUrlArray, 'http')]
+        }
+        else if (value.includes('http')) {
+            valueArry = value.split("\"");
+            finalUrl = valueArry[getindex(valueArry, 'http')]
+        }
+        else {
+            return "none";
+        }
+        return finalUrl;
+    }
+    $("#plans").on("change", function () {
+        value = this.value == "" ? "0" : this.value;
+        $.ajax({
+            url: "@Url.Action("GetCategories", "DocFiles")",
+            data: { 'id': value },
+            type: "GET",
+            success: function (data) {
+                let options = "";
+                if (data.length > 0) {
+                    //console.log(data)
+                    options = "";
+                    for (i = 0; i < data.length; i++) {
+                        options = options + "<option value='" + data[i].Id + "'>" +@if (isArabic) {<text>data[i].NameAr</text>}
+            else { <text>data[i].Name</text>}+ "</option>"
+                    }
+
+                }
+                else {
+                    options = "<option value=''>Select</option>";
+                }
+                $('#CategoryId').html(options)
+            },
+            error: function (data) {
+                $('#CategoryId').html("<option value=''>Select</option>")
+                //console.log("error" + data);
+                //console.log(data);
+            }
+        });
+    });
+</script>

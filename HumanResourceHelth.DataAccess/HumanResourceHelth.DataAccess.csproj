@@ -87,6 +87,8 @@
     <Compile Include="Repositories\AttachmentsRepository.cs" />
     <Compile Include="Repositories\BaseRepo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
+    <Compile Include="Repositories\CategoryRepo.cs" />
+    <Compile Include="Repositories\DocFileRepo.cs" />
     <Compile Include="Repositories\ContentRepo.cs" />
     <Compile Include="Repositories\CountriesRepository.cs" />
     <Compile Include="Repositories\ExpertsProfile.cs" />
@@ -114,6 +116,9 @@
     <Compile Include="Repositories\SurveyResultRepo.cs" />
     <Compile Include="Repositories\SurveyTypeRepo.cs" />
     <Compile Include="Repositories\TechRequestRepo.cs" />
+    <Compile Include="Repositories\SemiNotificationRepo.cs" />
+    <Compile Include="Repositories\UpdatesRepo.cs" />
+    <Compile Include="Repositories\TermsConditionsRepo.cs" />
     <Compile Include="Repositories\TrainersRepository.cs" />
     <Compile Include="Repositories\UserCourseRepo.cs" />
     <Compile Include="Repositories\UserPlanRepo.cs" />

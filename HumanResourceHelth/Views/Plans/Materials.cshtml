@@ -1,33 +1,254 @@
 ﻿@model DirectoryInfo[]
-@{ ViewBag.Title = "Index"; }
-@{ string plan = ViewBag.Plan; }
-<br />
-<br />
-@{int looper = 0; }
-@foreach (DirectoryInfo directoryInfo in Model)
-{
-<div class="col col-md-4">
-    <h4>@directoryInfo.Name</h4>
-</div> foreach (FileInfo file in directoryInfo.GetFiles())
-                {
-                    if (looper >= 3 && ViewBag.Isfree)
-                    {
-<div class="col col-md-4">
-
-    <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan">@file.Name  <i class="fa fa-lock red text-danger"></i></a>
-</div> }
-else
-{
-<div class="col col-md-4">
-    <a href="@Url.Content(string.Format("~/Areas/plansData/{0}/Categories{1}/{2}/{3}", plan, ViewBag.Lang, directoryInfo.Name, file.Name))" download>@file.Name</a>
-</div> }
-looper = looper + 1;
+@using HumanResourceHelth.Model
+@{ bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    ViewBag.Title = "Index";
+    string plan = ViewBag.Plan;
+    int looper = 0;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    string Text_Align = isArabic ? "text-right" : "";
+    List<Category> categories = Session["planCategories"] == null ? null : (List<Category>)Session["planCategories"];
+    List<DocFile> Files = Session["PlanFiles"] == null ? null : (List<DocFile>)Session["PlanFiles"];
+    var imageIconPath = "/assets/img/icon/image_icon.png";
+    var wordIconPath = "/assets/img/icon/word_icon.png";
+    var pdfIconPath = "/assets/img/icon/pdf_icon.png";
+    var excelIconPath = "/assets/img/icon/excel_icon.png";
+    var pptIconPath = "/assets/img/icon/ppt_icon.png";
+    var finalimagePath = "";
+    var docName = "";
+    var docUrl = "";
+    var vedioUrl = "";
+    var PlanName = Session["FilesPlan"] == null ? "" : Session["FilesPlan"];
 }
-<div class="col col-md-4">
-    <hr />
-</div>}
-<br />
-<br />
+@functions{
+    private bool URLCheck(string url)
+    {
+        Uri uriResult;
+        return Uri.TryCreate(url, UriKind.Absolute, out uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    }
+}
+<div class="container mt-5 mb-1 pt-5" dir="@dir">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-6">
+                <label class="control-label @labelClass">بحث</label>
+                <input id="SearchKey" type="text" maxlength="255" onkeyup="search()" class="form-control" placeholder="مفتاح البحث" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </div>
+<div class="container mb-5 pt-1 pb-5" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @Opalignclass"> @Resources.General.SeeFiles</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body" id="CategoriesContinar" dir="@dir">
+            @if (categories.Count > 0)
+            {
+                foreach (Category category in categories)
+                {
+                    List<DocFile> CategoryFiles = Files.Where(a => a.CategoryId == category.Id).ToList();
+                    if (CategoryFiles.Count > 0)
+                    {
+                        <div class="card @Text_Align mb-3">
+                            <div class="category-card-header text-center text-white">
+                                <h2>
+                                    @if (isArabic)
+                                    {
+                                        <text>@category.NameAr</text> }
+                                    else
+                                    {
+                                        <text>@category.Name</text>}
+                                </h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+
+
+                                    @if (CategoryFiles.Count > 0)
+                                    {
+                                        foreach (DocFile file in CategoryFiles)
+                                        {
+                                            if (isArabic)
+                                            {
+                                                docName = file.NameAr;
+                                                docUrl = file.ArbDocPath;
+                                                vedioUrl = file.ArbVedio;
+
+
+                                                if (file.ArbDocPath.Contains(".doc") || file.ArbDocPath.Contains(".docx"))
+                                                {
+                                                    finalimagePath = wordIconPath;
+                                                }
+                                                else if (file.ArbDocPath.Contains(".pdf"))
+                                                {
+                                                    finalimagePath = pdfIconPath;
+                                                }
+                                                else if (file.ArbDocPath.Contains(".xls") || file.ArbDocPath.Contains(".xls"))
+                                                {
+                                                    finalimagePath = excelIconPath;
+                                                }
+                                                else if (file.ArbDocPath.Contains(".ppt") || file.ArbDocPath.Contains(".ppt"))
+                                                {
+                                                    finalimagePath = pptIconPath;
+                                                }
+                                                else if (file.ArbDocPath.Contains(".png") || file.ArbDocPath.Contains(".jpg") || file.ArbDocPath.Contains(".gif"))
+                                                {
+                                                    finalimagePath = imageIconPath;
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                docName = file.Name;
+                                                docUrl = file.EngDocPath;
+                                                vedioUrl = file.EngVedio;
+
+                                                if (file.EngDocPath.Contains(".doc"))
+                                                {
+                                                    finalimagePath = wordIconPath;
+                                                }
+                                                else if (file.EngDocPath.Contains(".pdf"))
+                                                {
+                                                    finalimagePath = pdfIconPath;
+                                                }
+                                                else if (file.EngDocPath.Contains(".xls"))
+                                                {
+                                                    finalimagePath = excelIconPath;
+                                                }
+                                                else if (file.EngDocPath.Contains(".ppt"))
+                                                {
+                                                    finalimagePath = pptIconPath;
+                                                }
+                                                else if (file.EngDocPath.Contains(".png") || file.EngDocPath.Contains(".jpg") || file.EngDocPath.Contains(".gif"))
+                                                {
+                                                    finalimagePath = imageIconPath;
+                                                }
+                                            }
+                                            <div class="col-lg-3">
+                                                <div class="file-card text-center mb-2">
+                                                    <div class="file-card-header text-white">
+                                                        <div class="row">
+
+                                                            <div class="col-9"> <div class="h5 text-center mt-2">@docName</div></div>
+                                                            <div class="col-3 m-0 p-0">
+                                                                <img src="@finalimagePath" class="card-img-top-custom media-middle" alt="...">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-body">
+
+                                                        <div class="row">
+                                                            @if (!file.isFileFree && (bool)ViewBag.Isfree)
+                                                            {
+                                                                <div class="col-lg-12 text-center">
+
+                                                                    <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                @*<div class="col-lg-3"></div>*@
+
+                                                                if (vedioUrl != "none")
+                                                                {
+                                                                    <div class="col-lg-4"><a href="@docUrl"><i class="fa fa-eye"></i></a></div>
+                                                                    <div class="col-lg-4"><a href="@docUrl" download="@docName"><img src="~/assets/img/icon/export-pdf-96.png" class="a-img" /></a></div>
+                                                                    <div class="col-lg-4"><a href="" onclick="SetUpVedioIframe('@vedioUrl')" data-toggle="modal" data-target="#VedioPlayer"><img src="~/assets/img/icon/youtube-480.png" class="a-img" /></a></div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col-lg-6"><a href="@docUrl"><i class="fa fa-eye"></i></a></div>
+                                                                    <div class="col-lg-6"><a href="@docUrl" download="@docName"><img src="~/assets/img/icon/export-pdf-96.png" class="a-img" style="max-width:35% !important" /></a></div>
+                                                                }
+                                                            }
+                                                            @*<div class="col-lg-3"></div>*@
+                                                        </div>
+
+                                                        @if (!file.isFileFree && (bool)ViewBag.Isfree)
+                                                        {
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="row">
+                                                                @*<div class="col-lg-3"></div>*@
+
+                                                                @if (vedioUrl != "none")
+                                                                {
+                                                                    <div class="col-lg-4 p-0">@Resources.General.View</div>
+                                                                    <div class="col-lg-4 p-0"><span>@Resources.General.Download</span></div>
+                                                                    <div class="col-lg-4 p-0">
+                                                                        @Resources.General.ExplainerVideo
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div class="col-lg-6 p-0">@Resources.General.View</div>
+                                                                    <div class="col-lg-6 p-0"><span>@Resources.General.Download</span></div>
+                                                                }
+                                                                @*<div class="col-lg-3"></div>*@
+                                                            </div>
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                            </div>}
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            }
+            else
+            {
+                <text>No Categories</text>}
+        </div>
+    </div>
+</div>
+@*@foreach (DirectoryInfo directoryInfo in Model)
+    {
+    <div class="col col-md-4">
+        <h4>@directoryInfo.Name</h4>
+    </div> foreach (FileInfo file in directoryInfo.GetFiles())
+                    {
+                        if (looper >= 3 && ViewBag.Isfree)
+                        {
+    <div class="col col-md-4">
+
+        <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan">@file.Name  <i class="fa fa-lock red text-danger"></i></a>
+    </div> }
+    else
+    {
+    <div class="col col-md-4">
+        <a href="@Url.Content(string.Format("~/Areas/plansData/{0}/Categories{1}/{2}/{3}", plan, ViewBag.Lang, directoryInfo.Name, file.Name))" download>@file.Name</a>
+    </div> }
+    looper = looper + 1;
+    }
+    <div class="col col-md-4">
+        <hr />
+    </div>}*@
+
 <div class="modal fade" id="toUnlockPlan" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="toUnlockPlanLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -47,3 +268,132 @@ looper = looper + 1;
         </div>
     </div>
 </div>
+@*=========================================================================================*@
+
+<div class="modal fade" id="VedioPlayer" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="VedioPlayerLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="VedioPlayerLabel">@Resources.General.ExplainerVideo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <iframe id="vedioIframe" width="700" height="400" src="https://www.youtube.com/embed/Fz5Lfa1E33E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function SetUpVedioIframe(link) {
+        $('#vedioIframe').attr('src', link);
+    }
+    search = () => {
+        searchKey = $('#SearchKey').val();
+        $.ajax({
+            url: "@Url.Action("SearchForFile", "Plans")",
+            type: "post",
+            data: { "searchKey": searchKey },
+            success: function (data) {
+                /*data = JSON.parse(data);*/
+                console.log(data);
+                categories=data[0].Value;
+                files = data[1].Value;
+                isPlanfree = data[2].Value;
+                console.log(isPlanfree);
+                var content = "";
+                if (files.length > 0) {
+                    categories.forEach((item) => {
+                        name = "";
+                        @if (isArabic)
+            {
+
+
+<text>name = item.NameAr</text>
+            }
+            else
+            {
+<text>name = item.Name</text>
+            }
+                        content = content + '<div class="card @Text_Align mb-3">'
+                            + '<div class="category-card-header text-center text-white" > <h2>' +name
+                            + '</h2> </div> <div class="card-body"><div class="row">'
+                        files.forEach((file) => {
+                            var fileName = "";
+                            var filePath = "";
+                            var Vedio = "";
+                            crdbodycontent = "";
+                            @if(isArabic){
+                                <text>fileName = file.NameAr;
+                            filePath = file.ArbDocPath;
+                            Vedio = file.ArbVedio;
+
+                            </text>
+
+                            }
+                            else
+                            {
+                <text>fileName = file.Name;
+                            filePath = file.EngDocPath;
+                            Vedio = file.EngVedio;
+                            </text>
+            }
+                            if (filePath.includes(".doc") || filePath.includes(".docx")) {
+                                    finalimagePath = "/assets/img/icon/word_icon.png";
+                                }
+                                else if (filePath.includes(".pdf")) {
+                                    finalimagePath = "/assets/img/icon/pdf_icon.png";
+                                }
+                                else if (filePath.includes(".xls") || filePath.includes(".xls")) {
+                                    finalimagePath = "/assets/img/icon/excel_icon.png";
+                                }
+                                else if (filePath.includes(".ppt") || filePath.includes(".pptx")) {
+                                    finalimagePath = "/assets/img/icon/ppt_icon.png";
+                                }
+                                else if (filePath.includes(".png") || filePath.includes(".jpg") || filePath.includes(".gif")) {
+                                    finalimagePath = "/assets/img/icon/image_icon.png";
+                                }
+                            //fileName=@isArabic file.NameAr : file.Name
+                            if (!file.isFileFree && isPlanfree) {
+                                crdbodycontent = crdbodycontent+ '<div class="col-lg-12 text-center"><a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a></div>';
+                            }
+                        else
+                            {
+                                if (Vedio != "none")
+                                                                {
+        crdbodycontent = crdbodycontent + '<div class="col-lg-4"><a href="' + filePath + '"><i class="fa fa-eye"></i></a></div>';
+        crdbodycontent = crdbodycontent + '<div class="col-lg-4"><a href="' + filePath + '" download="' + fileName+'"><img src="../assets/img/icon/export-pdf-96.png" class="a-img" /></a></div>';
+        crdbodycontent = crdbodycontent + '<div class="col-lg-4"><a href="" onclick="SetUpVedioIframe(\'' + Vedio+'\')" data-toggle="modal" data-target="#VedioPlayer"><img src="../assets/img/icon/youtube-480.png" class="a-img" /></a></div>'
+                                                                }
+                                                                else
+                                                                {
+        crdbodycontent = crdbodycontent + '<div class="col-lg-6"><a href="' + filePath+'"><i class="fa fa-eye"></i></a></div>'
+        crdbodycontent = crdbodycontent + '<div class="col-lg-6"><a href="' + filePath + '" download="' + fileName+'"><img src="../assets/img/icon/export-pdf-96.png" class="a-img" style="max-width:35% !important" /></a></div>'
+                                                                }
+                            }
+                                content = content + '<div class="col-lg-3"><div class="file-card text-center mb-2">'
+                                    + ' <div class="file-card-header text-white" > <div class="row">'
+                                    + '<div class="col-9"><div class="h5 text-center mt-2">' + fileName
+                                    + '</div></div><div class="col-3 m-0 p-0">' +
+                                    '<img src="' + finalimagePath+'" class="card-img-top-custom media-middle" alt="...">'
+                                    + '</div></div></div><div class="card-body"><div class="row">' + crdbodycontent+'</div></div></div></div > ';
+
+                            });
+                        content = content + '</div></div></div>';
+                    });
+                }
+                else {
+                     content = "لا توجد ملفات مطابقة لبحثك";
+                }
+        $('#CategoriesContinar').html('');
+        $('#CategoriesContinar').html(content);
+            },
+            error: function (err) {
+
+            }
+        })
+
+    }
+</script>

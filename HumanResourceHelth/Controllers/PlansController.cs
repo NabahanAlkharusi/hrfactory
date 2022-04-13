@@ -16,6 +16,7 @@ namespace HumanResourceHelth.Web.Controllers
     public class PlansController : Controller
     {
         UnitOfWork _uow = new UnitOfWork();
+        bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
         // GET: Plans
         public ActionResult Index(string plan)
         {
@@ -27,40 +28,87 @@ namespace HumanResourceHelth.Web.Controllers
         public ActionResult Materials(string plan)
         {
             int userId = 0;
-            int planId = 0;
+            //int planId = 0;
             if (Session["UserId"] == null)
                 return RedirectToAction("Index", "Login");
             else
-                 userId = (int)Session["UserId"];
-            if (plan == "StartUp")
-                planId = (int)SubscriptionPlan.Startup;
-            else
-                return RedirectToAction("StartUp", "Plans");
-            ViewBag.Isfree = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsActive && x.PlanId == planId).SingleOrDefault().IsFreeActive;
-            string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
-            DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/{plan}/Categories{lang}"));
-            ViewBag.Plan = plan;
-            ViewBag.Lang = lang;
-            return View(myDir.GetDirectories());
+                userId = (int)Session["UserId"];
+            int Plan = (int)Enum.Parse(typeof(SubscriptionPlan), plan);
+            getPlanFiles(Plan, userId);
+            Session["FilesPlan"] = plan;
+            Session["FilesPlanId"] = Plan;
+            ViewBag.Isfree = Plan == 1 ? false : _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsActive && x.PlanId == Plan).SingleOrDefault().IsFreeActive;
+            //if (plan == "StartUp")
+            //{
+            //    planId = (int)SubscriptionPlan.Startup;
+            //    ViewBag.Isfree = _uow.UserPlanRepo.Search(x => x.UserId == userId && x.IsActive && x.PlanId == planId).SingleOrDefault().IsFreeActive;
+            //    string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
+            //    DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/{plan}/Categories{lang}"));
+            //    ViewBag.Plan = plan;
+            //    ViewBag.Lang = lang;
+            //    return View(myDir.GetDirectories());
+            //}
+            //else
+            //{
+            //    ViewBag.Isfree = false;
+            //    string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
+            //    DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/{plan}/Categories{lang}"));
+            //    ViewBag.Plan = plan;
+            //    ViewBag.Lang = lang;
+            //    return View(myDir.GetDirectories());
+
+            //}
+            return View();
+
+        }
+
+        private void getPlanFiles(int Plan, int userId = 0)
+        {
+            int CountryId = userId == 0 ? 0 : _uow.UserRepo.FindById(userId).CountryId;
+            List<Category> planCategories = _uow.CategoryRepo.Search(z => z.CategoryPlan == Plan && z.isActive).OrderByDescending(a => a.Id).ToList();
+            List<DocFile> PlanFiles = new List<DocFile>();
+            foreach (Category category in planCategories)
+            {
+                List<DocFile> docs = _uow.DocFileRepo.GetAll().ToList();
+                List<DocFile> UserCountrdocs = docs.Where(a => a.CategoryId == category.Id && a.isFileActive && a.CountryId == CountryId).ToList();
+                UserCountrdocs = UserCountrdocs.Count > 0 ? UserCountrdocs : docs.Where(a => a.CategoryId == category.Id && a.isFileActive && a.CountryId == 158).ToList();
+                foreach (DocFile docFile in UserCountrdocs)
+                {
+                    PlanFiles.Add(docFile);
+                }
+                if (userId != 0)
+                {
+                    UserCountrdocs = docs.Where(a => a.CategoryId == category.Id && a.isFileActive && a.CountryId == 0).ToList();
+                    foreach (DocFile docFile in UserCountrdocs)
+                    {
+                        PlanFiles.Add(docFile);
+                    }
+                }
+            }
+            Session["PlanFiles"] = PlanFiles;
+            Session["planCategories"] = planCategories;
         }
 
         public ActionResult WarmUp()
         {
             //if (Session["UserId"] == null)
             //    return RedirectToAction("Index", "Login");
-
+            int userId = 0;
             string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
             DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/WarmUp/Categories{lang}/"));
             if (Session["UserId"] != null)
             {
                 int numberOfChecks = 0;
-                int userId = (int)Session["UserId"];
+                int numberOfBHChecks = 0;
+                userId = (int)Session["UserId"];
                 numberOfChecks = _uow.SurveyRepo.Search(x => x.UserId == userId).Count();
-
+                numberOfBHChecks = _uow.SurveyRepo.Search(x => x.UserId == userId && x.SurveyTypeId == 3).Count();
                 ViewBag.NumberOfChecks = numberOfChecks;
+                ViewBag.numberOfBHChecks = numberOfBHChecks;
             }
             ViewBag.Lang = lang;
-            return View(myDir.GetDirectories());
+            getPlanFiles((int)SubscriptionPlan.WarmUp, userId);
+            return View();
         }
         public ActionResult StartUp()
         {
@@ -71,6 +119,18 @@ namespace HumanResourceHelth.Web.Controllers
 
             {
                 userId = (int)Session["UserId"];
+                int UserCountryId = _uow.UserRepo.FindById(userId).CountryId;
+                TermsConditions terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId && a.TermsConditionType == (int)TermsConditionType.StartUpPlanMonthly).FirstOrDefault();
+                terms = terms == null ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.StartUpPlanMonthly).FirstOrDefault() : terms;
+
+                ViewBag.SUMTitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.SUMText = isArabic ? terms.ArabicText : terms.EnglishText;
+                terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId && a.TermsConditionType == (int)TermsConditionType.StartUpPlanAnnually).FirstOrDefault();
+                terms = terms == null ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.StartUpPlanAnnually).FirstOrDefault() : terms;
+
+                ViewBag.SUATitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.SUAText = isArabic ? terms.ArabicText : terms.EnglishText;
+
                 UserPlan startUpPlan = _uow.UserPlanRepo.Search(x => x.IsActive && x.UserId == userId && x.PlanId == (int)SubscriptionPlan.Startup).SingleOrDefault();
                 if (startUpPlan == null)
                     ViewBag.isHaveStartupPlan = false;
@@ -80,10 +140,10 @@ namespace HumanResourceHelth.Web.Controllers
                     ViewBag.isFreePlan = startUpPlan.IsFreeActive;
                 }
             }
-            string lang = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "Arabic" : "English";
+            string lang = isArabic ? "Arabic" : "English";
+            getPlanFiles((int)SubscriptionPlan.Startup, userId);
 
-
-            DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/StartUp/Categories{lang}/"));
+            //DirectoryInfo myDir = new DirectoryInfo(Server.MapPath($"~/Areas/plansData/StartUp/Categories{lang}/"));
 
 
 
@@ -91,18 +151,38 @@ namespace HumanResourceHelth.Web.Controllers
             Plan plan = _uow.PlanRepo.FindById((int)SubscriptionPlan.Startup);
             ViewBag.AnnualPrice = plan.AnnualPrice;
             ViewBag.MonthlyPrice = plan.ManthlyPrice;
+            ViewBag.AnnualPriceDisp = (int)(plan.AnnualPrice * 2.6008);
+            ViewBag.MonthlyPriceDisp = (int)(plan.ManthlyPrice * 2.6008);
             ViewBag.Lang = lang;
-            return View(myDir.GetDirectories());
+            return View();
         }
 
         public ActionResult ManualBuilder()
         {
+
+
             ViewBag.isFreePlan = false;
             if (Session["UserId"] == null)
+            {
                 ViewBag.PlanType = 0;
+
+            }
             else
             {
+
                 int userId = (int)Session["UserId"];
+                int UserCountryId = _uow.UserRepo.FindById(userId).CountryId;
+                TermsConditions terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanMonthly).FirstOrDefault();
+                terms = terms == null ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanMonthly).FirstOrDefault() : terms;
+
+                ViewBag.MBMTitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.MBMText = isArabic ? terms.ArabicText : terms.EnglishText;
+
+                terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanAnnually).FirstOrDefault();
+                terms = terms == null ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanAnnually).FirstOrDefault() : terms;
+
+                ViewBag.MBATitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.MBAText = isArabic ? terms.ArabicText : terms.EnglishText;
                 UserPlan builderPlan = _uow.UserPlanRepo.Search(x => x.IsActive && x.UserId == userId && x.PlanId == (int)SubscriptionPlan.ManualBuilder).SingleOrDefault();
                 if (builderPlan != null)
                 {
@@ -139,7 +219,8 @@ namespace HumanResourceHelth.Web.Controllers
             Plan plan = _uow.PlanRepo.FindById((int)SubscriptionPlan.ManualBuilder);
             ViewBag.AnnualPrice = plan.AnnualPrice;
             ViewBag.MonthlyPrice = plan.ManthlyPrice;
-
+            ViewBag.AnnualPriceDisp = (int)(plan.AnnualPrice * 2.6008);
+            ViewBag.MonthlyPriceDisp = (int)(plan.ManthlyPrice * 2.6008);
             return View();
         }
 
@@ -148,7 +229,10 @@ namespace HumanResourceHelth.Web.Controllers
             List<Section> userSections = new List<Section>();
             if (_uow.SectionRepo.Search(x => x.UserId == userId).Count() > 0) return;
             int adminId = _uow.UserRepo.Search(x => x.IsAdmin).Single().Id;
-            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId).ToList();
+            User user = _uow.UserRepo.FindById(userId);
+            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId).ToList();
+            if (adminSections.Count == 0)
+                adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == 158).ToList();
             List<Section> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
             foreach (Section parent in parentAdminSections)
             {
@@ -161,6 +245,8 @@ namespace HumanResourceHelth.Web.Controllers
                     LanguageId = parent.LanguageId,
                     IsActive = parent.IsActive,
                     Content = parent.Content,
+                    CountryID = parent.CountryID,
+                    SectionId = parent.SectionId,
                     Childs = new List<Section>(),
                 };
 
@@ -175,6 +261,8 @@ namespace HumanResourceHelth.Web.Controllers
                         LanguageId = parent.LanguageId,
                         IsActive = parent.IsActive,
                         Content = child.Content,
+                        CountryID = child.CountryID,
+                        SectionId = child.SectionId,
                     };
                     parentUserSection.Childs.Add(childUserSection);
                 }
@@ -459,7 +547,7 @@ namespace HumanResourceHelth.Web.Controllers
                 Price = price,
                 UserId = userId,
                 IsFreeActive = isTrail,
-                IsFreeUsed = false,
+                IsFreeUsed = true,
             };
 
             _uow.UserPlanRepo.Add(myPlan);
@@ -525,6 +613,59 @@ namespace HumanResourceHelth.Web.Controllers
                     }
                 }
             }
+        }
+        public ActionResult SearchForFile()
+        {
+            try
+            {
+                int userId = 0;
+                if (Session["UserId"] == null)
+                    return RedirectToAction("Index", "Login");
+                else
+                    userId = (int)Session["UserId"];
+                string key = Request["SearchKey"];
+                int plan = (int)Session["FilesPlanId"];
+                int country = _uow.UserRepo.FindById(userId).CountryId;
+
+                List<DocFile> files = new List<DocFile>();
+                List<DocFile> EachCatfiles = new List<DocFile>();
+                List<Category> categories = new List<Category>();
+                if (key.Length > 0)
+                {
+                    categories = _uow.CategoryRepo.Search(a => a.CategoryPlan == plan).ToList();
+                    foreach (Category category in categories)
+                    {
+                        EachCatfiles = isArabic ? _uow.DocFileRepo.Search(x => x.CategoryId == category.Id && (x.CountryId == country || x.CountryId == 0) && x.NameAr.Contains(key)).ToList() : _uow.DocFileRepo.Search(x => x.CategoryId == category.Id && (x.CountryId == country || x.CountryId == 0) && x.Name.Contains(key)).ToList();
+                        foreach (DocFile docFile in EachCatfiles)
+                        {
+                            files.Add(docFile);
+                        }
+                    }
+                }
+                else
+                {
+                    categories = _uow.CategoryRepo.Search(a => a.CategoryPlan == plan).ToList();
+                    foreach (Category category in categories)
+                    {
+                        EachCatfiles = _uow.DocFileRepo.Search(x => x.CategoryId == category.Id).ToList();
+                        foreach (DocFile docFile in EachCatfiles)
+                        {
+                            files.Add(docFile);
+                        }
+                    }
+                }
+                bool isPlanFree = plan == 1 ? false : _uow.UserPlanRepo.Search(a => a.PlanId == plan && a.UserId == userId && a.IsActive).SingleOrDefault().IsFreeActive;
+                var list = new List<KeyValuePair<string, dynamic>>();
+                list.Add(new KeyValuePair<string, dynamic>("categories", categories));
+                list.Add(new KeyValuePair<string, dynamic>("files", files));
+                list.Add(new KeyValuePair<string, dynamic>("isFree", isPlanFree));
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception er)
+            {
+                return Json("Error: " + er.Message + "<br>" + er.StackTrace, JsonRequestBehavior.AllowGet);
+            }
+
         }
     }
 }

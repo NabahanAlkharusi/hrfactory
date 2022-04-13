@@ -1,0 +1,120 @@
+﻿@model IEnumerable<HumanResourceHelth.Model.DocFile>
+@using HumanResourceHelth.Model.Resources
+@{
+    ViewBag.Title = "Index";
+    Session["Backto"] = "DocFiles";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.CategoryDocFiles</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-10">
+                        <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                            @AppResource.Create
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="table-responsive">
+            <div class="panel-body" dir="@dir">
+                <table class="table table-hover table-striped table-sm">
+                    <tr>
+                        <th class="text-center">
+                            @Resources.General.DocFileArName
+                        </th>
+
+                        <th class="text-center">
+                            @Resources.General.DocFileFreeStatus
+                        </th>
+                        <th class="text-center">
+                            @Resources.General.DocFileStatus
+                        </th>
+
+                        <th class="text-center">
+                            @Resources.General.DocFileCountryDomain
+                        </th>
+                        <th class="text-center">
+                            @Resources.General.CategoryDocFile
+                        </th>
+                        <th class="text-center">
+                            @Resources.General.PlanDocFile
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr class="text-center">
+                            <td>
+                                @if (isArabic)
+                                {
+                                    @Html.DisplayFor(modelItem => item.NameAr)
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                }
+                            </td>
+
+                            <td>
+                                @if (item.isFileFree)
+                                {
+                                    @Resources.General.DocFileFree
+                                }
+                                else
+                                {
+                                    @Resources.General.DocFileNotFree
+                                }
+
+                            </td>
+                            <td>
+                                @if (item.isFileActive)
+                                {
+                                    @Resources.General.DocFileActive
+                                }
+                                else
+                                {
+                                    @Resources.General.DocFileInActive
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CountryId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CategoryId)
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    @Html.ActionLink(Resources.General.Edit, "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-lg m-1 p-1" })
+                                    @Html.ActionLink(Resources.General.Details, "Details", new { id = item.Id }, new { @class = "btn btn-info btn-lg m-1 p-1" })
+                                    @Html.ActionLink(Resources.General.Delete, "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-lg m-1 p-1" })
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

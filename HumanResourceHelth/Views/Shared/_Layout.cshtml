@@ -100,10 +100,10 @@
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/assets/revslider/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"></noscript>
     <!-- <link rel="stylesheet" type="text/css" href="~/assets/revslider/fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css"> -->
-    <link rel="preload" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css" as="style"
-          onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css"></noscript>
-    <!-- <link rel="stylesheet" type="text/css" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css"> -->
+    @*<link rel="preload" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css" as="style"
+              onload="this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="~/assets/revslider/fonts/font-awesome/css/font-awesome.css"></noscript>*@
+    <link rel="stylesheet" type="text/css" href="~/assets/revslider/fonts/font-awesome/css/all.css">
     <link rel="preload" href="~/assets/revslider/css/settings.css" as="style"
           onload="this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="~/assets/revslider/css/settings.css"></noscript>
@@ -134,7 +134,8 @@
 </head>
 
 <body class="background-white">
-    @functions{ IHtmlString GetContent(int contentId)
+    @functions{
+        IHtmlString GetContent(int contentId)
         {
             string content = "";
             List<Content> contents = (List<Content>)Session["Content"];
@@ -149,24 +150,19 @@
                 if (content.Trim() == "") content = "برجاء ادخال نص";
             }
             return Html.Raw(content);
-        } }
+        }
+    }
     @{
-        var dir = "ltr";
-        var floatclass = "float-left";
-        var style = "";
-        var Cancelbtnstyle = "";
-        var acceptbtnstyle = "";
-        var textRight = "";
+        bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+        var dir = isArabic ? "rtl" : "ltr";
+        var Email_Tel = isArabic ? "ltr" : "";
+        var floatclass = isArabic ? "float-right" : "float-left";
+        var style = isArabic ? "margin-right:auto !important;margin-left:-15px !important;" : "";
+        //var Cancelbtnstyle = "";
+        var acceptbtnstyle = isArabic ? "margin-right: 0.25rem !important;" : "";
+        var textRight = isArabic ? "text-right" : "";
     }
-    @if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
-    {
-        dir = "rtl";
-        floatclass = "float-right";
-        style = "margin-right:auto !important;margin-left:-15px !important;";
-        textRight = "text-right";
-        acceptbtnstyle = "margin-right: 0.25rem !important;";
-        Cancelbtnstyle = "margin-left: 0.25rem !important;";
-    }
+
     @if (Session["eligableForFreeSU"] == null)
     {
         <script type="text/javascript">
@@ -194,7 +190,22 @@
 
                         <!-- // lang dropdown -->
                     </div>
-                    <div class="col-6 text-white text-right text-center" dir="@dir">
+                    <div class="col-2 padding-tb-10px">
+                        <ul class="list-inline float-right" dir="@dir">
+                            @if (Session["UserId"] != null || Session["User"] != null)
+                            {
+                                <li class="list-inline-item padding-left-10px mr-2 ml-2 @floatclass">
+                                    <a href="~/home/Updates">
+                                        <img src="~/assets/img/bell.svg" class="img-responsive position-relative" title="@Resources.General.Notifications" alt="@Resources.General.Notifications" /> @if (Session["Notification"] != null)
+                                        {<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white">@Session["Notification"]</span>}
+                                    else { }
+                                    </a>
+                                </li>
+
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-4 text-white text-right text-center" dir="@dir">
                         @if (Session["userPlans"] != null)
                         {
                             var userPlans = Session["userPlans"] as List<UserPlan>;
@@ -202,59 +213,66 @@
                             {
 
                                 <ul class="list-inline float-right" dir="@dir">
-                                    <li class="list-inline-item padding-left-10px padding-tb-10px @floatclass"> @Html.ActionLink(Resources.General.Plans, "../Home/UserSubscriptions")</li>
-                                    @foreach (UserPlan userPlan in userPlans)
-                                    {
-                                        <li class="list-inline-item padding-left-30px @floatclass">
-                                            @if (userPlan.Plan.Id == 2)
-                                            {
-                                                <a href="/Plans/StartUp"><img src="~/assets/img/start-up.png" class="img-responsive" height="40" width="40" alt="@Resources.General.SubscribeFreeStartUpPlanName" title="@Resources.General.SubscribeFreeStartUpPlanName" /></a>
-
-                                            }
-                                            else
-                                            {
-                                                <a href="/Plans/ManualBuilder">
-                                                    <img src="~/assets/img/bulider.png" class="img-responsive img-25" height="40" width="40" alt="@Resources.General.SubscribeFreeMBPlanName" title="@Resources.General.SubscribeFreeMBPlanName" />
-                                                </a>
-                                            }
-                                            @{
-                                                TimeSpan dif = userPlan.EndDate.Subtract(DateTime.Now);
-                                                TimeSpan planeBer = userPlan.EndDate.Subtract(userPlan.StartDate);
-
-
-
-                                            }
-                                            @if (userPlan.IsFreeActive)
-                                            {
-                                                <span class="text-brown-3">@Resources.General.FreeSubscription </span>
-                                            }
-                                            else
-                                            {
-                                                if (planeBer.TotalDays < 30)
+                                    <li class="list-inline-item padding-left-10px padding-tb-10px @floatclass"> @Html.ActionLink(Resources.General.MyDashboard, "../Home/UserSubscriptions")</li>
+                                    <li class="list-inline-item padding-left-10px mr-2 ml-2 @floatclass">
+                                        <a href="~/home/UserSubscriptions">
+                                            <img src="~/assets/img/file-text.svg" class="img-responsive position-relative" title="@Resources.General.Plans" alt="@Resources.General.Plans" /> @if (Session["userPlansCount"] != null)
+                                            {<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success text-white">@Session["userPlansCount"]</span>}
+                                        else { }
+                                        </a>
+                                    </li>
+                                    @*@foreach (UserPlan userPlan in userPlans)
+                                        {
+                                            <li class="list-inline-item padding-left-30px @floatclass">
+                                                @if (userPlan.Plan.Id == 2)
                                                 {
-                                                    if (dif.TotalDays < 30)
-                                                    {
-                                                        <span class="text-warning">@Resources.General.ThisPlanWillEndSoon </span>
-                                                    }
-                                                    else if (dif.TotalDays < 15)
-                                                    {
-                                                        <span class="text-danger">@Resources.General.ThisPlanWillEndSoon </span>
-                                                    }
+                                                    <a href="/Plans/StartUp"><img src="~/assets/img/start-up.png" class="img-responsive" height="40" width="40" alt="@Resources.General.SubscribeFreeStartUpPlanName" title="@Resources.General.SubscribeFreeStartUpPlanName" /></a>
+
                                                 }
                                                 else
                                                 {
-                                                    if (dif.TotalDays < 15)
+                                                    <a href="/Plans/ManualBuilder">
+                                                        <img src="~/assets/img/bulider.png" class="img-responsive img-25" height="40" width="40" alt="@Resources.General.SubscribeFreeMBPlanName" title="@Resources.General.SubscribeFreeMBPlanName" />
+                                                    </a>
+                                                }
+                                                @{
+                                                    TimeSpan dif = userPlan.EndDate.Subtract(DateTime.Now);
+                                                    TimeSpan planeBer = userPlan.EndDate.Subtract(userPlan.StartDate);
+
+
+
+                                                }
+                                                @if (userPlan.IsFreeActive)
+                                                {
+                                                    <span class="text-brown-3">@Resources.General.FreeSubscription </span>
+                                                }
+                                                else
+                                                {
+                                                    if (planeBer.TotalDays < 30)
                                                     {
-                                                        <span class="text-warning">@Resources.General.ThisPlanWillEndSoon </span>
+                                                        if (dif.TotalDays < 30)
+                                                        {
+                                                            <span class="text-warning">@Resources.General.ThisPlanWillEndSoon </span>
+                                                        }
+                                                        else if (dif.TotalDays < 15)
+                                                        {
+                                                            <span class="text-danger">@Resources.General.ThisPlanWillEndSoon </span>
+                                                        }
                                                     }
-                                                    else if (dif.TotalDays < 7)
+                                                    else
                                                     {
-                                                        <span class="text-danger">@Resources.General.ThisPlanWillEndSoon </span>
+                                                        if (dif.TotalDays < 15)
+                                                        {
+                                                            <span class="text-warning">@Resources.General.ThisPlanWillEndSoon </span>
+                                                        }
+                                                        else if (dif.TotalDays < 7)
+                                                        {
+                                                            <span class="text-danger">@Resources.General.ThisPlanWillEndSoon </span>
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        </li>
-                                    }
+                                            </li>
+                                        }*@
                                 </ul>
                             }
                             else
@@ -284,6 +302,7 @@
                             @if (Session["UserId"] == null || Session["User"] == null)
                             {
                                 <li class="list-inline-item  padding-right-10px"><a href="@Url.Action("Index", "Login")"><i class="fa fa-lock padding-right-5px"></i>@Resources.General.Login</a></li>
+                                <li class="list-inline-item  padding-right-10px"><a href="@Url.Action("Register", "Login")"><i class="fa fa-user padding-right-5px"></i>@Resources.General.singup</a></li>
                             }
                             else
                             {
@@ -354,11 +373,11 @@
     @RenderBody()
 
 
-    <footer class="background-footer">
+    <footer class="background-footer" dir="@dir">
         <div class="container">
             <div class="row">
                 <div class="col-8 col-lg-10 col-md-10 margin-tb-20px wow fadeInUp">
-                    <div class="logo margin-bottom-10px"><img src="~/assets/img/logo.png" alt=""></div>
+                    <div class="logo margin-bottom-10px @textRight"><img src="~/assets/img/logo.png" alt=""></div>
                     <div class="text-grey-2 font-weight-300"></div>
 
                     <!-- // Social -->
@@ -369,8 +388,8 @@
                         <li class="list-inline-item"><a class="youtube cms" data-contentId="106" href="@GetContent(106)"><i class="fab fa-instagram"></i></a></li>
                         <li class="list-inline-item"><a class="linkedin cms" data-contentId="107" href="@GetContent(107)"><i class="fab fa-linkedin"></i></a></li>
                     </ul>
-                    <a class="text-white" href="tel:+96879178007"><i class="fas fa-phone"></i>&nbsp; +968 7917 8007</a><br />
-                    <a class="text-white" href="mailto:care@hrfactoryapp.com"><i class="fas fa-envelope"></i>&nbsp; care@hrfactoryapp.com</a>
+                    <a class="text-white" href="tel:+96879178007" dir="@Email_Tel"><i class="fas fa-phone"></i>&nbsp; +968 7917 8007</a><br />
+                    <a class="text-white" href="mailto:care@hrfactoryapp.com" dir="@Email_Tel"><i class="fas fa-envelope"></i>&nbsp; care@hrfactoryapp.com</a>
                 </div>
             </div>
         </div>
@@ -443,7 +462,6 @@
         </div>
     </div>
 
-
     <!--  <script type="text/javascript" src="~/assets/js/numscroller-1.0.js"></script> -->
     <script type="text/javascript" src="~/assets/js/sticky-sidebar.js"></script>
     <script type="text/javascript" src="~/assets/js/YouTubePopUp.jquery.js"></script>
@@ -455,335 +473,10 @@
     <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
     @*==========================================================================*@
 
-    <script type="text/javascript">
-                        function agree(div) {
-
-                    $('#' + div).toggleClass('d-none show');
-                }
-                        function getCouponDiscount(textbox, link, catogry, price) {
-                    //alert("this textbox value: " + );
-
-                    var linkdata = $('#' + link).attr('href');
-
-                    var priceBeforDiscount = price * 1000;
-                    $.ajax({
-                        type: 'GET',
-                        url: '/Coupon/getCouponRate?CouponFor=' + catogry + '&&code=' + $('#' + textbox).val(),
-
-                        timeout: 5000,
-                        success: function (data) {
-                            if (data['result'] == "success") {
-                                if (textbox == 'CourseCouponCode') {
-                                    var CourseDiscountRate = parseFloat(data['rate']);
-                                    var CourseintCost = parseInt(priceBeforDiscount) * ((100 - CourseDiscountRate) / 100);
-                                    $('#CoursePlanPriceCD').html((priceBeforDiscount / 1000).toFixed(3));
-                                    $('#CourseCouponDiscRateCD').html(CourseDiscountRate + '%');
-                                    $('#CoursePriceAftDisCD').html((CourseintCost / 1000).toFixed(3));
-                                    var CourseLink = $('#' + link).attr('href');
-                                    console.log(CourseintCost);
-                                    console.log(CourseLink + '');
-                                    var SiplitedCourseLink = CourseLink.split('&')
-                                    if (CourseintCost == 0) {
-                                        var coursesplitedlink = SiplitedCourseLink[0].split('?');
-                                        console.log(coursesplitedlink);
-                                        var test = SiplitedCourseLink[0].replace(coursesplitedlink[0], '/TrainingHome/CourseMaterial')
-                                        console.log(test)
-                                        $('#' + link).attr('href', test);
-                                    }
-                                    else {
-                                        console.log(SiplitedCourseLink[0]);
-                                        var priceSpilted = SiplitedCourseLink[1].split('=')
-                                        var CourseLinkafter = CourseLink.replace(priceSpilted[1], (CourseintCost / 1000).toFixed(3))
-                                        $('#' + link).attr('href', CourseLinkafter);
-                                    }
-
-                                    $('#CoursePriceSaveCD').html('<del>' + ((priceBeforDiscount - CourseintCost) / 1000).toFixed(3) + '</del>');
-
-                                    if ($('#CourseDiscountDiv').hasClass('d-none')) {
-                                        $('#CourseDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
-                                        $('#CourseDiscountDiv').removeClass('d-none');
-
-
-                                    }
-                                }
-                                else {
-
-                                    var splitedLink = linkdata.split("=");
-                                    var RealCost = splitedLink[3];
-                                    var discountRate = parseFloat(data['rate']);
-                                    var splitedLinks = linkdata.split("=");
-                                    var RealCosts = splitedLink[3];
-                                    var intCost = parseInt(priceBeforDiscount) * ((100 - discountRate) / 100);
-                                    if (intCost == 0) intCost = intCost + '000'
-                                    var AfterDiscount = linkdata.replace(RealCosts, parseInt(intCost));
-
-                                    $('#' + link).attr("href", AfterDiscount);
-                                    if (textbox == 'SearchCouponCodeStartUp') {
-                                        $('#startupPlanPriceCD').html((priceBeforDiscount / 1000).toFixed(3));
-                                        $('#startupCouponDiscRateCD').html(discountRate + '%');
-                                        $('#startupPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
-
-                                        $('#startupPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
-
-                                        if ($('#annualStartUpDiscountDiv').hasClass('d-none')) {
-                                            $('#annualStartUpDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
-                                            $('#annualStartUpDiscountDiv').removeClass('d-none');
-
-
-                                        }
-                                        if (intCost == 0) {
-                                            if ($('#freeSubscribeStartUPAnnual').hasClass('d-none')) {
-                                                $('#freeSubscribeStartUPAnnual').removeClass('d-none')
-                                                $('#' + link).addClass('d-none');
-                                            }
-                                        }
-                                        else {
-                                            if ($('#' + link).hasClass('d-none')) {
-                                                $('#freeSubscribeStartUPAnnual').addClass('d-none')
-                                                $('#' + link).removeClass('d-none');
-                                            }
-                                        }
-                                    }
-                                    if (textbox == 'MonthlySearchCouponCodeStartUp') {
-                                        $('#MonthlystartupPlanPriceCD').html((priceBeforDiscount / 1000));
-                                        $('#MonthlystartupCouponDiscRateCD').html(discountRate + '%');
-                                        $('#MonthlystartupPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
-
-                                        $('#MonthlystartupPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
-
-                                        if ($('#MonthlyStartUpDiscountDiv').hasClass('d-none')) {
-                                            $('#MonthlyStartUpDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
-                                            $('#MonthlyStartUpDiscountDiv').removeClass('d-none');
-
-
-                                        }
-
-                                        if (intCost == 0) {
-                                            if ($('#freeSubscribeStartUPMonthly').hasClass('d-none')) {
-                                                $('#freeSubscribeStartUPMonthly').removeClass('d-none')
-                                                $('#' + link).addClass('d-none');
-                                            }
-                                        }
-                                        else {
-                                            if ($('#' + link).hasClass('d-none')) {
-                                                $('#freeSubscribeStartUPMonthly').addClass('d-none')
-                                                $('#' + link).removeClass('d-none');
-                                            }
-                                        }
-                                    }
-                                    if (textbox == 'MonthlySearchCouponCodeManualBuilder') {
-                                        $('#MonthlyManualBuilderPlanPriceCD').html((priceBeforDiscount / 1000));
-                                        $('#MonthlyManualBuilderCouponDiscRateCD').html(discountRate + '%');
-                                        $('#MonthlyManualBuilderPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
-
-                                        $('#MonthlyManualBuilderPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
-
-                                        if ($('#MonthlyManualBuilderDiscountDiv').hasClass('d-none')) {
-                                            $('#MonthlyManualBuilderDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
-                                            $('#MonthlyManualBuilderDiscountDiv').removeClass('d-none');
-
-
-                                        }
-                                        if (intCost == 0) {
-                                            if ($('#freeSubscribeManualBuilderMonthly').hasClass('d-none')) {
-                                                $('#freeSubscribeManualBuilderMonthly').removeClass('d-none')
-                                                $('#' + link).addClass('d-none');
-                                            }
-                                        }
-                                        else {
-                                            if ($('#' + link).hasClass('d-none')) {
-                                                $('#freeSubscribeManualBuilderMonthly').addClass('d-none')
-                                                $('#' + link).removeClass('d-none');
-                                            }
-                                        }
-                                    }
-                                    if (textbox == 'AnnualSearchCouponCodeManualBuilder') {
-                                        $('#AnnualManualBuilderPlanPriceCD').html((priceBeforDiscount / 1000));
-                                        $('#AnnualManualBuilderCouponDiscRateCD').html(discountRate + '%');
-                                        $('#AnnualManualBuilderPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
-
-                                        $('#AnnualManualBuilderPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
-
-                                        if ($('#AnnualManualBuilderDiscountDiv').hasClass('d-none')) {
-                                            $('#AnnualManualBuilderDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
-                                            $('#AnnualManualBuilderDiscountDiv').removeClass('d-none');
-
-
-                                        }
-                                        if (intCost == 0) {
-                                            if ($('#freeSubscribeManualBuilderAnnual').hasClass('d-none')) {
-                                                $('#freeSubscribeManualBuilderAnnual').removeClass('d-none')
-                                                $('#' + link).addClass('d-none');
-                                            }
-                                        }
-                                        else {
-                                            if ($('#' + link).hasClass('d-none')) {
-                                                $('#freeSubscribeManualBuilderAnnual').addClass('d-none')
-                                                $('#' + link).removeClass('d-none');
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                            else {
-
-                                splitedLink = linkdata.split('=');
-                                var RealCost = splitedLink[3];
-
-                                var nochange = linkdata.replace(RealCost, parseInt(priceBeforDiscount));
-                                $('#' + link).attr("href", nochange);
-
-                                if (textbox == 'SearchCouponCodeStartUp') {
-                                    if (!$('#annualStartUpDiscountDiv').hasClass('d-none')) {
-                                        $('#annualStartUpDiscountDiv').addClass('d-none');
-
-                                    }
-                                }
-                                if (textbox == 'MonthlySearchCouponCodeStartUp') {
-                                    if (!$('#MonthlyStartUpDiscountDiv').hasClass('d-none')) {
-                                        $('#MonthlyStartUpDiscountDiv').addClass('d-none');
-
-                                    }
-                                }
-                                if (textbox == 'MonthlySearchCouponCodeManualBuilder') {
-                                    if (!$('#MonthlyManualBuilderDiscountDiv').hasClass('d-none')) {
-                                        $('#MonthlyManualBuilderDiscountDiv').addClass('d-none');
-
-                                    }
-                                }
-                                if (textbox == 'AnnualSearchCouponCodeManualBuilder') {
-                                    if (!$('#AnnualManualBuilderDiscountDiv').hasClass('d-none')) {
-                                        $('#AnnualManualBuilderDiscountDiv').addClass('d-none');
-
-                                    }
-                                }
-                                if (textbox == 'CourseCouponCode') {
-                                    if (!$('#CourseDiscountDiv').hasClass('d-none')) {
-                                        $('#CourseDiscountDiv').addClass('d-none');
-
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                }
-
-                        $(document).ready(function () {
-
-
-                    var requestUrl = "https://extreme-ip-lookup.com/json/?key=sswCYj3OKfeIuxY1C3Bd";
-
-                    $.ajax({
-                        url: requestUrl,
-                        type: 'GET',
-                        success: function (json) {
-
-                            var country = json.country;
-
-                            $("#selectCountry option").each(function () {
-
-                                if ($(this).text() == country) $(this).attr('selected', true);
-                            });
-                            $.ajax({
-                                type: 'get',
-                                url: 'https://restcountries.com/v3.1/name/' + country,
-                                success: function (data) {
-
-
-                                    if (data.length >= 1) {
-                                        $.ajax({
-                                            type: 'get',
-                                            url: 'https://restcountries.com/v3.1/name/' + country + '?fullText=true',
-                                            success: function (data) {
-                                                // console.log(data);
-                                                var stringified = JSON.stringify(data);
-                                                var parsedObj = JSON.parse(stringified);
-
-                                                $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
-
-                                                $('#flagimg').attr('src', data[0].flags['png']);
-                                                $('#flagimg').attr('alt', data[0].idd);
-
-                                            }
-
-                                        });
-                                    }
-                                    else if (data.length != 0) {
-                                        var stringified = JSON.stringify(data);
-                                        var parsedObj = JSON.parse(stringified);
-                                        $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
-
-                                        $('#flagimg').attr('src', data[0].flags['png']);
-                                        $('#flagimg').attr('alt', parsedObj[0]['name']);
-                                    }
-
-                                }
-                            });
-                        },
-                        error: function (err) {
-                            console.log("Request failed, error= " + err);
-                        }
-                    });
-
-
-                    $('#selectCountry').change(function () {
-                        var country = $("#selectCountry option:selected").text();
-                        $.ajax({
-                            type: 'get',
-                            url: 'https://restcountries.com/v3.1/name/' + country,
-                            success: function (data) {
-
-                                if (data.length >= 1) {
-                                    $.ajax({
-                                        type: 'get',
-                                        url: 'https://restcountries.com/v3.1/name/' + country + '?fullText=true',
-                                        success: function (data) {
-                                            // console.log(data);
-                                            if (data.length > 0) {
-                                                var stringified = JSON.stringify(data);
-                                                var parsedObj = JSON.parse(stringified);
-                                                $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
-
-                                                $('#flagimg').attr('src', data[0].flags['png']);
-                                                $('#flagimg').attr('alt', parsedObj[0]['name']);
-                                            } else {
-                                                alert("wiwi");
-                                            }
-
-                                        },
-                                        error: function (data) {
-                                            $('#countryPhoneKey').html('Double Click Here');
-
-                                            $('#flagimg').attr('src', 'None');
-                                            $('#flagimg').attr('alt', 'Not Availabel');
-                                        }
-
-                                    });
-                                }
-                                else if (data.length != 0) {
-                                    var stringified = JSON.stringify(data);
-                                    var parsedObj = JSON.parse(stringified);
-                                    $('#countryPhoneKey').html(parsedObj[0]['callingCodes']);
-
-                                    $('#flagimg').attr('src', parsedObj[0]['flag']);
-                                    $('#flagimg').attr('alt', parsedObj[0]['name']);
-                                }
-                                else {
-                                    alert("ddd")
-                                }
-
-                            }
-                        });
-                    });
-                });
-    </script>
-
     @*==========================================================================*@
     <script>
-        $.blockUI.defaults.message = "Please Wait";
-        $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+                                                $.blockUI.defaults.message = "Please Wait";
+            $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
     </script>
     <script>
         $(".cms").on("click", function (e) {
@@ -805,6 +498,316 @@
             });
 
             $('#cmsModal').modal('show');
+        });
+        function agree(contorl, div) {
+            var x = document.getElementById(div);
+            if ($('#' + contorl).is(':checked'))
+                x.style.display = "block";
+
+            else
+                x.style.display = "none";
+
+        }
+        function getCouponDiscount(textbox, link, catogry, price) {
+            var linkdata = $('#' + link).attr('href');
+            var priceBeforDiscount = price * 1000;
+            $.ajax({
+                type: 'GET',
+                url: '/Coupon/getCouponRate?CouponFor=' + catogry + '&&code=' + $('#' + textbox).val(),
+                timeout: 5000,
+                success: function (data) {
+                    if (data['result'] == "success") {
+                        if (textbox == 'CourseCouponCode') {
+                            var CourseDiscountRate = parseFloat(data['rate']);
+                            var CourseintCost = parseInt(priceBeforDiscount) * ((100 - CourseDiscountRate) / 100);
+                            $('#CoursePlanPriceCD').html((priceBeforDiscount / 1000).toFixed(3));
+                            $('#CourseCouponDiscRateCD').html(CourseDiscountRate + '%');
+                            $('#CoursePriceAftDisCD').html((CourseintCost / 1000).toFixed(3));
+                            var CourseLink = $('#' + link).attr('href');
+                            //console.log(CourseintCost);
+                            //console.log(CourseLink + '');
+                            var SiplitedCourseLink = CourseLink.split('&')
+                            if (CourseintCost == 0) {
+                                var coursesplitedlink = SiplitedCourseLink[0].split('?');
+                                console.log(coursesplitedlink);
+                                var test = SiplitedCourseLink[0].replace(coursesplitedlink[0], '/TrainingHome/CourseMaterial')
+                                console.log(test)
+                                $('#' + link).attr('href', test);
+                            }
+                            else {
+                                console.log(SiplitedCourseLink[0]);
+                                var priceSpilted = SiplitedCourseLink[1].split('=')
+                                var CourseLinkafter = CourseLink.replace(priceSpilted[1], (CourseintCost / 1000).toFixed(3))
+                                $('#' + link).attr('href', CourseLinkafter);
+                            }
+
+                            $('#CoursePriceSaveCD').html('<del>' + ((priceBeforDiscount - CourseintCost) / 1000).toFixed(3) + '</del>');
+
+                            if ($('#CourseDiscountDiv').hasClass('d-none')) {
+                                $('#CourseDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                $('#CourseDiscountDiv').removeClass('d-none');
+                            }
+                        }
+                        else {
+
+                            var splitedLink = linkdata.split("=");
+                            var RealCost = splitedLink[3];
+                            var discountRate = parseFloat(data['rate']);
+                            var splitedLinks = linkdata.split("=");
+                            var RealCosts = splitedLink[3];
+                            var intCost = parseInt(priceBeforDiscount) * ((100 - discountRate) / 100);
+                            if (intCost == 0) intCost = intCost + '000'
+                            var AfterDiscount = linkdata.replace(RealCosts, parseInt(intCost));
+
+                            $('#' + link).attr("href", AfterDiscount);
+                            if (textbox == 'SearchCouponCodeStartUp') {
+                                $('#startupPlanPriceCD').html((priceBeforDiscount / 1000).toFixed(3));
+                                $('#startupCouponDiscRateCD').html(discountRate + '%');
+                                $('#startupPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#startupPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#annualStartUpDiscountDiv').hasClass('d-none')) {
+                                    $('#annualStartUpDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#annualStartUpDiscountDiv').removeClass('d-none');
+                                }
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeStartUPAnnual').hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPAnnual').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPAnnual').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+                            if (textbox == 'MonthlySearchCouponCodeStartUp') {
+                                $('#MonthlystartupPlanPriceCD').html((priceBeforDiscount / 1000));
+                                $('#MonthlystartupCouponDiscRateCD').html(discountRate + '%');
+                                $('#MonthlystartupPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#MonthlystartupPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#MonthlyStartUpDiscountDiv').hasClass('d-none')) {
+                                    $('#MonthlyStartUpDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#MonthlyStartUpDiscountDiv').removeClass('d-none');
+                                }
+
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeStartUPMonthly').hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPMonthly').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeStartUPMonthly').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+                            if (textbox == 'MonthlySearchCouponCodeManualBuilder') {
+                                $('#MonthlyManualBuilderPlanPriceCD').html((priceBeforDiscount / 1000));
+                                $('#MonthlyManualBuilderCouponDiscRateCD').html(discountRate + '%');
+                                $('#MonthlyManualBuilderPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#MonthlyManualBuilderPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#MonthlyManualBuilderDiscountDiv').hasClass('d-none')) {
+                                    $('#MonthlyManualBuilderDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#MonthlyManualBuilderDiscountDiv').removeClass('d-none');
+                                }
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeManualBuilderMonthly').hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderMonthly').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderMonthly').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+                            if (textbox == 'AnnualSearchCouponCodeManualBuilder') {
+                                $('#AnnualManualBuilderPlanPriceCD').html((priceBeforDiscount / 1000));
+                                $('#AnnualManualBuilderCouponDiscRateCD').html(discountRate + '%');
+                                $('#AnnualManualBuilderPlanPriceAftDisCD').html((intCost / 1000).toFixed(3));
+
+                                $('#AnnualManualBuilderPlanPriceSaveCD').html('<del>' + ((priceBeforDiscount - intCost) / 1000).toFixed(3) + '</del>');
+
+                                if ($('#AnnualManualBuilderDiscountDiv').hasClass('d-none')) {
+                                    $('#AnnualManualBuilderDiscountDiv').toggleClass('d-none show', true, 400, "easeOutSine");
+                                    $('#AnnualManualBuilderDiscountDiv').removeClass('d-none');
+
+
+                                }
+                                if (intCost == 0) {
+                                    if ($('#freeSubscribeManualBuilderAnnual').hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderAnnual').removeClass('d-none')
+                                        $('#' + link).addClass('d-none');
+                                    }
+                                }
+                                else {
+                                    if ($('#' + link).hasClass('d-none')) {
+                                        $('#freeSubscribeManualBuilderAnnual').addClass('d-none')
+                                        $('#' + link).removeClass('d-none');
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    else {
+
+                        splitedLink = linkdata.split('=');
+                        var RealCost = splitedLink[3];
+
+                        var nochange = linkdata.replace(RealCost, parseInt(priceBeforDiscount));
+                        $('#' + link).attr("href", nochange);
+
+                        if (textbox == 'SearchCouponCodeStartUp') {
+                            if (!$('#annualStartUpDiscountDiv').hasClass('d-none')) {
+                                $('#annualStartUpDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'MonthlySearchCouponCodeStartUp') {
+                            if (!$('#MonthlyStartUpDiscountDiv').hasClass('d-none')) {
+                                $('#MonthlyStartUpDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'MonthlySearchCouponCodeManualBuilder') {
+                            if (!$('#MonthlyManualBuilderDiscountDiv').hasClass('d-none')) {
+                                $('#MonthlyManualBuilderDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'AnnualSearchCouponCodeManualBuilder') {
+                            if (!$('#AnnualManualBuilderDiscountDiv').hasClass('d-none')) {
+                                $('#AnnualManualBuilderDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                        if (textbox == 'CourseCouponCode') {
+                            if (!$('#CourseDiscountDiv').hasClass('d-none')) {
+                                $('#CourseDiscountDiv').addClass('d-none');
+
+                            }
+                        }
+                    }
+                },
+            });
+
+        }
+        $('#selectCountry').change(function () {
+            var country = $("#selectCountry option:selected").val();
+
+            $.ajax({
+                type: 'get',
+                url: 'https://restcountries.com/v2/alpha/' + country,
+                success: function (data) {
+                    if (data.length >= 1) {
+                        $.ajax({
+                            type: 'get',
+                            url: 'https://restcountries.com/v3.1/name/' + data.name + '?fullText=true',
+                            success: function (data) {
+                                // console.log(data);
+                                if (data.length > 0) {
+                                    var stringified = JSON.stringify(data);
+                                    var parsedObj = JSON.parse(stringified);
+                                    $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
+
+                                    $('#flagimg').attr('src', data[0].flags['png']);
+                                    $('#flagimg').attr('alt', parsedObj[0]['name']);
+                                } else {
+                                    alert("wiwi");
+                                }
+
+                            },
+                            error: function (data) {
+                                $('#countryPhoneKey').html('Double Click Here');
+
+                                $('#flagimg').attr('src', 'None');
+                                $('#flagimg').attr('alt', 'Not Availabel');
+                            },
+
+                        });
+                    }
+                    else if (data.length != 0) {
+
+                        //console.log(data);
+                        var stringified = JSON.stringify(data);
+                        var parsedObj = JSON.parse(stringified);
+                        $('#countryPhoneKey').html(data.callingCodes[0]);
+
+
+                        $('#flagimg').attr('src', data.flags["png"]);
+                        $('#flagimg').attr('alt', data.name);
+
+                    }
+                    else {
+                        alert("ddd");
+                    }
+
+                },
+            });
+        });
+        $(document).ready(function () {
+            var requestUrl = "https://extreme-ip-lookup.com/json/?key=sswCYj3OKfeIuxY1C3Bd";
+            $.ajax({
+                url: requestUrl,
+                type: 'GET',
+                success: function (json) {
+                    var country = json.country;
+                    var countrycode = json.countryCode;
+                    //@Session["CountryCode"]=countrycode;
+                    $("#selectCountry option").each(function () {
+
+                        if ($(this).val() == countrycode) $(this).attr('selected', true);
+                    });
+                    $.ajax({
+                        type: 'get',
+                        url: 'https://restcountries.com/v3.1/name/' + country,
+                        success: function (data) {
+                            if (data.length >= 1) {
+                                $.ajax({
+                                    type: 'get',
+                                    url: 'https://restcountries.com/v3.1/name/' + country + '?fullText=true',
+                                    success: function (data) {
+                                        // console.log(data);
+                                        var stringified = JSON.stringify(data);
+                                        var parsedObj = JSON.parse(stringified);
+
+                                        $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
+
+                                        $('#flagimg').attr('src', data[0].flags['png']);
+                                        $('#flagimg').attr('alt', data[0].idd);
+
+                                    },
+                                        });
+                            }
+                            else if (data.length != 0) {
+                                var stringified = JSON.stringify(data);
+                                var parsedObj = JSON.parse(stringified);
+                                $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
+
+                                $('#flagimg').attr('src', data[0].flags['png']);
+                                $('#flagimg').attr('alt', parsedObj[0]['name']);
+                            }
+                        },
+                    });
+                },
+                error: function (err) {
+                    console.log("Request failed, error= " + err);
+                },
+            });
+
         });
     </script>
     <script>
@@ -831,18 +834,23 @@
         });
         $("#btnSubscripFree").on("click", function () {
             @{
-                    var flage = Session["User"] != null? 1:0;
-                    var userID = Session["UserId"] != null ? Session["UserId"] : "none";
-                    int eligableforSU = 1;
-                    if (Session["eligableForFreeSU"] != null)
-                    { eligableforSU = (bool)Session["eligableForFreeSU"] ? 1 : 0; }
-                    int eligableforMB = 1;
-                    if (Session["eligableForFreeMB"] != null)
-                    { eligableforMB = (bool)Session["eligableForFreeMB"] ? 1 : 0; }
+                int totalFreePlans = 0;
+                var flage = Session["User"] != null? 1:0;
+                var userID = Session["UserId"] != null ? Session["UserId"] : "none";
+                int eligableforSU = 1;
+                if (Session["eligableForFreeSU"] != null)
+                { eligableforSU = (bool)Session["eligableForFreeSU"] ? 1 : 0; }
+                int eligableforMB = 1;
+                if (Session["eligableForFreeMB"] != null)
+                { eligableforMB = (bool)Session["eligableForFreeMB"] ? 1 : 0; }
+                totalFreePlans = eligableforSU + eligableforMB;
+                Session["Backto"] = "UserPlans";
                 }
 
             if (@flage== 1) {
-                let startDate = new Date();
+                let counter = 0;
+                var totalFreePlans =@totalFreePlans
+                    let startDate = new Date();
                 let endDate = new Date();
                 endDate.setDate(endDate.getDate() + 7);
                 var startmonth = ((startDate.getMonth() + 1));
@@ -863,19 +871,20 @@
 
                 if (@eligableforSU== 1) {
                     $.ajax({
-                url: "@Url.Action("SubscribeFree", "Plans")",
+                        url: "@Url.Action("SubscribeFree", "Plans")",
                         data: {
-                        "userId": userId, "planId": planId,
+                            "userId": userId, "planId": planId,
                             "fromDay": fromDay, "fromMonth": fromMonth, "fromYear": fromYear,
                             "toDay": toDay, "toMonth": toMonth, "toYear": toYear,
                             "price": price, "isTrail": true
                         },
                         type: "GET",
                         success: function () {
-                        toastr.success("@Resources.General.SubscribeFreeSucess");
-                    },
+                            counter++;
+                            toastr.success("@Resources.General.SubscribeFreeSucess");
+                        },
                         error: function (err) {
-                        toastr.error(err.statusText)
+                            toastr.error(err.statusText)
                         }
                     });
                 }
@@ -891,6 +900,7 @@
                         },
                         type: "GET",
                         success: function () {
+                            counter++;
                             toastr.success("@Resources.General.SubscribeFreeSucess");
                         },
                         error: function (err) {
@@ -898,23 +908,53 @@
                         }
                     });
                 }
-                location.reload();
+                if (counter == totalFreePlans) {
+                    var url = window.location.protocol + "//" + window.location.host;
+                    url = url + "/Home/UserSubscriptions";
+                    window.location.replace(url);
+                }
             }
             else {
                 window.location.replace("/Login#LoginArea");
             }
         });
+        function showPss(control, id) {
+            //console.log($('#'+control));
+            var flage = false;
+            var classList = $('#' + id).attr('class').split(/\s+/);
+            $.each(classList, function (index, item) {
+                if (item === 'fa-eye-slash') {
+                    flage = true;
+                }
+            });
+            if (flage) {
+                $("#" + id).attr('class', "fa fa-eye");
+                $("#" + control).prop("type", "text");
+            }
+            else {
+                $("#" + id).attr('class', "fa fa-eye-slash");
+                $("#" + control).prop("type", "password");
+            }
+
+        }
     </script>
 
     <script type="text/javascript">
+        pullIcon = "pull-left";
+        @if(isArabic)
+            {
+            <text>pullIcon="pull-right"</text>
+            }
         var $zoho = $zoho || {}; $zoho.salesiq = $zoho.salesiq || { widgetcode: "a0bf81e7cc85be531435933c0fb3566921edc78b8a6779188a891ea821207fc1", values: {}, ready: function () { } };
         var d = document;
         s = d.createElement("script");
         s.type = "text/javascript";
         s.id = "zsiqscript";
         s.src = "https://salesiq.zoho.com/widget";
+
         t = d.getElementsByTagName("script")[0];
         t.parentNode.insertBefore(s, t);
+        console.log(s)
         d.write("<div id='zsiqwidget'></div>");
     </script>
 </body>
