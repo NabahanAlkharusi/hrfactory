@@ -163,7 +163,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult UserProfile()
         {
-            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);
 
@@ -280,7 +280,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult EditProfile()
         {
-            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);
 
@@ -304,7 +304,7 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult ChangePassword()
         {
-            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);
 
@@ -348,7 +348,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
             ViewBag.ManualBuilderSu = true;
             ViewBag.StartUpSu = true;
-            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = (int)Session["UserId"];
             try
             {
@@ -430,7 +430,7 @@ namespace HumanResourceHelth.Web.Controllers
 
 
             List<Updates> updates = new List<Updates>();
-            if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int UserId = (int)Session["UserId"];
             SemiNotifications notifications = _uow.SemiNotificationRepo.Search(a => a.UserId == UserId).FirstOrDefault();
             if (notifications == null)
@@ -495,7 +495,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
             try
             {
-                if (Session["UserId"] == null) return RedirectToAction("Index", "Login");
+                if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
                 var type = Request["type"];
                 int id = int.Parse(Request["id"]);
                 Updates update = _uow.UpdatesRepo.FindById(id);

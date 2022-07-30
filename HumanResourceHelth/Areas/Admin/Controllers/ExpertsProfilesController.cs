@@ -20,12 +20,14 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         // GET: Admin/ExpertsProfiles
         public ActionResult Index()
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             return View(db.Experts.ToList());
         }
 
         // GET: Admin/ExpertsProfiles/Details/5
         public ActionResult Details(int? id)
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -51,6 +53,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken, ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,ImageUrl,LinkedInUrl,DescriptionEn,DescriptionAr,YouToubeUrl,InstagramUrl,NameEn,NameAr,SummaryEn,EducationEn,ExperiencesEN,CertificatesEN,LanguagesEn,SummaryAr,EducationAr,ExperiencesAr,CertificatesAr,LanguagesAr")] ExpertsProfile expertsProfile)
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             if (ModelState.IsValid)
             {
                 HttpFileCollectionBase files = Request.Files;
@@ -78,6 +81,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         // GET: Admin/ExpertsProfiles/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -97,6 +101,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken, ValidateInput(false)]
         public ActionResult Edit([Bind(Include = "Id,ImageUrl,LinkedInUrl,DescriptionEn,DescriptionAr,YouToubeUrl,InstagramUrl,NameEn,NameAr,SummaryEn,EducationEn,ExperiencesEN,CertificatesEN,LanguagesEn,SummaryAr,EducationAr,ExperiencesAr,CertificatesAr,LanguagesAr")] ExpertsProfile expertsProfile)
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             if (ModelState.IsValid)
             {
                 HttpFileCollectionBase files = Request.Files;
@@ -123,6 +128,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         // GET: Admin/ExpertsProfiles/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -140,6 +146,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             ExpertsProfile expertsProfile = db.Experts.Find(id);
             db.Experts.Remove(expertsProfile);
             db.SaveChanges();

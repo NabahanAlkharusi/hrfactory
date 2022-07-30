@@ -29,8 +29,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
             int userId = 0;
             //int planId = 0;
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             else
                 userId = (int)Session["UserId"];
             int Plan = (int)Enum.Parse(typeof(SubscriptionPlan), plan);
@@ -619,8 +618,7 @@ namespace HumanResourceHelth.Web.Controllers
             try
             {
                 int userId = 0;
-                if (Session["UserId"] == null)
-                    return RedirectToAction("Index", "Login");
+                if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
                 else
                     userId = (int)Session["UserId"];
                 string key = Request["SearchKey"];

@@ -7,7 +7,11 @@
     bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
 
     var dir = isArabic ? "rtl" : "ltr";
-    var labAlign = isArabic ? "pull-right" : "pull-left"; }
+    var labAlign = isArabic ? "pull-right" : "pull-left"; 
+    var text_align = isArabic ? "text-right" : "text-left"; 
+    var op_text_align = isArabic ? "text-left" : "text-right"; 
+    
+    }
 
 <!-- Page title --->
 <div id="page-title" class="text-grey background-overlay " style="background-image: url('../assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;" dir="@dir">
@@ -87,7 +91,7 @@
 <section class="padding-tb-10px" dir="@dir">
     <div class="container">
         <div class="row justify-content-md-center">
-            <div class="col-lg-8 text-uppercase">
+            <div class="col-lg-8 text-uppercase @text_align">
                 <form autocomplete="off">
                     <input autocomplete="off" name="hidden" type="text" style="display:none;">
                     <input type="text" style="display:none">
@@ -209,14 +213,46 @@
                             </div>
                         </div>
                     </div>
-                    <div class="padding-bottom-22px"><button type="button" id="btnRegister" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 col-sm-12 col-lg-3">@Resources.General.Register</button></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-12 col-xs-9">
+                                
+                                <div class="form-check form-check-inline">
+                                    <div class="row">
+                                        <input class="form-check-input" type="checkbox"  required id="acceptCheckbox">
+                                        <label class="form-check-label" for="acceptCheckbox">
+                                            <span class="d-block text-grey-2  mt-3 text-center">
+                                                @Resources.General.BySigningUpYouAcceptOur
+                                                <a href="#" class="text-blue" data-toggle="modal" data-target="#TermsModal">
+                                                    @Resources.General.TermsOfService
+                                                </a>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-bottom-22px @op_text_align"><button type="button" id="btnRegister" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 col-sm-12 col-lg-3">@Resources.General.Register</button></div>
                 </form>
             </div>
         </div>
     </div>
 </section>
 <!-- Modal -->
-
+<div class="modal fade" id="TermsModal" tabindex="-1" role="dialog" aria-labelledby="TermsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="TermsModalLabel" class="modal-title cms" data-contentId="00000">@ViewBag.RegistrationTitle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body cms" data-contentId="67">@Html.Raw(ViewBag.Registration)</div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -339,7 +375,10 @@
         var password = $("#txtPassword").val();
         var confirmPassword = $("#txtConfirmPassword").val();
 
-
+        if (!$("#acceptCheckbox").is(":checked")) {
+            toastr.error("@Resources.General.YouHaveToAccept")
+            return;
+        }
         if (name == "") {
             toastr.error("@Resources.General.RequiredCompanyName")
             return;

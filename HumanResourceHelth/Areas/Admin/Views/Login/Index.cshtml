@@ -116,12 +116,35 @@
     $("#btnSave").on("click", function () {
         var email = $("#txtEmail").val();
         var password = $("#txtPassword").val();
+        const queryString = window.location.search;
+        let finalbackUrl;
+        if (queryString != "") {
+
+            const urlParams = new URLSearchParams(queryString);
+            const backUrl = urlParams.get('r');
+            finalbackUrl = backUrl;
+        }
+        else {
+            const backUrl = "@Url.Action("Index", "Home", new { Area = "Admin" })";
+            finalbackUrl = backUrl;
+        }
+        //console.log(finalbackUrl);
+
         $.ajax({
             url: "@Url.Action("Login", "Login", new { Area= "Admin"})",
-            data: { "email": email, "password" : password},
+            data: { "email": email, "password": password, "backUrl": finalbackUrl},
             type: "POST",
             success: function (msg, msg2, msg3) {
-                if (msg3.statusText == "CreateExpert")
+
+                //console.log(msg.StatusCode);
+                //console.log(msg.previousePage);
+                if (msg.StatusCode == 200) {
+                    window.location = msg.previousePage;
+                }
+
+                //console.log(msg2);
+                //console.log(msg);-->
+                @*if (msg3.statusText == "CreateExpert")
                     window.location = '@Url.Action("Create", "ExpertsProfiles", new { Area = "Admin" })';
                 else if (msg3.statusText == "IndexExpert")
                     window.location = '@Url.Action("Index", "ExpertsProfiles", new { Area = "Admin" })';
@@ -134,7 +157,7 @@
                 else if (msg3.statusText == "Categories")
                     window.location = '@Url.Action("Index", "Categories", new { Area = "Admin" })';
                 else
-                window.location = '@Url.Action("Index","Home", new { Area = "Admin"})';
+                window.location = '@Url.Action("Index","Home", new { Area = "Admin"})';*@
             },
             error: function () {
                 toastr.error("User Name or Password not correct")

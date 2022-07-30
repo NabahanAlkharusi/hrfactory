@@ -26,49 +26,88 @@
             </div>
 
         </div>
-        <div class="panel-body" id="CategoriesContinar" dir="@dir">
-            <div class="row @Text_Align">
-                <h5>@Resources.General.PlanName: </h5>@ViewBag.plan
-            </div>
-            <div class="row @Text_Align">
-                <h5>@Resources.General.SubscriptionPeriod: </h5>@ViewBag.subscriptionPeriod
-            </div>
-            <div class="row @Text_Align">
-                <h5>@Resources.General.Subscriptionfrom: </h5> @ViewBag.DateFrom <h5> @Resources.General.To: </h5> @ViewBag.DateTo
-            </div>
-            <div class="row @Text_Align">
-                <h5>@Resources.General.SubscriptionPrice: </h5> @ViewBag.Amount
-            </div>
-            @*<div class="row @Text_Align">
-                    <h5>@Resources.General.VAT 5% </h5> 5
-                </div>*@
-            <div class="row @Text_Align">
-                <h5>@Resources.General.Total </h5> @ViewBag.Amount
-            </div>
-            <div class="row @Text_Align">
-                <table class="table table-hover">
-                    <tr>
-                        <td colspan="2" class="@Text_Align">
-                            <h4>@Resources.General.Paywith</h4>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="@Text_Align">
+        <div class="panel-body justify-content-center" id="CategoriesContinar" dir="@dir">
+            <div class="table-responsive">
+                <table class="table table-condensed table-hover w-100 @Text_Align">
+                    <tbody>
+                        <tr>
+                            <th class="w-25">@Resources.General.PlanName</th>
+                            <td class="@Text_Align" colspan="3">@ViewBag.plan</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">@Resources.General.SubscriptionPeriod</th>
+                            <td class="@Text_Align" colspan="3">@ViewBag.subscriptionPeriod</td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">@Resources.General.Subscriptionfrom</th>
+                            <td class="@Text_Align">@ViewBag.DateFrom</td>
+                            <th class="w-25">@Resources.General.To</th>
+                            <td class="@Text_Align">@ViewBag.DateTo</td>
+                        </tr>
+                        <tr>
+                            <th>@Resources.General.SelectCurrency</th>
+                            <td class="@Text_Align">
+                                <select id="Currencies" class="form-control"></select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">@Resources.General.SubscriptionPrice</th>
+                            <td class="@Text_Align" >@ViewBag.Amount  @Resources.General.OMR</td>
+                            <td class="@Text_Align" id="AmountTxt"></td>
+                            <td class="@Text_Align" id="AmountVal"></td>
+                        </tr>
+                        <tr>
+                            <th class="w-25">@Resources.General.Total</th>
+                            <td class="@Text_Align">@ViewBag.Amount  @Resources.General.OMR</td>
+                            <td class="@Text_Align" id="TotalTxt"></td>
+                            <td class="@Text_Align" id="TotalVal"></td>
+                        </tr>
 
-                            <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = ViewBag.planId, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = ViewBag.Amount+"000" })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
-                                <img src="https://thawani.om/wp-content/themes/thawani/images/logo.svg" style="width:100%; height:100px;">
-                            </a>
-                        </td>
-                        <td class="@Text_Align">
-                            <form action="~/Thawani/Create" method="post">
-                                @Html.AntiForgeryToken()
-                                <button type="submit">
-                                    <img src="~/assets/img/payTabs.png" style="width:200px; height:100px;">
-                                    <h5 class="h6">@Resources.General.GeneratePayTabsPaymentLink</h5>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                        @*</table>
+                            </div>*@
+                        @*<div class="row @Text_Align">
+                                <h5>@Resources.General.PlanName: </h5>@ViewBag.plan
+                            </div>
+                            <div class="row @Text_Align">
+                                <h5>@Resources.General.SubscriptionPeriod: </h5>@ViewBag.subscriptionPeriod
+                            </div>
+                            <div class="row @Text_Align">
+                                <h5>@Resources.General.Subscriptionfrom: </h5> @ViewBag.DateFrom <h5> @Resources.General.To: </h5> @ViewBag.DateTo
+                            </div>
+                            <div class="row @Text_Align">
+                                <h5>@Resources.General.SubscriptionPrice: </h5> @ViewBag.Amount  @Resources.General.OMR
+                            </div>*@
+                        @*<div class="row @Text_Align">
+                                <h5>@Resources.General.VAT 5% </h5> 5
+                            </div>*@
+                        @*<div class="row @Text_Align">
+                                <h5>@Resources.General.Total </h5> @ViewBag.Amount  @Resources.General.OMR
+                            </div>*@
+                        @*<div class="row @Text_Align">
+                            <table class="table table-hover">*@
+                        <tr>
+                            <td colspan="4" class="@Text_Align">
+                                <h5>@Resources.General.Paywith</h5>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="@Text_Align">
+
+                                <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = ViewBag.planId, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = ViewBag.Amount+"000" })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
+                                    <img src="https://thawani.om/wp-content/themes/thawani/images/logo.svg" style="width:100%; height:100px;">
+                                </a>
+                            </td>
+                            <td colspan="2" class="@Text_Align">
+                                <form action="~/Thawani/Create" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit">
+                                        <img src="~/assets/img/payTabs.png" style="width:200px; height:100px;">
+                                        <h5 class="h6">@Resources.General.GeneratePayTabsPaymentLink</h5>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="row" dir="ltr">
@@ -76,7 +115,7 @@
 
                 </div>
                 <div class="col-6 p-3 m-2">
-                    
+
                 </div>
             </div>
             @*<div class="row text-left" dir="ltr">
@@ -93,3 +132,56 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+
+        countryCode = "us";
+        option = "<option value=''>@Resources.General.Select</option>"
+        $.ajax({
+            url: "https://restcountries.com/v2/alpha/" + countryCode,
+            type: "get",
+            success: (resp) => {
+                option += "<option value='" + resp.currencies[0].code + "'>" + resp.currencies[0].name + " : " + resp.currencies[0].symbol + "</option>";
+            },
+            error: (errResp) => {
+
+            }
+        });
+        countryCode = "@ViewBag.countryCode";
+
+        $.ajax({
+            url: "https://restcountries.com/v2/alpha/" + countryCode,
+            type: "get",
+            success: (resp) => {
+                option += "<option value='" + resp.currencies[0].code + "'>" + resp.currencies[0].name + " : " + resp.currencies[0].symbol + "</option>";
+                $("#Currencies").html(option);
+            },
+            error: (errResp) => {
+
+            }
+        });
+        $("#Currencies").change(function () {
+            let CountryCurrency = $("#Currencies").val().toLowerCase();
+            var currencyDetails = $("#Currencies option:selected").text();
+            currencyDetails = currencyDetails.split(":")
+            //console.log(currencyDetails);
+            url = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/omr/" + CountryCurrency + ".json";
+            $.ajax({
+                url: url,
+                type: "get",
+                success: (resp) => {
+                    var newPrice = resp[CountryCurrency] *@ViewBag.Amount;
+                    var newPricetxt = newPrice + currencyDetails[1];
+                    $("#AmountTxt").html("Plan Price in " + currencyDetails[0]);
+                    $("#AmountVal").html(newPricetxt);
+                    $("#TotalTxt").html("Total Price in " + currencyDetails[0]);
+                    $("#TotalVal").html(newPricetxt);
+                
+                },
+                error: (errResp) => {
+                    console.log(errResp);
+                }
+            });
+        });
+    });
+</script>

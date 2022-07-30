@@ -49,6 +49,7 @@ namespace HumanResourceHelth.DataAccess
         public SemiNotificationRepo  SemiNotificationRepo { get; set; }
         public CategoryRepo CategoryRepo { get; set; }
         public DocFileRepo DocFileRepo { get; set; }
+        public DefaultMBRepo DefaultMBRepo { get; set; }
 
         #region Constructor
         public UnitOfWork() : this(null) { }
@@ -97,6 +98,7 @@ namespace HumanResourceHelth.DataAccess
             SemiNotificationRepo = new SemiNotificationRepo(_entities);
             CategoryRepo = new CategoryRepo(_entities);
             DocFileRepo = new DocFileRepo(_entities);
+            DefaultMBRepo = new DefaultMBRepo(_entities);
         }
         #endregion
 

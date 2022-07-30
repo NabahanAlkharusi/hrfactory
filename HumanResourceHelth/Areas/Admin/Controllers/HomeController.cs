@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HumanResourceHelth.Model;
 
 namespace HumanResourceHelth.Web.Areas.Admin.Controllers
 {
@@ -14,6 +15,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
+            List<DefaultMB> defaultMBs = _uow.DefaultMBRepo.GetAll();
             HomeViewModel homeViewModel = new HomeViewModel()
             {
                 FreeIndicators = _uow.IndicatorRepo.Search(x => x.SurveyTypeId == 1).Count(),
@@ -29,8 +31,9 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 Experts = _uow.ExpertsProfileRepo.Count(),
                 SurveyTypes = _uow.SurveyTypeRepo.Count(),
                 Terms = _uow.TermsConditionsRepo.Count(),
-                Updates=_uow.UpdatesRepo.Count(),
-                Files=_uow.DocFileRepo.Count()
+                Updates = _uow.UpdatesRepo.Count(),
+                Files = _uow.DocFileRepo.Count(),
+                DefaultMBs = defaultMBs.Select(a =>new { a.CountryID,a.CompanySize }).Distinct().Count()
 
             };
 

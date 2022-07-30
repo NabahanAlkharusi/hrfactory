@@ -22,5 +22,6 @@ namespace HumanResourceHelth.Web.Areas.Admin.Data
         public int Terms { get; set; }
         public int Updates { get; set; }
         public int Files { get; set; }
+        public int DefaultMBs { get; set; }
     }
 }

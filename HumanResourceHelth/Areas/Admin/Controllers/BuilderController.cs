@@ -19,9 +19,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         // GET: Section
         public ActionResult Index()
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
-            int userId = int.Parse(Session["UserId"].ToString());
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
             SectionViewModel section = new SectionViewModel()
             {
                 Sections = _uow.SectionRepo.GetAll().Where(a => a.UserId == userId).OrderBy(a => a.Ordering).ToList()

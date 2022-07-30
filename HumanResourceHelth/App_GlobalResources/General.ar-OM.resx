@@ -129,8 +129,20 @@
   <data name="Agree" xml:space="preserve">
     <value>موافق</value>
   </data>
+  <data name="arabCountry" xml:space="preserve">
+    <value>الدول العربية</value>
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>عربى</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>هل حقا تود إتمام عملية الحذف؟</value>
+  </data>
+  <data name="AreYouSureChildSection" xml:space="preserve">
+    <value>سيؤدي هذا إلى حذف هذا القسم بشكل دائم. هل أنت متأكد أنك تريد حذف هذا القسم؟</value>
+  </data>
+  <data name="AreYouSureParentSection" xml:space="preserve">
+    <value>سيؤدي ذلك إلى حذف هذا القسم الرئيسي وأقسامه الفرعية بشكل دائم. هل أنت متأكد أنك تريد حذف هذا القسم الأصل وأقسامه الفرعية؟</value>
   </data>
   <data name="Around" xml:space="preserve">
     <value>وحوالي</value>
@@ -164,6 +176,15 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>الغاء</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>ألغيت عملية الحذف</value>
+  </data>
+  <data name="CancelledDeletingChild" xml:space="preserve">
+    <value>إطمئن القسم بأمان</value>
+  </data>
+  <data name="CancelledDeletingParent" xml:space="preserve">
+    <value>إطمئن القسم الرئيس وأفرعه بأمان</value>
   </data>
   <data name="Categories" xml:space="preserve">
     <value>تصنيفات المستندات</value>
@@ -228,11 +249,17 @@
   <data name="ContactPerson" xml:space="preserve">
     <value>شخص الاتصال</value>
   </data>
+  <data name="CopyDefaultMBbtn" xml:space="preserve">
+    <value>نسخ صانع السياسات الإفتراضي</value>
+  </data>
   <data name="CountriesBuilderTitle" xml:space="preserve">
     <value>صانع سياسات العمل متوافق مع قوانين العمل في</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
+  </data>
+  <data name="CreatDefaultMBbtn" xml:space="preserve">
+    <value>إنشاء صانع السياسات الإفتراضي</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>انشاء</value>
@@ -243,8 +270,20 @@
   <data name="DefaultMB" xml:space="preserve">
     <value>المحتوى الإفتراضي للائحة سياسات العمل</value>
   </data>
+  <data name="DefaultMBs" xml:space="preserve">
+    <value>قوالب منشئ الدليل الافتراضي</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>تم الحذف!</value>
+  </data>
+  <data name="DeletedChildSectionMsg" xml:space="preserve">
+    <value>تم حذف القسم الفرعي بنجاح - مجموع الأقسام المحذوفة:</value>
+  </data>
+  <data name="DeletedParentSectionMsg" xml:space="preserve">
+    <value>بنجاح تم حذف القسم الرئيس وكل الأقسام الفرعية المرتبطة به - مجموع الأقسام المحذوفة: </value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>الوصف</value>
@@ -484,6 +523,9 @@
   <data name="NoActiveSubscriptions" xml:space="preserve">
     <value>لا توجد اشتراكات نشطة</value>
   </data>
+  <data name="NoCancel" xml:space="preserve">
+    <value>لا، ألغي عملية الحذف</value>
+  </data>
   <data name="NoPreviousSubscriptions" xml:space="preserve">
     <value>لا توجد اشتراكات سابقة</value>
   </data>
@@ -522,6 +564,9 @@
   </data>
   <data name="OrderHere" xml:space="preserve">
     <value>اشترك من هنا</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>أخرى</value>
   </data>
   <data name="Paid" xml:space="preserve">
     <value>الباقة المدفوعة</value>
@@ -639,6 +684,9 @@
   </data>
   <data name="SelectCountry" xml:space="preserve">
     <value>أختر الدولة</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>أختر عملات أخرى</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
@@ -760,6 +808,9 @@
   <data name="ThePlans" xml:space="preserve">
     <value>الباقات</value>
   </data>
+  <data name="ThisDefaultManualBuilderSuitable" xml:space="preserve">
+    <value>الدليل الإفتراضي الموضح أدناه ملائم للشركات التي تعمل في: </value>
+  </data>
   <data name="ThisPlanWillEndSoon" xml:space="preserve">
     <value>سينتهي إشتراكك في هذه الباقة قريبا</value>
   </data>
@@ -823,7 +874,16 @@
   <data name="Welcome" xml:space="preserve">
     <value>مرحبا</value>
   </data>
+  <data name="WithSize" xml:space="preserve">
+    <value>والتي يتراوح عدد موظفيها: </value>
+  </data>
+  <data name="YesDeleteIt" xml:space="preserve">
+    <value>نعم قم بالحذف</value>
+  </data>
   <data name="YouAreNotSubscribed" xml:space="preserve">
     <value>لم تشترك في أي باقة بعد</value>
+  </data>
+  <data name="YouHaveToAccept" xml:space="preserve">
+    <value>يجب أن توافق على الشروط والأحكام</value>
   </data>
 </root>

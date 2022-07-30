@@ -21,8 +21,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
 
             int surveyTypeId = 0;
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
 
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);
@@ -146,8 +145,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult History()
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
 
             int userId = (int)Session["UserId"];
             List<Survey> surveies = _uow.SurveyRepo.Search(x => x.UserId == userId).ToList();
@@ -174,8 +172,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
 
             int surveyTypeId = 3;
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
 
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);

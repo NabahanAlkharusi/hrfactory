@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace HumanResourceHelth.Model
 {
-    public class Section : BaseEntity
+   public class DefaultMB : BaseEntity
     {
         [MaxLength(50)]
         public string Title { get; set; }
         public int? Ordering { get; set; }
         [ForeignKey("Childs")]
         public int? ParenId { get; set; }
-        public virtual List<Section> Childs { get; set; }
+        public virtual List<DefaultMB> Childs { get; set; }
         [Column(TypeName = "ntext")]
         public string Description { get; set; }
-        [Column(TypeName ="ntext")]
+        [Column(TypeName = "ntext")]
         public string Content { get; set; }
         [ForeignKey("User")]
         public int UserId { get; set; }
@@ -27,7 +27,7 @@ namespace HumanResourceHelth.Model
         public int LanguageId { get; set; }
         public bool IsHaveLineBefore { get; set; } = false;
         public int CountryID { get; set; }
-        public int SectionId { get; set; }
+        public int DefaultMBId { get; set; }
         public int CompanySize { get; set; }
         public int CompanyIndustry { get; set; }
     }

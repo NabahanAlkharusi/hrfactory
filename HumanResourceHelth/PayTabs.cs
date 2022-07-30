@@ -8,7 +8,8 @@ namespace HumanResourceHelth.Web
 {
     public class PayTabs
     {
-        public int profile_id = 92888;
+        //public int profile_id = 92253;//test
+        public int profile_id = 92888;//live
         public string tran_type = "sale";
         public string tran_class = "ecom";
         public string cart_id = "4244b9fd-c7e9-4f16-8d3c-4fe7bf6c48ca";
@@ -18,13 +19,14 @@ namespace HumanResourceHelth.Web
         public bool hide_shipping = true;
         public string callback = "https://";
         public string returnurl = "https://";
-        public string key = "SKJN2RT2ZT-JD6DMZTLL6-ZL6BL9GRDB";
+        public string key = "SKJN2RT2ZT-JD6DMZTLL6-ZL6BL9GRDB";//live
+        //public string key = "SZJN2RT2TM-JDGJT62RJM-NDHJKNJR2D";//test
         public bool framed = true;
         public string Fullname = "compnay Name";
         public string Email = "youremail@example.com";
         public string Address = "Oman";
         public string City = "Muscat";
-        public string Country = "OMR";
+        public string Country = "OM";
 
     }
 
@@ -36,7 +38,7 @@ namespace HumanResourceHelth.Web
         public string tran_class = "ecom";
 
         public double cart_amount = 0;
-        public string cart_currency = "JOD";
+        public string cart_currency = "OMR";
         public string cart_id = "biolab_id_";
         public string cart_description = "";
 

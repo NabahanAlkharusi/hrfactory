@@ -12,8 +12,10 @@ namespace HumanResourceHelth.Web
     public class PTConnector
     {
         static string pt_endpoint = "https://secure-oman.paytabs.com/";
-        static int pt_profile_id = 92888;
-        static string pt_server_key = "SKJN2RT2ZT-JD6DMZTLL6-ZL6BL9GRDB";
+        //static int pt_profile_id = 92253;//test
+        static int pt_profile_id = 92888;//live
+        //static string pt_server_key = "SZJN2RT2TM-JDGJT62RJM-NDHJKNJR2D";//test
+        static string pt_server_key = "SKJN2RT2ZT-JD6DMZTLL6-ZL6BL9GRDB";//live
 
 
         //

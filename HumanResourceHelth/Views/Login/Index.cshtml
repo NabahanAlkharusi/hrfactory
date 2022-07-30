@@ -82,12 +82,7 @@
                     <div class="form-group" dir="@dir">
                         <div class="margin-bottom-20px margin-top-20px">
                             <a href="@Url.Action("Register","Login")" class="btn btn-primary btn-block rounded-0 background-main-color"> <span class="text-uppercase @pullText">@Resources.General.singup</span><i class="fa fa-user margin-right-10px @pullIcon" aria-hidden="true"></i></a>
-                            <span class="d-block text-grey-2  mt-3 text-center">
-                                @Resources.General.BySigningUpYouAcceptOur
-                                <a href="#" class="text-blue" data-toggle="modal" data-target="#exampleModal">
-                                    @Resources.General.TermsOfService
-                                </a>
-                            </span>
+                            
                         </div>
 
                         <div class="border-grey-2 text-center">
@@ -123,17 +118,25 @@
 
 
 
-@{ string referrer = "";
-    if (ViewBag.Referrer != null)
-    {
-        referrer = ViewBag.Referrer;
-    } }
+
 <script>
     $("#btnSave").on("click", function () {
         var email = $("#txtEmail").val();
 
         var password = $("#txtPassword").val();
-        var referrer = "@(referrer)";
+        const queryString = window.location.search;
+        let finalbackUrl;
+        if (queryString != "") {
+
+            const urlParams = new URLSearchParams(queryString);
+            const backUrl = urlParams.get('r');
+            finalbackUrl = backUrl;
+        }
+        else {
+            const backUrl = "@Url.Action("UserSubscriptions", "Home")";
+            finalbackUrl = backUrl;
+        }
+        
         if (email == "") {
             toastr.error("Please Enter Email");
             return;
@@ -145,36 +148,39 @@
         }
         $.ajax({
             url: "@Url.Action("Login", "Login")",
-            data: { "email": email, "password": password, "referrer": referrer },
+            data: { "email": email, "password": password, "backUrl": finalbackUrl },
             type: "POST",
             success: function (msg, msg2, msg3) {
-                console.log(msg3);
-                console.log(msg3.statusDescription);
-                console.log(msg2); console.log(msg);
-                debugger;
-                var url = window.location.protocol + "//" + window.location.host;
+                if (msg.StatusCode == 200) {
+                    window.location = msg.previousePage;
+                }
+                //console.log(msg3);
+                //console.log(msg3.statusDescription);
+                //console.log(msg2); console.log(msg);
+                //debugger;
+                //var url = window.location.protocol + "//" + window.location.host;
 
-                if (msg3.statusText == "Survey")
-                    url = url + "/Survey/Index";
-                else if (msg3.statusText == "WarmUp")
-                    url = url + "/Plans/WarmUp";
-                else if(msg3.statusText == "StartUp")
-                    url = url + "/Plans/StartUp";
-                else if (msg3.statusText == "ManualBuilder")
-                    url = url + "/Plans/ManualBuilder";
-                else if (msg3.statusText == "Section")
-                    url = url + "/Section/Index";
-                else if (msg3.statusText == "ChangePassword")
-                    url = url + "/Home/ChangePassword";
-                else if (msg3.statusText == "EditProfile")
-                    url = url + "/Home/EditProfile";
-                else if (msg3.statusText == "UserProfile")
-                    url = url + "/Home/UserProfile";
-                else if(msg3.statusText == "UserPlans")
-                    url = url + "/Home/UserSubscriptions";
-                else
-                    url = url + "/Home";
-                window.location.replace(url);
+                //if (msg3.statusText == "Survey")
+                //    url = url + "/Survey/Index";
+                //else if (msg3.statusText == "WarmUp")
+                //    url = url + "/Plans/WarmUp";
+                //else if(msg3.statusText == "StartUp")
+                //    url = url + "/Plans/StartUp";
+                //else if (msg3.statusText == "ManualBuilder")
+                //    url = url + "/Plans/ManualBuilder";
+                //else if (msg3.statusText == "Section")
+                //    url = url + "/Section/Index";
+                //else if (msg3.statusText == "ChangePassword")
+                //    url = url + "/Home/ChangePassword";
+                //else if (msg3.statusText == "EditProfile")
+                //    url = url + "/Home/EditProfile";
+                //else if (msg3.statusText == "UserProfile")
+                //    url = url + "/Home/UserProfile";
+                //else if(msg3.statusText == "UserPlans")
+                //    url = url + "/Home/UserSubscriptions";
+                //else
+                //    url = url + "/Home";
+               /* window.location.replace(url);*/
                     @*window.location = '@Url.Action("StartUp", "Plans")';*@
             },
             error: function () {

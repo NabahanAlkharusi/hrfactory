@@ -97,11 +97,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Arab Country.
+        /// </summary>
+        internal static string arabCountry {
+            get {
+                return ResourceManager.GetString("arabCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Arabic.
         /// </summary>
         internal static string Arabic {
             get {
                 return ResourceManager.GetString("Arabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        internal static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to This will lead to delete this section permanently. Are you sure you want to delete this section?.
+        /// </summary>
+        internal static string AreYouSureChildSection {
+            get {
+                return ResourceManager.GetString("AreYouSureChildSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to This will lead to delete this parent section and it&apos;s sub-sections permanently. Are you sure you want to delete this parent section and it&apos;s sub-sections?.
+        /// </summary>
+        internal static string AreYouSureParentSection {
+            get {
+                return ResourceManager.GetString("AreYouSureParentSection", resourceCulture);
             }
         }
         
@@ -201,6 +237,33 @@ namespace Resources {
         internal static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Cancelled.
+        /// </summary>
+        internal static string Cancelled {
+            get {
+                return ResourceManager.GetString("Cancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Your Section is safe..
+        /// </summary>
+        internal static string CancelledDeletingChild {
+            get {
+                return ResourceManager.GetString("CancelledDeletingChild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Your Section and its sub-sections are safe..
+        /// </summary>
+        internal static string CancelledDeletingParent {
+            get {
+                return ResourceManager.GetString("CancelledDeletingParent", resourceCulture);
             }
         }
         
@@ -394,6 +457,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Copy Default Manul Builder.
+        /// </summary>
+        internal static string CopyDefaultMBbtn {
+            get {
+                return ResourceManager.GetString("CopyDefaultMBbtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Policy builder compatible with labor laws in.
         /// </summary>
         internal static string CountriesBuilderTitle {
@@ -408,6 +480,15 @@ namespace Resources {
         internal static string Country {
             get {
                 return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Create Default Manual Builder.
+        /// </summary>
+        internal static string CreatDefaultMBbtn {
+            get {
+                return ResourceManager.GetString("CreatDefaultMBbtn", resourceCulture);
             }
         }
         
@@ -439,11 +520,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Default Manual Builder Teamplates.
+        /// </summary>
+        internal static string DefaultMBs {
+            get {
+                return ResourceManager.GetString("DefaultMBs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Delete.
         /// </summary>
         internal static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Deleted!.
+        /// </summary>
+        internal static string Deleted {
+            get {
+                return ResourceManager.GetString("Deleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Your Sub-section is deleted - Total Deleted Sections:.
+        /// </summary>
+        internal static string DeletedChildSectionMsg {
+            get {
+                return ResourceManager.GetString("DeletedChildSectionMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Your Parent Section and it&apos;s avaiabel sub Section are deleted - Total Deleted Sections:.
+        /// </summary>
+        internal static string DeletedParentSectionMsg {
+            get {
+                return ResourceManager.GetString("DeletedParentSectionMsg", resourceCulture);
             }
         }
         
@@ -1159,6 +1276,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to No, cancel!.
+        /// </summary>
+        internal static string NoCancel {
+            get {
+                return ResourceManager.GetString("NoCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to No Previous Subscriptions.
         /// </summary>
         internal static string NoPreviousSubscriptions {
@@ -1272,6 +1398,15 @@ namespace Resources {
         internal static string OrderHere {
             get {
                 return ResourceManager.GetString("OrderHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Other.
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -1564,7 +1699,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to SavedSuccessffuly.
+        ///    Looks up a localized string similar to Saved Successffuly.
         /// </summary>
         internal static string SavedSuccessffuly {
             get {
@@ -1623,6 +1758,15 @@ namespace Resources {
         internal static string SelectCountry {
             get {
                 return ResourceManager.GetString("SelectCountry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Select Another Currency.
+        /// </summary>
+        internal static string SelectCurrency {
+            get {
+                return ResourceManager.GetString("SelectCurrency", resourceCulture);
             }
         }
         
@@ -1987,6 +2131,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to This Default Manual Builder suitable for Companies Working in.
+        /// </summary>
+        internal static string ThisDefaultManualBuilderSuitable {
+            get {
+                return ResourceManager.GetString("ThisDefaultManualBuilderSuitable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Your subscription in this will expire soon.
         /// </summary>
         internal static string ThisPlanWillEndSoon {
@@ -2176,11 +2329,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to with size:.
+        /// </summary>
+        internal static string WithSize {
+            get {
+                return ResourceManager.GetString("WithSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Yes, delete it!.
+        /// </summary>
+        internal static string YesDeleteIt {
+            get {
+                return ResourceManager.GetString("YesDeleteIt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to You are not subscribed in any plan.
         /// </summary>
         internal static string YouAreNotSubscribed {
             get {
                 return ResourceManager.GetString("YouAreNotSubscribed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to You Have To Accept Terms and Conditions.
+        /// </summary>
+        internal static string YouHaveToAccept {
+            get {
+                return ResourceManager.GetString("YouHaveToAccept", resourceCulture);
             }
         }
     }

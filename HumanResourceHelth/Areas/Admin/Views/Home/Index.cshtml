@@ -57,7 +57,7 @@
 
     @{ if (Session["User"] == null || !((User)Session["User"]).IsAdmin)
         {
-            Response.Redirect(Url.Action("Index", "Login", new { Area = "Admin" }));
+            Response.Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
         } }
 
     <div class="row" dir="@dir"> 
@@ -125,10 +125,10 @@
                 <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
                 <div class="stats-info">
                     <h4>@Resources.General.Builder</h4>
-                    <p>@Model.Builders</p>
+                    <p>@Model.DefaultMBs</p>
                 </div>
                 <div class="stats-link">
-                    <a href="@Url.Action("Index","Section", new { Area = ""})">@Resources.General.ViewDetails</a>
+                    <a href="@Url.Action("Index","DefaultMBs", new { Area = "Admin"})">@Resources.General.ViewDetails</a>
                 </div>
             </div>
         </div>

@@ -53,6 +53,7 @@ namespace HumanResourceHelth.DataAccess
         public DbSet<TermsConditions> TermsConditions { get; set; }
         public DbSet<Updates> Updates { get; set; }
         public DbSet<SemiNotifications> SemiNotifications { get; set; }
+        public DbSet<DefaultMB> DefaultMB { get; set; }
         //public DbSet<Category> Categories { get; set; }
         public HumanResourceContext() : base("HumanResourceContext")
         {

@@ -139,6 +139,12 @@
     <Content Include="Areas\Admin\assets\css\animate.min.css" />
     <Content Include="Areas\Admin\assets\css\invoice-print.css" />
     <Content Include="Areas\Admin\assets\css\invoice-print.min.css" />
+    <Content Include="Areas\Admin\assets\css\simditor.css" />
+    <Content Include="Areas\Admin\assets\js\hotkeys.js" />
+    <Content Include="Areas\Admin\assets\js\jquery.min.js" />
+    <Content Include="Areas\Admin\assets\js\module.js" />
+    <Content Include="Areas\Admin\assets\js\simditor.js" />
+    <Content Include="Areas\Admin\assets\js\uploader.js" />
     <Content Include="Areas\PlansData1\Oman\Startup\ar\Videos\greenish_blue_butterfly_butterfly_523.mp4" />
     <Content Include="Areas\PlansData1\Oman\Startup\en\Videos\western_bluebird_bird_perched_tree_684.mp4" />
     <Content Include="Areas\plansData\ManualBuilder.mp4" />
@@ -5578,6 +5584,7 @@
     <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-v4compatibility.ttf" />
     <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Areas\Admin\assets\fonts\majalla.ttf" />
+    <Content Include="Areas\Admin\Views\DefaultMBs\Index.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -5729,6 +5736,7 @@
     <Compile Include="Areas\Admin\Controllers\BuilderController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\CourseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DefaultMBsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DocFilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExpertsProfilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -5776,6 +5784,7 @@
     <Compile Include="Controllers\TrainingHomeController.cs" />
     <Compile Include="Data\AnswersViewModel.cs" />
     <Compile Include="Areas\Admin\Data\FilesViewModel.cs" />
+    <Compile Include="Data\DefaultMBViewModel.cs" />
     <Compile Include="Data\TermsConditionsViewModel.cs" />
     <Compile Include="Data\SectionViewModel.cs" />
     <Compile Include="Data\SubscriptionViewModel.cs" />

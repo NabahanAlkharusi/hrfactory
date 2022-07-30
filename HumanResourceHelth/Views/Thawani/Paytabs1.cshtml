@@ -6,32 +6,4 @@
 
 <h2>Paytabs1</h2>
 
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            url: "https://secure-oman.paytabs.com/payment/request",
-            headers: {
-                "authorization": "SZJN2RT2TM-JDGJT62RJM-NDHJKNJR2D",
-                "Content-Type": "application/json"},
-            data: {
-                "profile_id": "92253",
-                "tran_type": "sale",
-                "tran_class": "ecom",
-                "cart_id": "4244b9fd-c7e9-4f16-8d3c-4fe7bf6c48ca",
-                "cart_description": "Dummy Order 35925502061445345",
-                "cart_currency": "OMR",
-                "cart_amount": "1",
-                "callback": "https://www.hrfactoryapp.com/Thawani/Test",
-                "hide_shipping": true
-            },
-            type: "post",
-            success: function (data) {
-                console.log(data)
-            },
-            error: function (err) {
-
-            }
-        })
-    }
-    );
-</script>
+@ViewData["Message"]

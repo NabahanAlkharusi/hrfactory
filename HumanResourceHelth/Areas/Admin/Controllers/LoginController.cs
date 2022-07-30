@@ -14,11 +14,13 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         // GET: Admin/Login
         public ActionResult Index()
         {
+            if (Session["UserId"] != null && (bool)Session["IsAdmin"])
+                return Redirect("/Admin/Home");
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(string email, string password)
+        public ActionResult Login(string email, string password,string backUrl)
         {
             Session["Content"] = _uow.ContentRepo.GetAll();
             Model.User user = _uow.UserRepo.Search(x => x.Email == email && x.Password == password && x.IsAdmin && x.IsDeleted == false).SingleOrDefault();
@@ -28,9 +30,13 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 Session["User"] = user;
                 Session["CMS"] = true;
                 Session["IsAdmin"] = true;
-                if (Session["Backto"] != null)
-                    return new HttpStatusCodeResult(HttpStatusCode.OK, Session["Backto"].ToString());
-                return new HttpStatusCodeResult(HttpStatusCode.OK);
+                //string previousePage = backUrl;
+                //if (Session["Backto"] != null)
+                //    return new HttpStatusCodeResult(HttpStatusCode.OK, Session["Backto"].ToString());
+                Dictionary<string, dynamic> pairs = new Dictionary<string, dynamic>();
+                pairs.Add("StatusCode", HttpStatusCode.OK);
+                pairs.Add("previousePage", backUrl);
+                return  Json(pairs,JsonRequestBehavior.AllowGet);
             }
             else
             {

@@ -13,9 +13,12 @@ namespace HumanResourceHelth.Model
         {
             Employees = new Dictionary<int, string>();
             Employees.Add(1, "From 1 to 10");
-            Employees.Add(2, "From 11 to 50");
-            Employees.Add(3, "From 51 to 100");
-            Employees.Add(4, "More Than 100");
+            Employees.Add(2, "From 11 to 49");
+            Employees.Add(3, "From 50 to 99");
+            Employees.Add(4, "From 100 to 499");
+            Employees.Add(5, "From 500 to 1000");
+            Employees.Add(6, "More Than 1000");
+            
         }
     }
 }

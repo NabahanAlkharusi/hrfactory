@@ -1,0 +1,722 @@
+﻿@using HumanResourceHelth.Web.Data
+@using HumanResourceHelth.Model.Resources
+@model DefaultMBViewModel
+@{ ViewBag.Title = "Index"; }
+
+@{ ViewBag.Title = "Index";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    string OPText_align = isArabic ? "text-left" : "text-right";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.DefaultMBs</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    @*<div class="btn-group ml-2 col-lg-10">
+                        <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                            @AppResource.NewUpdate
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>*@
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <div class="row">
+
+                <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                    @Html.Label(Resources.General.SelectCountry, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                    <div class="col-md-10 col-xs-12">
+                        <select id="countryToShow" class="form-control">
+                            <option value="">@Resources.General.Select</option>
+                            <optgroup label="@Resources.General.arabCountry">
+                                @foreach (HumanResourceHelth.Model.Country country in Model.Countries.Where(a => a.IsArabCountry).ToList())
+                                {
+                                    <option value="@country.Id">
+                                        @if (isArabic)
+                                        {@country.NameAr}
+                                    else
+                                    {@country.Name}
+                                    </option>
+                                }
+                            </optgroup>
+                            <optgroup label="@Resources.General.Other">
+                                @foreach (HumanResourceHelth.Model.Country country in Model.Countries.Where(a => a.IsArabCountry == false).ToList())
+                                {
+                                    <option value="@country.Id">
+                                        @if (isArabic)
+                                        {@country.NameAr}
+                                    else
+                                    {@country.Name}
+                                    </option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                    @Html.Label(Resources.General.NumberOfEmployees, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                    <div class="col-md-10 col-xs-12">
+                        <select id="NumberofEmpToShow" class="form-control">
+                            <option value="">@Resources.General.Select</option>
+                            @if (isArabic)
+                            {
+                                foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployeesAr()).EmployeesAr)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            }
+                            else
+                            {
+                                foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row hidden" id="ToCopyFrom">
+                    <div class="form-group col-lg-6 col-xs-12 @labelClass">
+                        @Html.Label(Resources.General.SelectCountry, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                        <div class="col-md-10 col-xs-12">
+                            <select id="countryToCopy" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div id="NumberofEmpToCopydiv" class="form-group col-lg-6 col-xs-12 hidden @labelClass">
+                        @Html.Label(Resources.General.NumberOfEmployees, htmlAttributes: new { @class = "control-label col-lg-4 " + labelClass })
+                        <div class="col-md-10 col-xs-12">
+                            <select id="NumberofEmpToCopy" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row p-40 form-group col-lg-6 col-xs-12 @Text_align">
+                        <button id="Cancelbtn" class="btn btn-lg btn-danger">@Resources.General.Cancel</button>
+                        <button id="CopyDefaultMbtn" class="btn btn-lg btn-info">@Resources.General.CopyDefaultMBbtn</button>
+                    </div>
+                </div>
+                <div class="row p-40 @Text_align hidden" id="buttonsDiv">
+                    <div id="ShowDefaultM" class="hidden">
+                        @using (Html.BeginForm("RenderDefaultM", "DefaultMBs", FormMethod.Post))
+                        {
+                            <input type="hidden" id="countryToShowValue" name="countryToShowValue" />
+                            <input type="hidden" id="NumberofEmpToShowValue" name="NumberofEmpToShowValue" />
+                            <button id="" type="submit" class="btn btn-lg btn-success">@Resources.General.ShowDefaultMBbtn</button>
+                        }
+
+                    </div>
+                    <button id="CopyDefaultM" class="hidden btn btn-lg btn-warning">@Resources.General.CreatDefaultMBbtn</button>
+                </div>
+            </div>
+            <fieldset>
+                <legend>
+                    <div class="alert alert-info text-center">
+                        <h3>
+                            @Resources.General.ThisDefaultManualBuilderSuitable @foreach (HumanResourceHelth.Model.Country country1 in Model.Countries)
+                            {
+                                if (country1.Id == Model.DefaultMB.FirstOrDefault().CountryID)
+                                {
+                                    if (isArabic)
+                                    {
+                                        <b> @country1.NameAr</b>
+                                    }
+                                    else
+                                    {
+                                        <b>@country1.Name</b>
+                                    }
+                                }
+                            }
+                            @Resources.General.WithSize
+                            @if (isArabic)
+                            {
+                                HumanResourceHelth.Model.NumberOfEmployeesAr employeesAr = new HumanResourceHelth.Model.NumberOfEmployeesAr();
+                                Dictionary<int, string> keyValues = employeesAr.EmployeesAr;
+                                <b><text>@keyValues[Model.DefaultMB.FirstOrDefault().CompanySize]</text></b>
+                            }
+                            else
+                            {
+                                HumanResourceHelth.Model.NumberOfEmployees employees = new HumanResourceHelth.Model.NumberOfEmployees();
+                                Dictionary<int, string> keyValues = employees.Employees;
+                                <b> <text>@keyValues[Model.DefaultMB.FirstOrDefault().CompanySize]</text></b>
+                            }
+                        </h3>
+                    </div>
+                </legend>
+                <div class="row">
+                    <div class="col-lg-3 btn-acc @alignclass">
+                        <div class="panel-group font-3" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                @{
+                                    int count = 0;
+                                    List<HumanResourceHelth.Model.DefaultMB> PDefaultMB = Model.DefaultMB1;
+
+                                    int record = PDefaultMB.Count;
+                                    record = record - 1;
+                                }
+                                @foreach (HumanResourceHelth.Model.DefaultMB Parent in Model.DefaultMB)
+                                {
+                                    if (Parent.ParenId == null)
+                                    {
+                                        string accordion = "ParentAccordion" + Parent.Id;
+                                        string accordionID = "#" + accordion;
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <div class="row">
+
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" style="font-size:15px; font-weight:bold; text-decoration:none"
+                                                       href="@accordionID" aria-expanded="false" class="col-lg-6 @alignclass" aria-controls="@accordion">
+                                                        @Parent.Title
+
+                                                    </a>
+                                                    @if (count > 0)
+                                                    {<button onclick="MoveSection(@Parent.Id,@PDefaultMB[count-1].Id)">
+                                                            <i class="fa fa-arrow-up"></i>
+                                                        </button>
+                                                    }
+                                                    @if (count < record)
+                                                    {<button onclick="MoveSection(@Parent.Id,@PDefaultMB[count+1].Id)">
+                                                            <i class="fa fa-arrow-down"></i>
+                                                        </button>
+                                                    }
+                                                    @{ count++;}
+
+                                                    <a href="#" onclick="ShowEdit(@Parent.Id)" class="editSection col-lg-2" data-sectionid="@Parent.Id">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                    <a href="#" onclick="Delete(@Parent.Id,true)" class="col-lg-1 text-danger" data-sectionid="@Parent.Id">
+                                                        <i class="fa fa-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </h4>
+                                        </div>
+                                        <div id="@accordion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+                                                    @{ int childernCounter = 0;
+                                                        List<HumanResourceHelth.Model.DefaultMB> childern = Parent.Childs.OrderBy(a => a.Ordering).ToList();
+                                                        int childernCount = childern.Count;
+                                                        childernCount = childernCount - 1;}
+                                                    @foreach (HumanResourceHelth.Model.DefaultMB mB in Parent.Childs.OrderBy(a => a.Ordering))
+                                                    {
+                                                        var collapse = "collapse" + mB.Id;
+                                                        var collapseID = "#" + collapse;
+                                                        var heading = "heading" + mB.Id;
+                                                        var headingID = "#" + heading;
+
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading" role="tab" id="@heading">
+                                                                <h4 class="panel-title">
+                                                                    <div class="row">
+                                                                        <a role="button" data-toggle="collapse" data-parent="#accordion2" style="font-size:15px; font-weight:bold; text-decoration:none"
+                                                                           href="@collapseID" aria-expanded="true" class="col-lg-6 @alignclass" aria-controls="@collapse">
+                                                                            @mB.Title
+                                                                        </a>
+                                                                        @if (childernCounter > 0)
+                                                                        {<button onclick="MoveSection(@mB.Id,@childern[childernCounter-1].Id)">
+                                                                                <i class="fa fa-arrow-up"></i>
+                                                                            </button>
+                                                                        }
+                                                                        @if (childernCounter < childernCount)
+                                                                        {<button onclick="MoveSection(@mB.Id,@childern[childernCounter+1].Id)">
+                                                                                <i class="fa fa-arrow-down"></i>
+                                                                            </button>
+                                                                        }
+                                                                        @{ childernCounter++;}
+                                                                        <a href="#" onclick="ShowEdit(@mB.Id)" class="editSection col-lg-2" data-sectionid="@mB.Id">
+                                                                            <i class="far fa-edit"></i>
+                                                                        </a>
+                                                                        <a href="#" onclick="Delete(@mB.Id, false)" class="col-lg-1 text-danger" data-sectionid="@Parent.Id">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </h4>
+                                                            </div>
+                                                            <div id="@collapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="@heading">
+
+                                                            </div>
+                                                        </div>}
+                                                </div>
+                                            </div>
+                                        </div>}
+                                }
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-lg-9 btn-acc" style="" id="NewDiv">
+
+                        <div class="form-group p-40 col-12">
+                            <button class="btn btn-lg btn-success col-lg-12 col-md-12 col-sm-12 col-xl-12" id="addnew">@Resources.General.NewSection</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 btn-acc" style="display:none" id="CancelDiv">
+
+                        <div class="form-group p-40 col-12">
+                            <button class="btn btn-lg btn-success col-lg-12 col-md-12 col-sm-12 col-xl-12" id="Cancel">@Resources.General.Cancel</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 btn-acc" style="display:none" id="EditDiv">
+                        <div id="ParentSectionsCont" class="form-group" style="display:none">
+                            <label class="form-label">
+                                @Resources.General.Section
+                            </label>
+                            <select class="form-control" id="ParentSections">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @Resources.General.Title
+                            </label>
+                            <input type="text" class="form-control" id="SectionTitle" />
+                            <input type="hidden" id="SectionId" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @Resources.General.Explain
+                            </label>
+                            <input type="text" class="form-control" id="SectionExplain" />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" id="SectionNewPage" />
+                                Show In New Page
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                @Resources.General.Details
+                            </label>
+                            <textarea class="form-control" id="SectionContent"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" id="SaveEdits">@Resources.General.Save</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+<link href="~/Areas/Admin/assets/css/simditor.css" rel="stylesheet">
+
+<script type="text/javascript" src="~/Areas/Admin/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="~/Areas/Admin/assets/js/module.js"></script>
+<script type="text/javascript" src="~/Areas/Admin/assets/js/hotkeys.js"></script>
+<script type="text/javascript" src="~/Areas/Admin/assets/js/uploader.js"></script>
+<script type="text/javascript" src="~/Areas/Admin/assets/js/simditor.js"></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    var prvID = 0;
+    ShowEdit = (id) => {
+        $.ajax({
+            url: "@Url.Action("GetSection", "DefaultMBs")",
+            data: { "id": id},
+            type: "POST",
+            success: (data) => {
+                $("#SectionId").val(data["id"]);
+                $("#SectionTitle").val(data["title"]);
+                $("#SectionExplain").val(data["explain"]);
+                var haveLine = data["haveLine"];
+                $('#SectionNewPage').prop('checked', haveLine);
+                editor.setValue(data["content"]);
+
+            },
+            error: (err) => {
+
+            }
+        });
+        let dis = $("#EditDiv").css("display");
+                if (prvID != id && dis.includes("none")) {
+
+                    $("#EditDiv").toggle("slow");
+                    $("#CancelDiv").toggle("slow");
+                    $("#NewDiv").toggle("slow");
+        }
+        else if (prvID == id)
+            {
+                    $("#EditDiv").toggle("slow");
+                    $("#CancelDiv").toggle("slow");
+                    $("#NewDiv").toggle("slow");
+            }
+        else {
+
+        }
+        if (!$("#ParentSectionsCont").css("display").includes("none")) {
+            $("#ParentSectionsCont").css("display", "none");
+        }
+        prvID = id;
+
+    }
+
+    var editor = new Simditor({
+        textarea: $('#SectionContent')
+        //optional options
+    });
+    $("#SaveEdits").click(function () {
+        var content = editor.getValue();
+        var id = $("#SectionId").val();
+        var title=$("#SectionTitle").val();
+        var explain=$("#SectionExplain").val();
+        var checked = $('#SectionNewPage').is(':checked');
+        var Parent = $("#ParentSections").val();
+        $.ajax({
+            url: "@Url.Action("SaveChanges", "DefaultMBs")",
+            type: "POST",
+            data: {
+                "id": id, "title": title, "explain": explain, "content": content,
+                "ischecked": checked, "CountryID":@Model.CurrentCountry, "size":@Model.CurrentCompanySize,
+                    "Parent": Parent
+            },
+            success: (response) => {
+                window.location.reload();
+            },
+            error: (response) => {
+                console.log(response);
+            },
+        })
+        console.log("id " + id +" title " + title + " ==explain " + explain + " ==checked " + checked);
+
+    });
+    $("#addnew").on("click", function () {
+        prvID = 0;
+        $.ajax({
+            url: "@Url.Action("GetParent", "DefaultMBs")",
+            type: "POST",
+            data: { "country":@Model.CurrentCountry, "size":@Model.CurrentCompanySize},
+            success: (response) => {
+                console.log(response);
+                var IDs=response["id"];
+                var names = response["name"];
+                var options = "<option value=''>@Resources.General.Select</option>"
+                for (i = 0; i < names.length; i++) {
+                    options = options + "<option value='" + IDs[i] + "'>" + names[i]+"</option>"
+                }
+                $("#ParentSections").html(options)
+            },
+            error: (response) => {
+                console.log(response);
+            }
+        });
+        $("#SectionId").val("");
+        $("#SectionTitle").val("");
+        $("#SectionExplain").val("");
+        $('#SectionNewPage').prop('checked', false);
+        editor.setValue("");
+        $("#EditDiv").toggle("slow");
+        $("#CancelDiv").toggle("slow");
+        $("#NewDiv").toggle("slow");
+
+        if ($("#ParentSectionsCont").css("display").includes("none")) {
+            $("#ParentSectionsCont").css("display", "");
+        }
+
+    });
+    $("#Cancel").on("click", function () {
+        prvID = 0;
+        $("#SectionId").val("");
+        $("#SectionTitle").val("");
+        $("#SectionExplain").val("");
+        $('#SectionNewPage').prop('checked', false);
+        editor.setValue("");
+        $("#EditDiv").toggle("slow");
+        $("#CancelDiv").toggle("slow");
+        $("#NewDiv").toggle("slow");
+        if (!$("#ParentSectionsCont").css("display").includes("none")) {
+            $("#ParentSectionsCont").css("display", "none");
+        }
+    });
+    $("#CopyDefaultM").on("click", function () {
+        var options = ""
+        $.ajax({
+            url: "@Url.Action("GetCountries", "DefaultMBs")",
+            type: "post",
+            success: (resp) => {
+                options += "<option value=''>@Resources.General.Select</option>"
+                resp.forEach(function (item) {
+                    options += "<option value='" + item.CountryID + "'>" + item.CountryName + "</option>"
+
+                });
+                $("#countryToCopy").html(options);
+                if (!$("#CopyDefaultM").hasClass("hidden"))
+                    $("#CopyDefaultM").addClass("hidden");
+            },
+            error: (respErr) => {
+
+            },
+        });
+        if ($("#ToCopyFrom").hasClass("hidden")) {
+            $("#ToCopyFrom").removeClass("hidden");
+        }
+    });
+    $("#countryToCopy").on("change", function () {
+        var options = ""
+        var CountryID = $("#countryToCopy").val();
+        if (CountryID == "") {
+            if (!$("#NumberofEmpToCopydiv").hasClass("hidden")) {
+                $("#NumberofEmpToCopydiv").addClass("hidden");
+            }
+        }
+        else {
+            $.ajax({
+                url: "@Url.Action("GetCompaniesSizes", "DefaultMBs")",
+                type: "post",
+                data: { "CountryID": CountryID },
+                success: (resp) => {
+                    options += "<option value=''>@Resources.General.Select</option>"
+                    resp.forEach(function (item) {
+                        options += "<option value='" + item.optionID + "'>" + item.optionText + "</option>"
+
+                    });
+                    $("#NumberofEmpToCopy").html(options);
+                    if ($("#NumberofEmpToCopydiv").hasClass("hidden")) {
+                        $("#NumberofEmpToCopydiv").removeClass("hidden");
+                    }
+                },
+                error: (respErr) => {
+
+                },
+            });
+        }
+    });
+    $("#ShowDefaultM").on("click", function () {
+        let sizeCategory = $('#NumberofEmpToShow').val();
+        let Country = $('#countryToShow').val();
+        $.ajax({
+            url: "@Url.Action("ShowBuilder", "DefaultMBs")",
+            data: { "sizeCategory": sizeCategory, "Country": Country },
+            type: "post",
+            success: (resp) => { console.log(resp) },
+            error: (respErr) => {
+                console.log(resp)
+            }
+        });
+    });
+    MoveSection = (id, NextID) => {
+        //console.log(id + "  " + NextID)
+                            $.ajax({
+                                url: "@Url.Action("ChangeOrder", "DefaultMBs")",
+                                data: { "id": id, "NextID": NextID },
+            type: "POST",
+                                success: (data) => {
+                                    //console.log(data);
+            },
+            error: (err) => {
+
+            }
+        });
+                                    window.location.reload();
+    }
+
+</script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+
+    $(document).ready(function () {
+        var element=$("body").find("[aria-describedby='swal2-html-container']");
+
+        $(".swal2-popup").css({ 'display': 'grid', 'font-size': '2rem !important' })
+        $('#NumberofEmpToShow').on('change', function () {
+            if (!$('#ToCopyFrom').hasClass("hidden")) {
+                $("#ToCopyFrom").addClass("hidden")
+            }
+            if (!$("#NumberofEmpToCopydiv").hasClass("hidden")) {
+                $("#NumberofEmpToCopydiv").addClass("hidden")
+            }
+            let sizeCategory = $('#NumberofEmpToShow').val();
+            let Country = $('#countryToShow').val();
+            if (sizeCategory == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Number of Employees Not Selected',
+                    text: 'You have to select the number of employees category',
+
+                })
+            } if (Country == '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Country Not Selected',
+                    text: "You have to select the country to start show it's Default Builders",
+
+                })
+            }
+            if (Country != "" && sizeCategory != "") {
+                $.ajax({
+                    url: "@Url.Action("CheckBuilder", "DefaultMBs")",
+                    data: { "countryID": Country, "sizeCategory": sizeCategory },
+                    type: "POST",
+                    success: (resp) => {
+                        $("#buttonsDiv").removeClass("hidden")
+                        let count = resp.DefaultM;
+                        let show = $("#ShowDefaultM")
+                        let copy = $("#CopyDefaultM")
+                        //console.log(count);
+                        if (count < 1) {
+                            if (!show.hasClass('hidden')) {
+                                show.addClass('hidden')
+                            }
+                            if (copy.hasClass('hidden')) {
+                                copy.removeClass('hidden');
+                                //console.log(copy.attr("class"));
+                            }
+                        }
+                        else {
+                                $('#countryToShowValue').val($('#countryToShow').val());
+                                $('#NumberofEmpToShowValue').val($('#NumberofEmpToShow').val());
+                            if (show.hasClass('hidden')) {
+                                show.removeClass('hidden')
+                            }
+                            if (!copy.hasClass('hidden')) {
+                                copy.addClass('hidden');
+                            }
+                            if (!$("#ToCopyFrom").hasClass("hidden")) {
+                                $("#ToCopyFrom").addClass("hidden");
+                            }
+                        }
+                    },
+                    error: (respErr) => {
+
+                    }
+
+                })
+            }
+        });
+        $("#CopyDefaultMbtn").on("click", function () {
+            let sizeCategory = $('#NumberofEmpToShow').val();
+            let Country = $('#countryToShow').val();
+            let sizeCategoryCopFrom = $('#NumberofEmpToCopy').val();
+            let CountryCopFrom = $('#countryToCopy').val();
+            $.ajax({
+                url: "@Url.Action("CpoyDefaultM", "DefaultMBs")",
+                data: { "NumberofEmpCopyFrom": sizeCategoryCopFrom, "countryCopyFrom": CountryCopFrom, "NumberofEmpNew": sizeCategory, "countryNew": Country },
+                type: "POST",
+                success: (resp,resp2,resp3) => {
+                    //console.log(resp);
+                    //console.log(resp2);
+                    //console.log("resp3.statusText "+resp3.statusText);
+                    //console.log("resp3.statusCode "+resp3.statusCode);
+                    //console.log("resp3.status "+resp3.status);
+                    //console.log(resp3);
+                    //debugger;
+                    if (resp3.status == 200) {
+                        if (!$("#ToCopyFrom").hasClass("hidden")) {
+                            $("#ToCopyFrom").addClass("hidden")
+                        }
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: '@Resources.General.SavedSuccessffuly',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: '@Resources.General.Error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+
+                },
+                error: (ErrResp) => {
+                    console.log(ErrResp);
+                }
+            });
+
+        });
+        $('#countryToShow').on('change', function () {
+            if (!$('#ToCopyFrom').hasClass("hidden")) {
+                $("#ToCopyFrom").addClass("hidden")
+            }
+            if (!$("#NumberofEmpToCopydiv").hasClass("hidden")) {
+                $("#NumberofEmpToCopydiv").addClass("hidden")
+            }
+        });
+    });
+    Delete = (id, isParent) => {
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: '@Resources.General.AreYouSure',
+            text: isParent ? '@Resources.General.AreYouSureParentSection' : '@Resources.General.AreYouSureChildSection',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '@Resources.General.YesDeleteIt',
+            cancelButtonText: '@Resources.General.NoCancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "@Url.Action("DeleteSection", "DefaultMBs")",
+                    type: "post",
+                    data: {
+                        "id": id,
+                        "isParent": isParent
+                    },
+                    success: (respons) => {
+                        swalWithBootstrapButtons.fire(
+                            "@Resources.General.Deleted",
+                            respons['Message'] + ' ' + respons['Deleted'],
+                            'success'
+                        )
+                    },
+                    error: (error) => {
+                        console.log("err");
+                    }
+                });
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    '@Resources.General.Cancelled',
+                    isParent ? '@Resources.General.CancelledDeletingParent' : '@Resources.General.CancelledDeletingChild',
+                    'error'
+                )
+            }
+        })
+
+    }
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#countryToShow").select2();
+    });
+    $(function () {
+        $("#selectIndustry").select2();
+    });
+</script>

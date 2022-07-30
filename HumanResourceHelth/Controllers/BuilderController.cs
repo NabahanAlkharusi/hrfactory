@@ -15,16 +15,14 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult Index()
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
             return View(user);
         }
 
         public ActionResult SaveDocName(string docName)
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
             
             if (Session["lang"].ToString() == "en-US")

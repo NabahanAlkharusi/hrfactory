@@ -47,8 +47,7 @@ namespace HumanResourceHelth.Web.Controllers
 
         public ActionResult Learn()
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
 
             UnitOfWork _uow = new UnitOfWork();
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
@@ -69,8 +68,7 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult Payment()
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             if (HttpContext.Request.QueryString["planId"] == null || HttpContext.Request.QueryString["Amount"] == null || HttpContext.Request.QueryString["subscriptionPeriod"] == null)
                 return RedirectToAction("Index", "Home");
             var planID = int.Parse(HttpContext.Request.QueryString["planId"]);
@@ -84,11 +82,13 @@ namespace HumanResourceHelth.Web.Controllers
             ViewBag.DateFrom = DateTime.Now.ToShortDateString();
             ViewBag.DateTo = DateTime.Now.AddDays(subscriptionPeriod == "Month" ? 30 : 365).ToShortDateString();
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
+            ViewBag.countryCode = user.Country.CountryCode;
             PayTabs PaymentDetails = new PayTabs();
             PaymentDetails.cart_amount = double.Parse(Amount);
             PaymentDetails.Email = user.Email;
             PaymentDetails.Country = user.Country.Name;
             PaymentDetails.Fullname = user.Name;
+            PaymentDetails.cart_currency = "omr";
             DateTime dateTime = DateTime.Now;
             PaymentDetails.cart_id = user.Id.ToString() + "-" + planID.ToString() + "-" + subscriptionPeriod + "-" + dateTime.Day.ToString() + "-" + dateTime.Month.ToString() + "-"
                 + dateTime.Year.ToString() + "-" + dateTime.Hour.ToString() + ":" + dateTime.Minute.ToString() + ":" + dateTime.Second.ToString();
@@ -107,6 +107,7 @@ namespace HumanResourceHelth.Web.Controllers
             PaymentDetails = (PayTabs)Session["Pay"];
             try
             {
+                //PaymentDetails.cart_currency = "SAR";
                 PaymentDetails.returnurl = new Uri(Request.Url, Url.Action("Webhook", "Thawani")).ToString();
                 PaymentDetails.callback = new Uri(Request.Url, Url.Action("Ipn", "Thawani")).ToString();
                 PaymentDetails.framed = false;
@@ -122,12 +123,12 @@ namespace HumanResourceHelth.Web.Controllers
                 ViewBag.msg = res.message;
                 ViewData["Message"] = res.message;
 
-                return View();
+                return View("Paytabs1");
             }
             catch (Exception ex)
             {
                 ViewData["Message"] = ex.Message;
-                return View();
+                return View("Paytabs1");
             }
 
         }

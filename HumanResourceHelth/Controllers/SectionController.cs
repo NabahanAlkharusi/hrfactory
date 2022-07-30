@@ -24,8 +24,7 @@ namespace HumanResourceHelth.Web.Controllers
         {
             Session["Backto"] = "Section";
             Session["ActiveCountry"] = 158;
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = int.Parse(Session["UserId"].ToString());
             User userinfo = _uow.UserRepo.FindById(userId);
             if (_uow.UserPlanRepo.Search(a => a.PlanId == (int)SubscriptionPlan.ManualBuilder && a.UserId == userId && a.IsActive).FirstOrDefault() == null && !userinfo.IsAdmin)
@@ -72,8 +71,7 @@ namespace HumanResourceHelth.Web.Controllers
             Session["ActiveCountry"] = Id;
             ViewBag.CurrentCID = Id;
             Session["Backto"] = "Section";
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = int.Parse(Session["UserId"].ToString());
             Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
             List<int> countriesID = _uow.SectionRepo.Search(x => x.UserId == userId).ToList().Select(x => x.CountryID).Distinct().ToList();
@@ -135,8 +133,7 @@ namespace HumanResourceHelth.Web.Controllers
             //    item.IsActive = isActive;
             //}
 
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             try
             {
                 _uow.SaveChanges();
@@ -150,8 +147,7 @@ namespace HumanResourceHelth.Web.Controllers
         public ActionResult Create()
         {
             int countryID = 0;
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = int.Parse(Session["UserId"].ToString());
             User user = _uow.UserRepo.FindById(userId);
             if (user.IsAdmin)
@@ -182,8 +178,7 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult Save(HumanResourceHelth.Model.Section section)
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int userId = int.Parse(Session["UserId"].ToString());
             //get max order number
             //List<Model.Section> sections = _uow.SectionRepo.GetAll().ToList();
@@ -463,8 +458,7 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult NBNC(int countryId)
         {
-            if (Session["UserId"] == null)
-                return RedirectToAction("Index", "Login");
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             List<Model.Section> NewSections = new List<Model.Section>();
             int userId = int.Parse(Session["UserId"].ToString());
             List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == userId && x.CountryID == 158).OrderBy(a => a.Ordering).ToList();

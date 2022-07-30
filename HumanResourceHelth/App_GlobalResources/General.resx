@@ -129,8 +129,20 @@
   <data name="Agree" xml:space="preserve">
     <value>Agree</value>
   </data>
+  <data name="arabCountry" xml:space="preserve">
+    <value>Arab Country</value>
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>Arabic</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="AreYouSureChildSection" xml:space="preserve">
+    <value>This will lead to delete this section permanently. Are you sure you want to delete this section?</value>
+  </data>
+  <data name="AreYouSureParentSection" xml:space="preserve">
+    <value>This will lead to delete this parent section and it's sub-sections permanently. Are you sure you want to delete this parent section and it's sub-sections?</value>
   </data>
   <data name="Around" xml:space="preserve">
     <value>And Around</value>
@@ -164,6 +176,15 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Cancelled" xml:space="preserve">
+    <value>Cancelled</value>
+  </data>
+  <data name="CancelledDeletingChild" xml:space="preserve">
+    <value>Your Section is safe.</value>
+  </data>
+  <data name="CancelledDeletingParent" xml:space="preserve">
+    <value>Your Section and its sub-sections are safe.</value>
   </data>
   <data name="Categories" xml:space="preserve">
     <value>Categories</value>
@@ -228,11 +249,17 @@
   <data name="ContactPerson" xml:space="preserve">
     <value>Contact Person</value>
   </data>
+  <data name="CopyDefaultMBbtn" xml:space="preserve">
+    <value>Copy Default Manul Builder</value>
+  </data>
   <data name="CountriesBuilderTitle" xml:space="preserve">
     <value>Policy builder compatible with labor laws in</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>Country</value>
+  </data>
+  <data name="CreatDefaultMBbtn" xml:space="preserve">
+    <value>Create Default Manual Builder</value>
   </data>
   <data name="Create" xml:space="preserve">
     <value>Create</value>
@@ -243,8 +270,20 @@
   <data name="DefaultMB" xml:space="preserve">
     <value>Default HR Manual Content</value>
   </data>
+  <data name="DefaultMBs" xml:space="preserve">
+    <value>Default Manual Builder Teamplates</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted!</value>
+  </data>
+  <data name="DeletedChildSectionMsg" xml:space="preserve">
+    <value>Your Sub-section is deleted - Total Deleted Sections:</value>
+  </data>
+  <data name="DeletedParentSectionMsg" xml:space="preserve">
+    <value>Your Parent Section and it's avaiabel sub Section are deleted - Total Deleted Sections:</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
@@ -483,6 +522,9 @@
   <data name="NoActiveSubscriptions" xml:space="preserve">
     <value>No Active Subscriptions</value>
   </data>
+  <data name="NoCancel" xml:space="preserve">
+    <value>No, cancel!</value>
+  </data>
   <data name="NoPreviousSubscriptions" xml:space="preserve">
     <value>No Previous Subscriptions</value>
   </data>
@@ -521,6 +563,9 @@
   </data>
   <data name="OrderHere" xml:space="preserve">
     <value>Order Here</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
   </data>
   <data name="Paid" xml:space="preserve">
     <value>Paid</value>
@@ -619,7 +664,7 @@
     <value>Save</value>
   </data>
   <data name="SavedSuccessffuly" xml:space="preserve">
-    <value>SavedSuccessffuly</value>
+    <value>Saved Successffuly</value>
   </data>
   <data name="Section" xml:space="preserve">
     <value>Section</value>
@@ -638,6 +683,9 @@
   </data>
   <data name="SelectCountry" xml:space="preserve">
     <value>Select Country</value>
+  </data>
+  <data name="SelectCurrency" xml:space="preserve">
+    <value>Select Another Currency</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>Send</value>
@@ -759,6 +807,9 @@
   <data name="ThePlans" xml:space="preserve">
     <value>Plans</value>
   </data>
+  <data name="ThisDefaultManualBuilderSuitable" xml:space="preserve">
+    <value>This Default Manual Builder suitable for Companies Working in</value>
+  </data>
   <data name="ThisPlanWillEndSoon" xml:space="preserve">
     <value>Your subscription in this will expire soon</value>
   </data>
@@ -822,7 +873,16 @@
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
   </data>
+  <data name="WithSize" xml:space="preserve">
+    <value>with size:</value>
+  </data>
+  <data name="YesDeleteIt" xml:space="preserve">
+    <value>Yes, delete it!</value>
+  </data>
   <data name="YouAreNotSubscribed" xml:space="preserve">
     <value>You are not subscribed in any plan</value>
+  </data>
+  <data name="YouHaveToAccept" xml:space="preserve">
+    <value>You Have To Accept Terms and Conditions</value>
   </data>
 </root>

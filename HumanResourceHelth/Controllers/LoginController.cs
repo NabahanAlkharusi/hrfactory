@@ -31,7 +31,7 @@ namespace HumanResourceHelth.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string email, string password, string referrer)
+        public ActionResult Login(string email, string password, string backUrl)
         {
             string call = Request.UrlReferrer.ToString();
             Session["Content"] = _uow.ContentRepo.GetAll();
@@ -53,9 +53,11 @@ namespace HumanResourceHelth.Web.Controllers
                     List<int> unreadNotificationList = JsonConvert.DeserializeObject<List<int>>(unreadNotification);
                     Session["Notification"] = unreadNotificationList.Count();
                 }
-                if (Session["Backto"] != null)
-                    return new HttpStatusCodeResult(HttpStatusCode.OK, Session["Backto"].ToString());
-                return new HttpStatusCodeResult(HttpStatusCode.OK, "Home");
+                Dictionary<string, dynamic> pairs = new Dictionary<string, dynamic>();
+                pairs.Add("StatusCode", HttpStatusCode.OK);
+                pairs.Add("previousePage", backUrl);
+                return Json(pairs, JsonRequestBehavior.AllowGet);
+                //return new HttpStatusCodeResult(HttpStatusCode.OK, "Home");
             }
             //ffffffff
             else
@@ -101,6 +103,12 @@ namespace HumanResourceHelth.Web.Controllers
                 Countries = _uow.CountryRepo.GetAll().OrderBy(x => x.NameAr).OrderByDescending(s => s.IsArabCountry).ToList(),
                 Industries = _uow.IndustryRepo.GetAll()
             };
+            bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+            TermsConditions terms = _uow.TermsConditionsRepo.Search(
+                z => z.TermsConditionType == (int)TermsConditionType.Registeration &&
+                z.CountryId == 0).FirstOrDefault();
+            ViewBag.RegistrationTitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+            ViewBag.Registration = isArabic ? terms.ArabicText : terms.EnglishText;
             return View(registerViewModels);
         }
 
