@@ -65,7 +65,7 @@
     <script type="text/javascript" src="~/assets/js/jquery-3.2.1.min.js"></script>
     <script src="~/Scripts/toastr.js"></script>
     @*<script src="~/scripts/jquery.validate.min.js"></script>*@
-  @*  <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    @*  <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>*@
     @*<script src="~/Areas/Admin/assets/plugins/pace/pace.min.js"></script>*@
     <script src="~/Scripts/jquery.blockUI.js"></script>
     <!-- jquery UI library  -->
@@ -76,10 +76,11 @@
     <script src="https://kit.fontawesome.com/c19ae50bd2.js" crossorigin="anonymous"></script>
     <!-- ================== END BASE JS ================== -->
 </head>
-@{ 
+@{
     var arabicfont = "";
 }
-@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft) {
+@if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
+{
     arabicfont = "ar-font-family";
 }
 <body class="@arabicfont">
@@ -97,13 +98,25 @@
             <!-- begin container-fluid -->
             <div class="container-fluid">
                 <!-- begin mobile sidebar expand / collapse button -->
-                <div class="navbar-header">
-                    <a href="@Url.Action("Index", "Home")" class="navbar-brand"><span class="navbar-logo"></span>Human Resource</a>
-                    <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+                <div class="navbar-header col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div class="row">
+                        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 p-t-20">
+                            <!-- lang dropdown -->
+                            @if (Session["lang"].ToString() == "en-US")
+                            {
+                                <a class="" href="@Url.Action("ChangeLanguage", "Home", new { lang = "ar-OM" })" id="dropdownMenuLink"> عربى </a> }
+                            else
+                            {
+                                <a class="" href="@Url.Action("ChangeLanguage", "Home", new { lang = "en-US" })" id="dropdownMenuLink"> English </a>}
+                        </div>
+                        <!-- // lang dropdown -->
+                        <a href="@Url.Action("Index", "Home")" class="navbar-brand"><span class="navbar-logo"></span>Human Resource</a>
+                        <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
                 </div>
                 <!-- end mobile sidebar expand / collapse button -->
                 <!-- begin header navigation right -->
@@ -139,23 +152,23 @@
     <!-- ================== BEGIN BASE JS ================== -->
     @*<script src="~/Areas/Admin/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
         <script src="~/Scripts/toastr.js"></script>*@
-    <script src="~/Areas/Admin/assets/plugins/jquery/jquery-migrate-1.1.0.min.js" ></script>
-    <script src="~/Areas/Admin/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js" ></script>
-    <script src="~/Areas/Admin/assets/plugins/bootstrap/js/bootstrap.min.js" ></script>
+    <script src="~/Areas/Admin/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+    <script src="~/Areas/Admin/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+    <script src="~/Areas/Admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
     <!--[if lt IE 9]>
         <script src="~/Areas/Admin/assets/crossbrowserjs/html5shiv.js"></script>
         <script src="~/Areas/Admin/assets/crossbrowserjs/respond.min.js"></script>
         <script src="~/Areas/Admin/assets/crossbrowserjs/excanvas.min.js"></script>
     <![endif]-->
-    <script src="~/Areas/Admin/assets/plugins/slimscroll/jquery.slimscroll.min.js" ></script>
-    <script src="~/Areas/Admin/assets/plugins/jquery-cookie/jquery.cookie.js" ></script>
+    <script src="~/Areas/Admin/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Areas/Admin/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
     <!-- ================== END BASE JS ================== -->
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-    <script src="~/Areas/Admin/assets/js/apps.min.js" ></script>
+    <script src="~/Areas/Admin/assets/js/apps.min.js"></script>
     @RenderSection("PageLevelScripts", false)
     <!-- ================== END PAGE LEVEL JS ================== -->
-<script>
+    <script>
         $(document).ready(function () {
 
             //debugger;
@@ -174,6 +187,6 @@
             //    $('#end_date_hidden').val(formatedEndtDate);
             //});
         });
-</script>
+    </script>
 </body>
 </html>

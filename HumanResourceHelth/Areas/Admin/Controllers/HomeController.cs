@@ -39,5 +39,29 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
 
             return View(homeViewModel);
         }
+        public ActionResult ChangeLanguage(string lang)
+        {
+            if (Session["UserId"] == null)
+            {
+                Session["eligableForFreeSU"] = true;
+                Session["eligableForFreeMB"] = true;
+                Session["eligableForFree"] = true;
+            }
+            else
+            {
+                int UserId = (int)Session["UserId"];
+                User user = _uow.UserRepo.FindById(UserId);
+                
+            }
+            Session["Lang"] = lang;
+            var url = Request.UrlReferrer.ToString();
+            var splitedURl = url.Split('/');
+            if (splitedURl.Length == 4 && splitedURl[3] == "Section")
+                return Redirect("../Builder");
+            //return Redirect("https://www.hrfactoryapp.com/Builder");
+            if (Request.UrlReferrer.ToString().Contains("RenderDefaultM"))
+                return Redirect("~/Admin/DefaultMBs");
+            return Redirect(Request.UrlReferrer.ToString());
+        }
     }
 }

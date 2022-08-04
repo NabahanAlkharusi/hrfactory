@@ -287,18 +287,11 @@
                                 }
                                 <div class="text-center padding-lr-30px padding-bottom-63px cms" data-contentId="76">@GetContent(76)</div>
                                 <div class="padding-bottom-22px">
-                                    @if (ViewBag.NumberOfChecks == 0)
-                                    {
-                                        <a href="@Url.Action("Index","Survey", new {SurveyTypeId = 1 })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
-                                            @Resources.General.Start
-                                        </a>
-                                    }
-                                    else if (ViewBag.numberOfBHChecks == 0)
-                                    {
+                                  
                                         <a href="@Url.Action("BusinessHC","Survey")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
                                             @Resources.General.BusinessHealthCheck
                                         </a>
-                                    }
+                                    @*}
                                     else
                                     {
                                         if (isLogedin)
@@ -307,7 +300,7 @@
                                                 @Resources.General.Upgrade
                                             </a>
                                         }
-                                    }
+                                    }*@
 
                                 </div>
 

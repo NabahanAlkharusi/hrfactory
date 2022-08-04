@@ -384,8 +384,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
         public void CopySections()
         {
             List<DefaultMB> userSections = new List<DefaultMB>();
-
-            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == 1 && a.CountryID == 158).ToList();
+            int CurrentDMBSID=_uow.DefaultMBRepo.GetAll().Max(a=>a.DefaultMBId);
+            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == 1 && a.CountryID == 182).ToList();
             //if (adminSections.Count == 0)
             //    adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == 158).ToList();
             List<Section> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
@@ -401,7 +401,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                     IsActive = parent.IsActive,
                     Content = parent.Content,
                     CountryID = parent.CountryID,
-                    DefaultMBId = parent.SectionId,
+                    DefaultMBId = ++CurrentDMBSID,
+                    CompanySize=1,
                     Childs = new List<DefaultMB>(),
                 };
 
@@ -417,7 +418,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                         IsActive = parent.IsActive,
                         Content = child.Content,
                         CountryID = child.CountryID,
-                        DefaultMBId = child.SectionId,
+                        CompanySize = 1,
+                        DefaultMBId = ++CurrentDMBSID,
                     };
                     parentUserSection.Childs.Add(childUserSection);
                 }
