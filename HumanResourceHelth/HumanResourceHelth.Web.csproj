@@ -1,4 +1,5 @@
 ﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -49,10 +50,10 @@
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.39.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.39\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -145,6 +146,9 @@
     <Content Include="Areas\Admin\assets\js\module.js" />
     <Content Include="Areas\Admin\assets\js\simditor.js" />
     <Content Include="Areas\Admin\assets\js\uploader.js" />
+    <Content Include="Areas\PartnersFiles\Takatuf Logo 2.png" />
+    <Content Include="Areas\PartnersFiles\Takatuf Logo.png" />
+    <Content Include="Areas\PartnersPlansFiles\IMG_4996.JPG" />
     <Content Include="Areas\PlansData1\Oman\Startup\ar\Videos\greenish_blue_butterfly_butterfly_523.mp4" />
     <Content Include="Areas\PlansData1\Oman\Startup\en\Videos\western_bluebird_bird_perched_tree_684.mp4" />
     <Content Include="Areas\plansData\ManualBuilder.mp4" />
@@ -5585,6 +5589,37 @@
     <Content Include="assets\revslider\fonts\font-awesome\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Areas\Admin\assets\fonts\majalla.ttf" />
     <Content Include="Areas\Admin\Views\DefaultMBs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Functions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Functions\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Functions\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Functions\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Functions\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Partners\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\FunctionPractices\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\FunctionPractices\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\FunctionPractices\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\FunctionPractices\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\FunctionPractices\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PracticeQuestions\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PracticeQuestions\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PracticeQuestions\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PracticeQuestions\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PracticeQuestions\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Partnerships\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Partnerships\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Partnerships\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Partnerships\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Partnerships\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PlansToPartnerShips\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PlansToPartnerShips\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PlansToPartnerShips\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PlansToPartnerShips\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PlansToPartnerShips\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Partnerships\Landing.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -5739,11 +5774,17 @@
     <Compile Include="Areas\Admin\Controllers\DefaultMBsController.cs" />
     <Compile Include="Areas\Admin\Controllers\DocFilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExpertsProfilesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FunctionPracticesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FunctionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IndicatorController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PartnersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PartnershipsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PlansDataController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PlansToPartnerShipsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PluginRequestsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PracticeQuestionsController.cs" />
     <Compile Include="Areas\Admin\Controllers\QuestionController.cs" />
     <Compile Include="Areas\Admin\Controllers\DoctorRequestsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TechRequestsController.cs" />
@@ -6262,6 +6303,7 @@
     <Folder Include="Areas\Admin\assets\plugins\jquery-file-upload\server\node\public\files\thumbnail\" />
     <Folder Include="Areas\Admin\assets\plugins\jquery-file-upload\server\node\tmp\" />
     <Folder Include="Areas\Admin\assets\plugins\jquery-file-upload\server\php\files\thumbnail\" />
+    <Folder Include="Areas\PartnersFiles\IMG_5383.JPG\" />
     <Folder Include="Areas\plansData\Doctor\" />
     <Folder Include="Areas\plansData\ManualBuilder\" />
     <Folder Include="Areas\plansData\PlugIn\" />
@@ -6349,6 +6391,14 @@
     <MakeDir Directories="C:\Users\Taqi\Desktop\HumanResource\HumanResourceHelth\bin\roslyn" />
     <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="C:\Users\Taqi\Desktop\HumanResource\HumanResourceHelth\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
   </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

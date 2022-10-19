@@ -16,6 +16,8 @@
     <div>
         <div class="container padding-tb-35px z-index-2 position-relative">
             <div class="row">
+                @if (!ViewBag.isPartner)
+                {
                 <div class="col-xl-2">
                     @*<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 99 98">
                             <defs>
@@ -75,7 +77,21 @@
                             <rect class="cls-3" x="42.51" y="60.18" width="2.8" height="11.18" />
                         </svg>*@
                 </div>
+                }
+                @if (ViewBag.isPartner)
+                {<div class="col-xl-2 ml-4 margin-lr-30px pt-2">
+                        <a href="/Home/UserSubscriptions">
+                            <div class="card custom-card active-card" style="width: 12.5rem;">
+                                <div class="backgroundEffect"></div>
+                                <img src="../assets/img/Subscrptions.png" class="card-img-top" alt="...">
+                                <div class="card-body text-center">
+                                    <h6 class="card-title">@Resources.General.Partner</h6>
+                                    <p class="card-text">@Resources.General.Partner</p>
 
+                                </div>
+                            </div>
+                        </a>
+                    </div>}
                 <div class="col-xl-2 ml-4 margin-lr-30px pt-2">
                     <a href="/Home/UserSubscriptions">
                         <div class="card custom-card active-card" style="width: 12.5rem;">

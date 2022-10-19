@@ -1,18 +1,13 @@
 ﻿using HumanResourceHelth.Model;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResourceHelth.DataAccess
 {
     public class HumanResourceContext : DbContext
     {
         public DbSet<SurveyType> SurveyTypes { get; set; }
-        public DbSet<Survey> Surveys{ get; set; }
+        public DbSet<Survey> Surveys { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<SurveyResult> SurveyResults { get; set; }
@@ -20,13 +15,13 @@ namespace HumanResourceHelth.DataAccess
         public DbSet<Indicator> Indicators { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<Country> Countries { get; set; }
-        public DbSet<Section> Sections{ get; set; }
+        public DbSet<Section> Sections { get; set; }
 
         public DbSet<PluginRequest> PluginRequests { get; set; }
         public DbSet<TechRequest> TechRequests { get; set; }
         public DbSet<DoctorRequest> DoctorRequests { get; set; }
 
-     //   public DbSet<Course> Courses { get; set; }
+        //   public DbSet<Course> Courses { get; set; }
         public DbSet<CourseRate> CourseRates { get; set; }
         public DbSet<UserCourse> UserCourses { get; set; }
         public DbSet<UserWatchVideo> UserWatchVideos { get; set; }
@@ -54,7 +49,13 @@ namespace HumanResourceHelth.DataAccess
         public DbSet<Updates> Updates { get; set; }
         public DbSet<SemiNotifications> SemiNotifications { get; set; }
         public DbSet<DefaultMB> DefaultMB { get; set; }
-        //public DbSet<Category> Categories { get; set; }
+        public DbSet<Functions> Functions { get; set; }
+        public DbSet<Partners> Partners { get; set; }
+        //public DbSet<PlansToPartnerShip> PartnerPlans { get; set; }
+        public DbSet<FunctionPractice> FunctionPractices { get; set; }
+        public DbSet<PracticeQuestions> PracticeQuestions { get; set; }
+        public DbSet<Partnership> Partnerships { get; set; }
+        public DbSet<PartnerShipPlans> partnerShipPlans { get; set; }
         public HumanResourceContext() : base("HumanResourceContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<HumanResourceContext, Migrations.Configuration>());
@@ -70,5 +71,7 @@ namespace HumanResourceHelth.DataAccess
         }
 
         public System.Data.Entity.DbSet<HumanResourceHelth.Model.Trainers> Trainers { get; set; }
+
+        //public System.Data.Entity.DbSet<HumanResourceHelth.Model.Functions> Functions { get; set; }
     }
 }

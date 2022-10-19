@@ -183,6 +183,7 @@ namespace HumanResourceHelth.Web.Controllers
                 CompanyId = user.CountryId,
                 IndustryId = user.IndustryId
             };
+            ViewBag.isPartner = !(_uow.PartnersRepo.Search(x => x.UserID == userId).FirstOrDefault() == null);
             return View(registerViewModels);
         }
 
@@ -369,6 +370,7 @@ namespace HumanResourceHelth.Web.Controllers
 
 
             }
+            ViewBag.isPartner = !(_uow.PartnersRepo.Search(x => x.UserID == userId).FirstOrDefault() == null);
             User user = _uow.UserRepo.FindById(userId);
             GetSubscription(user);
             return View();
@@ -428,10 +430,10 @@ namespace HumanResourceHelth.Web.Controllers
         public ActionResult Updates()
         {
 
-
             List<Updates> updates = new List<Updates>();
             if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { r = Request.Url.ToString() }));
             int UserId = (int)Session["UserId"];
+            ViewBag.isPartner = !(_uow.PartnersRepo.Search(x => x.UserID == UserId).FirstOrDefault() == null);
             SemiNotifications notifications = _uow.SemiNotificationRepo.Search(a => a.UserId == UserId).FirstOrDefault();
             if (notifications == null)
                 return View(updates);
@@ -465,6 +467,7 @@ namespace HumanResourceHelth.Web.Controllers
                 }
                 ViewBag.ReadNotifi = updates;
                 ViewBag.ReadNotifiCount = updates.Count();
+                
                 return View(updates);
             }
         }

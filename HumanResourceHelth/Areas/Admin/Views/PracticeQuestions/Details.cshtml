@@ -1,0 +1,51 @@
+﻿@model HumanResourceHelth.Model.PracticeQuestions
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PracticeQuestions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Question)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Question)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Practice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Practice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,5 +1,4 @@
 ﻿using HumanResourceHelth.DataAccess.Repositories;
-using HumanResourceHelth.Model;
 using System.Data.Entity;
 
 namespace HumanResourceHelth.DataAccess
@@ -7,12 +6,12 @@ namespace HumanResourceHelth.DataAccess
     public class UnitOfWork
     {
         public AttachmentsRepository attachmentsRepo;
-        private readonly HumanResourceContext _entities; 
+        private readonly HumanResourceContext _entities;
         public SurveyTypeRepo SurveyTypeRepo { get; set; }
         public SurveyRepo SurveyRepo { get; set; }
         public UserRepo UserRepo { get; set; }
         public SurveyResultRepo SurveyResultRepo { get; set; }
-        public AnswerRepo AnswerRepo{ get; set; }
+        public AnswerRepo AnswerRepo { get; set; }
         public IndicatorRepo IndicatorRepo { get; set; }
         public QuestionRepo QuestionRepo { get; set; }
         public TechRequestRepo TechRequestRepo { get; set; }
@@ -46,10 +45,18 @@ namespace HumanResourceHelth.DataAccess
         public ExpertsProfileRepo ExpertsProfileRepo { get; set; }
         public TermsConditionsRepo TermsConditionsRepo { get; set; }
         public UpdatesRepo UpdatesRepo { get; set; }
-        public SemiNotificationRepo  SemiNotificationRepo { get; set; }
+        public SemiNotificationRepo SemiNotificationRepo { get; set; }
         public CategoryRepo CategoryRepo { get; set; }
         public DocFileRepo DocFileRepo { get; set; }
         public DefaultMBRepo DefaultMBRepo { get; set; }
+
+        public FunctionsRepo FunctionsRepo { get; set; }
+        public PartnersRepo PartnersRepo { get; set; }
+        //public PlansToPartnerShipRepo PlansRepo { get; set; }
+        public FunctionPracticeRepo FunctionPracticeRepo { get; set; }
+        public PracticeQuestionsRepo PracticeQuestionsRepo { get; set; }
+        public PartnershipRepo PartnershipRepo { get; set; }
+        public PartnerShipPlansRepo PartnerShipPlansRepo { get; set; }
 
         #region Constructor
         public UnitOfWork() : this(null) { }
@@ -80,7 +87,6 @@ namespace HumanResourceHelth.DataAccess
             UserPlanRepo = new UserPlanRepo(_entities);
             PlanRepo = new PlanRepo(_entities);
             ContentRepo = new ContentRepo(_entities);
-
             attachmentsRepo = new AttachmentsRepository(_entities);
             TrainersRepo = new TrainersRepository(_entities);
             DepartmentRepo = new DepartmentsRepository(_entities);
@@ -99,6 +105,13 @@ namespace HumanResourceHelth.DataAccess
             CategoryRepo = new CategoryRepo(_entities);
             DocFileRepo = new DocFileRepo(_entities);
             DefaultMBRepo = new DefaultMBRepo(_entities);
+            FunctionsRepo = new FunctionsRepo(_entities);
+            PartnersRepo = new PartnersRepo(_entities);
+            //PlansRepo = new PlansToPartnerShipRepo(_entities);
+            FunctionPracticeRepo = new FunctionPracticeRepo(_entities);
+            PracticeQuestionsRepo = new PracticeQuestionsRepo(_entities);
+            PartnershipRepo = new PartnershipRepo(_entities);
+            PartnerShipPlansRepo = new PartnerShipPlansRepo(_entities);
         }
         #endregion
 

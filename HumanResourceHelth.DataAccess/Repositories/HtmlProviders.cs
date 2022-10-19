@@ -1,21 +1,16 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
-using iTextSharp.tool.xml.css;
 using iTextSharp.tool.xml.html;
 using iTextSharp.tool.xml.parser;
 using iTextSharp.tool.xml.pipeline.css;
 using iTextSharp.tool.xml.pipeline.end;
 using iTextSharp.tool.xml.pipeline.html;
-using Org.BouncyCastle.Bcpg.OpenPgp;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
-using Image = iTextSharp.text.Image;
 
 namespace HumanResourceHelth.DataAccess.Repositories
 {
@@ -255,13 +250,13 @@ namespace HumanResourceHelth.DataAccess.Repositories
                         parser.Parse(stringReader);
                     }
                 }
-        }
+            }
             catch (Exception ex)
             {
-               string error = ex.Message;
+                string error = ex.Message;
 
-    }
-}
+            }
+        }
 
         // write on end of each page
     }

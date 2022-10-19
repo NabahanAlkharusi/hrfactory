@@ -95,6 +95,11 @@
     <Compile Include="Repositories\ExpertsProfile.cs" />
     <Compile Include="Repositories\CouponsRepo.cs" />
     <Compile Include="Repositories\CourseRateRepo.cs" />
+    <Compile Include="Repositories\PartnershipRepo.cs" />
+    <Compile Include="Repositories\PartnerShipPlansRepo.cs" />
+    <Compile Include="Repositories\PracticeQuestionsRepo.cs" />
+    <Compile Include="Repositories\FunctionPracticeRepo.cs" />
+    <Compile Include="Repositories\FunctionsRepo.cs" />
     <Compile Include="Repositories\IntroVedioRepo.cs" />
     <Compile Include="Repositories\CourseRepo.cs" />
     <Compile Include="Repositories\CoursesRepository.cs" />
@@ -105,6 +110,7 @@
     <Compile Include="Repositories\CountryRepo.cs" />
     <Compile Include="Repositories\IndicatorRepo.cs" />
     <Compile Include="Repositories\IndustryRepo.cs" />
+    <Compile Include="Repositories\PartnersRepo.cs" />
     <Compile Include="Repositories\PlanRepo.cs" />
     <Compile Include="Repositories\DoctorRequestRepo.cs" />
     <Compile Include="Repositories\PluginRequestRepo.cs" />

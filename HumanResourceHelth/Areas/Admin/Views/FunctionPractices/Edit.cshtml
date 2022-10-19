@@ -1,0 +1,117 @@
+﻿@model HumanResourceHelth.Model.FunctionPractice
+
+@using HumanResourceHelth.Model.Resources;
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var txtlignclass = isArabic ? "text-right" : "text-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    var modal_close = isArabic ? "margin: -15px auto -15px -15px" : "margin: -15px -15px -15px auto";
+    HumanResourceHelth.DataAccess.UnitOfWork unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.Functions> functions = unit.FunctionsRepo.GetAll();
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @alignclass"> @Resources.General.EditPractice</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body h4" dir="@dir">
+
+            <div class="m-5 p-5">
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>FunctionPractice</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PracticeTitleEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.PracticeTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PracticeTitle, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PracticeTitleArabic</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.PracticeTitleAr, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PracticeTitleAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.FunctionID</label>
+                                <div class="col-md-8">
+                                    <select id="Function" class="form-control">
+                                        <option value="">@Resources.General.Select</option>
+                                        @foreach (HumanResourceHelth.Model.Functions function in functions)
+                                        {
+                                            <option value="@function.Id" @if (function.Id == Model.FunctionId) {<text>Selected</text>}>
+                                                @if (isArabic)
+                                                {@function.FunctionTitleAr}
+                                            else
+                                            { @function.FunctionTitle}
+                                            </option>
+                                        }
+                                    </select>
+                                    @Html.HiddenFor(model => model.FunctionId, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.FunctionId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.Status</label>
+                                <div class="col-md-8">
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.Status)
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <div class="col-md-offset-2 col-md-8">
+                                    <input type="submit" value="Create" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+<script>
+    $("#Function").on("change", function () {
+        $("#FunctionId").val($("#Function").val());
+    });
+</script>

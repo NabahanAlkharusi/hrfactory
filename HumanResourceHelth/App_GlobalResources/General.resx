@@ -372,6 +372,24 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="EditFunction" xml:space="preserve">
+    <value>Edit Function</value>
+  </data>
+  <data name="EditPartner" xml:space="preserve">
+    <value>Edit Partner</value>
+  </data>
+  <data name="EditPartnership" xml:space="preserve">
+    <value>Edit Partnership</value>
+  </data>
+  <data name="EditPlanToPartnerShip" xml:space="preserve">
+    <value>Edit Plan To Partnership</value>
+  </data>
+  <data name="EditPractice" xml:space="preserve">
+    <value>Edit Practice</value>
+  </data>
+  <data name="EditQuestion" xml:space="preserve">
+    <value>Edit Question</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
@@ -401,6 +419,21 @@
   </data>
   <data name="FreeSubscription" xml:space="preserve">
     <value>Free Subscription</value>
+  </data>
+  <data name="FunctionID" xml:space="preserve">
+    <value>Function</value>
+  </data>
+  <data name="FunctionRespondent" xml:space="preserve">
+    <value>Who will Ansewr for this function Survey?</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>Functions</value>
+  </data>
+  <data name="FunctionTitleArabic" xml:space="preserve">
+    <value>Function Title in Arabic</value>
+  </data>
+  <data name="FunctionTitleEnglish" xml:space="preserve">
+    <value>Function Title in English</value>
   </data>
   <data name="GeneratePayTabsPaymentLink" xml:space="preserve">
     <value>Generate PayTabs Payment Link</value>
@@ -510,6 +543,24 @@
   <data name="New" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="NewFunction" xml:space="preserve">
+    <value>New Function</value>
+  </data>
+  <data name="NewPartner" xml:space="preserve">
+    <value>New Partner</value>
+  </data>
+  <data name="NewPartnership" xml:space="preserve">
+    <value>New Partnership</value>
+  </data>
+  <data name="NewPlanToPartnerShip" xml:space="preserve">
+    <value>New Plan To Partnership</value>
+  </data>
+  <data name="NewPractice" xml:space="preserve">
+    <value>New Practice</value>
+  </data>
+  <data name="NewQuestion" xml:space="preserve">
+    <value>New Question</value>
+  </data>
   <data name="NewSection" xml:space="preserve">
     <value>New Section</value>
   </data>
@@ -570,6 +621,63 @@
   <data name="Paid" xml:space="preserve">
     <value>Paid</value>
   </data>
+  <data name="Partner" xml:space="preserve">
+    <value>Partner</value>
+  </data>
+  <data name="PartnerAddress" xml:space="preserve">
+    <value>Partner Address</value>
+  </data>
+  <data name="PartnerBanner" xml:space="preserve">
+    <value>Partner Banner</value>
+  </data>
+  <data name="PartnerCountry" xml:space="preserve">
+    <value>Partner Country</value>
+  </data>
+  <data name="PartnerFocalPointEmail" xml:space="preserve">
+    <value>Partner Focal Point Email</value>
+  </data>
+  <data name="PartnerFocalPointNameArabic" xml:space="preserve">
+    <value>Partner Focal Point Name in Arabic</value>
+  </data>
+  <data name="PartnerFocalPointNameEnglish" xml:space="preserve">
+    <value>Partner Focal Point Name in English</value>
+  </data>
+  <data name="PartnerFocalPointPhone" xml:space="preserve">
+    <value>Partner Focal Point Phone</value>
+  </data>
+  <data name="PartnerLogo" xml:space="preserve">
+    <value>Partner Logo</value>
+  </data>
+  <data name="PartnerNameArabic" xml:space="preserve">
+    <value>Partner Name in Arabic</value>
+  </data>
+  <data name="PartnerNameEnglish" xml:space="preserve">
+    <value>Partner Name in English</value>
+  </data>
+  <data name="PartnerOfficalEmail" xml:space="preserve">
+    <value>Partner Offical Email</value>
+  </data>
+  <data name="PartnerOfficalPhone" xml:space="preserve">
+    <value>Partner Offical Phone</value>
+  </data>
+  <data name="Partners" xml:space="preserve">
+    <value>Partners</value>
+  </data>
+  <data name="PartnershipDomain" xml:space="preserve">
+    <value>Partnership Domain</value>
+  </data>
+  <data name="PartnershipEndDate" xml:space="preserve">
+    <value>Partnership End Date</value>
+  </data>
+  <data name="Partnerships" xml:space="preserve">
+    <value>Partnerships</value>
+  </data>
+  <data name="PartnershipStartDate" xml:space="preserve">
+    <value>Partnership Start Date</value>
+  </data>
+  <data name="PartnerSub-Domain" xml:space="preserve">
+    <value>Partner Sub-Domain</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -578,6 +686,9 @@
   </data>
   <data name="Payment" xml:space="preserve">
     <value>Payment</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>Payment Method</value>
   </data>
   <data name="Paywith" xml:space="preserve">
     <value>Pay with:</value>
@@ -591,14 +702,74 @@
   <data name="PerYear" xml:space="preserve">
     <value>Per Year</value>
   </data>
+  <data name="Plan" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="PlanAudience" xml:space="preserve">
+    <value>Plan Audience</value>
+  </data>
+  <data name="PlanDeliveryModeArabic" xml:space="preserve">
+    <value>Plan Delivery Mode in Arabic</value>
+  </data>
+  <data name="PlanDeliveryModeEnglish" xml:space="preserve">
+    <value>Plan Delivery Mode in English</value>
+  </data>
   <data name="PlanDocFile" xml:space="preserve">
     <value>Document For Plan</value>
+  </data>
+  <data name="PlanLimitationsArabic" xml:space="preserve">
+    <value>Plan Limitations in Arabic</value>
+  </data>
+  <data name="PlanLimitationsEnglish" xml:space="preserve">
+    <value>Plan Limitations in English</value>
   </data>
   <data name="PlanName" xml:space="preserve">
     <value>Plan Name</value>
   </data>
+  <data name="PlanObjectiveArabic" xml:space="preserve">
+    <value>Plan Objective in Arabic</value>
+  </data>
+  <data name="PlanObjectiveEnglish" xml:space="preserve">
+    <value>Plan Objective in English</value>
+  </data>
+  <data name="PlanPrice" xml:space="preserve">
+    <value>Plan Price</value>
+  </data>
+  <data name="PlanProcessArabic" xml:space="preserve">
+    <value>Plan Process in Arabic</value>
+  </data>
+  <data name="PlanProcessEnglish" xml:space="preserve">
+    <value>Plan Process in English</value>
+  </data>
+  <data name="PlanReportArabic" xml:space="preserve">
+    <value>Plan Report in Arabic</value>
+  </data>
+  <data name="PlanReportEnglish" xml:space="preserve">
+    <value>Plan Report in English</value>
+  </data>
   <data name="Plans" xml:space="preserve">
     <value>My Plans</value>
+  </data>
+  <data name="PlansToPartnerShip" xml:space="preserve">
+    <value>Plans To Partnership</value>
+  </data>
+  <data name="PlanTitleArabic" xml:space="preserve">
+    <value>Plan Title in Arabic</value>
+  </data>
+  <data name="PlanTitleEnglish" xml:space="preserve">
+    <value>Plan Title in English</value>
+  </data>
+  <data name="Practice" xml:space="preserve">
+    <value>Practice</value>
+  </data>
+  <data name="Practices" xml:space="preserve">
+    <value>Practices</value>
+  </data>
+  <data name="PracticeTitleArabic" xml:space="preserve">
+    <value>Practice Title in Arabic</value>
+  </data>
+  <data name="PracticeTitleEnglish" xml:space="preserve">
+    <value>Practice Title in English</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
@@ -620,6 +791,18 @@
   </data>
   <data name="PublicTerms" xml:space="preserve">
     <value>General Terms and Conditions</value>
+  </data>
+  <data name="QuestionArabic" xml:space="preserve">
+    <value>Question in Arabic</value>
+  </data>
+  <data name="QuestionEnglish" xml:space="preserve">
+    <value>Question in English</value>
+  </data>
+  <data name="QuestionRespondent" xml:space="preserve">
+    <value>Who will Ansewr for this Question?</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>Questions</value>
   </data>
   <data name="RecoverMyPassword" xml:space="preserve">
     <value>RECOVER MY PASSWORD</value>
@@ -732,6 +915,9 @@
   <data name="StartUpPlanMonthlyTerms" xml:space="preserve">
     <value>Start-up Plan Monthly Terms</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
   <data name="Subject" xml:space="preserve">
     <value>Subject</value>
   </data>
@@ -783,6 +969,9 @@
   <data name="SubscriptionType" xml:space="preserve">
     <value>Subscription Type</value>
   </data>
+  <data name="TamplatePath" xml:space="preserve">
+    <value>Tamplate Path</value>
+  </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>Terms and Conditions</value>
   </data>
@@ -803,6 +992,9 @@
   </data>
   <data name="TermsOfService" xml:space="preserve">
     <value>Terms of service</value>
+  </data>
+  <data name="ThePlan" xml:space="preserve">
+    <value>The Plan</value>
   </data>
   <data name="ThePlans" xml:space="preserve">
     <value>Plans</value>

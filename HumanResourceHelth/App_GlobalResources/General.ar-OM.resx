@@ -372,6 +372,24 @@
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="EditFunction" xml:space="preserve">
+    <value>تعديل بيانات وظيفة</value>
+  </data>
+  <data name="EditPartner" xml:space="preserve">
+    <value>تعديل بيانات شريك</value>
+  </data>
+  <data name="EditPartnership" xml:space="preserve">
+    <value>تعديل شراكة</value>
+  </data>
+  <data name="EditPlanToPartnerShip" xml:space="preserve">
+    <value>تعديل باقة مخصصة للشراكة</value>
+  </data>
+  <data name="EditPractice" xml:space="preserve">
+    <value>تعديل ممارسة</value>
+  </data>
+  <data name="EditQuestion" xml:space="preserve">
+    <value>تعديل سؤال</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>البريد الالكترونى</value>
   </data>
@@ -401,6 +419,21 @@
   </data>
   <data name="FreeSubscription" xml:space="preserve">
     <value>إشتراك مجاني</value>
+  </data>
+  <data name="FunctionID" xml:space="preserve">
+    <value>الوظيفية</value>
+  </data>
+  <data name="FunctionRespondent" xml:space="preserve">
+    <value>من سيجيب على استبانة أولوية هذه الوظيفة؟</value>
+  </data>
+  <data name="Functions" xml:space="preserve">
+    <value>الوظائف</value>
+  </data>
+  <data name="FunctionTitleArabic" xml:space="preserve">
+    <value>الوظيفة باللغة العربية</value>
+  </data>
+  <data name="FunctionTitleEnglish" xml:space="preserve">
+    <value>الوظيفة باللغة الإنجليزية</value>
   </data>
   <data name="GeneratePayTabsPaymentLink" xml:space="preserve">
     <value>إنشاء رابط الدفع الخاص بـ PayTabs</value>
@@ -511,6 +544,24 @@
   <data name="New" xml:space="preserve">
     <value>جديد</value>
   </data>
+  <data name="NewFunction" xml:space="preserve">
+    <value>وظيفة جديدة</value>
+  </data>
+  <data name="NewPartner" xml:space="preserve">
+    <value>شريك جديد</value>
+  </data>
+  <data name="NewPartnership" xml:space="preserve">
+    <value>شراكة جديدة</value>
+  </data>
+  <data name="NewPlanToPartnerShip" xml:space="preserve">
+    <value>باقة مخصصة للشراكة جديدة</value>
+  </data>
+  <data name="NewPractice" xml:space="preserve">
+    <value>ممارسة جديدة</value>
+  </data>
+  <data name="NewQuestion" xml:space="preserve">
+    <value>سؤال جديد</value>
+  </data>
   <data name="NewSection" xml:space="preserve">
     <value>قسم جديد</value>
   </data>
@@ -571,6 +622,63 @@
   <data name="Paid" xml:space="preserve">
     <value>الباقة المدفوعة</value>
   </data>
+  <data name="Partner" xml:space="preserve">
+    <value>الشريك</value>
+  </data>
+  <data name="PartnerAddress" xml:space="preserve">
+    <value>عنوان الشريك</value>
+  </data>
+  <data name="PartnerBanner" xml:space="preserve">
+    <value>بانر الشريك</value>
+  </data>
+  <data name="PartnerCountry" xml:space="preserve">
+    <value>دولة المقر للشريك</value>
+  </data>
+  <data name="PartnerFocalPointEmail" xml:space="preserve">
+    <value>البريد الإلكتروني لممثل للشريك </value>
+  </data>
+  <data name="PartnerFocalPointNameArabic" xml:space="preserve">
+    <value>اسم الشخص الممثل للشريك باللغة العربية</value>
+  </data>
+  <data name="PartnerFocalPointNameEnglish" xml:space="preserve">
+    <value>اسم الشخص الممثل للشريك باللغة الإنجليزية</value>
+  </data>
+  <data name="PartnerFocalPointPhone" xml:space="preserve">
+    <value>رقم هاتف ممثل للشريك</value>
+  </data>
+  <data name="PartnerLogo" xml:space="preserve">
+    <value>شعار الشريك</value>
+  </data>
+  <data name="PartnerNameArabic" xml:space="preserve">
+    <value>اسم الشريك باللغة العربية</value>
+  </data>
+  <data name="PartnerNameEnglish" xml:space="preserve">
+    <value>اسم الشريك باللغة الإنجليزية</value>
+  </data>
+  <data name="PartnerOfficalEmail" xml:space="preserve">
+    <value>البريد الإلكتروني الرسمي للشريك</value>
+  </data>
+  <data name="PartnerOfficalPhone" xml:space="preserve">
+    <value>رقم الهاتف الرسمي للشريك</value>
+  </data>
+  <data name="Partners" xml:space="preserve">
+    <value>الشركاء</value>
+  </data>
+  <data name="PartnershipDomain" xml:space="preserve">
+    <value>نطاق عمل الشراكة</value>
+  </data>
+  <data name="PartnershipEndDate" xml:space="preserve">
+    <value>تاريخ نهاية الشراكة</value>
+  </data>
+  <data name="Partnerships" xml:space="preserve">
+    <value>الشراكات</value>
+  </data>
+  <data name="PartnershipStartDate" xml:space="preserve">
+    <value>تاريخ بداية الشراكة</value>
+  </data>
+  <data name="PartnerSub-Domain" xml:space="preserve">
+    <value>النطاق الفرعي للشريك</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>كلمه المرور</value>
   </data>
@@ -579,6 +687,9 @@
   </data>
   <data name="Payment" xml:space="preserve">
     <value>الدفع</value>
+  </data>
+  <data name="PaymentMethod" xml:space="preserve">
+    <value>طريقة الدفع</value>
   </data>
   <data name="Paywith" xml:space="preserve">
     <value>ادفع من خلال:</value>
@@ -592,14 +703,74 @@
   <data name="PerYear" xml:space="preserve">
     <value>اشتراك سنوى</value>
   </data>
+  <data name="Plan" xml:space="preserve">
+    <value>الخطة</value>
+  </data>
+  <data name="PlanAudience" xml:space="preserve">
+    <value>الفئة المستهدفة بالخطة</value>
+  </data>
+  <data name="PlanDeliveryModeArabic" xml:space="preserve">
+    <value>وضع تسليم بيانات الخطة باللغة العربية</value>
+  </data>
+  <data name="PlanDeliveryModeEnglish" xml:space="preserve">
+    <value>وضع تسليم بيانات الخطة باللغة الإنجليزية</value>
+  </data>
   <data name="PlanDocFile" xml:space="preserve">
     <value>المستند لباقة</value>
+  </data>
+  <data name="PlanLimitationsArabic" xml:space="preserve">
+    <value>محددات الخطة باللغة العربية</value>
+  </data>
+  <data name="PlanLimitationsEnglish" xml:space="preserve">
+    <value>محددات الخطة باللغة الإنجليزية</value>
   </data>
   <data name="PlanName" xml:space="preserve">
     <value>اسم الباقة</value>
   </data>
+  <data name="PlanObjectiveArabic" xml:space="preserve">
+    <value>أهداف الخطة باللغة العربية</value>
+  </data>
+  <data name="PlanObjectiveEnglish" xml:space="preserve">
+    <value>أهداف الخطة باللغة الإنجليزية</value>
+  </data>
+  <data name="PlanPrice" xml:space="preserve">
+    <value>سعر الخطة</value>
+  </data>
+  <data name="PlanProcessArabic" xml:space="preserve">
+    <value>آلية عمل الخطة باللغة العربية</value>
+  </data>
+  <data name="PlanProcessEnglish" xml:space="preserve">
+    <value>آلية عمل الخطة باللغة الإنجليزية</value>
+  </data>
+  <data name="PlanReportArabic" xml:space="preserve">
+    <value>تقرير الخطة باللغة العربية</value>
+  </data>
+  <data name="PlanReportEnglish" xml:space="preserve">
+    <value>تقرير الخطة باللغة الإنجليزية</value>
+  </data>
   <data name="Plans" xml:space="preserve">
     <value>باقاتي</value>
+  </data>
+  <data name="PlansToPartnerShip" xml:space="preserve">
+    <value>باقة مخصصة للشراكة</value>
+  </data>
+  <data name="PlanTitleArabic" xml:space="preserve">
+    <value>الخطة باللغة العربية</value>
+  </data>
+  <data name="PlanTitleEnglish" xml:space="preserve">
+    <value>الخطة باللغة الإنجليزية</value>
+  </data>
+  <data name="Practice" xml:space="preserve">
+    <value>الممارسة</value>
+  </data>
+  <data name="Practices" xml:space="preserve">
+    <value>ممارسات</value>
+  </data>
+  <data name="PracticeTitleArabic" xml:space="preserve">
+    <value>عنوان الممارسة باللغة العربية</value>
+  </data>
+  <data name="PracticeTitleEnglish" xml:space="preserve">
+    <value>عنوان الممارسة باللغة الإنجليزية</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>معاينة</value>
@@ -621,6 +792,18 @@
   </data>
   <data name="PublicTerms" xml:space="preserve">
     <value>إشتراطات عامة</value>
+  </data>
+  <data name="QuestionArabic" xml:space="preserve">
+    <value>السؤال باللغة العربية</value>
+  </data>
+  <data name="QuestionEnglish" xml:space="preserve">
+    <value>السؤال باللغة الإنجليزية</value>
+  </data>
+  <data name="QuestionRespondent" xml:space="preserve">
+    <value>من سيجيب على هذا السؤال؟</value>
+  </data>
+  <data name="Questions" xml:space="preserve">
+    <value>الأسئلة</value>
   </data>
   <data name="RecoverMyPassword" xml:space="preserve">
     <value>استعادة كلمه المرور</value>
@@ -733,6 +916,9 @@
   <data name="StartUpPlanMonthlyTerms" xml:space="preserve">
     <value>شروط الاشتراك الشهري في باقة الانطلاق</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
   <data name="Subject" xml:space="preserve">
     <value>الموضوع</value>
   </data>
@@ -784,6 +970,9 @@
   <data name="SubscriptionType" xml:space="preserve">
     <value>نوع الإشتراك</value>
   </data>
+  <data name="TamplatePath" xml:space="preserve">
+    <value>نموذج</value>
+  </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>شروط الاستخدام</value>
   </data>
@@ -804,6 +993,9 @@
   </data>
   <data name="TermsOfService" xml:space="preserve">
     <value>شروط الاستخدام</value>
+  </data>
+  <data name="ThePlan" xml:space="preserve">
+    <value>الخطة</value>
   </data>
   <data name="ThePlans" xml:space="preserve">
     <value>الباقات</value>

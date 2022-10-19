@@ -1,5 +1,4 @@
 ﻿using HumanResourceHelth.Model;
-using System.Linq;
 
 namespace HumanResourceHelth.DataAccess.Repositories
 {
