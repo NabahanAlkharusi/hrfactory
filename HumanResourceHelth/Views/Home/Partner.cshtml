@@ -1,0 +1,109 @@
+﻿@model HumanResourceHelth.Model.OurPartners
+@section styles {
+    <link href="@Url.Content("~/assets/css/PartnerCards.css")" rel="stylesheet" type="text/css" />
+}
+@{
+    ViewBag.Title = "Partner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    string Text_Align = isArabic ? "text-right" : "";
+    string auto_margin = isArabic ? "mr-3" : "ml-3";
+    Session["Backto"] = "UserProfile";
+    string countryName = "";
+    string countryCode = "";
+    var labAlign = isArabic ? "pull-right" : "pull-left";
+    var float_start = isArabic ? "float-right" : "float-left";
+    var float_end = isArabic ? "float-left" : "float-right";
+}
+
+<div id="page-title" class="text-grey background-overlay " style="background-image: url('assets/img/hrplugin.jpg');background-size: cover;background-repeat: no-repeat;" dir="@dir">
+    <div>
+        <div class="container padding-tb-10px z-index-2 position-relative">
+            <div class="row justify-content-center">
+                <hr />
+                @*<div class="container justify-content-center">*@
+                <div class="card" dir="@dir">
+                    <img src="@Url.Content(Model.PartnerLogo)"class="img-responsive image-info w-50 @float_start" alt="...">
+                    <div class="card-body text-black @float_end">
+                        <h5 class="card-title text-black-50">
+                            @if (isArabic)
+                            {
+                                <span>@Model.PartnerNameAr</span>
+                            }
+                            else
+                            {
+                                <span>@Model.PartnerName</span>
+                            }
+                        </h5>
+                        @if (isArabic)
+                        {
+                            <p>@Html.Raw(Model.PartnerDesAr)</p>
+                        }
+                        else
+                        {
+                            <p>@Html.Raw(Model.PartnerDes)</p>
+                        }
+                        @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
+                        <a href="@Model.PartnerWebsite" class="btn btn-sm btn-info @float_end" target="_blank">
+                            @if (isArabic)
+                            {<text>المزيد..</text>}
+                        else
+                        { <text>Read More..</text>}
+                        </a>
+                    </div>
+                </div>
+                <!--<div class="card">
+                    <div class="face face1">
+                        <div class="content">
+                            <div class="icon text-center" style=" display: flex; justify-content: center; align-items: center; ">
+                                <img src="@Url.Content(Model.PartnerLogo)" style="max-height: 45%; filter: drop-shadow(0 0 5px #333)" />-->
+                                @*<i class="fa fa-linkedin-square" aria-hidden="true"></i>*@
+                            <!--</div>
+                        </div>
+                    </div>
+                    <div class="face face2">
+                        <div class="content">
+                            <h3>
+                                <a href="@Model.PartnerWebsite" target="_blank">
+                                    @if (isArabic)
+                                    {
+                                        <span>@Model.PartnerNameAr</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@Model.PartnerName</span>
+                                    }
+                                </a>
+                            </h3>
+                            <div style="overflow-y: scroll; height: 270px; ">
+                                @if (isArabic)
+                                {
+                                    <p>@Html.Raw(Model.PartnerDesAr)</p>
+                                }
+                                else
+                                {
+                                    <p>@Html.Raw(Model.PartnerDes)</p>
+                                }
+
+                            </div>
+                            <div class="row justify-content-center mt-3">
+                                <a class="btn btn-sm background-main-color" href="@Model.PartnerWebsite">
+                                    @if (isArabic)
+                                    {<text>المزيد..</text>}
+                                else
+                                { <text>Read More..</text>}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                @*</div>*@
+                <hr />
+
+            </div>
+        </div>
+    </div>
+</div>

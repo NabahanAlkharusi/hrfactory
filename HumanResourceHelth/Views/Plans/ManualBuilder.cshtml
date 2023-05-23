@@ -128,14 +128,25 @@
         </div>
     </div>
 </section>
+@* ================================================ *@
 
-
+@*//================================================*@
 <section class="padding-tb-20px background-white">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                 <p class="cms" data-contentId="81">@GetContent(81)</p>
             </div>
+        </div>
+        <div class="container">
+            @if (Session["UserId"] == null || ViewBag.PlanType == 0)
+            {
+            <div class="row text-center">
+                <div class="padding-bottom-22px col-lg-12">
+                    <a href="@Url.Action("SectionPlans", "Section")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.SubscriptionPlans</a>
+                </div>
+            </div>
+            }
         </div>
         <div class="row text-center">
             <div class="padding-bottom-22px col-lg-12">

@@ -1,0 +1,1307 @@
+﻿@model HumanResourceHelth.Web.Data.SectionViewModel
+@using HumanResourceHelth.Model.Resources
+
+
+@{
+    ViewBag.Title = "SectionPlans";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "ltr";
+    var accordion_header_text = isArabic ? "text-right" : "text-left";
+    var justify = isArabic ? "justify-content-end" : "justify-content-start";
+    var slideInLeft = isArabic ? "slideInRight" : "slideInLeft";
+    var slideInRight = isArabic ? "slideInLeft" : "slideInRight";
+    var alignfloat = isArabic ? "float-right" : "float-left";
+    var invalignfloat = isArabic ? "float-left" : "float-right";
+    var EditDisplayClass = "display:block";
+    string sectionItemClass = isArabic ? "float-right" : "float-left mr-4";
+    var textAlign = isArabic ? "text-right" : "text-left";
+    var pullAlign = isArabic ? "pull-right" : "pull-left";
+    var showbtn = "d-none";
+    var showCost = "";
+    HumanResourceHelth.DataAccess.UnitOfWork _uow = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.IntroVedio> vedios = _uow.introVedioRepo.GetAll();
+    List<HumanResourceHelth.Model.Country> countries = _uow.CountryRepo.GetAll().OrderByDescending(a=>a.IsArabCountry).ToList();
+    int userId = Session["UserId"] == null ? 0 : Convert.ToInt32(Session["UserId"].ToString());
+    HumanResourceHelth.Model.User usr = Session["UserId"] == null ? null : _uow.UserRepo.FindById(userId);
+    //name
+    string name = usr == null ? null : usr.Name;
+    //contact person
+    string contcatpserson = usr == null ? null : usr.ContactPerson;
+    // contact person email
+    string contactPersonPhone = usr == null ? null : usr.ContactInformation;
+    // company industry
+    int industry = usr == null ? 0 : usr.IndustryId;
+    //company contry
+    int country = usr == null ? 0 : usr.CountryId;
+    int NumberOfEmployee = usr == null ? 0 : usr.NumberOFEmployees;
+    // get industry list
+    List<HumanResourceHelth.Model.Industry> industries = _uow.IndustryRepo.GetAll();
+    // get list of number of employees
+    var numberOfEmployees = isArabic ? new HumanResourceHelth.Model.NumberOfEmployeesAr().EmployeesAr : new HumanResourceHelth.Model.NumberOfEmployees().Employees;
+
+
+    string videoSrc = "";
+    if (vedios.FirstOrDefault().Uploaded)
+    {
+        videoSrc = isArabic ? "../IntroVedio/" + vedios.FirstOrDefault().UploadedArabic : "../IntroVedio/" + vedios.FirstOrDefault().UploadedEnglish;
+    }
+    else
+    {
+        videoSrc = isArabic ? vedios.FirstOrDefault().EmbadedArabic : vedios.FirstOrDefault().EmbadedEnglish;
+    }
+}
+}
+<div class="container">
+    <div class="col-12">
+        <fieldset class="form-group border p-3 col-lg-4 col-md-6 col-sm-12">
+            <legend class="w-auto px-2">@Resources.General.OurLegalPartner</legend>
+            <div class="form-group">
+                <a href="https://drsaifalrawahi.com/">
+                    <img src="~/assets/img/DSA.png" class="img-responsive" />
+                </a>
+            </div>
+        </fieldset>
+    </div>
+    <div class="col-11">
+        <fieldset>
+            <legend>How To use this builder</legend>
+            <div class="row p-2 justify-content-center">
+                <iframe width="980" height="350"
+                        src="@videoSrc">
+                </iframe>
+            </div>
+        </fieldset>
+    </div>
+    <div class="row pt-5 mt-4" dir="@dir">
+        <div class="col-lg-3 btn-acc">
+            <div class="releasesWrp" id="releases">
+                @{ string hidden = "";}
+                <ul class="releases">
+                    <li>
+                        @if (Model.Sections.Count != 0)
+                        {
+
+                            for (int i = 0; i < Model.Sections.Count(); i++)
+                            {
+                                if (Model.Sections[i].ParenId == null)
+                                {<!-- Release Item -->
+                                    <ul class="releaseRow row " data-SectionId="@Model.Sections[i].Id">
+
+                                        <div class="list_icon">
+                                        <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                        <li class="col-lg-8 col-8 rcol tc showTracks" id="li-@i">
+                                            <span>
+                                                @Model.Sections[i].Title
+                                            </span>  @if (Model.Sections[i].Childs.Count() != 0)
+                                            {
+                                                <span id="plus-icon-@i" class="@sectionItemClass fa fa-plus"></span>
+                                            }
+
+                                        </li>
+                                        <li class="col-lg-3 col-3 rcol actions_icon">
+                                            <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.Sections[i].Id"><i class="far fa-edit"></i></a>
+                                            <a href="javascript:void(0)" onclick="return deleteSection(@Model.Sections[i].Id);"><i class="far fa-trash-alt"></i></a>
+                                            <a href="#">
+                                                <label class="switch">
+                                                    @if (Model.Sections[i].IsActive)
+                                                    {
+                                                        <input class="chkActivate" checked data-SectionId="@Model.Sections[i].Id" type="checkbox"> }
+                                                    else
+                                                    {
+                                                        <input class="chkActivate" data-SectionId="@Model.Sections[i].Id" type="checkbox">}
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            </a>
+                                        </li>
+                        </div>
+                        <li class="releaseTracks">
+                            @{ int x = 0;}
+                            @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
+                            {
+
+                                <ul class="trackRow" data-SectionId="@Item.Id">
+
+                                    <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
+                                    <li class="col-lg-6 col-6 rcol">@Item.Title</li>
+                                    <li class="col-lg-4 col-4 fa-pull-right rcol tc">
+                                        @{ string showActions = "";
+                                            string disabled = "";}
+                                        @if (x > 2)
+                                        {
+                                            showActions = "d-none";
+                                        }
+                                        @if (x > 2)
+                                        {
+                                            <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>}
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit @showActions"></i></a>
+                                            <a href="javascript:void(0)" onclick="return deleteSection(@Item.Id);"><i class="far fa-trash-alt red @showActions"></i></a>}
+                                        <a href="#">
+                                            <label class="switch">
+                                                @if (x <= 2)
+                                                {
+                                                    <input checked class="chkActivate" data-SectionId="@Item.Id" type="checkbox"> }
+                                                else
+                                                {
+                                                    if (x > 2)
+                                                    { disabled = "disabled"; }
+                                                    <input class="chkActivate" data-SectionId="@Item.Id" type="checkbox" @disabled>}
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </a>
+                                    </li>
+                                </ul>
+                                x++;
+                            }
+
+                        </li>
+                        </ul>}
+                }
+            }
+
+
+                        </li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <a class="btn btn-primary" id="AddNewSection" href="#)" role="button">@Resources.General.NewSection</a>
+                    <a class="btn btn-primary" id="DownloadPolicy" href="#" role="button">@Resources.General.Download</a>
+                    <a class="btn btn-warning" id="SharePolicy" href="#" role="button">@Resources.General.SharePolicy</a>
+                    <hr>
+                    <a class="btn btn-primary" href="@Url.Action(" Index", "Builder" )" role="button">@Resources.General.Back</a>
+                    <hr>
+                </div>
+                @if (Session["CMS"] == null || (bool)Session["CMS"] == false)
+                {
+                    int parent = 1;
+                    int Child = 1;
+                    var ParentCard = "";
+                    var Parentcollapse = "";
+                    var ChildCard = "";
+                    var Childcollapse = "";
+                    var textToRight = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "text-right" : "";
+                    <div class="col-lg-9" id="defult" dir="@dir">
+                        <div class="card @textToRight" id="DefaultMBCard" style="display:none">
+                            <div class="card-header">
+                                <h5 class="mb-0 d-inline">
+                                    @Resources.General.DefaultMB
+                                </h5>
+
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-warning text-center"><h6>@Resources.General.UserManulNotif</h6></div>
+                                <div id="accordion">
+
+                                    @foreach (HumanResourceHelth.Model.Section section in Model.Sections.Where(x => x.ParenId == null))
+                                    {
+                                        ParentCard = "Parent" + parent.ToString();
+                                        Parentcollapse = "collapse" + parent.ToString();
+                                        parent = parent + 1;
+                                        <div>
+                                            <div class="card">
+                                                <div class="card-header" id="@ParentCard">
+                                                    <h5 class="mb-0 d-inline">
+                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#@Parentcollapse" aria-expanded="false" aria-controls="@Parentcollapse">
+                                                            @Html.Raw(section.Title)
+                                                        </button>
+                                                    </h5>
+
+                                                </div>
+                                                <div id="@Parentcollapse" class="collapse" aria-labelledby="@ParentCard" data-parent="#accordion">
+
+                                                    <div class="card-body">
+                                                        @if (section.Childs.Count == 0)
+                                                        {
+
+                                                            <p>@Html.Raw(section.Content)</p>
+
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach (HumanResourceHelth.Model.Section childSection in section.Childs)
+                                                            {
+                                                                ChildCard = "ChildCard" + Child.ToString();
+                                                                Childcollapse = "Childcollapse" + Child.ToString();
+                                                                Child = Child + 1;
+                                                                <div class="card" id="@ChildCard">
+                                                                    <div class="card-header">
+                                                                        <a href="#" data-toggle="collapse" data-target="#@Childcollapse">@childSection.Title</a>
+                                                                    </div>
+                                                                    <div class="card-body collapse" data-parent="#@ChildCard" id="@Childcollapse">
+                                                                        @Html.Raw(childSection.Content)
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="col-lg-9" id="divEditSection" dir="@dir" style="@EditDisplayClass">
+
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-8 ml-auto wow fadeInUp">
+                    <img src="~/assets/img/BuilderFooter.png" alt="">
+                </div>
+            </div>
+            </div>
+            <hr />
+            <div class="container">
+                <div class="row mb-3 @dir">
+                    <div class="col-md-12 col-lg-4 mt-2 animated @slideInRight">
+                        <div class="card pricing-box rounded">
+                            <div class="card-block text-center">
+                                <h4 class="card-title">
+                                    @Resources.General.SectionSPlanTitle
+                                </h4>
+                                <h6 class="card-text">
+                                    <sup class="currency">
+                                        OMR
+                                    </sup>
+                                    <span class="amount">
+                                        55
+                                    </span>
+                                    <span class="month">
+                                        / mo
+                                    </span>
+                                </h6>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Forwhom</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        @Resources.General.SectionSPlanFor
+                                    </span>
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Process</b></span>
+
+                                    <ul class="list-unstyled @invalignfloat @accordion_header_text">
+                                        <li>
+                                            @Resources.General.SectionSPlanProcess1
+                                        </li>
+                                        <li> @Resources.General.SectionSPlanProcess2</li>
+                                    </ul>
+
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.PaymentMode</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        @Resources.General.onlinePay
+                                    </span>
+                                </li>
+                                @*<li class="list-group-item text-center d-inline-block">
+                                        <span class="float-right @accordion_header_text"><b>for</b></span>
+                                        <span class="float-left @accordion_header_text">
+                                            A client who wants only to access a compliant HR manual builder/ prepopulated policies
+                                        </span>
+                                    </li>*@
+                            </ul>
+                            <div class="card-block text-center">
+
+                                @*Launch demo modal*@
+
+                                @*<a href="#" class="btn btn-warning btn-outline-start m-1" title="Get Started">*@
+                                <button type="button" class="btn btn-warning btn-outline-start m-1" data-toggle="modal" data-target="#basicPlanSub">
+                                    @Resources.General.GetStarted
+                                </button>
+                                @*</a>*@
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-3 @slideInRight">
+                        <div class="card pricing-box pricing-premium">
+                            <div class="card-block text-center">
+                                <h4 class="card-title">
+                                    @Resources.General.SectionSLPlanTitle
+                                </h4>
+                                <h6 class="card-text">
+                                    <sup class="currency">
+                                        OMR
+                                    </sup>
+                                    <span class="amount">
+                                        55
+                                    </span>
+                                    <span class="month">
+                                        / mo
+                                    </span>
+                                    +
+                                    <sup class="currency">
+                                        OMR
+                                    </sup>
+                                    <span class="amount">
+                                        (600 - 1000)
+                                    </span>
+                                </h6>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Forwhom</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        @Resources.General.SectionSLPlanFor
+                                    </span>
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Process</b></span>
+
+                                    <ul class="list-unstyled @invalignfloat @accordion_header_text">
+                                        <li>
+                                            @Resources.General.SectionSLPlanProcess1
+                                        </li>
+                                        <li>  @Resources.General.SectionSLPlanProcess2</li>
+                                        <li>  @Resources.General.SectionSLPlanProcess3</li>
+                                        <li>  @Resources.General.SectionSLPlanProcess4</li>
+                                    </ul>
+
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.PaymentMode</b></span>
+                                    <ul class="list-unstyled @invalignfloat @accordion_header_text">
+                                        <li>
+                                            @Resources.General.SectionSLPlanonlinePay1
+                                        </li>
+                                        <li>  @Resources.General.SectionSLPlanonlinePay2</li>
+                                    </ul>
+                                </li>-->
+                    @*<li class="list-group-item text-center d-inline-block">
+                            <span class="float-right @accordion_header_text"><b>for</b></span>
+                            <span class="float-left @accordion_header_text">
+                                A client who wants only to access a compliant HR manual builder/ prepopulated policies
+                            </span>
+                        </li>*@
+                    <!--</ul>
+                            <div class="card-block text-center">
+                                <a href="#" class="btn btn-warning btn-outline-start m-1" title="Get Started">
+                                    @Resources.General.GetStarted
+                                </a>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="col-md-12 col-lg-4 mt-2 ">
+                        <div class="card pricing-box pricing-premium">
+                            <div class="card-block text-center">
+                                <h4 class="card-title">
+                                    @Resources.General.SectionCPlanTitle
+                                </h4>
+                                <h6 class="card-text">
+                                    @*<sup class="currency">
+                                            $
+                                        </sup>
+                                        <span class="amount">
+                                            19
+                                        </span>*@
+                                    <span class="month">
+                                        @Resources.General.Basedonagreed
+                                    </span>
+                                </h6>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Forwhom</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        @Resources.General.SectionCPlanFor
+                                    </span>
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Process</b></span>
+
+                                    <ul class="list-unstyled @invalignfloat @accordion_header_text">
+                                        <li>
+                                            @Resources.General.SectionCPlanProcess1
+                                        </li>
+                                    </ul>
+
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.PaymentMode</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        Offline
+                                    </span>
+                                </li>
+                                @*<li class="list-group-item text-center d-inline-block">
+                                        <span class="float-right @accordion_header_text"><b>for</b></span>
+                                        <span class="float-left @accordion_header_text">
+                                            A client who wants only to access a compliant HR manual builder/ prepopulated policies
+                                        </span>
+                                    </li>*@
+                            </ul>
+                            <div class="card-block text-center">
+                                <a href="javascript:void(0);" class="btn btn-warning btn-outline-start m-1" title="Get Started" data-toggle="modal" data-target="#RequestService" onclick="SetupServiceid('1')">
+                                    @Resources.General.GetStarted
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4 mt-2 animated @slideInLeft">
+                        <div class="card pricing-box">
+                            <div class="card-block text-center">
+                                <h4 class="card-title">
+                                    @Resources.General.SectionOLPlanTitle
+                                </h4>
+                                <h6 class="card-text">
+                                    @*<sup class="currency">
+                                            $
+                                        </sup>
+                                        <span class="amount">
+                                            39
+                                        </span>*@
+                                    <span class="month">
+                                        @Resources.General.Basedonagreed
+                                    </span>
+                                </h6>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Forwhom</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        @Resources.General.SectionOLPlanFor
+                                    </span>
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.Process</b></span>
+
+                                    <ul class="list-unstyled @invalignfloat @accordion_header_text">
+                                        <li>
+                                            @Resources.General.SectionOLPlanProcess1
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+                                <li class="list-group-item text-center d-inline-block">
+                                    <span class="@alignfloat @accordion_header_text"><b>@Resources.General.PaymentMode</b></span>
+                                    <span class="@invalignfloat @accordion_header_text">
+                                        offline
+                                    </span>
+                                </li>
+                                @*<li class="list-group-item text-center d-inline-block">
+                                        <span class="float-right @accordion_header_text"><b>for</b></span>
+                                        <span class="float-left @accordion_header_text">
+                                            A client who wants only to access a compliant HR manual builder/ prepopulated policies
+                                        </span>
+                                    </li>*@
+                            </ul>
+                            <div class="card-block text-center">
+                                <a href="javascript:void(0);" class="btn btn-warning btn-outline-start m-1" title="Get Started" data-toggle="modal" data-target="#RequestService" onclick="SetupServiceid('2')">
+                                    @Resources.General.GetStarted
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="basicPlanSub" tabindex="-1" aria-labelledby="basicPlanSubLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="basicPlanSubLabel">Subscribe</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <section>
+                                <div id="builder_s" class="section">
+                                    <div class="sectionInner">
+                                        <div class="container">
+                                            <div class="row @showbtn" id="btnShowUpGrade">
+                                                <div class="col-lg-12 col-md-12 sm-mb-30px wow fadeInUp">
+                                                    <div class="blog-item thum-hover hvr-float hvr-sh2">
+                                                        <button id="btnUpgrade" class="btn background-main-color text-white">@Resources.General.Upgrade</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="divCost" class="row">
+                                                <div class="col-lg-6 col-md-6 sm-mb-30px">
+                                                    <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
+                                                        <div class="position-relative background-beig">
+                                                            <div class="item-thumbnail" style="font-size: 5rem;">
+                                                                @ViewBag.MonthlyPriceDisp
+                                                                <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">
+                                                                    USD $
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="blog-item padding-lr-30px padding-top-60px text-center">
+                                                            <h1 class="padding-bottom-20px">@Resources.General.PerMonth</h1>
+                                                            <div class="form-group ">
+                                                                <div class="form-check padding-bottom-20px">
+                                                                    <label class="form-check-label">
+                                                                        <input class="form-check-input" required type="checkbox" id="ManualMonthlyCheckbox" onchange="agree('ManualMonthlyCheckbox','MonthlyManualBuilderdiv')">
+                                                                        @Resources.General.IAgreeWith
+                                                                        <a href="#" data-toggle="modal" data-target="#agreeMonthModal">
+                                                                            @Resources.General.TermsAndConditions
+                                                                        </a>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div id="MonthlyManualBuilderdiv" style="display:none;">
+                                                                <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
+                                                                    <div class="col-md-6 @pullAlign">
+                                                                        <label for="MonthlySearchCouponCodeManualBuilder" class="form-label">
+                                                                            @HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCode
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="MonthlySearchCouponCodeManualBuilder"
+                                                                               aria-describedby="MonthlySearchCouponCodeManualBuilderMSG" onchange="getCouponDiscount('MonthlySearchCouponCodeManualBuilder','MonthlyManualBuilderSubLink','3',@ViewBag.MonthlyPrice)" required>
+                                                                        <div id="MonthlySearchCouponCodeManualBuilderMSG" class="invalid-feedback d-none">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="MonthlyManualBuilderDiscountDiv" class="row @pullAlign padding-bottom-22px col-md-12 d-none @textAlign" dir="@dir">
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.PlanPriceCD</label>
+                                                                        <label id="MonthlyManualBuilderPlanPriceCD" class="font-weight-700">55 </label>&nbsp;&nbsp; @AppResource.OMRCurrncy
+                                                                    </div>
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.CouponDiscRateCD</label>
+                                                                        <label id="MonthlyManualBuilderCouponDiscRateCD" class="font-weight-700">
+                                                                            55
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.PlanPriceAftDisCD</label>
+                                                                        <label id="MonthlyManualBuilderPlanPriceAftDisCD" class="font-weight-700">55 </label>
+                                                                        &nbsp;&nbsp;@AppResource.OMRCurrncy
+                                                                    </div>
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.PlanPriceSaveCD</label>
+                                                                        <label id="MonthlyManualBuilderPlanPriceSaveCD" class="font-weight-700">
+                                                                            <del> 55</del>
+                                                                        </label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+                                                                    </div>
+                                                                </div>
+                                                                <div class="padding-bottom-22px">
+                                                                    @if (ViewBag.PlanType == 0)
+                                                                    {
+                                                                        <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = HumanResourceHelth.Model.SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                                            @Resources.General.Subscribe
+                                                                        </a>
+                                                                        <a id="freeSubscribeManualBuilderMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">
+                                                                            @Resources.General.Subscribe
+                                                                        </a>
+                                                                    }
+                                                                    @if (ViewBag.isFreePlan)
+                                                                    {
+                                                                        <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = HumanResourceHelth.Model.SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                                            @Resources.General.Subscribe
+                                                                        </a>
+                                                                        <a id="freeSubscribeManualBuilderMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 sm-mb-30px">
+                                                    <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
+                                                        <div class="position-relative background-beig">
+                                                            <div class="item-thumbnail" style="font-size: 5rem;">
+                                                                @ViewBag.AnnualPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="blog-item padding-lr-30px padding-top-60px text-center">
+                                                            <h1 class="padding-bottom-20px">@Resources.General.PerYear</h1>
+                                                            <div class="form-group ">
+                                                                <div class="form-check padding-bottom-20px">
+                                                                    <label class="form-check-label">
+                                                                        <input class="form-check-input" type="checkbox" id="ManualAnnualCheckbox" onchange="agree('ManualAnnualCheckbox','AnnualManualBuilderdiv')">                                      @Resources.General.IAgreeWith
+                                                                        <a href="#" data-toggle="modal" data-target="#agreeYearModal">
+                                                                            @Resources.General.TermsAndConditions
+                                                                        </a>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div id="AnnualManualBuilderdiv" style="display:none;">
+                                                                <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
+                                                                    <div class="col-md-6 @pullAlign">
+                                                                        <label for="AnnualSearchCouponCodeManualBuilder" class="form-label">
+                                                                            @HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCode
+                                                                        </label>
+                                                                        <input type="text" class="form-control" id="AnnualSearchCouponCodeManualBuilder" aria- describedby="AnnualSearchCouponCodeManualBuilderMSG" onchange="getCouponDiscount                                             ('AnnualSearchCouponCodeManualBuilder','AnnualManualBuilderSubLink','3',@ViewBag.AnnualPrice)" required>
+                                                                        <div id="AnnualSearchCouponCodeManualBuilderMSG" class="invalid-feedback d-                                 none">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="AnnualManualBuilderDiscountDiv" class="row @pullAlign padding-bottom-22px                          col-md-12 d-none @textAlign" dir="@dir">
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.PlanPriceCD</label>
+                                                                        <label id="AnnualManualBuilderPlanPriceCD" class="font-weight-700">55</label>
+                                                                        &nbsp;&nbsp; @AppResource.OMRCurrncy
+                                                                    </div>
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.CouponDiscRateCD</label>
+                                                                        <label id="AnnualManualBuilderCouponDiscRateCD" class="font-weight-700">
+                                                                            55
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.PlanPriceAftDisCD</label>
+                                                                        <label id="AnnualManualBuilderPlanPriceAftDisCD" class="font-weight-700">
+                                                                            55
+                                                                        </label>
+                                                                        &nbsp;&nbsp;@AppResource.OMRCurrncy
+                                                                    </div>
+                                                                    <div class="col-md-7 @pullAlign row">
+                                                                        <label>@AppResource.PlanPriceSaveCD</label>
+                                                                        <label id="AnnualManualBuilderPlanPriceSaveCD" class="font-weight-700">
+                                                                            <del> 55</del>
+                                                                        </label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+                                                                    </div>
+                                                                </div>
+                                                                <div class="padding-bottom-22px">
+                                                                    @if (ViewBag.PlanType == 0)
+                                                                    {
+                                                                        <a id="AnnualManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = HumanResourceHelth.Model.SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                                            @Resources.General.Subscribe
+                                                                        </a>
+                                                                        <a id="freeSubscribeManualBuilderAnnual" href="#" class="btn btn-sm     background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                                    }
+                                                                    @if (ViewBag.isFreePlan)
+                                                                    {
+                                                                        <a id="AnnualManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = HumanResourceHelth.Model.SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                                            @Resources.General.Subscribe
+                                                                        </a>
+                                                                        <a id="freeSubscribeManualBuilderAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="agreeMonthModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="exampleModalLabel2" class="modal-title" data-contentId="">@ViewBag.MBMTitle</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" data-contentId="">@Html.Raw(ViewBag.MBMText)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="agreeYearModal" tabindex="-1" role="dialog" aria-labelledby="agreeYearModalLabel1" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 id="agreeYearModalLabel1" class="modal-title" data-contentId="">@ViewBag.MBATitle</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" data-contentId="">@Html.Raw(ViewBag.MBAText)</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Request Service Modal -->
+            <div class="modal fade" id="RequestService" tabindex="-1" aria-labelledby="RequestServiceLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="RequestServiceLabel">Request Service</h1>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="requesrServiceForm" enctype="multipart/form-data">
+                                <div class="row">
+                                    @* company name *@
+                                    @* company name *@
+                                    <input type="hidden" value="@userId" name="userID" id="userID" />
+                                    <input type="hidden" value="" name="serviceID" id="serviceID" />
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.Company @Resources.General.InEnglish
+                                        </label>
+                                        <input type="text" class="form-control" value="@name" name="company_name" id="company_name" required />
+                                    </div>
+                                    @* contact person *@
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.ContactPerson
+                                        </label>
+                                        <input type="text" class="form-control" value="@contcatpserson" name="contact_name" id="contact_name" required />
+                                    </div>
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.ContactInformation
+                                        </label>
+                                        <input type="text" class="form-control" value="@contactPersonPhone" name="contact_phone" id="contact_phone" required />
+                                    </div>
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.Email
+                                        </label>
+                                        <input type="text" class="form-control" value="" name="contact_email" id="contact_email" required />
+
+                                    </div>
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.Industry
+                                        </label>
+                                        <select class="form-control" name="industry" id="industry" required>
+                                            <option value=""> @Resources.General.Select</option>
+                                            @foreach (HumanResourceHelth.Model.Industry indust in (List<HumanResourceHelth.Model.Industry>)industries)
+                                            {
+                                                <option value="@indust.Id" @if (userId != 0 && indust.Id == industry) { <text> selected</text> }>
+                                                    @if (isArabic)
+                                                    {<text>@indust.NameAr</text>
+                                                }
+                                                else
+                                                {<text>@indust.Name</text>}
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.Country
+                                        </label>
+                                        <select class="form-control" name="Country" id="Country" required>
+                                            <option value=""> @Resources.General.Select</option>
+                                            @foreach (HumanResourceHelth.Model.Country country1 in countries)
+                                            {
+                                                <option value="@country1.Id" @if (userId != 0 && country1.Id == country) { <text> selected</text> }>
+                                                    @if (isArabic)
+                                                    {<text>@country1.NameAr</text>
+                                                }
+                                                else
+                                                {<text>@country1.Name</text>}
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <label class="form-label">
+                                            @Resources.General.Country
+                                        </label>
+                                        <select id="employees" name="employees" required class="form-control">
+                                            @foreach (KeyValuePair<int, string> item in numberOfEmployees)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }
+
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 col-md-11 form-group">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="isFileExist">
+                                             <input type="hidden" id="isFileExistVal" name="isFileExistVal" value="0" />
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Do you Have Exisiting HR Manual policy?</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-11 form-group" style="display:none" id="FileUpload">
+                                        <label class="form-label">
+                                            @Resources.General.Upload
+                                        </label>
+                                        <input type="file" class="form-control" value="" name="HRPolice" id="HRPolice" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="SubmitServiceReq">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script>
+
+                $(function () {
+
+        $("#accordion")
+            .accordion({
+                                                    header: "> div > .test",
+                heightStyle: true,
+                collapsible: true,
+                active: false,
+                activate: function () {
+
+                                                            //alert("Hello Edit");
+                    @*var id = sectionId;
+                    var result = confirm("Are you Sure you want to Delete This item ?");
+                    if (result) {
+                        $.ajax({
+                            url: "@Url.Action("Edit", "Section")",
+                            data: { id: id },
+                            type: "GET",
+                            success: function () {
+                                toastr.success("Data Deleted Successffly")
+                                location.reload();
+                            },
+                            error: function () {
+                                toastr.error("Error")
+                            }
+                        });
+                    }*@
+                }
+            })
+            .sortable({
+                axis: "y",
+                handle: ".test",
+                stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children(".test").triggerHandler("focusout");
+                    newOrder = (ui.item.index()+1);
+                    console.log(ui.item);
+                    sectionId=ui.item[0].children[0].id;
+                    // Refresh accordion to handle new order
+                    $(this).accordion("refresh");
+                    $.ajax({
+
+                        url: "@Url.Action("SaveSectionOrder", "Section")",
+                        data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                        type: "GET",
+                        success: function () {
+                            toastr.success("Section New Location Saved")
+                            //location.reload();
+                        },
+                        error: function () {
+                            //toastr.error("Error");
+                        }
+                    });
+                }
+            });
+    });
+
+    $(function () {
+        $(".cities").sortable({
+            revert: true,
+            stop: function (event, ui) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children(".test").triggerHandler("focusout");
+                newOrder = (ui.item.index() + 1);
+                //console.log(ui.item[0].id);
+                sectionId = ui.item[0].id
+                    // Refresh accordion to handle new order
+
+                    $.ajax({
+
+                        url: "@Url.Action("SaveSubSectionOrder", "Section")",
+                        data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                        type: "GET",
+                        success: function () {
+                            toastr.success("Section New Location Saved")
+                            //location.reload();
+                        },
+                        error: function () {
+                            //toastr.success(" Success")
+                        }
+                    });
+                }
+        })
+    });
+                $(document).ready(function () {
+                    $("#isFileExist").change(function () {
+                        $("#FileUpload").toggle("slow");
+                        var newVal = $("#isFileExistVal").val() == 0 ? 1 : 0;
+                        $("#isFileExistVal").val(newVal);
+                    });
+                    
+                    $("#SubmitServiceReq").click(function (event) {
+                        event.preventDefault();
+                        if ($("#company_name").val() === "") {
+                            // toast alert
+                            toastr.error('Check Comapny Name');
+                            return;
+                        }
+                        if ($("#contact_name").val() === "") {
+                            // toast alert
+                            toastr.error('Check Contact Name');
+                            return;
+                        }
+                        if ($("#contact_phone").val() === "") {
+                            // toast alert
+                            toastr.error('Check Contact Phone');
+                            return;
+                        }
+                        if ($("#contact_email").val() === "") {
+                            // toast alert
+                            toastr.error('Check Contact Email');
+                            return;
+                        }
+                        if ($("#industry").val() === "") {
+                            // toast alert
+                            toastr.error('Check Industry');
+                            return;
+                        }
+                        if ($("#Country").val() === "") {
+                            // toast alert
+                            toastr.error('Check Country');
+                            return;
+                        }
+                        if ($("#employees").val() === "") {
+                            // toast alert
+                            toastr.error('Check Employees');
+                            return;
+                        }
+                        if (($("#isFileExistVal").val() === "1") && ($("#HRPolice")[0].files.length <= 0)) {
+                            // toast alert
+                            toastr.error('Check HR ploicy file');
+                            return;
+                        }
+
+                        var form = $('#requesrServiceForm');
+                        form.attr('enctype', 'multipart/form-data');
+                        var formData = new FormData(form[0]);
+                        $.ajax({
+                            url: "/RequestMBServices/anythingtosave",
+                            type: "POST",
+                            processData: false,
+                            contentType: false,
+                            data:  formData ,
+                            success: (response) => {
+                                if (response.success) {
+                                    //toaster success
+                                    toastr.success("Your Request has benn submitted");
+                                    window.location.reload();
+                                }
+                                else {
+                                    toastr.error("Somthing went Wrong")
+                                }
+                            },
+                            error: (error) => {
+                                toastr.error("Somthing went Wrong")
+                                console.log(error);
+                            }
+                        });
+                    });
+                    SetupServiceid = (service) => {
+                        $("#serviceID").val(service);
+                    }
+                });
+            </script>
+            <script id="rendered-js">
+    $(function () {
+        $('#releases ul li').sortable({ // #releases ul li
+            containment: "document",
+            items: '> ul',
+            handle: '.sort',
+            cursor: 'move',
+            connectWith: '.releaseRow', // #releases ul
+            placeholder: 'holder',
+            tolerance: "pointer",
+            revert: 300,
+            forcePlaceholderSize: true,
+            opacity: 0.5,
+            helper: "clone",
+            scroll: false,
+            dropOnEmpty: true,
+            stop: function (event, ui) {
+                Swal.fire("The new sort-order will be saved only for subscribed users")
+                var sectionId = ui.item.attr("data-SectionId");
+                console.log("Section Id : " + sectionId);
+                var newOrder = (ui.item.index() + 1);
+                console.log("new Order : " + newOrder);
+                @*$.ajax({
+                    url: "@Url.Action("SaveSectionOrder", "Section")",
+                    data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                    type: "GET",
+                    success: function () {
+                        toastr.success("Section New Location Saved")
+                        //location.reload();
+                    },
+                    error: function () {
+                        //toastr.error("Error");
+                    }
+                });*@
+            },
+            //change: function (event, ui) {
+            //    // do your stuff here.
+            //    alert("Ok");
+            //}
+        });
+
+
+        $('.releaseTracks').sortable({ // #releases ul li
+            containment: "document",
+            items: '> ul',
+            handle: '.sort',
+            cursor: 'move',
+            helper: "clone",
+            revert: 300,
+            connectWith: '.releaseTracks', // #releases ul
+            placeholder: 'holder',
+            tolerance: "pointer",
+            forcePlaceholderSize: true,
+            opacity: 0.5,
+            scroll: true,
+            dropOnEmpty: true,
+            containment: "parent",
+            stop: function (event, ui) {
+                Swal.fire('The new sort-order will be saved only for subscribed users')
+                @*debugger;
+                var sectionId = ui.item.attr("data-SectionId");
+                console.log("Section Id : " + sectionId);
+                var newOrder = (ui.item.index() + 1);
+                console.log("new Order : " + newOrder);
+                $.ajax({
+                    url: "@Url.Action("SaveSubSectionOrder", "Section")",
+                    data: { 'newOrder': newOrder, 'sectionId': sectionId },
+                    type: "GET",
+                    success: function () {
+                        toastr.success("Section New Location Saved")
+                        //location.reload();
+                    },
+                    error: function () {
+                        //toastr.error("Error");
+                    }
+                });*@
+            },
+        });
+
+        $('.showTracks').on('click', function () {
+            id = $(this).attr("id");
+            idvariables = id.split("-");
+            spanID = "#plus-icon-" + idvariables[1];
+            if ($(spanID).length > 0) {
+                classes=$(spanID).attr("class");
+
+                if (classes.includes("fa-plus")) {
+                                        classes = classes.replace('fa-plus', 'fa-minus');
+                                    }
+                else {
+                    classes = classes.replace('fa-minus', 'fa-plus');
+
+                }
+                $(spanID).attr("class", classes);
+            }
+            $(this).closest('.releaseRow').find('.releaseTracks').slideToggle(function () {
+                //if ($(this).children().length)
+
+            });
+        });
+
+        $(".tooltip_bottom_center").tooltip({
+            tooltipClass: "tooltipBox",
+            show: {
+                effect: "slideDown",
+                delay: 100
+            },
+
+            position: {
+                my: "center",
+                at: "bottom+10"
+            }
+        });
+                  var releaseItem = $('.releases li ul.releaseRow');
+        releaseItem = releaseItem.slice(1);
+        var container = $('.releases > li ul.releaseRow:gt(0)');
+        var order = [3, 4];
+        var release_id = null;
+
+        $(document).one('ready', function () {
+            setOrder(order);
+        });
+
+        // Set releases order
+        function setOrder(order) {
+            // console.log(order);
+            if (order !== undefined && order !== null && order.length !== 0) {
+                // console.log('A - ' + 'Order: ' + order);
+                render(order);
+            } else {
+                // TODO update to be actual release id's of default value being used on page load.
+                $.each(releaseItem, function (i, v) {
+
+                    // var release_id = i; // update to use actual release ID.
+                    // $(this).attr('data-soResourceseGeneralsourcesurcesurcest', release_id);
+                    order.push($(this).data('sort'));
+                    var items = $(this).children('li');
+
+                    $.each(items, function (i, v) {
+                        $(this).attr('data-sort', $(this).parent().data('sort') + '.' + i++);
+                    });
+
+                });
+                // console.log('B');
+                render(order);
+            }
+        }
+
+
+        // Get releases order
+        function getOrder() {
+            if (order !== undefined && order !== null && order.length !== 0) {
+                return order;
+            } else {
+                return 0;
+            }
+        }
+
+        // Sort releases order based on sort selction
+        function sortReleases(sortby) // string
+        {
+            // Get current order
+            var currentOrder = getOrder();
+            // console.log(currentOrder);
+
+            var dataValue = [];
+            var sortValue = Array();
+            var toSort = [];
+            var newOrder = [];
+
+            $.each(releaseItem, function () {
+                dataValue.push($(this).children('li').not('li.releaseTracks'));
+            });
+
+            $.each(dataValue, function (k, v) {
+                $.each(v, function () {
+                    if ($(this).data('sortby') === sortby) {
+                        var rId = 'release_' + $(this).parent().data('sort');
+                        // console.log(rId + ' ' + $(this).text());
+                        sortValue[rId] = $(this).text();
+                    }
+                });
+            });
+            // console.log(sortValue);
+
+            var alpha = /[^a-zA-Z]/g;
+            var numeric = /[^0-9]/g;
+
+            function sortAlphaNum(a, b) {
+                console.log(a);
+                console.log(b);
+                var aA = a.replace(alpha, "");
+                var bA = b.replace(alpha, "");
+                if (aA === bA) {
+                    var aN = parseInt(a.replace(numeric, ""), 10);
+                    var bN = parseInt(b.replace(numeric, ""), 10);
+                    return aN === bN ? 0 : aN > bN ? 1 : -1;
+                } else {
+                    return aA > bA ? 1 : -1;
+                }
+            }
+            // console.log(sortValue);
+            sortValue.sort(sortAlphaNum);
+            // sortAlphaNum(sortValue);
+            console.log(sortValue);
+            render(sortValue);
+        }
+
+        // Event, listen for releases order selection
+        $('.releaseHeadings .fa-sort').on('click', function () {
+            var sortby = $(this).parent().data('sortby');
+            sortReleases(sortby);
+        });
+
+        function render(order) {
+            console.log('Output HTML of releases in new order: ' + order);
+        }
+
+        $("#NewBuilderForNewCountry").on("click", function () {
+            let countryId = $("#selectCountry").val();
+
+            if (countryId != "") {
+                $.ajax({
+                    url: "@Url.Action("NBNC", "Section")",
+                    data: { countryId: countryId },
+            type: "GET",
+            success: function (data) {
+
+                    toastr.success(data)
+
+            },
+                    error: function (data) {
+                        toastr.error(data)
+
+            }
+        });
+            }
+
+        });
+        $("#ShowDefualtMBbtn").on("click", function () {
+            $("#DefaultMBCard").toggle();
+            $("#ShowDefualtMBbtn").html($("#DefaultMBCard").css("display") == "none" ? "@Resources.General.ShowDefaultMBbtn" : "@Resources.General.HideDefaultMBbtn")
+        });
+    }); // end of document.ready
+//# sourceURL=pen.js
+            </script>
+            <script>
+    $(".editSection").on("click", function () {
+        var sectionId = $(this).attr("data-SectionId")
+        $(".list_icon").removeClass("activee");
+        $(".trackRow").removeClass("activee");
+        $(this).parent().parent().addClass("activee");
+        $.ajax({
+            url: "@Url.Action("EditSe", "Section")",
+            data: { "sectionId": sectionId },
+            type: "GET",
+            async: false,
+            success: function (data) {
+                $("#divEditSection").html(data);
+                @if (Session["CMS"] == null || (bool)Session["CMS"] == false)
+                    {<text>
+                        var divEditSection = document.getElementById("divEditSection");
+                        var ix = divEditSection.style.display == "none" ? 0 : 1;
+
+                $('#defult').toggle(ix === 1);
+                $('#divEditSection').toggle(ix === 0);
+                </text>
+                    }
+                },
+            error: function (data) {
+                console.log(data)
+                toastr.error("Error")
+            }
+        });
+    });
+                function deleteSection(sectionId) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire(
+                                'Deleted!',
+                                'After subscription user can delete any section and it will be effected in database, for now deleting section will not affected into database',
+                                'success'
+                            )
+                        }
+                    })
+
+    };
+                $("#DownloadPolicy").click(function () {
+                    Swal.fire('To download your own HR policy you need to subscribe')
+                });
+                $("#AddNewSection").click(function () {
+                    Swal.fire('To add new section into your own HR policy you need to subscribe')
+                });
+            </script>

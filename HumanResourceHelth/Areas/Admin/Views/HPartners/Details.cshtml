@@ -1,0 +1,115 @@
+﻿@model HumanResourceHelth.Model.HPartners
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Partners</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerNameAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerNameAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerofficalEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerofficalEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerofficalPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerofficalPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerCountry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerCountry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerFocalPointName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerFocalPointName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerFocalPointNameAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerFocalPointNameAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerFocalPointEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerFocalPointEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerFocalPointPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerFocalPointPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnerSubDomain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnerSubDomain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

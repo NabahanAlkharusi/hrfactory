@@ -530,5 +530,11 @@ namespace HumanResourceHelth.Web.Controllers
                 return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult Partner(int id)
+        {
+            OurPartners partner = _uow.OurPartnersRepo.FindById(id);
+            return View(partner);
+            
+        }
     }
 }

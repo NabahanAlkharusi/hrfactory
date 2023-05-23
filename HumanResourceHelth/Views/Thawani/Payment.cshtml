@@ -32,72 +32,72 @@
                     <tbody>
                         <tr>
                             <th class="w-25">@Resources.General.PlanName</th>
-                            <td class="@Text_Align" colspan="3">@ViewBag.plan</td>
+                            <td class="text-end" colspan="3">@ViewBag.plan</td>
                         </tr>
                         <tr>
                             <th class="w-25">@Resources.General.SubscriptionPeriod</th>
-                            <td class="@Text_Align" colspan="3">@ViewBag.subscriptionPeriod</td>
+                            <td class="text-end" colspan="3">@ViewBag.subscriptionPeriod</td>
                         </tr>
                         <tr>
                             <th class="w-25">@Resources.General.Subscriptionfrom</th>
-                            <td class="@Text_Align">@ViewBag.DateFrom</td>
+                            <td class="text-end">@ViewBag.DateFrom</td>
                             <th class="w-25">@Resources.General.To</th>
-                            <td class="@Text_Align">@ViewBag.DateTo</td>
+                            <td class="text-end">@ViewBag.DateTo</td>
                         </tr>
                         <tr>
                             <th>@Resources.General.SelectCurrency</th>
-                            <td class="@Text_Align">
+                            <td class="text-end">
                                 <select id="Currencies" class="form-control"></select>
                             </td>
                         </tr>
                         <tr>
                             <th class="w-25">@Resources.General.SubscriptionPrice</th>
-                            <td class="@Text_Align" >@ViewBag.Amount  @Resources.General.OMR</td>
-                            <td class="@Text_Align" id="AmountTxt"></td>
-                            <td class="@Text_Align" id="AmountVal"></td>
+                            <td class="text-end" >@ViewBag.Amount  @Resources.General.OMR</td>
+                            <td class="text-end" id="AmountTxt"></td>
+                            <td class="text-end" id="AmountVal"></td>
                         </tr>
                         <tr>
                             <th class="w-25">@Resources.General.Total</th>
-                            <td class="@Text_Align">@ViewBag.Amount  @Resources.General.OMR</td>
-                            <td class="@Text_Align" id="TotalTxt"></td>
-                            <td class="@Text_Align" id="TotalVal"></td>
+                            <td class="text-end">@ViewBag.Amount  @Resources.General.OMR</td>
+                            <td class="text-end" id="TotalTxt"></td>
+                            <td class="text-end" id="TotalVal"></td>
                         </tr>
 
                         @*</table>
                             </div>*@
-                        @*<div class="row @Text_Align">
+                        @*<div class="row text-end">
                                 <h5>@Resources.General.PlanName: </h5>@ViewBag.plan
                             </div>
-                            <div class="row @Text_Align">
+                            <div class="row text-end">
                                 <h5>@Resources.General.SubscriptionPeriod: </h5>@ViewBag.subscriptionPeriod
                             </div>
-                            <div class="row @Text_Align">
+                            <div class="row text-end">
                                 <h5>@Resources.General.Subscriptionfrom: </h5> @ViewBag.DateFrom <h5> @Resources.General.To: </h5> @ViewBag.DateTo
                             </div>
-                            <div class="row @Text_Align">
+                            <div class="row text-end">
                                 <h5>@Resources.General.SubscriptionPrice: </h5> @ViewBag.Amount  @Resources.General.OMR
                             </div>*@
-                        @*<div class="row @Text_Align">
+                        @*<div class="row text-end">
                                 <h5>@Resources.General.VAT 5% </h5> 5
                             </div>*@
-                        @*<div class="row @Text_Align">
+                        @*<div class="row text-end">
                                 <h5>@Resources.General.Total </h5> @ViewBag.Amount  @Resources.General.OMR
                             </div>*@
-                        @*<div class="row @Text_Align">
+                        @*<div class="row text-end">
                             <table class="table table-hover">*@
                         <tr>
-                            <td colspan="4" class="@Text_Align">
+                            <td colspan="4" class="text-end">
                                 <h5>@Resources.General.Paywith</h5>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="@Text_Align">
+                            <td colspan="2" class="text-center">
 
                                 <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = ViewBag.planId, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = ViewBag.Amount+"000" })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
-                                    <img src="https://thawani.om/wp-content/themes/thawani/images/logo.svg" style="width:100%; height:100px;">
+                                    <img src="~/assets/img/Logo-Thawani.png" style="width:100%; height:100px;">
                                 </a>
                             </td>
-                            <td colspan="2" class="@Text_Align">
+                            <td colspan="2" class="text-center">
                                 <form action="~/Thawani/Create" method="post">
                                     @Html.AntiForgeryToken()
                                     <button type="submit">

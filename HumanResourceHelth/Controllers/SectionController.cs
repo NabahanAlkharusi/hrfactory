@@ -13,13 +13,16 @@ using System.Web.UI;
 using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
-
+using System.Configuration;
+using static System.Collections.Specialized.BitVector32;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HumanResourceHelth.Web.Controllers
 {
     public class SectionController : Controller
     {
         UnitOfWork _uow = new UnitOfWork();
+        bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
         public ActionResult Index()
         {
             Session["Backto"] = "Section";
@@ -400,6 +403,11 @@ namespace HumanResourceHelth.Web.Controllers
             HumanResourceHelth.Model.Section section = _uow.SectionRepo.FindById(sectionId);
             return PartialView("_Edit", section);
         }
+        public ActionResult EditSe(int sectionId)
+        {
+            HumanResourceHelth.Model.Section section = _uow.SectionRepo.FindById(sectionId);
+            return PartialView("_Edits", section);
+        }
         [HttpPost]
         [ValidateInput(false)]
         public ActionResult SaveContent(int sectionId, string title, string description, string content, bool isNewPage)
@@ -427,7 +435,7 @@ namespace HumanResourceHelth.Web.Controllers
             }
             catch (Exception ex)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "There is an error in uploading company logo "+ex.Message);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "There is an error in uploading company logo " + ex.Message);
             }
         }
         public ActionResult SaveIntroVedio(string vedioEmbadEn, string vedioEmbadAr, string isUploaded)
@@ -509,5 +517,88 @@ namespace HumanResourceHelth.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Error Happend");
             }
         }
+        public ActionResult SectionPlans()
+        {
+            int userPlan = 0;
+            Plan plan = _uow.PlanRepo.FindById((int)SubscriptionPlan.ManualBuilder);
+            ViewBag.AnnualPrice = plan.AnnualPrice;
+            ViewBag.MonthlyPrice = plan.ManthlyPrice;
+            ViewBag.AnnualPriceDisp = (int)(plan.AnnualPrice * 2.6008);
+            ViewBag.MonthlyPriceDisp = (int)(plan.ManthlyPrice * 2.6008);
+            ViewBag.isFreePlan = false;
+
+            if (Session["UserId"] != null)
+            {
+                int user_id = (int)Session["UserId"];
+                userPlan = _uow.UserPlanRepo.Search(a => a.UserId == user_id && a.PlanId == (int)SubscriptionPlan.ManualBuilder && a.IsActive).Count();
+                UserPlan builderPlan = _uow.UserPlanRepo.Search(a => a.UserId == user_id && a.PlanId == (int)SubscriptionPlan.ManualBuilder && a.IsActive).FirstOrDefault();
+                if (builderPlan != null)
+                {
+                    ViewBag.isFreePlan = builderPlan.IsFreeActive ? true : false;
+                    TimeSpan planPeriod = builderPlan.EndDate - builderPlan.StartDate;
+                    if (planPeriod.TotalDays > 60)
+                        ViewBag.PlanType = 2;
+                    else
+                        ViewBag.PlanType = 1;
+                }
+                else
+                {
+                    ViewBag.PlanType = 0;
+                }
+                // get user country ID
+                int UserCountryId = _uow.UserRepo.FindById(user_id).CountryId;
+                TermsConditions terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanMonthly).FirstOrDefault();
+                terms = terms == null ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanMonthly).FirstOrDefault() : terms;
+
+                ViewBag.MBMTitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.MBMText = isArabic ? terms.ArabicText : terms.EnglishText;
+
+                terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == UserCountryId && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanAnnually).FirstOrDefault();
+                terms = terms == null ? _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanAnnually).FirstOrDefault() : terms;
+
+                ViewBag.MBATitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.MBAText = isArabic ? terms.ArabicText : terms.EnglishText;
+                //return View(section);
+            }
+
+            if (Session["UserId"] == null || userPlan == 0)
+            {
+                ViewBag.PlanType = 0;
+                Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
+                User user = _uow.UserRepo.Search(x => x.IsAdmin).FirstOrDefault();
+                List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == user.Id && x.LanguageId == (int)language && x.CountryID == user.CountryId).OrderBy(a => a.Ordering).ToList();
+                SectionViewModel section = new SectionViewModel()
+                {
+                    Sections = sections
+                };
+                TermsConditions terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanMonthly).FirstOrDefault();
+
+                ViewBag.MBMTitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.MBMText = isArabic ? terms.ArabicText : terms.EnglishText;
+
+                terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanAnnually).FirstOrDefault();
+
+                ViewBag.MBATitle = isArabic ? terms.ArabicTitle : terms.EnglishTitle;
+                ViewBag.MBAText = isArabic ? terms.ArabicText : terms.EnglishText;
+                return View(section);
+            }
+
+            else
+                return RedirectToAction("Index");
+
+        }
+        public ActionResult SharePolicy(int id)
+        {
+
+
+            //List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == id && x.LanguageId == (int)Language.English).OrderBy(a => a.Ordering).ToList();
+            List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == id).OrderBy(a => a.Ordering).ToList();
+
+            return View(sections);
+
+
+        }
+
+        
     }
 }

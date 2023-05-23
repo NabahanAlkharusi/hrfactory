@@ -1,0 +1,89 @@
+﻿
+@using HumanResourceHelth.Model.Resources
+@{ bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "ltr";
+    var icon_align = isArabic ? "pull-left" : "pull-right";
+    var row_item_align = isArabic ? "pull-right" : "";
+    var stats_icon_class = isArabic ? "stats-icon-ar" : "stats-icon"; }
+
+
+<div>
+    <div class="row h4" dir="@dir">
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-green">
+                <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Partnerships</h4>
+                    <p></p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","HPartnerships", new { Area = "Admin"})">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-orange">
+                <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Partners</h4>
+                    <p></p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","HPartners")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-purple">
+                <div class="@stats_icon_class"><i class="fa fa-desktop"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.ThePlans</h4>
+                    <p></p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","HPlansToPartnerShips")">@Resources.General.ViewDetails</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-red">
+                <div class="@stats_icon_class"><i class="fa fa-clock-o"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Functions</h4>
+                    <p></p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","HFunctions")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-red">
+                <div class="@stats_icon_class"><i class="fa fa-clock-o"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Practices</h4>
+                    <p></p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","HFunctionPractices")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <!-- end col-3 -->
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-purple">
+                <div class="@stats_icon_class"><i class="fa fa-desktop"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Questions</h4>
+                    <p></p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","HPracticeQuestions")">@Resources.General.ViewDetails</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

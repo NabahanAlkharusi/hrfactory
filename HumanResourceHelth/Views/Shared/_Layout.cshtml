@@ -130,7 +130,7 @@
     <script type="text/javascript" src="~/assets/revslider/js/extensions/revolution.extension.video.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.15.0/full/ckeditor.js"></script>
     <script src="~/Scripts/jquery.blockUI.js"></script>
-
+    @RenderSection("styles", required: false)
 </head>
 
 <body class="background-white">
@@ -153,6 +153,7 @@
         }
     }
     @{
+        int userID_ = 0;
         bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
         var dir = isArabic ? "rtl" : "ltr";
         var Email_Tel = isArabic ? "ltr" : "";
@@ -161,19 +162,77 @@
         //var Cancelbtnstyle = "";
         var acceptbtnstyle = isArabic ? "margin-right: 0.25rem !important;" : "";
         var textRight = isArabic ? "text-right" : "";
+        HumanResourceHelth.DataAccess.UnitOfWork _unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+        List<HumanResourceHelth.Model.OurPartners> OurPartners = _unit.OurPartnersRepo.GetAll().OrderBy(a => a.PartnerSort).ToList();
     }
-
-    @if (Session["eligableForFreeSU"] == null)
+    @if (Session["UserId"] == null)
     {
-        <script type="text/javascript">
-            $(document).ready(function () {
-                toastr.error("Your Session has been expired System Will Redirect You To Home Page", "Session Timeout");
-            }
-        </script>
-
-        Response.Redirect(Url.Action("Index", "Home"));
-
+        Session["eligableForFreeSU"] = true;
+        Session["eligableForFreeMB"] = true;
+        Session["eligableForFree"] = true;
     }
+    else
+    {
+        bool havingMBSub = false;
+        bool havingSUSub = false;
+        Session["eligableForFreeSU"] = false;
+        Session["eligableForFreeMB"] = false;
+        userID_ = (int) int.Parse(Session["UserId"].ToString());
+        List<UserPlan> subscriptionPlan = _unit.UserPlanRepo.Search(x => x.UserId == userID_ && !x.IsActive).ToList();
+        List<UserPlan> subscriptionPlan1 = _unit.UserPlanRepo.Search(x => x.UserId == userID_).ToList();
+        if (subscriptionPlan1.Count == 0)
+        {
+            Session["eligableForFree"] = true;
+            Session["eligableForFreeSU"] = true;
+            Session["eligableForFreeMB"] = true;
+        }
+        else
+        {
+            foreach (UserPlan Plansub in subscriptionPlan1)
+            {
+                if (Plansub.IsFreeActive)
+                {
+                    DateTime dateToday = DateTime.Now;
+                    if ((Plansub.EndDate.Date - dateToday.Date).Days <= 0)
+                    {
+                        Plansub.IsActive = false;
+                        Plansub.IsFreeActive = false;
+                        _unit.SaveChanges();
+                    }
+                }
+                if (Plansub.PlanId == (int)SubscriptionPlan.Startup)
+                { havingSUSub = true; }
+                if (Plansub.PlanId == (int)SubscriptionPlan.ManualBuilder)
+                {  havingMBSub = true;
+                }
+            }
+            if (!havingMBSub)
+            { Session["eligableForFreeMB"] = true; }
+            else
+            { Session["eligableForFreeMB"] = false; }
+            if (!havingSUSub)
+            { Session["eligableForFreeSU"] = true; }
+            else
+            { Session["eligableForFreeSU"] = false; }
+            if (!havingMBSub || !havingSUSub)
+            { Session["eligableForFree"] = true; }
+            else
+            { Session["eligableForFree"] = false; }
+        }
+        Session["NotActiveuserPlans"] = subscriptionPlan;
+    }
+
+    @*@if (Session["eligableForFreeSU"] == null)
+        {
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    toastr.error("Your Session has been expired System Will Redirect You To Home Page", "Session Timeout");
+                }
+            </script>
+
+            Response.Redirect(Url.Action("Index", "Home"));
+
+        }*@
     <!-- header -->
     <header class="gradient-white box-shadow">
         <div class="background-grey-2 padding-tb-5px position-relative">
@@ -318,7 +377,7 @@
             <div class="container header-in">
                 <div class="row">
                     <div class="col-xl-2 col-lg-2"> <a id="logo" href="/" class="d-inline-block margin-tb-10px"><img src="~/assets/img/logo-1.png" alt=""></a> <a class="mobile-toggle padding-15px background-main-color" href="#"><i class="fas fa-bars"></i></a> </div>
-                    <div class="col-xl-4 col-lg-4 margin-tb-25px">
+                    <div class="col-xl-3 col-lg-3 margin-tb-25px">
                         <div class="text-center">
                             @{
                                 bool isEligableForFree = Session["eligableForFree"] == null ? true : (bool)Session["eligableForFree"];
@@ -333,7 +392,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 margin-tb-25px">
+                    <div class="col-xl-5 col-lg-5 margin-tb-25px">
                         <div class="float-lg-right">
                             <ul id="menu-main" class="float-lg-left nav-menu dropdown-dark">
                                 <li><a href="@Url.Action("Index", "Home")">@Resources.General.Home</a></li>
@@ -347,6 +406,20 @@
                                     <li><a href="@(Url.Action("Index", "Home"))#subscriptionPlans">@Resources.General.ThePlans</a> </li>
                                 }
                                 <li><a href="@Url.Action("Index", "TrainingHome")#learnOnline">@Resources.General.Learn</a> </li>
+                                <li class="dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                        @Resources.General.OurPartners
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        @foreach (HumanResourceHelth.Model.OurPartners ourPartner in OurPartners)
+                                        {
+
+                                            <a class="dropdown-item" href="@Url.Action("Partner", "Home", new { id = (int) ourPartner.Id })"><img class="contentImage" style="max-height:50px;" src="@Url.Content(ourPartner.PartnerLogo)" alt=""></a>
+                                        }
+                                        @*<a class="dropdown-item" href="#">Another action</a>*@
+
+                                    </div>
+                                </li>
                                 <li><a href="@Url.Action("Index", "Home")#consultHR">@Resources.General.Consult</a> </li>
                                 <li><a href="@Url.Action("AboutUs", "Home")">@Resources.General.AboutUs</a> </li>
                                 @*<li><a href="@Url.Action("ContactUs","Home")">@Resources.General.Ask</a></li>*@
@@ -475,8 +548,8 @@
 
     @*==========================================================================*@
     <script>
-                                                $.blockUI.defaults.message = "Please Wait";
-            $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+        $.blockUI.defaults.message = "Please Wait";
+        $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
     </script>
     <script>
         $(".cms").on("click", function (e) {

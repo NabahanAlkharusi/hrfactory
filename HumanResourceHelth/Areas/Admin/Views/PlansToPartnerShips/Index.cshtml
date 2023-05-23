@@ -130,24 +130,24 @@
                             <tr class="text-center">
                                 <td>
                                     @if (isArabic)
-                                    {@Html.DisplayFor(modelItem => item.PlanTitleAr)}
+                                    {@Html.Raw( item.PlanTitleAr)}
                                 else
                                 {
-                                    @Html.DisplayFor(modelItem => item.PlanTitle)
+                                    @Html.Raw( item.PlanTitle)
                                 }
                                 </td>
                                 <td>
                                     @if (isArabic)
-                                    {@Html.DisplayFor(modelItem => item.ObjectiveAr)}
+                                    {@Html.Raw(item.ObjectiveAr)}
                                 else
                                 {
-                                    @Html.DisplayFor(modelItem => item.Objective)
+                                    @Html.Raw(item.Objective)
                                 }
                                 </td>
                                 <td>
                                     @if (isArabic)
                                     {@Html.DisplayFor(modelItem => item.ProcessAr)}
-                                else
+                     `           else
                                 {
                                     @Html.DisplayFor(modelItem => item.Process)}
                                 </td>
@@ -181,10 +181,10 @@
                                 </td>
                                 <td>
                                     @if (isArabic)
-                                    {@Html.DisplayFor(modelItem => item.LimitationsAr)}
+                                    {@Html.Raw( item.LimitationsAr)}
                                 else
                                 {
-                                    @Html.DisplayFor(modelItem => item.Limitations)
+                                    @Html.Raw( item.Limitations)
                                 }
                                 </td>
 

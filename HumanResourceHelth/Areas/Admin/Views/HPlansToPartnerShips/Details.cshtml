@@ -1,0 +1,155 @@
+﻿@model HumanResourceHelth.Model.HPartnerShipPlans
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PlansToPartnerShip</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PlanTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlanTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Objective)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Objective)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Process)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Process)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.audience)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.audience)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Report)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Report)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryMode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryMode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Limitations)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Limitations)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlanTitleAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlanTitleAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ObjectiveAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ObjectiveAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProcessAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProcessAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReportAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReportAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryModeAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryModeAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LimitationsAr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LimitationsAr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TamplatePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TamplatePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentMethod)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentMethod)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

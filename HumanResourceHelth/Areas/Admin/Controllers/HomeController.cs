@@ -34,7 +34,9 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 Updates = _uow.UpdatesRepo.Count(),
                 Files = _uow.DocFileRepo.Count(),
                 DefaultMBs = defaultMBs.Select(a => new { a.CountryID, a.CompanySize }).Distinct().Count(),
-                Partnerships = _uow.PartnershipRepo.Count()
+                Partnerships = _uow.PartnershipRepo.Count(),
+                HPartnerships = _uow.HPartnershipRepo.Count(),
+                OurPartner = _uow.OurPartnersRepo.Count()
 
             };
 

@@ -153,6 +153,9 @@
   <data name="Back" xml:space="preserve">
     <value>رجوع</value>
   </data>
+  <data name="Basedonagreed" xml:space="preserve">
+    <value>على أساس نطاق العمل المتفق عليه.</value>
+  </data>
   <data name="BookAnAppointment" xml:space="preserve">
     <value>احجز ميعاد</value>
   </data>
@@ -185,6 +188,9 @@
   </data>
   <data name="CancelledDeletingParent" xml:space="preserve">
     <value>إطمئن القسم الرئيس وأفرعه بأمان</value>
+  </data>
+  <data name="Cash" xml:space="preserve">
+    <value>نقدا</value>
   </data>
   <data name="Categories" xml:space="preserve">
     <value>تصنيفات المستندات</value>
@@ -414,6 +420,9 @@
   <data name="Finish" xml:space="preserve">
     <value>انهاء</value>
   </data>
+  <data name="Forwhom" xml:space="preserve">
+    <value>لمن?</value>
+  </data>
   <data name="FreePlan" xml:space="preserve">
     <value>باقة مجانية</value>
   </data>
@@ -424,7 +433,7 @@
     <value>الوظيفية</value>
   </data>
   <data name="FunctionRespondent" xml:space="preserve">
-    <value>من سيجيب على استبانة أولوية هذه الوظيفة؟</value>
+    <value>من سيجيب على استبانة الأولويات لهذه الوظيفة؟</value>
   </data>
   <data name="Functions" xml:space="preserve">
     <value>الوظائف</value>
@@ -440,6 +449,9 @@
   </data>
   <data name="GetFreeSub" xml:space="preserve">
     <value>اشترك مجانا لمدة 7 أيام</value>
+  </data>
+  <data name="GetStarted" xml:space="preserve">
+    <value>إبدء</value>
   </data>
   <data name="Go" xml:space="preserve">
     <value>انطلق</value>
@@ -613,11 +625,20 @@
   <data name="OMR" xml:space="preserve">
     <value>ريال عمانى</value>
   </data>
+  <data name="onlinePay" xml:space="preserve">
+    <value>دفع إلكتروني</value>
+  </data>
   <data name="OrderHere" xml:space="preserve">
     <value>اشترك من هنا</value>
   </data>
   <data name="Other" xml:space="preserve">
     <value>أخرى</value>
+  </data>
+  <data name="OurLegalPartner" xml:space="preserve">
+    <value>شريكنا القانوني</value>
+  </data>
+  <data name="OurPartners" xml:space="preserve">
+    <value>شركائنا</value>
   </data>
   <data name="Paid" xml:space="preserve">
     <value>الباقة المدفوعة</value>
@@ -689,6 +710,9 @@
     <value>الدفع</value>
   </data>
   <data name="PaymentMethod" xml:space="preserve">
+    <value>طريقة الدفع</value>
+  </data>
+  <data name="PaymentMode" xml:space="preserve">
     <value>طريقة الدفع</value>
   </data>
   <data name="Paywith" xml:space="preserve">
@@ -787,6 +811,9 @@
   <data name="ProceedPayment" xml:space="preserve">
     <value>مواصلة الدفع</value>
   </data>
+  <data name="Process" xml:space="preserve">
+    <value>عملية</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>الملف الشخصى</value>
   </data>
@@ -856,8 +883,62 @@
   <data name="SectionActivated" xml:space="preserve">
     <value>تم التفعيل</value>
   </data>
+  <data name="SectionCPlanFor" xml:space="preserve">
+    <value>العميل الذي يريد تخصيص دليل سياسة الموارد البشرية / مناسب للغرض من وجهة نظر الموارد البشرية.</value>
+  </data>
+  <data name="SectionCPlanProcess1" xml:space="preserve">
+    <value>يعمل مستشار (مستشارو) الموارد البشرية معك لتسهيل تطوير دليل مخصص لسياسة الموارد البشرية.</value>
+  </data>
+  <data name="SectionCPlanTitle" xml:space="preserve">
+    <value>دليل سياسة الموارد البشرية المخصص.</value>
+  </data>
   <data name="SectionDeactivated" xml:space="preserve">
     <value>تم الحجب</value>
+  </data>
+  <data name="SectionOLPlanFor" xml:space="preserve">
+    <value>العميل الذي لديه بالفعل دليل سياسات الموارد البشرية الخاص به ويحتاج فقط إلى مراجعة قانونية.</value>
+  </data>
+  <data name="SectionOLPlanProcess1" xml:space="preserve">
+    <value>اتصل بالمكتب القانوني مباشرة.</value>
+  </data>
+  <data name="SectionOLPlanTitle" xml:space="preserve">
+    <value>مراجعة قانونية فقط</value>
+  </data>
+  <data name="SectionSLPlanFor" xml:space="preserve">
+    <value>العميل الذي يريد فقط الوصول إلى سياسات إنشاء دليل الموارد البشرية للشكوى / السياسات المعبأة مسبقًا ثم الحصول على مراجعة قانونية وختم وزارة العمل.</value>
+  </data>
+  <data name="SectionSLPlanonlinePay1" xml:space="preserve">
+    <value>عبر الإنترنت للخطة القياسية</value>
+  </data>
+  <data name="SectionSLPlanonlinePay2" xml:space="preserve">
+    <value>نقدا للمراجعة القانونية</value>
+  </data>
+  <data name="SectionSLPlanProcess1" xml:space="preserve">
+    <value>الوصول إلى منشئ دليل الموارد البشرية.</value>
+  </data>
+  <data name="SectionSLPlanProcess2" xml:space="preserve">
+    <value>قم بتحرير الدليل وفقًا لمتطلباتك.</value>
+  </data>
+  <data name="SectionSLPlanProcess3" xml:space="preserve">
+    <value>احفظ الدليل وقم بتنزيله.</value>
+  </data>
+  <data name="SectionSLPlanProcess4" xml:space="preserve">
+    <value>احصل على مراجعة الشركة القانونية.</value>
+  </data>
+  <data name="SectionSLPlanTitle" xml:space="preserve">
+    <value>الأساسية+ مراجعة قانونية</value>
+  </data>
+  <data name="SectionSPlanFor" xml:space="preserve">
+    <value>العملاء الذين يريدون فقط الوصول إلى منشئ دليل الموارد البشرية المعبأة مسبقًا</value>
+  </data>
+  <data name="SectionSPlanProcess1" xml:space="preserve">
+    <value>الوصول إلى منشئ دليل الموارد البشرية.</value>
+  </data>
+  <data name="SectionSPlanProcess2" xml:space="preserve">
+    <value>قم بتحرير الدليل وفقًا لمتطلباتك.</value>
+  </data>
+  <data name="SectionSPlanTitle" xml:space="preserve">
+    <value>الأساسية</value>
   </data>
   <data name="SeeFiles" xml:space="preserve">
     <value>ملفات الباقة</value>
@@ -873,6 +954,9 @@
   </data>
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
+  </data>
+  <data name="SharePolicy" xml:space="preserve">
+    <value>شارك اللائحة</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>عرض</value>
@@ -963,6 +1047,9 @@
   </data>
   <data name="subscriptionPeriodYear" xml:space="preserve">
     <value>سنة</value>
+  </data>
+  <data name="SubscriptionPlans" xml:space="preserve">
+    <value>خطط الاشتراك</value>
   </data>
   <data name="SubscriptionPrice" xml:space="preserve">
     <value>قيمة الاشتراك</value>

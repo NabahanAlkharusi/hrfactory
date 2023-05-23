@@ -1,0 +1,105 @@
+﻿@model IEnumerable<HumanResourceHelth.Model.HFunctions>
+
+@using HumanResourceHelth.Model.Resources
+@{ ViewBag.Title = "Index";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    string OPText_align = isArabic ? "text-left" : "text-right";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    HumanResourceHelth.DataAccess.UnitOfWork unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.HPartnerShipPlans> plans = unit.HPartnerShipPlansRepo.GetAll();
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.Functions</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group ml-2 col-lg-10">
+                            <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                                @AppResource.Create
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+                        <div class="btn-group ml-2 col-lg-12">
+                            <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Landing","HPartnerships", new { Area = "Admin"})">
+                                <i class="fa fa-backward" style="@rotate"></i>
+                                @Resources.General.Back
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th class="text-center">
+                                @Resources.General.FunctionTitleEnglish
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.FunctionTitleArabic
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PlanName
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.Status
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-center">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FunctionTitle)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FunctionTitleAr)
+                                </td>
+                                <td>
+                                    @{HumanResourceHelth.Model.HPartnerShipPlans plan = plans.Where(a => a.Id == item.planId).FirstOrDefault();
+                                        if (isArabic)
+                                        {
+                                            <p>@plan.PlanTitleAr</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@plan.PlanTitle</p>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.status)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿@model List<HumanResourceHelth.Model.Section>
+
+@{
+    ViewBag.Title = "SharePolicy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "ltr";
+    var accordion_header_text = isArabic ? "text-right" : "text-left";
+    var justify = isArabic ? "justify-content-end" : "justify-content-start";
+    var slideInLeft = isArabic ? "slideInRight" : "slideInLeft";
+    var slideInRight = isArabic ? "slideInLeft" : "slideInRight";
+    var alignfloat = isArabic ? "float-right" : "float-left";
+    var invalignfloat = isArabic ? "float-left" : "float-right";
+    var EditDisplayClass = "display:block";
+    string sectionItemClass = isArabic ? "float-right" : "float-left mr-4";
+    int lang = isArabic ? 2 : 1;
+}
+}
+<div class="container" dir="@dir">
+    <div class="accordion" id="accordionExample">
+
+        @foreach (HumanResourceHelth.Model.Section parent in Model.Where(a => a.ParenId == null && a.LanguageId == lang).ToList())
+        {
+            string collapseid = "collapse" + parent.Id.ToString();
+            string Hacollapseid = "#collapse" + parent.Id.ToString();
+            <div class="card mb-3">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block @accordion_header_text" type="button" data-toggle="collapse" data-target="@Hacollapseid" aria-expanded="true" aria-controls="@collapseid">
+                            @parent.Title
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="@collapseid" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body @accordion_header_text">
+                        @Html.Raw(parent.Content)
+                        <div class="accordion" id="ChaccordionExample">
+                            @foreach (HumanResourceHelth.Model.Section child in parent.Childs)
+                            {
+                                string collapseCid = "collapse" + child.Id.ToString();
+                                string HacollapseCid = "#collapse" + child.Id.ToString();
+                                <div class="card mb-1">
+                                    <div class="card-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link btn-block @accordion_header_text" type="button" data-toggle="collapse" data-target="@HacollapseCid" aria-expanded="true" aria-controls="@collapseCid">
+                                                @child.Title
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="@collapseCid" class="collapse" aria-labelledby="headingOne" data-parent="#ChaccordionExample">
+                                        <div class="card-body @accordion_header_text">
+                                            @Html.Raw(child.Content)
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

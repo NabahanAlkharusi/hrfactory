@@ -51,11 +51,21 @@ namespace HumanResourceHelth.DataAccess
         public DbSet<DefaultMB> DefaultMB { get; set; }
         public DbSet<Functions> Functions { get; set; }
         public DbSet<Partners> Partners { get; set; }
+        public DbSet<OurPartners> OurPartners { get; set; }
         //public DbSet<PlansToPartnerShip> PartnerPlans { get; set; }
         public DbSet<FunctionPractice> FunctionPractices { get; set; }
         public DbSet<PracticeQuestions> PracticeQuestions { get; set; }
         public DbSet<Partnership> Partnerships { get; set; }
         public DbSet<PartnerShipPlans> partnerShipPlans { get; set; }
+        public DbSet<HFunctions> HFunctions { get; set; }
+        public DbSet<HPartners> HPartners { get; set; }
+        //public DbSet<PlansToPartnerShip> PartnerPlans { get; set; }
+        public DbSet<HFunctionPractice> HFunctionPractices { get; set; }
+        public DbSet<HPracticeQuestions> HPracticeQuestions { get; set; }
+        public DbSet<HPartnership> HPartnerships { get; set; }
+        public DbSet<HPartnerShipPlans> HpartnerShipPlans { get; set; }
+        // add Dbset for RequestMBService
+        public DbSet<RequestMBService> RequestMBService { get; set; }
         public HumanResourceContext() : base("HumanResourceContext")
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<HumanResourceContext, Migrations.Configuration>());

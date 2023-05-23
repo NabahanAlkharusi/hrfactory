@@ -52,11 +52,21 @@ namespace HumanResourceHelth.DataAccess
 
         public FunctionsRepo FunctionsRepo { get; set; }
         public PartnersRepo PartnersRepo { get; set; }
+        public OurPartnersRepo OurPartnersRepo { get; set; }
         //public PlansToPartnerShipRepo PlansRepo { get; set; }
         public FunctionPracticeRepo FunctionPracticeRepo { get; set; }
         public PracticeQuestionsRepo PracticeQuestionsRepo { get; set; }
         public PartnershipRepo PartnershipRepo { get; set; }
         public PartnerShipPlansRepo PartnerShipPlansRepo { get; set; }
+        public HFunctionsRepo HFunctionsRepo { get; set; }
+        public HPartnersRepo HPartnersRepo { get; set; }
+        //public PlansToPartnerShipRepo PlansRepo { get; set; }
+        public HFunctionPracticeRepo HFunctionPracticeRepo { get; set; }
+        public HPracticeQuestionsRepo HPracticeQuestionsRepo { get; set; }
+        public HPartnershipRepo HPartnershipRepo { get; set; }
+        public HPartnerShipPlansRepo HPartnerShipPlansRepo { get; set; }
+        // add RequestMBSeriveRepo
+        public RequestMBServiceRepo RequestMBServiceRepo { get; set; }
 
         #region Constructor
         public UnitOfWork() : this(null) { }
@@ -107,11 +117,21 @@ namespace HumanResourceHelth.DataAccess
             DefaultMBRepo = new DefaultMBRepo(_entities);
             FunctionsRepo = new FunctionsRepo(_entities);
             PartnersRepo = new PartnersRepo(_entities);
+            OurPartnersRepo = new OurPartnersRepo(_entities);
             //PlansRepo = new PlansToPartnerShipRepo(_entities);
             FunctionPracticeRepo = new FunctionPracticeRepo(_entities);
             PracticeQuestionsRepo = new PracticeQuestionsRepo(_entities);
             PartnershipRepo = new PartnershipRepo(_entities);
             PartnerShipPlansRepo = new PartnerShipPlansRepo(_entities);
+            HFunctionsRepo = new HFunctionsRepo(_entities);
+            HPartnersRepo = new HPartnersRepo(_entities);
+            //PlansRepo = new PlansToPartnerShipRepo(_entities);
+            HFunctionPracticeRepo = new HFunctionPracticeRepo(_entities);
+            HPracticeQuestionsRepo = new HPracticeQuestionsRepo(_entities);
+            HPartnershipRepo = new HPartnershipRepo(_entities);
+            HPartnerShipPlansRepo = new HPartnerShipPlansRepo(_entities);
+            // add RequestMBSeriveRepo
+            RequestMBServiceRepo = new RequestMBServiceRepo(_entities);
         }
         #endregion
 

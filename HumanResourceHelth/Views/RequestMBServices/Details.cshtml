@@ -1,0 +1,107 @@
+﻿@model HumanResourceHelth.Model.RequestMBService
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RequestMBService</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganizationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganizationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOFEmployees)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOFEmployees)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IndustryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IndustryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPerson)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactPerson)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactPEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactPersonPhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactPersonPhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HaveExistingHRMP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HaveExistingHRMP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExistingHRMPPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExistingHRMPPath)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

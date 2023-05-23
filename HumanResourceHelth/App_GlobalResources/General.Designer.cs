@@ -169,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Based on an agreed scope of work..
+        /// </summary>
+        internal static string Basedonagreed {
+            get {
+                return ResourceManager.GetString("Basedonagreed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Book an appointment.
         /// </summary>
         internal static string BookAnAppointment {
@@ -264,6 +273,15 @@ namespace Resources {
         internal static string CancelledDeletingParent {
             get {
                 return ResourceManager.GetString("CancelledDeletingParent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cash.
+        /// </summary>
+        internal static string Cash {
+            get {
+                return ResourceManager.GetString("Cash", resourceCulture);
             }
         }
         
@@ -952,6 +970,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to For whom?.
+        /// </summary>
+        internal static string Forwhom {
+            get {
+                return ResourceManager.GetString("Forwhom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free Plan.
         /// </summary>
         internal static string FreePlan {
@@ -979,7 +1006,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Who will Ansewr for this function Survey?.
+        ///   Looks up a localized string similar to Who will Answer for this function Priority Survey?.
         /// </summary>
         internal static string FunctionRespondent {
             get {
@@ -1029,6 +1056,15 @@ namespace Resources {
         internal static string GetFreeSub {
             get {
                 return ResourceManager.GetString("GetFreeSub", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get Started.
+        /// </summary>
+        internal static string GetStarted {
+            get {
+                return ResourceManager.GetString("GetStarted", resourceCulture);
             }
         }
         
@@ -1546,6 +1582,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Online.
+        /// </summary>
+        internal static string onlinePay {
+            get {
+                return ResourceManager.GetString("onlinePay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order Here.
         /// </summary>
         internal static string OrderHere {
@@ -1560,6 +1605,24 @@ namespace Resources {
         internal static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Our Legal Partner.
+        /// </summary>
+        internal static string OurLegalPartner {
+            get {
+                return ResourceManager.GetString("OurLegalPartner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Our Partners.
+        /// </summary>
+        internal static string OurPartners {
+            get {
+                return ResourceManager.GetString("OurPartners", resourceCulture);
             }
         }
         
@@ -1776,6 +1839,15 @@ namespace Resources {
         internal static string PaymentMethod {
             get {
                 return ResourceManager.GetString("PaymentMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment Mode.
+        /// </summary>
+        internal static string PaymentMode {
+            get {
+                return ResourceManager.GetString("PaymentMode", resourceCulture);
             }
         }
         
@@ -2068,6 +2140,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process.
+        /// </summary>
+        internal static string Process {
+            get {
+                return ResourceManager.GetString("Process", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         internal static string Profile {
@@ -2275,11 +2356,173 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A client who wants customization of the HR policy manual/ a fit for purpose from an HR standpoint..
+        /// </summary>
+        internal static string SectionCPlanFor {
+            get {
+                return ResourceManager.GetString("SectionCPlanFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HR consultant(s) works with you to facilitate the development of a customized HR policy manual..
+        /// </summary>
+        internal static string SectionCPlanProcess1 {
+            get {
+                return ResourceManager.GetString("SectionCPlanProcess1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customized HR Policy Manual.
+        /// </summary>
+        internal static string SectionCPlanTitle {
+            get {
+                return ResourceManager.GetString("SectionCPlanTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Section Deactivated.
         /// </summary>
         internal static string SectionDeactivated {
             get {
                 return ResourceManager.GetString("SectionDeactivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A client who already has his own HR policy manual and just needs a legal review..
+        /// </summary>
+        internal static string SectionOLPlanFor {
+            get {
+                return ResourceManager.GetString("SectionOLPlanFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact the legal firm directly..
+        /// </summary>
+        internal static string SectionOLPlanProcess1 {
+            get {
+                return ResourceManager.GetString("SectionOLPlanProcess1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only Legal Review.
+        /// </summary>
+        internal static string SectionOLPlanTitle {
+            get {
+                return ResourceManager.GetString("SectionOLPlanTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A client who wants only to access a complaint HR manual builder/ pre-populated policies and then get a legal review and the Ministry of Labour stamp..
+        /// </summary>
+        internal static string SectionSLPlanFor {
+            get {
+                return ResourceManager.GetString("SectionSLPlanFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Online for the standard plan.
+        /// </summary>
+        internal static string SectionSLPlanonlinePay1 {
+            get {
+                return ResourceManager.GetString("SectionSLPlanonlinePay1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offline for the legal review.
+        /// </summary>
+        internal static string SectionSLPlanonlinePay2 {
+            get {
+                return ResourceManager.GetString("SectionSLPlanonlinePay2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access to the HR manual builder..
+        /// </summary>
+        internal static string SectionSLPlanProcess1 {
+            get {
+                return ResourceManager.GetString("SectionSLPlanProcess1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the manual according to your requirements..
+        /// </summary>
+        internal static string SectionSLPlanProcess2 {
+            get {
+                return ResourceManager.GetString("SectionSLPlanProcess2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and download the manual..
+        /// </summary>
+        internal static string SectionSLPlanProcess3 {
+            get {
+                return ResourceManager.GetString("SectionSLPlanProcess3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Get the legal firm’s review..
+        /// </summary>
+        internal static string SectionSLPlanProcess4 {
+            get {
+                return ResourceManager.GetString("SectionSLPlanProcess4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard + Legal Review.
+        /// </summary>
+        internal static string SectionSLPlanTitle {
+            get {
+                return ResourceManager.GetString("SectionSLPlanTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A client who wants only to access a compliant HR manual builder/ prepopulated A client who wants only to access a complaint HR manual builder/ pre-populated policies.
+        /// </summary>
+        internal static string SectionSPlanFor {
+            get {
+                return ResourceManager.GetString("SectionSPlanFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Access to the HR manual builder..
+        /// </summary>
+        internal static string SectionSPlanProcess1 {
+            get {
+                return ResourceManager.GetString("SectionSPlanProcess1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit the manual according to your requirements..
+        /// </summary>
+        internal static string SectionSPlanProcess2 {
+            get {
+                return ResourceManager.GetString("SectionSPlanProcess2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard.
+        /// </summary>
+        internal static string SectionSPlanTitle {
+            get {
+                return ResourceManager.GetString("SectionSPlanTitle", resourceCulture);
             }
         }
         
@@ -2325,6 +2568,15 @@ namespace Resources {
         internal static string Send {
             get {
                 return ResourceManager.GetString("Send", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share Policy.
+        /// </summary>
+        internal static string SharePolicy {
+            get {
+                return ResourceManager.GetString("SharePolicy", resourceCulture);
             }
         }
         
@@ -2595,6 +2847,15 @@ namespace Resources {
         internal static string subscriptionPeriodYear {
             get {
                 return ResourceManager.GetString("subscriptionPeriodYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription Plans.
+        /// </summary>
+        internal static string SubscriptionPlans {
+            get {
+                return ResourceManager.GetString("SubscriptionPlans", resourceCulture);
             }
         }
         

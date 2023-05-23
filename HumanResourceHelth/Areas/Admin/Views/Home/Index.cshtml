@@ -336,6 +336,30 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-green-darker">
+                <div class="@stats_icon_class"><i class="fa fa-clock-o"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.Partnerships 3H</h4>
+                    <p>@Model.HPartnerships</p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Landing","HPartnerships", new { Area = "Admin"})">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12 @row_item_align">
+            <div class="widget widget-stats bg-silver-darker">
+                <div class="@stats_icon_class"><i class="fa fa-users"></i></div>
+                <div class="stats-info">
+                    <h4>@Resources.General.OurPartners</h4>
+                    <p>@Model.OurPartner</p>
+                </div>
+                <div class="stats-link">
+                    <a href="@Url.Action("Index","OurPartners")">@Resources.General.ViewDetails</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

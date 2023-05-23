@@ -63,6 +63,14 @@
     <Compile Include="Answer.cs" />
     <Compile Include="AppUser.cs" />
     <Compile Include="Attachments.cs" />
+    <Compile Include="HFunctionPractice.cs" />
+    <Compile Include="HFunctions.cs" />
+    <Compile Include="HPartners.cs" />
+    <Compile Include="HPartnership.cs" />
+    <Compile Include="HPartnerShipPlans.cs" />
+    <Compile Include="HPracticeQuestions.cs" />
+    <Compile Include="OurPartners.cs" />
+    <Compile Include="RequestMBService.cs" />
     <Compile Include="Respondent.cs" />
     <Compile Include="PaymentMethodOptions.cs" />
     <Compile Include="BaseEntity.cs" />

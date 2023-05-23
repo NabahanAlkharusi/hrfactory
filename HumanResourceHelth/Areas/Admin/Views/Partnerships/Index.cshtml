@@ -91,15 +91,18 @@
                                 </td>
                                 <td>
                                     @{HumanResourceHelth.Model.PartnerShipPlans plan = plans.Where(a => a.Id == item.PlanID).FirstOrDefault();
-                                        if (isArabic)
+                                        if (plan != null)
                                         {
+                                            if (isArabic)
+                                            {
                                             <p>@plan.PlanTitleAr</p>
-                                        }
-                                        else
-                                        {
+                                            }
+                                            else
+                                            {
                                             <p>@plan.PlanTitle</p>
+                                                }
+                                            }
                                         }
-                                    }
                                     @*@Html.DisplayFor(modelItem => item.PlanID)*@
                                 </td>
                                 <td>

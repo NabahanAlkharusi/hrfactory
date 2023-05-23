@@ -1,0 +1,201 @@
+﻿@model IEnumerable<HumanResourceHelth.Model.HPartners>
+@using HumanResourceHelth.Model.Resources
+
+@{ ViewBag.Title = "Index";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    string OPText_align = isArabic ? "text-left" : "text-right";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    HumanResourceHelth.DataAccess.UnitOfWork unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.Country> countries = unit.CountryRepo.GetAll();
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.Partners</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group ml-2 col-lg-10">
+                            <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                                @AppResource.Create
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>
+                        <div class="btn-group ml-2 col-lg-12">
+                            <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Landing","HPartnerships", new { Area = "Admin"})">
+                                <i class="fa fa-backward" style="@rotate"></i>
+                                @Resources.General.Back
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th class="text-center">
+                                @if (isArabic)
+                                {
+                                    @Resources.General.PartnerNameArabic
+                                }
+                                else
+                                {
+                                    @Resources.General.PartnerNameEnglish
+                                }
+                            </th>
+
+                            <th class="text-center">
+                                @Resources.General.PartnerOfficalEmail
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerOfficalPhone
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerCountry
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerAddress
+                            </th>
+                            <th class="text-center">
+                                @if (isArabic)
+                                {
+                                    @Resources.General.PartnerFocalPointNameArabic
+                                }
+                                else
+                                {
+                                    @Resources.General.PartnerFocalPointNameEnglish
+                                }
+
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerFocalPointEmail
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerFocalPointPhone
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerSub_Domain
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerLogo
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.PartnerBanner
+                            </th>
+                            <th class="text-center">
+                                @Resources.General.Status
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-center">
+                                <td>
+                                    @if (isArabic)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.PartnerNameAr)
+
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.PartnerName)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartnerofficalEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartnerofficalPhone)
+                                </td>
+                                <td>
+                                    @{HumanResourceHelth.Model.Country country = countries.Where(a => a.Id == item.PartnerCountry).FirstOrDefault();
+                                        if (isArabic)
+                                        {
+                                            <p>@country.NameAr</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@country.Name</p>
+                                        }
+                                    }
+                                    @*@Html.DisplayFor(modelItem => item.PartnerCountry)*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartnerAddress)
+                                </td>
+                                <td>
+                                    @if (isArabic)
+                                    {
+                                        @Html.DisplayFor(modelItem => item.PartnerFocalPointNameAr)
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.PartnerFocalPointName)
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartnerFocalPointEmail)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartnerFocalPointPhone)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PartnerSubDomain)
+                                </td>
+                                <td>
+                                    @if (item.PartnerLogo != null)
+                                    {
+                                        <a href="@Url.Content(item.PartnerLogo)">@Resources.General.PartnerLogo</a>
+                                    }
+                                    else
+                                    {
+                                        <text>No File</text>
+                                    }
+
+                                </td>
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.PartnerSubDomain)*@
+                                </td>
+                                <td>
+                                    @if (item.PartnerBanner != null)
+                                    {
+                                        <a href="@Url.Content(item.PartnerBanner)">@Resources.General.PartnerBanner</a>
+                                    }
+                                    else
+                                    {
+                                        <text>No File</text>
+                                    }
+
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

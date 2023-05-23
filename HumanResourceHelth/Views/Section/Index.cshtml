@@ -36,7 +36,16 @@
 
 <section class="padding-top-80px  padding-bottom-10px background-white" dir="@dir">
     <div class="container">
-
+        <div class="col-12">
+            <fieldset class="form-group border p-3 col-lg-4 col-md-6 col-sm-12">
+                <legend class="w-auto px-2">@Resources.General.OurLegalPartner</legend>
+                <div class="form-group">
+                    <a href="https://drsaifalrawahi.com/">
+                        <img src="~/assets/img/DSA.png" class="img-responsive" />
+                    </a>
+                </div>
+            </fieldset>
+        </div>
 
         @if (Session["CMS"] != null && (bool)Session["CMS"] == true && Convert.ToInt32(ViewBag.vediosCount) == 0)
         {
@@ -221,7 +230,8 @@
                         </div>
                         <hr>
                         <a class="btn btn-primary" href="@Url.Action("Create", "Section" )" role="button">@Resources.General.NewSection</a>
-                        <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section" )" role="button">@Resources.General.Download</a>
+                        <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section" )" role="button">@Resources.General.Download d</a>
+                        <a class="btn btn-warning" id="SharePolicy" href="@Url.Action("SharePolicy", "Section", new { id = (int) Model.Sections.FirstOrDefault().UserId } )" role="button">@Resources.General.SharePolicy</a>
                         <hr>
                         <a class="btn btn-primary" href="@Url.Action(" Index", "Builder" )" role="button">@Resources.General.Back</a>
                         <hr>

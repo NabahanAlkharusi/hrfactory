@@ -1,0 +1,244 @@
+﻿@model HumanResourceHelth.Model.OurPartners
+@using HumanResourceHelth.Model.Resources;
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var txtlignclass = isArabic ? "text-right" : "text-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    var modal_close = isArabic ? "margin: -15px auto -15px -15px" : "margin: -15px -15px -15px auto";
+    HumanResourceHelth.DataAccess.UnitOfWork unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.Country> countries = unit.CountryRepo.GetAll();
+    List<HumanResourceHelth.Model.Industry> industries = unit.IndustryRepo.GetAll();
+    
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @alignclass"> @Resources.General.NewPartner</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body h4" dir="@dir">
+
+            <div class="m-5 p-5">
+
+                @using (Html.BeginForm("Create", "OurPartners", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>Our Partners</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerName, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerNameAr, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerNameAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerNameAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerofficalEmail, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerofficalEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerofficalEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerofficalPhone, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerofficalPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerofficalPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerCountry, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                <select id="Country" class="form-control">
+                                    <option value="">@Resources.General.Select</option>
+                                    @foreach (HumanResourceHelth.Model.Country country in countries.OrderByDescending(a => a.IsArabCountry))
+                                    {
+                                        <option value="@country.Id">
+                                            @if (isArabic)
+                                            {@country.NameAr}
+                                        else
+                                        { @country.Name}
+                                        </option>
+                                    }
+                                </select>
+                                @Html.HiddenFor(model => model.PartnerCountry, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerCountry, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerAddress, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerAddress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerFocalPointName, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerFocalPointName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerFocalPointNameAr, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerFocalPointNameAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointNameAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerFocalPointEmail, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerFocalPointEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerFocalPointPhone, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerFocalPointPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerWebsite, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.PartnerWebsite, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerWebsite, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.status)
+                                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerLogo, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                <input type="file" class="form-control" id="PartnerLogo" name="PartnerLogo" accept="image/x-png,image/gif,image/jpeg" />
+                                @Html.ValidationMessageFor(model => model.PartnerLogo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerDes, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(model => model.PartnerDes, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerDes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            @Html.LabelFor(model => model.PartnerDesAr, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+                            <div class="col-md-8">
+                                @Html.TextAreaFor(model => model.PartnerDesAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerDesAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        @*<div class="form-group col-lg-6 @labelClass">
+            @Html.LabelFor(model => model.PartnerSort, htmlAttributes: new { @class = "control-label col-md-4" + labelClass })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.PartnerSort, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PartnerSort, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+                    </div>
+                        <div class="form-group col-lg-6 @labelClass">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#PartnerDes').summernote({
+        placeholder: 'Partner Summary In English',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $('#PartnerDesAr').summernote({
+        placeholder: 'Partner Summary In Arabic',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+    $("#Country").on("change", function () {
+        $("#PartnerCountry").val($("#Country").val());
+    });
+</script>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

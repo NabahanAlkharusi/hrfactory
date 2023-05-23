@@ -24,5 +24,7 @@ namespace HumanResourceHelth.Web.Areas.Admin.Data
         public int Files { get; set; }
         public int DefaultMBs { get; set; }
         public int Partnerships { get; set; }
+        public int HPartnerships { get; set; }
+        public int OurPartner { get; set; }
     }
 }

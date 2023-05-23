@@ -1,0 +1,202 @@
+﻿@model HumanResourceHelth.Model.HPartners
+
+@using HumanResourceHelth.Model.Resources;
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var txtlignclass = isArabic ? "text-right" : "text-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    var modal_close = isArabic ? "margin: -15px auto -15px -15px" : "margin: -15px -15px -15px auto";
+    HumanResourceHelth.DataAccess.UnitOfWork unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.Country> countries = unit.CountryRepo.GetAll();
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @alignclass"> @Resources.General.EditPartner</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body h4" dir="@dir">
+
+            <div class="m-5 p-5">
+                @using (Html.BeginForm("Edit", "HPartners", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerNameEnglish</label>
+                            <div class=" col-md-8 ">
+                                @Html.EditorFor(model => model.PartnerName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerNameArabic</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerNameAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerNameAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group col-lg-6 @labelClass">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerOfficalEmail</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerofficalEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerofficalEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerOfficalPhone</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerofficalPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerofficalPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerCountry</label>
+                            <div class=" col-md-8 @alignclass">
+                                <select id="Country" class="form-control">
+                                    <option value="">@Resources.General.Select</option>
+                                    @foreach (HumanResourceHelth.Model.Country country in countries.OrderByDescending(a => a.IsArabCountry))
+                                    {
+                                        <option value="@country.Id" @if (country.Id == Model.PartnerCountry) { <text> selected</text>}>
+                                            @if (isArabic)
+                                            {@country.NameAr}
+                                        else
+                                        { @country.Name}
+                                    </option>
+                                }
+                                </select>
+                                @Html.HiddenFor(model => model.PartnerCountry, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerCountry, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerAddress</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerAddress, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerAddress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerFocalPointNameEnglish</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerFocalPointName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerFocalPointNameArabic</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerFocalPointNameAr, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointNameAr, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerFocalPointEmail</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerFocalPointEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass ">@Resources.General.PartnerFocalPointPhone</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerFocalPointPhone, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerFocalPointPhone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerSub_Domain</label>
+                            <div class=" col-md-8 @alignclass">
+                                @Html.EditorFor(model => model.PartnerSubDomain, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartnerSubDomain, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.Status</label>
+                            <div class=" col-md-8 @alignclass">
+                                <div class="checkbox">
+                                    @Html.EditorFor(model => model.status)
+                                    @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6 @labelClass">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerLogo</label>
+                            <div class=" col-md-8 @alignclass">
+                                <input type="file" class="form-control" id="EPartnerLogo" name="EPartnerLogo" accept="image/x-png,image/gif,image/jpeg" />
+                                @Html.HiddenFor(model=>model.PartnerLogo)
+                                @Html.ValidationMessageFor(model => model.PartnerLogo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label class="control-label col-md-4 @labelClass">@Resources.General.PartnerBanner</label>
+                            <div class="col-md-8 @alignclass">
+                                <input type="file" class="form-control" id="EPartnerBanner" name="EPartnerBanner" accept="image/x-png,image/gif,image/jpeg" />
+                                @Html.HiddenFor(model => model.PartnerBanner)
+                                @Html.ValidationMessageFor(model => model.PartnerBanner, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    $(document).ready(function () {
+
+    });
+    $("#Country").on("change", function () {
+        $("#PartnerCountry").val($("#Country").val());
+    });
+</script>

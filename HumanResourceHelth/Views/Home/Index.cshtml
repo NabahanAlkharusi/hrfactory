@@ -10,6 +10,8 @@
     var acceptbtnstyle = isArabic ? "margin-right: 0.25rem !important;" : "";
     var textRight = isArabic ? "text-right" : "";
     var health_check = isArabic ? "text-left pl-5 ml-5" : "text-right pr-5 mr-5";
+    HumanResourceHelth.DataAccess.UnitOfWork _unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.OurPartners> OurPartners = _unit.OurPartnersRepo.GetAll().OrderBy(a => a.PartnerSort).ToList();
 }
 
 <style type="text/css">
@@ -143,46 +145,7 @@
 </section>
 
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 background-white">
-            <div class="margin-bottom-40px font-weight-300 wow fadeInUp padding-top-60px">
-                <h1 class="text-center cms" data-contentId="3">@GetContent(3)</h1>
-            </div>
-        </div>
-        <div class="col-lg-2"> </div>
-        <div class="col-lg-8 background-white">
-            <div class="">
-                <div class="row">
-                    <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
-                        <div class="item margin-lr-15px">
-                            <div class="background-white opacity-hover-7 padding-30px">
-                                <div class="float-left width-101px margin-right-20px"> <img src="@Url.Content("~/assets/img/icon1.png")" alt=""> </div>
-                                <h4 class="margin-bottom-0px cms" data-contentId="4">@GetContent(4)</h4>
-                                <p class="text-grey-2 cms" data-contentId="5">@GetContent(5)</p>
-                            </div>
-                        </div>
-                        <div class="item margin-lr-15px">
-                            <div class="background-white opacity-hover-7 padding-30px">
-                                <div class="float-left width-101px margin-right-20px"> <img src="@Url.Content("~/assets/img/icon2.png")" alt=""> </div>
-                                <h4 class="margin-bottom-0px cms" data-contentId="6">@GetContent(6)</h4>
-                                <p class="text-grey-2 cms" data-contentId="7">@GetContent(7)</p>
-                            </div>
-                        </div>
-                        <div class="item margin-lr-15px">
-                            <div class="background-white opacity-hover-7 padding-30px">
-                                <div class="float-left width-101px margin-right-20px"> <img src="@Url.Content("~/assets/img/icon3.png")" alt=""> </div>
-                                <h4 class="margin-bottom-0px cms" data-contentId="8">@GetContent(8)</h4>
-                                <p class="text-grey-2 cms" data-contentId="9">@GetContent(9)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-2"> </div>
-    </div>
-</div>
+
 
 
 
@@ -245,17 +208,26 @@
                             <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                                 <div class="position-relative">
                                     <div class="date z-index-101 padding-10px image-builder"></div>
-                                    <div class="item-thumbnail"><a href="@Url.Action("WarmUp","Plans")"><img src="@Url.Content("~/assets/img/HRWarm-up.png")" alt=""></a></div>
+                                    <div class="item-thumbnail">
+                                    @*<a href="@Url.Action("WarmUp","Plans")">*@
+                                    <a href="https://diagnosis.hrfactoryapp.com/">
+                                        <img src="@Url.Content("~/assets/img/HRWarm-up.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                    <a href="@Url.Action("WarmUp","Plans")" class="text-extra-large d-block cms" data-contentId="45">@GetContent(45)</a>
-                                    <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="13">@GetContent(13)</div>
+                                    @*<a href="@Url.Action("WarmUp","Plans")" class="text-extra-large d-block cms" data-contentId="45">@GetContent(45)</a>*@
+                                    <a href="https://diagnosis.hrfactoryapp.com/" class="text-extra-large d-block cms" data-contentId="122">@GetContent(122)</a>
+                                    @*<div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="13">@GetContent(13)</div>*@
+                                    <div class="text-center padding-lr-30px padding-bottom-20px height-200 cms" data-contentId="123">@GetContent(123)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
-                                        <a class="youtube" href="@Url.Action("WarmUp","Plans")">
+                                        @*<a class="youtube" href="@Url.Action("WarmUp","Plans")">*@
+                                            <a class="youtube" href="https://diagnosis.hrfactoryapp.com/">
                                             <img src="@Url.Content("~/assets/img/player-01.png")" alt="">
                                         </a>
                                     </div>
-                                    <div class="padding-bottom-22px"><a href="@Url.Action("WarmUp","Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a></div>
+                                    <div class="padding-bottom-22px">
+                                    <a href="https://diagnosis.hrfactoryapp.com/" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a>      
+                                        @*<a href="@Url.Action("WarmUp","Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a>*@
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -266,17 +238,29 @@
                             <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                                 <div class="position-relative">
                                     <div class="date z-index-101 padding-10px image-builder"></div>
-                                    <div class="item-thumbnail"><a href="@Url.Action("Doctor","Plans")"><img src="@Url.Content("~/assets/img/HRDoctor.png")" alt=""></a></div>
+                                    <div class="item-thumbnail">
+                                    <a href="https://3h.hrfactoryapp.com/"><img src="@Url.Content("~/assets/img/HRDoctor.png")" alt=""></a>
+                                        @*<a href="@Url.Action("Doctor","Plans")"><img src="@Url.Content("~/assets/img/HRDoctor.png")" alt=""></a>*@
+                                    </div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                    <a href="@Url.Action("Doctor","Plans")" class="text-extra-large d-block cms" data-contentId="46">@GetContent(46)</a>
-                                    <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="14">@GetContent(14)</div>
+                                    @*<a href="@Url.Action("Doctor","Plans")" class="text-extra-large d-block cms" 
+                                       data-contentId="46">@GetContent(46)</a>*@
+                                    <a href="https://3h.hrfactoryapp.com/" class="text-extra-large d-block cms" 
+                                       data-contentId="124">@GetContent(124)</a>
+                                    <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="125">@GetContent(125)</div>
+                                    @*<div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="14">@GetContent(14)</div>*@
                                     <div class="text-center blog-item padding-bottom-22px">
-                                        <a class="youtube" href="@Url.Action("Doctor","Plans")">
+                                        <a class="youtube" href="https://3h.hrfactoryapp.com/">
                                             <img src="@Url.Content("~/assets/img/player-01.png")" alt="">
                                         </a>
+                                        @*<a class="youtube" href="@Url.Action("Doctor","Plans")">
+                                            <img src="@Url.Content("~/assets/img/player-01.png")" alt="">
+                                        </a>*@
                                     </div>
-                                    <div class="padding-bottom-22px"> <a href="@Url.Action("Doctor","Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a></div>
+                                    <div class="padding-bottom-22px"> 
+                                    <a href="https://3h.hrfactoryapp.com/" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a>      @*<a href="@Url.Action("Doctor","Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a>*@
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -286,17 +270,22 @@
                             <div class="blog-item thum-hover background-white hvr-float hvr-sh2 ">
                                 <div class="position-relative">
                                     <div class="date z-index-101 padding-10px image-builder"></div>
-                                    <div class="item-thumbnail"><a href="@Url.Action("Tech","Plans")"><img src="@Url.Content("~/assets/img/HRTech.png")" alt=""></a></div>
+                                    <div class="item-thumbnail">
+                                    <a href="@Url.Action("Tech","Plans")">
+                                    
+                                        <img src="@Url.Content("~/assets/img/HRTech.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                    <a href="@Url.Action("Tech","Plans")" class="text-extra-large d-block ">@GetContent(47)</a>
+                                    <a href="@Url.Action("Tech","Plans")" class="text-extra-large d-block cms" data-contentId="47">@GetContent(47)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 cms" data-contentId="15">@GetContent(15)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("Tech","Plans")">
                                             <img src="@Url.Content("~/assets/img/player-01.png")" alt="">
                                         </a>
                                     </div>
-                                    <div class="padding-bottom-22px"> <a href="@Url.Action("Tech","Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a></div>
+                                    <div class="padding-bottom-22px"> 
+                                    <a href="@Url.Action("Tech","Plans")" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">@Resources.General.Go</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -309,7 +298,7 @@
                                     <div class="item-thumbnail"><a href="@Url.Action("Plugin","Plans")"><img src="@Url.Content("~/assets/img/HRPlug-in.png")" alt=""></a></div>
                                 </div>
                                 <div class="blog-item padding-lr-30px text-center">
-                                    <a href="@Url.Action("Plugin","Plans")" class="text-extra-large d-block ">@GetContent(48)</a>
+                                    <a href="@Url.Action("Plugin","Plans")" class="text-extra-large d-block cms" data-contentId="48">@GetContent(48)</a>
                                     <div class="text-center padding-lr-30px padding-bottom-42px height-200 margin-bottom-0px cms" data-contentId="16">@GetContent(16)</div>
                                     <div class="text-center blog-item padding-bottom-22px">
                                         <a class="youtube" href="@Url.Action("Plugin","Plans")">
@@ -327,7 +316,34 @@
     </div>
 </section>
 
+<section class="mb-2">
 
+    <div class="sectionWrapper">
+        <div id="section4" class="section">
+            <div class="sectionInner">
+                <div class="container">
+                    <div class="text-center  wow fadeInUp">
+                        <h1 class="cms margin-bottom-35px" data-contentId="44">@GetContent(44)</h1>
+                        <ul class="row  no-gutters padding-0px margin-0px list-unstyled text-center">
+                            @foreach (HumanResourceHelth.Model.OurPartners ourPartner in OurPartners)
+                            {
+                                <li class="col-md-3 col-6 m-auto p-4  wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="@ourPartner.PartnerWebsite" target="_blank"><img class="contentImage" style="max-height:100px;" src="@Url.Content(ourPartner.PartnerLogo)" alt=""></a> </li>
+                            }
+                            @*<li class="col-md-3 col-6 m-auto p-4  wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner1.png")" alt=""></a> </li>
+                                <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="https://www.takatuf.om/en/" target="_blank"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/TakatufLogo.png")" alt=""></a> </li>
+                                <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.4s"> <a class="hvr-bounce-out" href="https://drsaifalrawahi.com/" target="_blank"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/DSA.png")" alt=""></a> </li>
+                                <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.6s"> <a class="hvr-bounce-out" href="https://opaloman.org/"  target="_blank"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/opal.png")" alt=""></a> </li>
+                                <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp"> <a class="hvr-bounce-out" href="https://palmhr.net/en/"  target="_blank"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/palmhr.png")" alt=""></a> </li>*@
+                            @*<li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner6.png")" alt=""></a> </li>
+                                <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.4s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner7.jpg")" alt=""></a> </li>
+                                <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.6s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner8.jpg")" alt=""></a> </li>*@
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="video wow">
     <div class="stripeElephant">
@@ -535,28 +551,45 @@
 
 
 
-<section>
 
-    <div class="sectionWrapper">
-        <div id="section4" class="section">
-            <div class="sectionInner">
-                <div class="container">
-                    <div class="text-center  wow fadeInUp">
-                        <h1 class="cms margin-bottom-35px" data-contentId="44">@GetContent(44)</h1>
-                        <ul class="row  no-gutters padding-0px margin-0px list-unstyled text-center">
-                            <li class="col-md-3 col-6 m-auto p-4  wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner1.png")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner2.png")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.4s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner3.png")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.6s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner4.png")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner5.png")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.2s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner6.png")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.4s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner7.jpg")" alt=""></a> </li>
-                            <li class="col-md-3 col-6 m-auto p-4 wow fadeInUp" data-wow-delay="0.6s"> <a class="hvr-bounce-out" href="javascript:void(0);"><img class="contentImage" style="max-height:100px;" src="@Url.Content("~/ContentImages/partner8.jpg")" alt=""></a> </li>
-                        </ul>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 background-white">
+            <div class="margin-bottom-40px font-weight-300 wow fadeInUp padding-top-60px">
+                <h1 class="text-center cms" data-contentId="3">@GetContent(3)</h1>
+            </div>
+        </div>
+        <div class="col-lg-2"> </div>
+        <div class="col-lg-8 background-white">
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-12 margin-bottom-30px wow fadeInUp">
+                        <div class="item margin-lr-15px">
+                            <div class="background-white opacity-hover-7 padding-30px">
+                                <div class="float-left width-101px margin-right-20px"> <img src="@Url.Content("~/assets/img/icon1.png")" alt=""> </div>
+                                <h4 class="margin-bottom-0px cms" data-contentId="4">@GetContent(4)</h4>
+                                <p class="text-grey-2 cms" data-contentId="5">@GetContent(5)</p>
+                            </div>
+                        </div>
+                        <div class="item margin-lr-15px">
+                            <div class="background-white opacity-hover-7 padding-30px">
+                                <div class="float-left width-101px margin-right-20px"> <img src="@Url.Content("~/assets/img/icon2.png")" alt=""> </div>
+                                <h4 class="margin-bottom-0px cms" data-contentId="6">@GetContent(6)</h4>
+                                <p class="text-grey-2 cms" data-contentId="7">@GetContent(7)</p>
+                            </div>
+                        </div>
+                        <div class="item margin-lr-15px">
+                            <div class="background-white opacity-hover-7 padding-30px">
+                                <div class="float-left width-101px margin-right-20px"> <img src="@Url.Content("~/assets/img/icon3.png")" alt=""> </div>
+                                <h4 class="margin-bottom-0px cms" data-contentId="8">@GetContent(8)</h4>
+                                <p class="text-grey-2 cms" data-contentId="9">@GetContent(9)</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-2"> </div>
     </div>
-</section>
-
+</div>

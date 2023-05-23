@@ -1,0 +1,331 @@
+﻿@model HumanResourceHelth.Model.HPartnerShipPlans
+
+@using HumanResourceHelth.Model.Resources;
+@{
+    ViewBag.Title = "Create";
+    Session["Backto"] = "Updates";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    string dir = isArabic ? "rtl" : "ltr";
+    var alignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var txtlignclass = isArabic ? "text-right" : "text-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+    var modal_close = isArabic ? "margin: -15px auto -15px -15px" : "margin: -15px -15px -15px auto";
+    HumanResourceHelth.DataAccess.UnitOfWork unit = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.Country> countries = unit.CountryRepo.GetAll();
+}
+<div class="container" dir="@dir">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="row">
+                    <h1 class="h2 @alignclass"> @Resources.General.NewPlanToPartnerShip</h1>
+                </div>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group ml-2 col-lg-12">
+                        <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Index")">
+                            <i class="fa fa-backward" style="@rotate"></i>
+                            @Resources.General.Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="panel-body h4" dir="@dir">
+
+            <div class="m-5 p-5">
+
+                @using (Html.BeginForm("Create", "HPlansToPartnerShips", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanTitleEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.PlanTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PlanTitle, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanTitleArabic</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.PlanTitleAr, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PlanTitleAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanObjectiveEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.Objective, new { htmlAttributes = new { @class = "form-control summernote" } })
+                                    @Html.ValidationMessageFor(model => model.Objective, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanObjectiveArabic</label>
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.ObjectiveAr, new { htmlAttributes = new { @class = "form-control summernote" } })
+                                    @Html.ValidationMessageFor(model => model.ObjectiveAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanProcessEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Process, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Process, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanProcessArabic</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.ProcessAr, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ProcessAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanReportEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Report, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Report, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanReportArabic</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.ReportAr, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ReportAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanDeliveryModeEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.DeliveryMode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DeliveryMode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanDeliveryModeArabic</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.DeliveryModeAr, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.DeliveryModeAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanLimitationsEnglish</label>
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.Limitations, new { htmlAttributes = new { @class = "form-control summernote" } })
+                                    @Html.ValidationMessageFor(model => model.Limitations, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanLimitationsArabic</label>
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.LimitationsAr, new { htmlAttributes = new { @class = "form-control summernote" } })
+                                    @Html.ValidationMessageFor(model => model.LimitationsAr, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanAudience</label>
+                                <div class="col-md-8">
+                                    <select id="audienceOptions" name="audienceOptions" required class="form-control">
+                                        <option value="">@Resources.General.Select</option>
+                                        @if (isArabic)
+                                        {
+                                            foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.Audience()).audienceCatAR)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.Audience()).audienceCat)
+                                            {
+                                                <option value="@item.Key">@item.Value</option>
+                                            }
+                                        }
+                                    </select>
+                                    @Html.HiddenFor(model => model.audience, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.audience, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PaymentMethod</label>
+                                <div class="col-md-8">
+                                    <div class="checkbox">
+                                        <select id="PaymentMethodOptions" name="PaymentMethodOptions" required class="form-control">
+                                            <option value="">@Resources.General.Select</option>
+                                            @if (isArabic)
+                                            {
+                                                foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.PaymentMethodOptions()).PaymentMethodOptionsListAr)
+                                                {
+                                                    <option value="@item.Key">@item.Value</option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                foreach (KeyValuePair<int, string> item in (new HumanResourceHelth.Model.PaymentMethodOptions()).PaymentMethodOptionsList)
+                                                {
+                                                    <option value="@item.Key">@item.Value</option>
+                                                }
+                                            }
+                                        </select>
+                                        @Html.HiddenFor(model => model.PaymentMethod)
+                                        @Html.ValidationMessageFor(model => model.PaymentMethod, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.PlanPrice</label>
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6 @labelClass">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.TamplatePath</label>
+                                <div class="col-md-8">
+                                    <input type="file" id="Tamplatefile" name="Tamplatefile" class="form-control-file" />
+                                    @Html.HiddenFor(model => model.TamplatePath, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TamplatePath, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label for="" class="control-label col-md-4 @labelClass">@Resources.General.Status</label>
+                                <div class="col-md-8">
+                                    <label class="switch">
+                                        <input class="switch-input" type="checkbox" name="StatusOptions" id="StatusOptions" />
+                                        <span class="switch-label" data-on="@Resources.General.active" data-off="@Resources.General.inactive"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    <div class="checkbox">
+                                        @Html.EditorFor(model => model.Status)
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group col-lg-6">
+                            <div class="col-md-offset-2 col-md-8">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $('#Objective').summernote({
+        placeholder: '',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'help']]
+        ]
+    });
+    $('#ObjectiveAr').summernote({
+        placeholder: '',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'help']]
+        ]
+    });
+    $('#Limitations').summernote({
+        placeholder: '',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'help']]
+        ]
+    });
+    $('#LimitationsAr').summernote({
+        placeholder: '',
+        tabsize: 2,
+        height: 200,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'help']]
+        ]
+    });
+    $("#PaymentMethodOptions").change(function () {
+        $("#PaymentMethod").val(parseInt($("#PaymentMethodOptions").val()));
+        if ($("#PaymentMethodOptions").val() == 1) {
+            $("#Price").val("0");
+            $("#Price").attr("disabled", true);
+        }
+        else {
+            $("#Price").val('');
+            $("#Price").attr("disabled", false);
+        }
+    });
+    $("#audienceOptions").change(function () {
+
+        $("#audience").val($("#audienceOptions").val());
+
+    });
+    $("#StatusOptions").change(function () {
+        if ($("#StatusOptions").is(':checked'))
+            $("#Status").prop('checked', true);
+        else
+            $("#Status").prop('checked', false);
+
+
+    });
+</script>
