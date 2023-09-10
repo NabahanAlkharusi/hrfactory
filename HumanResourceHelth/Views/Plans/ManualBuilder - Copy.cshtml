@@ -180,7 +180,161 @@
             showbtn = "";
             showCost = "d-none";
         }
-        }
+        <section>
+            <div id="builder_s" class="section">
+                <div class="sectionInner">
+                    <div class="container">
+                        <div class="row @showbtn" id="btnShowUpGrade">
+                            <div class="col-lg-12 col-md-12 sm-mb-30px wow fadeInUp">
+                                <div class="blog-item thum-hover hvr-float hvr-sh2">
+                                    <button id="btnUpgrade" class="btn background-main-color text-white">@Resources.General.Upgrade</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divCost" class="row @showCost">
+                            <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                                <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
+                                    <div class="position-relative background-beig">
+                                        <div class="item-thumbnail" style="font-size: 5rem;">@ViewBag.MonthlyPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span></div>
+                                    </div>
+                                    <div class="blog-item padding-lr-30px padding-top-60px text-center">
+                                        <h1 class="padding-bottom-20px">@Resources.General.PerMonth</h1>
+                                        <div class="form-group ">
+                                            <div class="form-check padding-bottom-20px">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" required type="checkbox" id="ManualMonthlyCheckbox" onchange="agree('ManualMonthlyCheckbox','MonthlyManualBuilderdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeMonthModal">@Resources.General.TermsAndConditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="MonthlyManualBuilderdiv" style="display:none;">
+
+                                            <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
+                                                <div class="col-md-6 @pullAlign">
+                                                    <label for="MonthlySearchCouponCodeManualBuilder" class="form-label">@HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCode</label>
+                                                    <input type="text" class="form-control" id="MonthlySearchCouponCodeManualBuilder" aria-describedby="MonthlySearchCouponCodeManualBuilderMSG" onchange="getCouponDiscount('MonthlySearchCouponCodeManualBuilder','MonthlyManualBuilderSubLink','3',@ViewBag.MonthlyPrice)" required>
+                                                    <div id="MonthlySearchCouponCodeManualBuilderMSG" class="invalid-feedback d-none">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="MonthlyManualBuilderDiscountDiv" class="row @pullAlign padding-bottom-22px col-md-12 d-none @textAlign" dir="@dir">
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.PlanPriceCD</label>
+                                                    <label id="MonthlyManualBuilderPlanPriceCD" class="font-weight-700">55 </label>&nbsp;&nbsp; @AppResource.OMRCurrncy
+                                                </div>
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.CouponDiscRateCD</label>
+                                                    <label id="MonthlyManualBuilderCouponDiscRateCD" class="font-weight-700">55 </label>
+                                                </div>
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.PlanPriceAftDisCD</label>
+                                                    <label id="MonthlyManualBuilderPlanPriceAftDisCD" class="font-weight-700">55 </label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+                                                </div>
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.PlanPriceSaveCD</label>
+                                                    <label id="MonthlyManualBuilderPlanPriceSaveCD" class="font-weight-700"><del> 55 </del></label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+
+                                                </div>
+                                            </div>
+                                            <div class="padding-bottom-22px">
+                                                @if (ViewBag.PlanType == 0)
+                                                {
+
+                                                    <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                        @Resources.General.Subscribe
+                                                    </a> @*<a href="@Url.Action("Index", "Thawani", new {Product = "ManualBuilder",Amount=50000 })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                            @Resources.General.Subscribe
+                                                        </a>*@
+                                                    <a id="freeSubscribeManualBuilderMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+
+                                                }
+
+                                                @if (ViewBag.isFreePlan)
+                                                {
+
+                                                    <a id="MonthlyManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Month, Amount = ViewBag.MonthlyPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                        @Resources.General.Subscribe
+                                                    </a> @*<a href="@Url.Action("Index", "Thawani", new {Product = "ManualBuilder",Amount=50000 })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                            @Resources.General.Subscribe
+                                                        </a>*@
+                                                    <a id="freeSubscribeManualBuilderMonthly" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 sm-mb-30px wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                                <div class="blog-item thum-hover bg-gray hvr-float hvr-sh2 ">
+                                    <div class="position-relative background-beig">
+                                        <div class="item-thumbnail" style="font-size: 5rem;">@ViewBag.AnnualPriceDisp <span style="font-size: 2.5rem; margin-top: -38px; text-align: center;">USD $</span></div>
+                                    </div>
+                                    <div class="blog-item padding-lr-30px padding-top-60px text-center">
+                                        <h1 class="padding-bottom-20px">@Resources.General.PerYear</h1>
+                                        <div class="form-group ">
+                                            <div class="form-check padding-bottom-20px">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" id="ManualAnnualCheckbox" onchange="agree('ManualAnnualCheckbox','AnnualManualBuilderdiv')"> @Resources.General.IAgreeWith <a href="#" data-toggle="modal" data-target="#agreeYearModal">@Resources.General.TermsAndConditions</a>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="AnnualManualBuilderdiv" style="display:none;">
+
+                                            <div class="row pull-right padding-bottom-22px col-md-12 @textAlign" dir="@dir">
+                                                <div class="col-md-6 @pullAlign">
+                                                    <label for="AnnualSearchCouponCodeManualBuilder" class="form-label">@HumanResourceHelth.Model.Resources.Coupons.Coupons.CouponCode</label>
+                                                    <input type="text" class="form-control" id="AnnualSearchCouponCodeManualBuilder" aria-describedby="AnnualSearchCouponCodeManualBuilderMSG" onchange="getCouponDiscount('AnnualSearchCouponCodeManualBuilder','AnnualManualBuilderSubLink','3',@ViewBag.AnnualPrice)" required>
+                                                    <div id="AnnualSearchCouponCodeManualBuilderMSG" class="invalid-feedback d-none">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="AnnualManualBuilderDiscountDiv" class="row @pullAlign padding-bottom-22px col-md-12 d-none @textAlign" dir="@dir">
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.PlanPriceCD</label>
+                                                    <label id="AnnualManualBuilderPlanPriceCD" class="font-weight-700">55 </label>&nbsp;&nbsp; @AppResource.OMRCurrncy
+                                                </div>
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.CouponDiscRateCD</label>
+                                                    <label id="AnnualManualBuilderCouponDiscRateCD" class="font-weight-700">55 </label>
+                                                </div>
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.PlanPriceAftDisCD</label>
+                                                    <label id="AnnualManualBuilderPlanPriceAftDisCD" class="font-weight-700">55 </label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+                                                </div>
+                                                <div class="col-md-7 @pullAlign row">
+                                                    <label>@AppResource.PlanPriceSaveCD</label>
+                                                    <label id="AnnualManualBuilderPlanPriceSaveCD" class="font-weight-700"><del> 55 </del></label>&nbsp;&nbsp;@AppResource.OMRCurrncy
+
+                                                </div>
+                                            </div>
+
+                                            <div class="padding-bottom-22px">
+                                                @if (ViewBag.PlanType == 0)
+                                                {
+                                                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                        @Resources.General.Subscribe
+                                                    </a>
+                                                    <a id="freeSubscribeManualBuilderAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                }
+                                                @if (ViewBag.isFreePlan)
+                                                {
+                                                    <a id="AnnualManualBuilderSubLink" href="@Url.Action("Payment", "Thawani", new { planId = (int)HumanResourceHelth.Model.SubscriptionPlan.ManualBuilder, subscriptionPeriod = SubscriptionPeriod.Year, Amount = ViewBag.AnnualPrice  })" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8">
+                                                        @Resources.General.Subscribe
+                                                    </a>
+                                                    <a id="freeSubscribeManualBuilderAnnual" href="#" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 d-none">@Resources.General.Subscribe</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>}
 }
 
 

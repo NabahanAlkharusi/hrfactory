@@ -1,0 +1,198 @@
+﻿@model IEnumerable<HumanResourceHelth.Model.RequestMBService>
+@using HumanResourceHelth.Model.Resources
+
+@{
+    ViewBag.Title = "RequestServices";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    HumanResourceHelth.DataAccess.UnitOfWork _uow = new HumanResourceHelth.DataAccess.UnitOfWork();
+    List<HumanResourceHelth.Model.Country> countries = _uow.CountryRepo.GetAll();
+    List<HumanResourceHelth.Model.Industry> industries = _uow.IndustryRepo.GetAll();
+    ViewBag.Title = "Index";
+
+    bool isArabic = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft;
+    var dir = isArabic ? "rtl" : "";
+    int countryId = 99999;
+    string countryName = "";
+    string TermsName = "";
+    string Text_align = isArabic ? "text-right" : "text-left";
+    string OPText_align = isArabic ? "text-left" : "text-right";
+    var alignclass = isArabic ? "pull-right" : "pull-left";
+    var Opalignclass = isArabic ? "pull-left" : "pull-right";
+    var labelClass = isArabic ? "pull-right" : "pull-left";
+    var rotate = isArabic ? "-webkit-transform:rotate(180deg);-moz-transform: rotate(180deg);-ms-transform: rotate(180deg);-o-transform: rotate(180deg);transform: rotate(180deg);" : "";
+}
+<div class="container" dir="@dir" style="font-size:1.4em;">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2"> @Resources.General.ManualBuilderRequests</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        @*<div class="btn-group ml-2 col-lg-10">
+                            <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                                @AppResource.Create
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>*@
+                        <div class="btn-group ml-2 col-lg-12">
+                            <a class="btn btn-lg btn-warning @labelClass" href="@Url.Action("Landing","Partnerships", new { Area = "Admin"})">
+                                <i class="fa fa-backward" style="@rotate"></i>
+                                @Resources.General.Back
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="panel-body" dir="@dir">
+           
+            @if (Model.Count() > 0)
+            {
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Resources.General.user
+                        </th>
+                        <th>
+                           @Resources.General.service
+                        </th>
+                        <th>
+                            @Resources.General.Company
+                        </th>
+                        <th>
+                            @Resources.General.NumberOfEmployees
+                        </th>
+                        <th>
+                            @Resources.General.Industry
+                        </th>
+                        <th>
+                            @Resources.General.Country
+                        </th>
+                        <th>
+                            @Resources.General.ContactPerson
+                        </th>
+                        <th>
+                            @Resources.General.Email
+                        </th>
+                        <th>
+                           @Resources.General.ContactInformation
+                        </th>
+                        <th>
+                            @Resources.General.IsthereExistingHRPolicy
+                        </th>
+                        <th>
+                            @Resources.General.ExistingHRPolicy
+                        </th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if ((int)item.UserID == 0)
+                                {
+                                    <span class="badge badge-warning" style=" font-size: 1.5rem; font-weight: 100;">@Resources.General.NotRegisteredUser</span>
+                                }
+                                else
+                                {
+                            <span class="badge badge-success" style=" font-size: 1.5rem; font-weight: 100;">@isArabic?@_uow.UserRepo.FindById((int)item.UserID).NameAr:@_uow.UserRepo.FindById((int)item.UserID).Name</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.ServiceID == 1)
+                                {
+                                    @Resources.General.SectionCPlanTitle
+                                }
+                                else
+                                {
+                                    @Resources.General.SectionOLPlanTitle
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OrganizationName)
+                            </td>
+                            <td>
+                               
+                                @if (isArabic)
+                                {
+                                    foreach (KeyValuePair<int, string> keyValuePair in (new HumanResourceHelth.Model.NumberOfEmployeesAr()).EmployeesAr)
+                                    {
+                                        if (keyValuePair.Key == item.NumberOFEmployees)
+                                        {
+                                            <span class="badge badge-info" style=" font-size: 1.5rem; font-weight: 100;">@keyValuePair.Value</span>
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (KeyValuePair<int, string> keyValuePair in (new HumanResourceHelth.Model.NumberOfEmployees()).Employees)
+                                    {
+                                        if (keyValuePair.Key == item.NumberOFEmployees)
+                                        {
+                                            <span class="badge badge-info" style=" font-size: 1.5rem; font-weight: 100;">@keyValuePair.Value</span>
+                                            break;
+                                        }
+                                    }
+                                }
+                                @*get company*@
+                            </td>
+                            <td>
+                                
+                                @{
+                                    HumanResourceHelth.Model.Industry industry = industries.Where(z => z.Id == item.IndustryId).First();
+                                }
+                                @industry.NameAr
+                            </td>
+                            <td>
+                                
+                                @{
+                                    HumanResourceHelth.Model.Country country = countries.Where(a => a.Id == item.CountryId).First();
+
+                                }
+                                @country.NameAr
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactPerson)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactPEmail)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ContactPersonPhone)
+                            </td>
+                            <td>
+                                @if ((bool)item.HaveExistingHRMP)
+                                {
+                                    <text>@Resources.General.avilable</text>
+                                }
+                                else
+                                {
+                                    <text>@Resources.General.notavilable</text>
+                                }
+
+                            </td>
+                            <td>
+                                @if ((bool)item.HaveExistingHRMP)
+                                {
+                                    <a href="~/Uploads/ExistingHRMP/@item.ExistingHRMPPath" class="btn btn-sm btn-success" target="_blank">@Resources.General.Download</a>
+                                }
+                                </td>
+                           
+                        </tr>
+                    }
+
+                </table>
+            }
+            else
+            {
+                <p>no data</p>
+            }
+        </div>
+    </div>
+</div>

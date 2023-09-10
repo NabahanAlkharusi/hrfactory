@@ -229,11 +229,13 @@ namespace HumanResourceHelth.Web.Controllers
             if (_uow.SectionRepo.Search(x => x.UserId == userId).Count() > 0) return;
             int adminId = _uow.UserRepo.Search(x => x.IsAdmin).Single().Id;
             User user = _uow.UserRepo.FindById(userId);
-            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId).ToList();
+            List<DefaultMB> adminSections = _uow.DefaultMBRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId && a.CompanySize==user.NumberOFEmployees).ToList();
             if (adminSections.Count == 0)
-                adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == 158).ToList();
-            List<Section> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
-            foreach (Section parent in parentAdminSections)
+                adminSections = _uow.DefaultMBRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId && a.CompanySize == 1).ToList();
+            if (adminSections.Count == 0)
+                adminSections = _uow.DefaultMBRepo.Search(a => a.UserId == adminId && a.CountryID == 158 && a.CompanySize == 1).ToList();
+            List<DefaultMB> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
+            foreach (DefaultMB parent in parentAdminSections)
             {
                 Section parentUserSection = new Section()
                 {
@@ -245,23 +247,23 @@ namespace HumanResourceHelth.Web.Controllers
                     IsActive = parent.IsActive,
                     Content = parent.Content,
                     CountryID = parent.CountryID,
-                    SectionId = parent.SectionId,
+                    SectionId = parent.DefaultMBId,
                     Childs = new List<Section>(),
                 };
 
-                foreach (Section child in parent.Childs)
+                foreach (DefaultMB child in parent.Childs)
                 {
                     Section childUserSection = new Section()
                     {
                         Description = child.Description,
                         Title = child.Title,
                         Ordering = child.Ordering,
-                        UserId = int.Parse(Session["UserId"].ToString()),
+                        UserId = userId,
                         LanguageId = parent.LanguageId,
                         IsActive = parent.IsActive,
                         Content = child.Content,
                         CountryID = child.CountryID,
-                        SectionId = child.SectionId,
+                        SectionId = child.DefaultMBId,
                     };
                     parentUserSection.Childs.Add(childUserSection);
                 }
@@ -269,6 +271,14 @@ namespace HumanResourceHelth.Web.Controllers
             }
             foreach (Section section in userSections)
             {
+                if (section.Childs.Count > 0)
+                {
+                    foreach (Section childsSection in section.Childs)
+                    {
+                        _uow.SectionRepo.Add(childsSection);
+                    }
+                }
+
                 _uow.SectionRepo.Add(section);
             }
             _uow.SaveChanges();

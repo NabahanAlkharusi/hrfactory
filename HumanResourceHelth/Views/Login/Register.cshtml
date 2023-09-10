@@ -184,14 +184,14 @@
                             <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.Password</label>
                                 <div class="input-group" dir="ltr">
-                                    <span class="input-group-addon"> <i id="iofpass" class="fa fa-eye-slash" onclick="showPss('txtPassword','iofpass')"></i></span>
-                                    <input id="txtPassword" type="password" class="form-control" required placeholder="@Resources.General.Password">
+                                    <span class="input-group-text" id="basic-addon2"> <i id="iofpass" class="fa fa-eye-slash" onclick="showPss('txtPassword','iofpass')"></i></span>
+                                    <input id="txtPassword" type="password" class="form-control" required placeholder="@Resources.General.Password" aria-describedby="basic-addon2">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.ConfirmPassword</label>
                                 <div class="input-group" dir="ltr">
-                                    <span class="input-group-addon"> <i id="iofConfirmpass" class="fa fa-eye-slash" onclick="showPss('txtConfirmPassword','iofConfirmpass')"></i></span>
+                                    <span class="input-group-text"> <i id="iofConfirmpass" class="fa fa-eye-slash" onclick="showPss('txtConfirmPassword','iofConfirmpass')"></i></span>
                                     <input id="txtConfirmPassword" type="password" class="form-control" required placeholder="@Resources.General.ConfirmPassword">
                                 </div>
                             </div>
@@ -202,8 +202,8 @@
                             <div class="col-lg-6 col-xs-9">
                                 <label class="@labAlign">@Resources.General.ContactInformation</label>
                                 <div class="input-group" dir="ltr">
-                                    <span class="input-group-addon" id="flage"><img id="flagimg" width="26" height="20" src="https://restcountries.eu/data/usa.svg" /></span>
-                                    <span class="input-group-addon" id="countryPhoneKey" data-target="#exampleModal">dd</span>
+                                    <span class="input-group-text" id="flage"><img id="flagimg" width="26" height="20" src="https://flagcdn.com/w320/om.png" /></span>
+                                    <span class="input-group-text" id="countryPhoneKey" data-target="#exampleModal">dd</span>
                                     <input id="txtInformation" type="number" maxlength="255" required class="form-control" placeholder="@Resources.General.ContactInformation" />
                                 </div>
                             </div>
@@ -233,7 +233,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="padding-bottom-22px @op_text_align"><button type="button" id="btnRegister" class="btn btn-sm background-main-color text-white padding-lr-15px border-0 opacity-8 col-sm-12 col-lg-3">@Resources.General.Register</button></div>
+                    <div class="padding-bottom-22px @op_text_align"><button type="button" id="btnRegister" class="btn btn-sm background-main-color padding-lr-15px border-0 opacity-8 col-sm-12 col-lg-3">@Resources.General.Register</button></div>
                 </form>
             </div>
         </div>
@@ -288,7 +288,7 @@
     </div>
 </div>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -307,7 +307,7 @@
         var phone=code + $(this).val();
         $.ajax({
             type: 'GET',
-            url: 'https://phonevalidation.abstractapi.com/v1/?api_key=af9830b65308460f8d8ff43f9e9f879a&phone=' + phone,
+            url: 'https://phonevalidation.abstractapi.com/v1/?api_key=ba7ac588cc8a4594868407a099afc864&phone=' + phone,
             success: function (data) {
                 if (data['valid']) {
                     if (!$('#txtInformation').hasClass('is-valid')) {
@@ -396,6 +396,10 @@
 
         if (information == "") {
             toastr.error("@Resources.General.RequiredPhone")
+            return;
+        }
+        if (country == "") {
+            toastr.error("test")
             return;
         }
 

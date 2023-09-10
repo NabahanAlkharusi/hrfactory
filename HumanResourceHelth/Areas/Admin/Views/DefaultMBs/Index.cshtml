@@ -25,11 +25,11 @@
                 <h1 class="h2"> @Resources.General.DefaultMBs</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     @*<div class="btn-group ml-2 col-lg-10">
-                        <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
-                            @AppResource.NewUpdate
-                            <i class="fa fa-plus"></i>
-                        </a>
-                    </div>*@
+                            <a class="btn btn-lg btn-success @Opalignclass" href="@Url.Action("Create")">
+                                @AppResource.NewUpdate
+                                <i class="fa fa-plus"></i>
+                            </a>
+                        </div>*@
 
                 </div>
             </div>
@@ -305,6 +305,12 @@
                                 @Resources.General.Details
                             </label>
                             <textarea class="form-control" id="SectionContent"></textarea>
+                            <script>
+                                CKEDITOR.replace('SectionContent', {
+                                    extraPlugins: 'editorplaceholder',
+                                    editorplaceholder: 'Start typing here Hello...',
+                                });
+                            </script>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success" id="SaveEdits">@Resources.General.Save</button>
@@ -316,13 +322,12 @@
     </div>
 </div>
 
-<link href="~/Areas/Admin/assets/css/simditor.css" rel="stylesheet">
-
 <script type="text/javascript" src="~/Areas/Admin/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="~/Areas/Admin/assets/js/module.js"></script>
 <script type="text/javascript" src="~/Areas/Admin/assets/js/hotkeys.js"></script>
 <script type="text/javascript" src="~/Areas/Admin/assets/js/uploader.js"></script>
-<script type="text/javascript" src="~/Areas/Admin/assets/js/simditor.js"></script>
+
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -340,7 +345,9 @@
                 $("#SectionExplain").val(data["explain"]);
                 var haveLine = data["haveLine"];
                 $('#SectionNewPage').prop('checked', haveLine);
-                editor.setValue(data["content"]);
+                $("#SectionContent").html(data["content"])
+                CKEDITOR.instances.SectionContent.setData(data["content"]);
+                //editor.setValue(data["content"]);
 
             },
             error: (err) => {
@@ -370,12 +377,13 @@
 
     }
 
-    var editor = new Simditor({
-        textarea: $('#SectionContent')
-        //optional options
-    });
+    //var editor = new Simditor({
+    //    textarea: $('#SectionContent'),
+    //    toolbar: true
+    //});
+   
     $("#SaveEdits").click(function () {
-        var content = editor.getValue();
+        var content = CKEDITOR.instances.SectionContent.getData();
         var id = $("#SectionId").val();
         var title=$("#SectionTitle").val();
         var explain=$("#SectionExplain").val();
@@ -390,7 +398,15 @@
                     "Parent": Parent
             },
             success: (response) => {
-                window.location.reload();
+                /*alert('Saved');*/
+                //add sweetalert
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Your work has been saved',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             },
             error: (response) => {
                 console.log(response);
@@ -534,6 +550,7 @@
 <script>
 
     $(document).ready(function () {
+       
         var element=$("body").find("[aria-describedby='swal2-html-container']");
 
         $(".swal2-popup").css({ 'display': 'grid', 'font-size': '2rem !important' })

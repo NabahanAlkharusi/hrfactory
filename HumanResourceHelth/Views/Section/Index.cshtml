@@ -1,4 +1,5 @@
 ﻿@using HumanResourceHelth.Web.Data
+@using HumanResourceHelth.Web.Data
 @model SectionViewModel
 @{ ViewBag.Title = "Index"; }
 @{ var dir = "ltr";
@@ -229,13 +230,16 @@
                             </ul>
                         </div>
                         <hr>
-                        <a class="btn btn-primary" href="@Url.Action("Create", "Section" )" role="button">@Resources.General.NewSection</a>
-                        <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section" )" role="button">@Resources.General.Download d</a>
-                        <a class="btn btn-warning" id="SharePolicy" href="@Url.Action("SharePolicy", "Section", new { id = (int) Model.Sections.FirstOrDefault().UserId } )" role="button">@Resources.General.SharePolicy</a>
-                        <hr>
-                        <a class="btn btn-primary" href="@Url.Action(" Index", "Builder" )" role="button">@Resources.General.Back</a>
-                        <hr>
-                    </div>
+                        @if (Model.Sections.Count != 0)
+                        {
+                            <a class="btn btn-primary" href="@Url.Action("Create", "Section")" role="button">@Resources.General.NewSection</a>
+                            <a class="btn btn-primary" href="@Url.Action("ConvertAr", "Section")" role="button">@Resources.General.Download</a>
+                            <a class="btn btn-warning" id="SharePolicy" href="@Url.Action("SharePolicy", "Section", new { id = (int)Model.Sections.FirstOrDefault().UserId })" role="button">@Resources.General.SharePolicy</a>
+                        }
+                            <hr>
+                            <a class="btn btn-primary" href="@Url.Action(" Index", "Builder" )" role="button">@Resources.General.Back</a>
+                            <hr>
+                        </div>
                     @if (Session["CMS"] == null || (bool)Session["CMS"] == false)
                     {
                         int parent = 1;
@@ -257,7 +261,7 @@
                                     <div class="alert alert-warning text-center"><h6>@Resources.General.UserManulNotif</h6></div>
                                     <div id="accordion">
 
-                                        @foreach (HumanResourceHelth.Model.Section section in Model.DefualtSections.Where(x => x.ParenId == null))
+                                        @foreach (HumanResourceHelth.Model.DefaultMB section in Model.DefualtMBs.Where(x => x.ParenId == null))
                                         {
                                             ParentCard = "Parent" + parent.ToString();
                                             Parentcollapse = "collapse" + parent.ToString();
@@ -284,7 +288,7 @@
                                                             else
                                                             {
 
-                                                                foreach (HumanResourceHelth.Model.Section childSection in section.Childs)
+                                                                foreach (HumanResourceHelth.Model.DefaultMB childSection in section.Childs)
                                                                 {
                                                                     ChildCard = "ChildCard" + Child.ToString();
                                                                     Childcollapse = "Childcollapse" + Child.ToString();

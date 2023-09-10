@@ -22,5 +22,6 @@ namespace HumanResourceHelth.Model
         [Display(Name = "Respondent")]
         public int Respondent { get; set; }
         public bool Status { get; set; }
+        public bool IsENPS { get; set; } = false;
     }
 }

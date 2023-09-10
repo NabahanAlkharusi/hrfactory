@@ -26,5 +26,6 @@ namespace HumanResourceHelth.Web.Areas.Admin.Data
         public int Partnerships { get; set; }
         public int HPartnerships { get; set; }
         public int OurPartner { get; set; }
+        public int MBRequestedServices { get; set; }
     }
 }

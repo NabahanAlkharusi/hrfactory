@@ -177,7 +177,7 @@
         bool havingSUSub = false;
         Session["eligableForFreeSU"] = false;
         Session["eligableForFreeMB"] = false;
-        userID_ = (int) int.Parse(Session["UserId"].ToString());
+        userID_ = (int)int.Parse(Session["UserId"].ToString());
         List<UserPlan> subscriptionPlan = _unit.UserPlanRepo.Search(x => x.UserId == userID_ && !x.IsActive).ToList();
         List<UserPlan> subscriptionPlan1 = _unit.UserPlanRepo.Search(x => x.UserId == userID_).ToList();
         if (subscriptionPlan1.Count == 0)
@@ -203,7 +203,8 @@
                 if (Plansub.PlanId == (int)SubscriptionPlan.Startup)
                 { havingSUSub = true; }
                 if (Plansub.PlanId == (int)SubscriptionPlan.ManualBuilder)
-                {  havingMBSub = true;
+                {
+                    havingMBSub = true;
                 }
             }
             if (!havingMBSub)
@@ -386,7 +387,7 @@
 
                             <ul id="menu-main" class="text-c nav-menu dropdown-dark @showSubFree">
                                 <li>
-                                    <a href="#" class="btn btn-acc blink_me" data-toggle="modal" data-target="#FreeSub"><h4>@Resources.General.GetFreeSub </h4> </a>
+                                    <button type="button" id="subscribeForFree" class="btn btn-acc blink_me" data-bs-toggle="modal" data-bs-target="#FreeSub"><h4>@Resources.General.GetFreeSub </h4> </button>
 
                                 </li>
                             </ul>
@@ -536,22 +537,81 @@
     </div>
 
     <!--  <script type="text/javascript" src="~/assets/js/numscroller-1.0.js"></script> -->
+    <script type="text/javascript" src="~/assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="~/assets/js/sticky-sidebar.js"></script>
     <script type="text/javascript" src="~/assets/js/YouTubePopUp.jquery.js"></script>
     <script type="text/javascript" src="~/assets/js/owl.carousel.min.js"></script>
     <script type="text/javascript" src="~/assets/js/imagesloaded.min.js"></script>
     <script type="text/javascript" src="~/assets/js/wow.min.js"></script>
-    <script type="text/javascript" src="~/assets/js/custom.js"></script>
     <script type="text/javascript" src="~/assets/js/popper.min.js"></script>
     <script type="text/javascript" src="~/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets/js/custom.js"></script>
     @*==========================================================================*@
 
     @*==========================================================================*@
+    @*<script>
+            $.blockUI.defaults.message = "Please Wait";
+            $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+        </script>*@
     <script>
-        $.blockUI.defaults.message = "Please Wait";
-        $(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-    </script>
-    <script>
+        $(document).ready(function () {
+            $("#subscribeForFree").click(function () {
+
+            $("#FreeSub").modal();
+            })
+            var requestUrl = "https://extreme-ip-lookup.com/json/?key=sswCYj3OKfeIuxY1C3Bd";
+            $.ajax({
+                url: requestUrl,
+                type: 'GET',
+                success: function (json) {
+                    var country = json.country;
+                    var countrycode = json.countryCode;
+                    //@Session["CountryCode"]=countrycode;
+                    $("#selectCountry option").each(function () {
+
+                        if ($(this).val() == countrycode) {
+                            console.log("ddd")
+                            $("#selectCountry").attr('selected', true);
+                        }
+                    });
+                    $.ajax({
+                        type: 'get',
+                        url: 'https://restcountries.com/v3.1/name/' + country,
+                        success: function (data) {
+                            if (data.length >= 1) {
+                                $.ajax({
+                                    type: 'get',
+                                    url: 'https://restcountries.com/v3.1/name/' + country + '?fullText=true',
+                                    success: function (data) {
+                                        // console.log(data);
+                                        var stringified = JSON.stringify(data);
+                                        var parsedObj = JSON.parse(stringified);
+
+                                        $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
+
+                                        $('#flagimg').attr('src', data[0].flags['png']);
+                                        $('#flagimg').attr('alt', data[0].idd);
+
+                                    },
+                                        });
+                            }
+                            else if (data.length != 0) {
+                                var stringified = JSON.stringify(data);
+                                var parsedObj = JSON.parse(stringified);
+                                $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
+
+                                $('#flagimg').attr('src', data[0].flags['png']);
+                                $('#flagimg').attr('alt', parsedObj[0]['name']);
+                            }
+                        },
+                    });
+                },
+                error: function (err) {
+                    console.log("Request failed, error= " + err);
+                },
+            });
+
+        });
         $(".cms").on("click", function (e) {
 
             @if (Session["CMS"] == null || (bool)Session["CMS"] == false) { <text>return;</text>}
@@ -628,9 +688,10 @@
                             var discountRate = parseFloat(data['rate']);
                             var splitedLinks = linkdata.split("=");
                             var RealCosts = splitedLink[3];
-                            var intCost = parseInt(priceBeforDiscount) * ((100 - discountRate) / 100);
-                            if (intCost == 0) intCost = intCost + '000'
-                            var AfterDiscount = linkdata.replace(RealCosts, parseInt(intCost));
+                            var intCost = parseInt((priceBeforDiscount) * ((100 - discountRate) / 100));
+                            var intCost1 = parseFloat((priceBeforDiscount) * ((100 - discountRate) / 100)/1000);
+                            if (intCost1 == 0.0) intCost1 = intCost1 + '000'
+                            var AfterDiscount = linkdata.replace(RealCosts, parseFloat(intCost1));
 
                             $('#' + link).attr("href", AfterDiscount);
                             if (textbox == 'SearchCouponCodeStartUp') {
@@ -831,57 +892,7 @@
                 },
             });
         });
-        $(document).ready(function () {
-            var requestUrl = "https://extreme-ip-lookup.com/json/?key=sswCYj3OKfeIuxY1C3Bd";
-            $.ajax({
-                url: requestUrl,
-                type: 'GET',
-                success: function (json) {
-                    var country = json.country;
-                    var countrycode = json.countryCode;
-                    //@Session["CountryCode"]=countrycode;
-                    $("#selectCountry option").each(function () {
 
-                        if ($(this).val() == countrycode) $(this).attr('selected', true);
-                    });
-                    $.ajax({
-                        type: 'get',
-                        url: 'https://restcountries.com/v3.1/name/' + country,
-                        success: function (data) {
-                            if (data.length >= 1) {
-                                $.ajax({
-                                    type: 'get',
-                                    url: 'https://restcountries.com/v3.1/name/' + country + '?fullText=true',
-                                    success: function (data) {
-                                        // console.log(data);
-                                        var stringified = JSON.stringify(data);
-                                        var parsedObj = JSON.parse(stringified);
-
-                                        $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
-
-                                        $('#flagimg').attr('src', data[0].flags['png']);
-                                        $('#flagimg').attr('alt', data[0].idd);
-
-                                    },
-                                        });
-                            }
-                            else if (data.length != 0) {
-                                var stringified = JSON.stringify(data);
-                                var parsedObj = JSON.parse(stringified);
-                                $('#countryPhoneKey').html(data[0].idd['root'] + data[0].idd['suffixes'][0]);
-
-                                $('#flagimg').attr('src', data[0].flags['png']);
-                                $('#flagimg').attr('alt', parsedObj[0]['name']);
-                            }
-                        },
-                    });
-                },
-                error: function (err) {
-                    console.log("Request failed, error= " + err);
-                },
-            });
-
-        });
     </script>
     <script>
         $(".contentImage").on("click", function () {

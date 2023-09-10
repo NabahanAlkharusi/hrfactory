@@ -44,12 +44,17 @@ namespace HumanResourceHelth.Web.Controllers
             List<Model.Section> Defualtsections = _uow.SectionRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == user.CountryId).OrderBy(a => a.Ordering).ToList();
             Defualtsections = Defualtsections.Count() == 0 ? _uow.SectionRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == 158).OrderBy(a => a.Ordering).ToList() : Defualtsections;
             Defualtsections = Defualtsections.Count() == 0 ? _uow.SectionRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language).OrderBy(a => a.Ordering).ToList() : Defualtsections;
+           
+            List<Model.DefaultMB> DefualtMBs = _uow.DefaultMBRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == user.CountryId && x.CompanySize==user.NumberOFEmployees).OrderBy(a => a.Ordering).ToList();
+            DefualtMBs = DefualtMBs.Count() == 0 ? _uow.DefaultMBRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == user.CountryId&& x.CompanySize==1).OrderBy(a => a.Ordering).ToList() : DefualtMBs;
+            DefualtMBs = DefualtMBs.Count() == 0 ? _uow.DefaultMBRepo.Search(x => x.UserId == AdminUserID && x.LanguageId == (int)language && x.CountryID == 158 && x.CompanySize == 1).OrderBy(a => a.Ordering).ToList() : DefualtMBs;
             SectionViewModel section = new SectionViewModel()
             {
                 Sections = sections,
                 Countries = countries,
                 CountriesNotAdded = countriesNotAdded,
-                DefualtSections = Defualtsections
+                DefualtSections = Defualtsections,
+                DefualtMBs = DefualtMBs
             };
 
             var vedios = _uow.introVedioRepo.GetAll();
@@ -267,18 +272,19 @@ namespace HumanResourceHelth.Web.Controllers
 
         public void ConvertAr()
         {
-            Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
-            string templateView = language == Language.English ? "~/Views/Section/Template.cshtml" : "~/Views/Section/TemplateAr.cshtml";
+            //Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
+            int language = isArabic ? 2 : 1;
+            string templateView =  !isArabic ? "~/Views/Section/Template.cshtml" : "~/Views/Section/TemplateAr.cshtml";
             int userId = (int)Session["UserId"];
             User user = _uow.UserRepo.FindById(userId);
 
-            List<HumanResourceHelth.Model.Section> sections = _uow.SectionRepo.Search(x => x.ParenId == null && x.UserId == userId && x.IsActive && x.LanguageId == (int)language).OrderBy(x => x.Ordering).ToList();
+            List<Model.Section> sections = _uow.SectionRepo.Search(x => x.ParenId == null && x.UserId == userId && x.IsActive && x.LanguageId == (int)language).OrderBy(x => x.Ordering).ToList();
             string logoFilePath = GetLogoPath(userId);
             BuilderViewModel builderViewModel = new BuilderViewModel()
             {
                 Sections = sections,
-                DocumentName = language == Language.English ? user.DocumentName : user.DocumentNameAr,
-                CompanyName = language == Language.English ? user.Name : user.NameAr,
+                DocumentName = !isArabic ? user.DocumentName : user.DocumentNameAr,
+                CompanyName = !isArabic ? user.Name : user.NameAr,
                 LogoFile = logoFilePath
             };
 
@@ -405,7 +411,7 @@ namespace HumanResourceHelth.Web.Controllers
         }
         public ActionResult EditSe(int sectionId)
         {
-            HumanResourceHelth.Model.Section section = _uow.SectionRepo.FindById(sectionId);
+            HumanResourceHelth.Model.DefaultMB section = _uow.DefaultMBRepo.FindById(sectionId);
             return PartialView("_Edits", section);
         }
         [HttpPost]
@@ -566,10 +572,10 @@ namespace HumanResourceHelth.Web.Controllers
                 ViewBag.PlanType = 0;
                 Language language = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? Language.Arabic : Language.English;
                 User user = _uow.UserRepo.Search(x => x.IsAdmin).FirstOrDefault();
-                List<Model.Section> sections = _uow.SectionRepo.Search(x => x.UserId == user.Id && x.LanguageId == (int)language && x.CountryID == user.CountryId).OrderBy(a => a.Ordering).ToList();
-                SectionViewModel section = new SectionViewModel()
+                List<Model.DefaultMB> sections = _uow.DefaultMBRepo.Search(x=> x.LanguageId == (int)language && x.CountryID == 158 && x.CompanySize==1).OrderBy(a => a.Ordering).ToList();
+                DefaultMBViewModel section = new DefaultMBViewModel()
                 {
-                    Sections = sections
+                   DefaultMB = sections
                 };
                 TermsConditions terms = _uow.TermsConditionsRepo.Search(a => a.CountryId == 158 && a.TermsConditionType == (int)TermsConditionType.ManualBuilderPlanMonthly).FirstOrDefault();
 

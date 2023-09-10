@@ -1,4 +1,4 @@
-﻿@model HumanResourceHelth.Web.Data.SectionViewModel
+﻿@model HumanResourceHelth.Web.Data.DefaultMBViewModel
 @using HumanResourceHelth.Model.Resources
 
 
@@ -13,7 +13,7 @@
     var slideInRight = isArabic ? "slideInLeft" : "slideInRight";
     var alignfloat = isArabic ? "float-right" : "float-left";
     var invalignfloat = isArabic ? "float-left" : "float-right";
-    var EditDisplayClass = "display:block";
+    var EditDisplayClass = "display:none";
     string sectionItemClass = isArabic ? "float-right" : "float-left mr-4";
     var textAlign = isArabic ? "text-right" : "text-left";
     var pullAlign = isArabic ? "pull-right" : "pull-left";
@@ -21,7 +21,7 @@
     var showCost = "";
     HumanResourceHelth.DataAccess.UnitOfWork _uow = new HumanResourceHelth.DataAccess.UnitOfWork();
     List<HumanResourceHelth.Model.IntroVedio> vedios = _uow.introVedioRepo.GetAll();
-    List<HumanResourceHelth.Model.Country> countries = _uow.CountryRepo.GetAll().OrderByDescending(a=>a.IsArabCountry).ToList();
+    List<HumanResourceHelth.Model.Country> countries = _uow.CountryRepo.GetAll().OrderByDescending(a => a.IsArabCountry).ToList();
     int userId = Session["UserId"] == null ? 0 : Convert.ToInt32(Session["UserId"].ToString());
     HumanResourceHelth.Model.User usr = Session["UserId"] == null ? null : _uow.UserRepo.FindById(userId);
     //name
@@ -79,37 +79,37 @@
                 @{ string hidden = "";}
                 <ul class="releases">
                     <li>
-                        @if (Model.Sections.Count != 0)
+                        @if (Model.DefaultMB.Count != 0)
                         {
 
-                            for (int i = 0; i < Model.Sections.Count(); i++)
+                            for (int i = 0; i < Model.DefaultMB.Count(); i++)
                             {
-                                if (Model.Sections[i].ParenId == null)
+                                if (Model.DefaultMB[i].ParenId == null)
                                 {<!-- Release Item -->
-                                    <ul class="releaseRow row " data-SectionId="@Model.Sections[i].Id">
+                                    <ul class="releaseRow row " data-SectionId="@Model.DefaultMB[i].Id">
 
                                         <div class="list_icon">
                                         <li class="col-lg-1 col-1 rcol tc sort" @hidden><i class="fas fa-arrows-alt" aria-hidden="true"></i></li>
                                         <li class="col-lg-8 col-8 rcol tc showTracks" id="li-@i">
                                             <span>
-                                                @Model.Sections[i].Title
-                                            </span>  @if (Model.Sections[i].Childs.Count() != 0)
+                                                @Model.DefaultMB[i].Title
+                                            </span>  @if (Model.DefaultMB[i].Childs.Count() != 0)
                                             {
                                                 <span id="plus-icon-@i" class="@sectionItemClass fa fa-plus"></span>
                                             }
 
                                         </li>
                                         <li class="col-lg-3 col-3 rcol actions_icon">
-                                            <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.Sections[i].Id"><i class="far fa-edit"></i></a>
-                                            <a href="javascript:void(0)" onclick="return deleteSection(@Model.Sections[i].Id);"><i class="far fa-trash-alt"></i></a>
+                                            <a href="javascript:void(0);" class="editSection" data-SectionId="@Model.DefaultMB[i].Id"><i class="far fa-edit"></i></a>
+                                            <a href="javascript:void(0)" onclick="return deleteSection(@Model.DefaultMB[i].Id);"><i class="far fa-trash-alt"></i></a>
                                             <a href="#">
                                                 <label class="switch">
-                                                    @if (Model.Sections[i].IsActive)
+                                                    @if (Model.DefaultMB[i].IsActive)
                                                     {
-                                                        <input class="chkActivate" checked data-SectionId="@Model.Sections[i].Id" type="checkbox"> }
+                                                        <input class="chkActivate" checked data-SectionId="@Model.DefaultMB[i].Id" type="checkbox"> }
                                                     else
                                                     {
-                                                        <input class="chkActivate" data-SectionId="@Model.Sections[i].Id" type="checkbox">}
+                                                        <input class="chkActivate" data-SectionId="@Model.DefaultMB[i].Id" type="checkbox">}
                                                     <span class="slider round"></span>
                                                 </label>
                                             </a>
@@ -117,7 +117,7 @@
                         </div>
                         <li class="releaseTracks">
                             @{ int x = 0;}
-                            @foreach (var Item in Model.Sections.Where(a => a.ParenId == Model.Sections[i].Id).OrderBy(a => a.Ordering))
+                            @foreach (var Item in Model.DefaultMB.Where(a => a.ParenId == Model.DefaultMB[i].Id).OrderBy(a => a.Ordering))
                             {
 
                                 <ul class="trackRow" data-SectionId="@Item.Id">
@@ -133,7 +133,7 @@
                                         }
                                         @if (x > 2)
                                         {
-                                            <a href="" onclick="" data-toggle="modal" data-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>}
+                                            <a href="" onclick="" data-bs-toggle="modal" data-bs-target="#toUnlockPlan"><i class="fa fa-lock red text-danger"></i></a>}
                                         else
                                         {
                                             <a href="javascript:void(0);" class="editSection" data-SectionId="@Item.Id"><i class="far fa-edit @showActions"></i></a>
@@ -182,70 +182,7 @@
                     var ChildCard = "";
                     var Childcollapse = "";
                     var textToRight = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft ? "text-right" : "";
-                    <div class="col-lg-9" id="defult" dir="@dir">
-                        <div class="card @textToRight" id="DefaultMBCard" style="display:none">
-                            <div class="card-header">
-                                <h5 class="mb-0 d-inline">
-                                    @Resources.General.DefaultMB
-                                </h5>
-
-                            </div>
-                            <div class="card-body">
-                                <div class="alert alert-warning text-center"><h6>@Resources.General.UserManulNotif</h6></div>
-                                <div id="accordion">
-
-                                    @foreach (HumanResourceHelth.Model.Section section in Model.Sections.Where(x => x.ParenId == null))
-                                    {
-                                        ParentCard = "Parent" + parent.ToString();
-                                        Parentcollapse = "collapse" + parent.ToString();
-                                        parent = parent + 1;
-                                        <div>
-                                            <div class="card">
-                                                <div class="card-header" id="@ParentCard">
-                                                    <h5 class="mb-0 d-inline">
-                                                        <button class="btn btn-link" data-toggle="collapse" data-target="#@Parentcollapse" aria-expanded="false" aria-controls="@Parentcollapse">
-                                                            @Html.Raw(section.Title)
-                                                        </button>
-                                                    </h5>
-
-                                                </div>
-                                                <div id="@Parentcollapse" class="collapse" aria-labelledby="@ParentCard" data-parent="#accordion">
-
-                                                    <div class="card-body">
-                                                        @if (section.Childs.Count == 0)
-                                                        {
-
-                                                            <p>@Html.Raw(section.Content)</p>
-
-                                                        }
-                                                        else
-                                                        {
-
-                                                            foreach (HumanResourceHelth.Model.Section childSection in section.Childs)
-                                                            {
-                                                                ChildCard = "ChildCard" + Child.ToString();
-                                                                Childcollapse = "Childcollapse" + Child.ToString();
-                                                                Child = Child + 1;
-                                                                <div class="card" id="@ChildCard">
-                                                                    <div class="card-header">
-                                                                        <a href="#" data-toggle="collapse" data-target="#@Childcollapse">@childSection.Title</a>
-                                                                    </div>
-                                                                    <div class="card-body collapse" data-parent="#@ChildCard" id="@Childcollapse">
-                                                                        @Html.Raw(childSection.Content)
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 }
                 <div class="col-lg-9" id="divEditSection" dir="@dir" style="@EditDisplayClass">
 
@@ -539,7 +476,7 @@
                                                                     <label class="form-check-label">
                                                                         <input class="form-check-input" required type="checkbox" id="ManualMonthlyCheckbox" onchange="agree('ManualMonthlyCheckbox','MonthlyManualBuilderdiv')">
                                                                         @Resources.General.IAgreeWith
-                                                                        <a href="#" data-toggle="modal" data-target="#agreeMonthModal">
+                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#agreeMonthModal">
                                                                             @Resources.General.TermsAndConditions
                                                                         </a>
                                                                     </label>
@@ -617,7 +554,7 @@
                                                                 <div class="form-check padding-bottom-20px">
                                                                     <label class="form-check-label">
                                                                         <input class="form-check-input" type="checkbox" id="ManualAnnualCheckbox" onchange="agree('ManualAnnualCheckbox','AnnualManualBuilderdiv')">                                      @Resources.General.IAgreeWith
-                                                                        <a href="#" data-toggle="modal" data-target="#agreeYearModal">
+                                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#agreeYearModal">
                                                                             @Resources.General.TermsAndConditions
                                                                         </a>
                                                                     </label>
@@ -812,8 +749,8 @@
                                     <div class="col-lg-6 col-md-11 form-group">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="isFileExist">
-                                             <input type="hidden" id="isFileExistVal" name="isFileExistVal" value="0" />
-                                            <label class="form-check-label" for="flexSwitchCheckDefault">Do you Have Exisiting HR Manual policy?</label>
+                                            <input type="hidden" id="isFileExistVal" name="isFileExistVal" value="0" />
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">@Resources.General.IsthereExistingHRPolicy</label>
                                         </div>
                                     </div>
                                     <div class="col-sm-11 form-group" style="display:none" id="FileUpload">
@@ -826,8 +763,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="SubmitServiceReq">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resources.General.Cancel</button>
+                            <button type="button" class="btn btn-primary" id="SubmitServiceReq">@Resources.General.Submit</button>
                         </div>
                     </div>
                 </div>
@@ -929,7 +866,7 @@
                         var newVal = $("#isFileExistVal").val() == 0 ? 1 : 0;
                         $("#isFileExistVal").val(newVal);
                     });
-                    
+
                     $("#SubmitServiceReq").click(function (event) {
                         event.preventDefault();
                         if ($("#company_name").val() === "") {
@@ -984,12 +921,14 @@
                             data:  formData ,
                             success: (response) => {
                                 if (response.success) {
+                                    $('#RequestService').modal('hide');
                                     //toaster success
                                     toastr.success("Your Request has benn submitted");
-                                    window.location.reload();
+                                    /*window.location.reload();*/
                                 }
                                 else {
                                     toastr.error("Somthing went Wrong")
+                                    console.log(response.responseText);
                                 }
                             },
                             error: (error) => {
@@ -1000,6 +939,7 @@
                     });
                     SetupServiceid = (service) => {
                         $("#serviceID").val(service);
+                        service == '1' ? $("#RequestServiceLabel").html("@Resources.General.SectionCPlanTitle") : $("#RequestServiceLabel").html("@Resources.General.SectionOLPlanTitle")
                     }
                 });
             </script>
@@ -1250,7 +1190,10 @@
 //# sourceURL=pen.js
             </script>
             <script>
-    $(".editSection").on("click", function () {
+                let secid = null;
+
+                $(".editSection").on("click", function () {
+                    
         var sectionId = $(this).attr("data-SectionId")
         $(".list_icon").removeClass("activee");
         $(".trackRow").removeClass("activee");
@@ -1267,16 +1210,19 @@
                         var divEditSection = document.getElementById("divEditSection");
                         var ix = divEditSection.style.display == "none" ? 0 : 1;
 
-                $('#defult').toggle(ix === 1);
-                $('#divEditSection').toggle(ix === 0);
+                //$('#defult').toggle(ix === 1);
+                if (secid == sectionId || secid == null || (secid != sectionId && ix==0)) {
+                    $('#divEditSection').toggle(ix === 0);
+                }
                 </text>
                     }
                 },
             error: function (data) {
                 console.log(data)
-                toastr.error("Error")
+                toastr.error("Error 12545")
             }
         });
+                    secid = sectionId;
     });
                 function deleteSection(sectionId) {
                     Swal.fire({
@@ -1304,4 +1250,87 @@
                 $("#AddNewSection").click(function () {
                     Swal.fire('To add new section into your own HR policy you need to subscribe')
                 });
+                $("#freeSubscribeManualBuilderAnnual").on("click", function () {
+                      @{
+                          var id = Session["UserId"] != null ? Session["UserId"] : 0;
+                      }
+                    console.log(@Session["UserId"]);;
+        let startDate = new Date();
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate() + 365);
+        var startmonth = ((startDate.getMonth() + 1));
+        var Endmonth = ((endDate.getMonth() + 1));
+        startDay = startDate.getDate();
+        startYear = startDate.getFullYear();
+        endDay = endDate.getDate();
+        endYear = endDate.getFullYear();
+
+        var userId =@id;
+        var planId = "3";
+        var fromDay = startDay;
+        var fromMonth = startmonth;
+        var fromYear = startYear;
+        var toDay = endDay;
+        var toMonth = Endmonth;
+        var toYear = endYear;
+        var price = 0;
+         $.ajax({
+            url: "@Url.Action("SubscribeFree", "Plans")",
+            data: {
+                "userId": userId, "planId": planId,
+                "fromDay": fromDay, "fromMonth": fromMonth, "fromYear": fromYear,
+                "toDay": toDay, "toMonth": toMonth, "toYear": toYear,
+                "price": price, "isTrail": false
+            },
+            type: "GET",
+            success: function () {
+                toastr.success("You have register for annual successfully");
+                location.reload();
+            },
+            error: function (err) {
+                toastr.error(err.statusText)
+            }
+        });
+    });
+
+                $("#freeSubscribeManualBuilderMonthly").on("click", function () {
+         @{
+                          var idx = Session["UserId"] != null ? Session["UserId"] : 0;
+                      }
+        let startDate = new Date();
+        let endDate = new Date();
+        endDate.setDate(endDate.getDate() + 30);
+        var startmonth = ((startDate.getMonth() + 1));
+        var Endmonth = ((endDate.getMonth() + 1));
+        startDay = startDate.getDate();
+        startYear = startDate.getFullYear();
+        endDay = endDate.getDate();
+        endYear = endDate.getFullYear();
+        var userId =@idx;
+        var planId = "3";
+        var fromDay = startDay;
+        var fromMonth = startmonth;
+        var fromYear = startYear;
+        var toDay = endDay;
+        var toMonth = Endmonth;
+        var toYear = endYear;
+        var price = 0;
+         $.ajax({
+            url: "@Url.Action("SubscribeFree", "Plans")",
+            data: {
+                "userId": userId, "planId": planId,
+                "fromDay": fromDay, "fromMonth": fromMonth, "fromYear": fromYear,
+                "toDay": toDay, "toMonth": toMonth, "toYear": toYear,
+                "price": price,"isTrail": false
+            },
+            type: "GET",
+            success: function () {
+                toastr.success("You have register for monthly successfully");
+                location.reload();
+            },
+            error: function (err) {
+                toastr.error(err.statusText)
+            }
+        });
+    });
             </script>

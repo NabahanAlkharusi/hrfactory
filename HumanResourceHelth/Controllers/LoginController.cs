@@ -188,13 +188,15 @@ namespace HumanResourceHelth.Web.Controllers
                 msgs.IsBodyHtml = true;
                 SmtpClient client = new SmtpClient();
                 //client.Host = "smtpout.asia.secureserver.net";
-                client.Host = "relay-hosting.secureserver.net";
+                client.Host = "smtp.gmail.com";
                 //client.Port = 80;
-                client.Port = 25;
+                client.Port = 587;
                 client.Timeout = 100000;
                 client.UseDefaultCredentials = false;
-                client.EnableSsl = false;
-                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
+                //client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "HRFA@pp(@2023)");
+                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "vymtkpdcvkcwwzmm");
                 //Send the msgs  
                 client.Send(msgs);
                 ViewBag.Status = "Email Sent Successfully.";
@@ -237,15 +239,16 @@ namespace HumanResourceHelth.Web.Controllers
                 msgs.Body = htmlBody;
                 msgs.IsBodyHtml = true;
                 SmtpClient client = new SmtpClient();
-                client.Host = "relay-hosting.secureserver.net";
                 //client.Host = "smtpout.asia.secureserver.net";
-                //client.Host = "smtpout.secureserver.net";
+                client.Host = "smtp.gmail.com";
                 //client.Port = 80;
-                client.Port = 25;
+                client.Port = 587;
                 client.Timeout = 100000;
                 client.UseDefaultCredentials = false;
-                client.EnableSsl = false;
-                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "Wahb@1985");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.EnableSsl = true;
+                //client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "HRFA@pp(@2023)");
+                client.Credentials = new NetworkCredential("care@hrfactoryapp.com", "vymtkpdcvkcwwzmm");
                 //Send the msgs  
                 client.Send(msgs);
                 ViewBag.Status = "Email Sent Successfully.";

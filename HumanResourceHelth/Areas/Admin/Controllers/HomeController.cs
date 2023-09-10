@@ -36,7 +36,8 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
                 DefaultMBs = defaultMBs.Select(a => new { a.CountryID, a.CompanySize }).Distinct().Count(),
                 Partnerships = _uow.PartnershipRepo.Count(),
                 HPartnerships = _uow.HPartnershipRepo.Count(),
-                OurPartner = _uow.OurPartnersRepo.Count()
+                OurPartner = _uow.OurPartnersRepo.Count(),
+                MBRequestedServices = _uow.RequestMBServiceRepo.Count(),
 
             };
 
@@ -65,6 +66,13 @@ namespace HumanResourceHelth.Web.Areas.Admin.Controllers
             if (Request.UrlReferrer.ToString().Contains("RenderDefaultM"))
                 return Redirect("~/Admin/DefaultMBs");
             return Redirect(Request.UrlReferrer.ToString());
+        }
+        //request services
+        public ActionResult RequestedServices()
+        {
+            if (Session["UserId"] == null) return Redirect(Url.Action("Index", "Login", new { Area = "Admin", r = Request.Url.ToString() }));
+            List<RequestMBService> requestMBServices = _uow.RequestMBServiceRepo.GetAll();
+            return View(requestMBServices);
         }
     }
 }

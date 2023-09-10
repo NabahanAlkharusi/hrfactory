@@ -92,8 +92,8 @@
                         </tr>
                         <tr>
                             <td colspan="2" class="text-center">
-
-                                <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = ViewBag.planId, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = ViewBag.Amount+"000" })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
+                                
+                                <a id="AnnualManualBuilderSubLink" href="@Url.Action("Index", "Thawani", new { planId = ViewBag.planId, subscriptionPeriod = ViewBag.subscriptionPeriod, Amount = (double.Parse( ViewBag.Amount)*1000) })" class="btn btn-sm text-white padding-lr-15px border-0 opacity-8">
                                     <img src="~/assets/img/Logo-Thawani.png" style="width:100%; height:100px;">
                                 </a>
                             </td>

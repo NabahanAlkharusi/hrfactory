@@ -150,6 +150,9 @@
   <data name="Ask" xml:space="preserve">
     <value>Ask</value>
   </data>
+  <data name="avilable" xml:space="preserve">
+    <value>Avilable</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -411,6 +414,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ExistingHRPolicy" xml:space="preserve">
+    <value>Path of Existing HR Policy</value>
+  </data>
   <data name="Explain" xml:space="preserve">
     <value>Explain</value>
   </data>
@@ -501,6 +507,9 @@
   <data name="IntroVideo" xml:space="preserve">
     <value>Introducing Video Details</value>
   </data>
+  <data name="IsthereExistingHRPolicy" xml:space="preserve">
+    <value>Do you Have an Existing HR Manual policy?</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>Last Login</value>
   </data>
@@ -539,6 +548,9 @@
   </data>
   <data name="ManualBuilderPlanMonthlyTerms" xml:space="preserve">
     <value>Manual Builder Plan Monthly Terms</value>
+  </data>
+  <data name="ManualBuilderRequests" xml:space="preserve">
+    <value>Manual Builder Services Requests</value>
   </data>
   <data name="Maybe" xml:space="preserve">
     <value>May be</value>
@@ -594,6 +606,9 @@
   <data name="NotApplicable" xml:space="preserve">
     <value>Not Applicable</value>
   </data>
+  <data name="notavilable" xml:space="preserve">
+    <value>Not Avilable</value>
+  </data>
   <data name="NotFreePlan" xml:space="preserve">
     <value>Not Free Plan</value>
   </data>
@@ -614,6 +629,9 @@
   </data>
   <data name="NotificationTitle" xml:space="preserve">
     <value>Notification Title</value>
+  </data>
+  <data name="NotRegisteredUser" xml:space="preserve">
+    <value>Not Registered User</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>Number Of Employees</value>
@@ -954,6 +972,9 @@
   <data name="Send" xml:space="preserve">
     <value>Send</value>
   </data>
+  <data name="service" xml:space="preserve">
+    <value>Service</value>
+  </data>
   <data name="SharePolicy" xml:space="preserve">
     <value>Share Policy</value>
   </data>
@@ -1004,6 +1025,9 @@
   </data>
   <data name="Subject" xml:space="preserve">
     <value>Subject</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>Subscribe</value>
@@ -1127,6 +1151,9 @@
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Upload File</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>User</value>
   </data>
   <data name="UserManulNotif" xml:space="preserve">
     <value>User will receive notification upon any changes in this manual.</value>

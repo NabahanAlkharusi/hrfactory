@@ -132,6 +132,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="7.png" />
     <Content Include="Areas\Admin\assets\crossbrowserjs\excanvas.min.js" />
     <Content Include="Areas\Admin\assets\crossbrowserjs\html5shiv.js" />
@@ -152,6 +153,7 @@
     <Content Include="Areas\PlansData1\Oman\Startup\ar\Videos\greenish_blue_butterfly_butterfly_523.mp4" />
     <Content Include="Areas\PlansData1\Oman\Startup\en\Videos\western_bluebird_bird_perched_tree_684.mp4" />
     <Content Include="Areas\plansData\ManualBuilder.mp4" />
+    <Content Include="Areas\plansData\ManualBuilderArabic.mp4" />
     <Content Include="Areas\plansData\WarmUp.mp4" />
     <Content Include="Areas\plansData\WarmUpArabic.mp4" />
     <Content Include="assets\css\bootstrap.min.css" />
@@ -4741,7 +4743,9 @@
     <Content Include="assets\img\Subscrptions.png" />
     <Content Include="assets\img\Updates.png" />
     <Content Include="assets\img\warmup.jpg" />
+    <Content Include="assets\js\bootstrap.bundle.js" />
     <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\bootstrap1.min.js" />
     <Content Include="assets\js\custom.js" />
     <Content Include="assets\js\imagesloaded.min.js" />
     <Content Include="assets\js\jquery-3.2.1.min.js" />
@@ -4753,6 +4757,7 @@
     <Content Include="assets\js\loading.js" />
     <Content Include="assets\js\numscroller-1.0.js" />
     <Content Include="assets\js\owl.carousel.min.js" />
+    <Content Include="assets\js\popper.min - Copy.js" />
     <Content Include="assets\js\popper.min.js" />
     <Content Include="assets\js\soon.js" />
     <Content Include="assets\js\sticky-sidebar.js" />
@@ -4808,7 +4813,6 @@
     <Content Include="ContentImages\partner5.png" />
     <Content Include="ContentImages\partner7.jpg" />
     <Content Include="ContentImages\partner8.jpg" />
-    <Content Include="ContentImages\TakatufLogo.png" />
     <Content Include="Content\Final_ar.mp4" />
     <Content Include="Content\Final.mp4" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -5689,6 +5693,9 @@
     <Content Include="Areas\Admin\Views\OurPartners\Details.cshtml" />
     <Content Include="Areas\Admin\Views\OurPartners\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\OurPartners\Index.cshtml" />
+    <Content Include="assets\css\bootstrap.min.css.map" />
+    <Content Include="assets\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Admin\Views\Home\RequestedServices.cshtml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -5903,6 +5910,7 @@
     <Compile Include="Data\AnswersViewModel.cs" />
     <Compile Include="Areas\Admin\Data\FilesViewModel.cs" />
     <Compile Include="Data\DefaultMBViewModel.cs" />
+    <Compile Include="Data\email.cs" />
     <Compile Include="Data\TermsConditionsViewModel.cs" />
     <Compile Include="Data\SectionViewModel.cs" />
     <Compile Include="Data\SubscriptionViewModel.cs" />
@@ -6377,6 +6385,7 @@
     <Content Include="Views\RequestMBServices\Details.cshtml" />
     <Content Include="Views\RequestMBServices\Edit.cshtml" />
     <Content Include="Views\RequestMBServices\Index.cshtml" />
+    <Content Include="Views\Plans\ManualBuilder - Copy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -12,6 +12,7 @@ using Microsoft.AspNet.WebHooks;
 using System.Web.Http;
 using HumanResourceHelth.Web.Data;
 using System.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace HumanResourceHelth.Web.Controllers
 {
@@ -25,24 +26,38 @@ namespace HumanResourceHelth.Web.Controllers
             Plan plan = _uow.PlanRepo.FindById(int.Parse(HttpContext.Request.QueryString["planId"]));
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            var client = new RestClient("https://checkout.thawani.om/api/v1/checkout/session");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("thawani-api-key", "8AoY3m4ahzYGuWtSfDW8YUa736DZvJ");
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("undefined",
-                "{\n\t\"client_reference_id\": \""
-                + Session["UserId"] + "\",\n\t\"products\": [\n\t\t{\n\t\t\t\"name\": \""
-                + plan.Name + "\",\n\t\t\t\"unit_amount\":" + HttpContext.Request.QueryString["Amount"]
-                + ",\n\t\t\t\"quantity\": 1\n\t\t}],\n\t\"success_url\": \"https://hrfactoryapp.com/Plans/Subscribe?planId="
-                + HttpContext.Request.QueryString["planId"] + "&subscriptionPeriod="
-                + HttpContext.Request.QueryString["subscriptionPeriod"] + "&UserId="
-                + Session["UserId"] + "\",\n\t\"cancel_url\": \"https://hrfactoryapp.com/#subscriptionPlans\",\n\t\"metadata\": {\n\t\t\"customer\": \""
-                + Session["UserId"] + "\",\n\t\t\"name\": \"" + user.Name + "\",\n\t\t\"contact\": "
-                + user.ContactInformation + ",\n\t\t\"email\": \"" + user.Email
-                + "\"}\n}\n", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            var v = response.Content.Split('"');
-            return Redirect("http://checkout.thawani.om/pay/" + v[13] + "?key=AE3Ac7wGc8tB13XuoXGw98KlwtkV5j");
+            HttpClient client = new HttpClient();
+            //var request = new RestRequest(Method.POST);
+            var bodycontent = "{\"client_reference_id\": \""
+                 + Session["UserId"] + "\",\"products\": [{\"name\": \""
+                 + plan.Name + "\",\"unit_amount\":" + HttpContext.Request.QueryString["Amount"]
+                 + ",\"quantity\": 1}],\"success_url\": \"https://hrfactoryapp.com/Plans/Subscribe?planId="
+                 + HttpContext.Request.QueryString["planId"] + "&subscriptionPeriod="
+                 + HttpContext.Request.QueryString["subscriptionPeriod"] + "&UserId="
+                 + Session["UserId"] + "\",\"cancel_url\": \"https://hrfactoryapp.com/#subscriptionPlans\",\"metadata\": {\"customer\": \""
+                 + Session["UserId"] + "\",\"name\": \"" + user.Name + "\",\"contact\": "
+                 + user.ContactInformation + ",\"email\": \"" + user.Email
+                 + "\"}}\n";
+            string apiKey = "8AoY3m4ahzYGuWtSfDW8YUa736DZvJ";
+            string requestUri = "https://checkout.thawani.om/api/v1/checkout/session";
+            client.DefaultRequestHeaders.Add("thawani-api-key", apiKey);
+            HttpContent httpContent = new StringContent(bodycontent, System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync(requestUri, httpContent).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = response.Content;
+                string responseString = responseContent.ReadAsStringAsync().Result;
+                Dictionary<string, dynamic> result = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(responseString);
+                //get by key
+                var data = result["data"];
+                //ket session_id
+                var session_id = data["session_id"];
+                return Redirect("http://checkout.thawani.om/pay/" + session_id + "?key=AE3Ac7wGc8tB13XuoXGw98KlwtkV5j");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public ActionResult Learn()
@@ -78,7 +93,8 @@ namespace HumanResourceHelth.Web.Controllers
             var Amount = HttpContext.Request.QueryString["Amount"];
             ViewBag.Amount = Amount;
             var subscriptionPeriod = HttpContext.Request.QueryString["subscriptionPeriod"];
-            ViewBag.subscriptionPeriod = subscriptionPeriod == "Month" ? Resources.General.subscriptionPeriodMonth : Resources.General.subscriptionPeriodYear;
+            ViewBag.subscriptionPeriod = subscriptionPeriod;
+            ViewBag.subscriptionPeriodt = subscriptionPeriod == "Month" ? Resources.General.subscriptionPeriodMonth : Resources.General.subscriptionPeriodYear;
             ViewBag.DateFrom = DateTime.Now.ToShortDateString();
             ViewBag.DateTo = DateTime.Now.AddDays(subscriptionPeriod == "Month" ? 30 : 365).ToShortDateString();
             User user = _uow.UserRepo.FindById((int)Session["UserId"]);
@@ -294,11 +310,13 @@ namespace HumanResourceHelth.Web.Controllers
             if (_uow.SectionRepo.Search(x => x.UserId == userId).Count() > 0) return;
             int adminId = _uow.UserRepo.Search(x => x.IsAdmin).Single().Id;
             User user = _uow.UserRepo.FindById(userId);
-            List<Section> adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId).ToList();
+            List<DefaultMB> adminSections = _uow.DefaultMBRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId && a.CompanySize == user.NumberOFEmployees).ToList();
             if (adminSections.Count == 0)
-                adminSections = _uow.SectionRepo.Search(a => a.UserId == adminId && a.CountryID == 158).ToList();
-            List<Section> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
-            foreach (Section parent in parentAdminSections)
+                adminSections = _uow.DefaultMBRepo.Search(a => a.UserId == adminId && a.CountryID == user.CountryId && a.CompanySize == 1).ToList();
+            if (adminSections.Count == 0)
+                adminSections = _uow.DefaultMBRepo.Search(a => a.UserId == adminId && a.CountryID == 158 && a.CompanySize == 1).ToList();
+            List<DefaultMB> parentAdminSections = adminSections.Where(x => x.ParenId == null).ToList();
+            foreach (DefaultMB parent in parentAdminSections)
             {
                 Section parentUserSection = new Section()
                 {
@@ -310,11 +328,11 @@ namespace HumanResourceHelth.Web.Controllers
                     IsActive = parent.IsActive,
                     Content = parent.Content,
                     CountryID = parent.CountryID,
-                    SectionId = parent.SectionId,
+                    SectionId = parent.DefaultMBId,
                     Childs = new List<Section>(),
                 };
 
-                foreach (Section child in parent.Childs)
+                foreach (DefaultMB child in parent.Childs)
                 {
                     Section childUserSection = new Section()
                     {
@@ -326,7 +344,7 @@ namespace HumanResourceHelth.Web.Controllers
                         IsActive = parent.IsActive,
                         Content = child.Content,
                         CountryID = child.CountryID,
-                        SectionId = child.SectionId,
+                        SectionId = child.DefaultMBId,
                     };
                     parentUserSection.Childs.Add(childUserSection);
                 }

@@ -150,6 +150,9 @@
   <data name="Ask" xml:space="preserve">
     <value>إسال</value>
   </data>
+  <data name="avilable" xml:space="preserve">
+    <value>يوجد</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>رجوع</value>
   </data>
@@ -411,6 +414,9 @@
   <data name="Error" xml:space="preserve">
     <value>خطاء</value>
   </data>
+  <data name="ExistingHRPolicy" xml:space="preserve">
+    <value>ملف سياسات العمل الحالي</value>
+  </data>
   <data name="Explain" xml:space="preserve">
     <value>الشرح</value>
   </data>
@@ -502,6 +508,9 @@
   <data name="IntroVideo" xml:space="preserve">
     <value>بيانات الفيديو التعريفي</value>
   </data>
+  <data name="IsthereExistingHRPolicy" xml:space="preserve">
+    <value>هل يوجد لديك سابقا دليل سياسة الموارد البشرية؟</value>
+  </data>
   <data name="LastLogin" xml:space="preserve">
     <value>أخر تسجيل دخول</value>
   </data>
@@ -540,6 +549,9 @@
   </data>
   <data name="ManualBuilderPlanMonthlyTerms" xml:space="preserve">
     <value>شروط الاشتراك الشهري في لائحة سياسات العمل</value>
+  </data>
+  <data name="ManualBuilderRequests" xml:space="preserve">
+    <value>طلبات خدمات صانع سياسات العمل</value>
   </data>
   <data name="Maybe" xml:space="preserve">
     <value>ربما</value>
@@ -595,6 +607,9 @@
   <data name="NotApplicable" xml:space="preserve">
     <value>لا ينطبق</value>
   </data>
+  <data name="notavilable" xml:space="preserve">
+    <value>لا يوجد</value>
+  </data>
   <data name="NotFreePlan" xml:space="preserve">
     <value>باقة غير مجانية</value>
   </data>
@@ -615,6 +630,9 @@
   </data>
   <data name="NotificationTitle" xml:space="preserve">
     <value>عنوان الإخطار</value>
+  </data>
+  <data name="NotRegisteredUser" xml:space="preserve">
+    <value>مستخدم غير مسجل</value>
   </data>
   <data name="NumberOfEmployees" xml:space="preserve">
     <value>عدد الموظفين</value>
@@ -955,6 +973,9 @@
   <data name="Send" xml:space="preserve">
     <value>ارسال</value>
   </data>
+  <data name="service" xml:space="preserve">
+    <value>الخدمة</value>
+  </data>
   <data name="SharePolicy" xml:space="preserve">
     <value>شارك اللائحة</value>
   </data>
@@ -1005,6 +1026,9 @@
   </data>
   <data name="Subject" xml:space="preserve">
     <value>الموضوع</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>تسليم الطلب</value>
   </data>
   <data name="Subscribe" xml:space="preserve">
     <value>اشترك</value>
@@ -1128,6 +1152,9 @@
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>تحميل ملف</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>المستخدم</value>
   </data>
   <data name="UserManulNotif" xml:space="preserve">
     <value>سيتم إشعار المشترك بالتعديلات التي تطرأ على هذه اللائحة.</value>

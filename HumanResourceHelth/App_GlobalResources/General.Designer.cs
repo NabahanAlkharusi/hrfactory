@@ -160,6 +160,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Avilable.
+        /// </summary>
+        internal static string avilable {
+            get {
+                return ResourceManager.GetString("avilable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         internal static string Back {
@@ -943,6 +952,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path of Existing HR Policy.
+        /// </summary>
+        internal static string ExistingHRPolicy {
+            get {
+                return ResourceManager.GetString("ExistingHRPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Explain.
         /// </summary>
         internal static string Explain {
@@ -1213,6 +1231,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you Have an Existing HR Manual policy?.
+        /// </summary>
+        internal static string IsthereExistingHRPolicy {
+            get {
+                return ResourceManager.GetString("IsthereExistingHRPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Last Login.
         /// </summary>
         internal static string LastLogin {
@@ -1326,6 +1353,15 @@ namespace Resources {
         internal static string ManualBuilderPlanMonthlyTerms {
             get {
                 return ResourceManager.GetString("ManualBuilderPlanMonthlyTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual Builder Services Requests.
+        /// </summary>
+        internal static string ManualBuilderRequests {
+            get {
+                return ResourceManager.GetString("ManualBuilderRequests", resourceCulture);
             }
         }
         
@@ -1492,6 +1528,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not Avilable.
+        /// </summary>
+        internal static string notavilable {
+            get {
+                return ResourceManager.GetString("notavilable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Free Plan.
         /// </summary>
         internal static string NotFreePlan {
@@ -1551,6 +1596,15 @@ namespace Resources {
         internal static string NotificationTitle {
             get {
                 return ResourceManager.GetString("NotificationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Registered User.
+        /// </summary>
+        internal static string NotRegisteredUser {
+            get {
+                return ResourceManager.GetString("NotRegisteredUser", resourceCulture);
             }
         }
         
@@ -2572,6 +2626,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Service.
+        /// </summary>
+        internal static string service {
+            get {
+                return ResourceManager.GetString("service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Share Policy.
         /// </summary>
         internal static string SharePolicy {
@@ -2721,6 +2784,15 @@ namespace Resources {
         internal static string Subject {
             get {
                 return ResourceManager.GetString("Subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        internal static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         
@@ -3090,6 +3162,15 @@ namespace Resources {
         internal static string UploadFile {
             get {
                 return ResourceManager.GetString("UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User.
+        /// </summary>
+        internal static string user {
+            get {
+                return ResourceManager.GetString("user", resourceCulture);
             }
         }
         

@@ -1,5 +1,5 @@
 ﻿@using HumanResourceHelth.Model
-@model Section
+@model DefaultMB
 @{ var dir = "ltr";
     var alignText = "text-left";}
 @if (System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft)
@@ -41,9 +41,9 @@
 
 <div class="row">
     <div class="form-group col-md-12">
-        <button id="btnSaveSection" class="btn btn-primary disabled">
+        @*<button id="btnSaveSection" class="btn btn-primary disabled">
             @Resources.General.Save
-        </button>
+        </button>*@
     </div>
 </div>
 

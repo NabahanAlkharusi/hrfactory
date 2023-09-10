@@ -24,6 +24,7 @@ namespace HumanResourceHelth.Web.Data
         public string Content { get; set; }
         public List<Section>  Sections { get; set; }
         public List<Section> DefualtSections { get; set; }
+        public List<DefaultMB> DefualtMBs { get; set; }
         public List<Country> Countries { get; set; }
         public List<Country> CountriesNotAdded { get; set; }
 

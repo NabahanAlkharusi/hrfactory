@@ -22,5 +22,6 @@ namespace HumanResourceHelth.Model
         [Display(Name = "Respondent")]
         public int Respondent { get; set; }
         public bool status { get; set; } = true;
+        public bool isDriver { get; set; } = true;
     }
 }
