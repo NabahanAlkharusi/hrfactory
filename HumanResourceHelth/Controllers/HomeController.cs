@@ -1,5 +1,7 @@
 ﻿using HumanResourceHelth.DataAccess;
+using HumanResourceHelth.DataAccess.Repositories;
 using HumanResourceHelth.Model;
+using HumanResourceHelth.Model.Resources.Coupons;
 using HumanResourceHelth.Web.Models;
 using Newtonsoft.Json;
 using System;
@@ -467,7 +469,7 @@ namespace HumanResourceHelth.Web.Controllers
                 }
                 ViewBag.ReadNotifi = updates;
                 ViewBag.ReadNotifiCount = updates.Count();
-                
+
                 return View(updates);
             }
         }
@@ -534,7 +536,159 @@ namespace HumanResourceHelth.Web.Controllers
         {
             OurPartners partner = _uow.OurPartnersRepo.FindById(id);
             return View(partner);
-            
+
+        }
+        public ActionResult shipData()
+        {
+
+            //create dictionary
+            Dictionary<string, dynamic> shipData = new Dictionary<string, dynamic>();
+            List<Content> contents = _uow.ContentRepo.GetAll().ToList();
+            shipData.Add("contents", contents);
+            //get list of category
+            List<Category> categories = _uow.CategoryRepo.GetAll().ToList();
+            shipData.Add("categories", categories);
+            //get list of DocFile
+            List<DocFile> docFiles = _uow.DocFileRepo.GetAll().ToList();
+            shipData.Add("docFiles", docFiles);
+            //get list of Users
+            List<User> users = _uow.UserRepo.GetAll().ToList();
+            shipData.Add("users", users);
+            // get list of plans
+            List<Plan> plans = _uow.PlanRepo.GetAll().ToList();
+            shipData.Add("plans", plans);
+            //get list of termsConditions
+            List<TermsConditions> termsConditions = _uow.TermsConditionsRepo.GetAll().ToList();
+            shipData.Add("termsConditions", termsConditions);
+            //get list of coupons
+            List<Model.Coupons> coupons = _uow.couponsRepo.GetAll().ToList();
+            shipData.Add("coupons", coupons);
+
+            //return json of contents
+            return Json(shipData, JsonRequestBehavior.AllowGet);
+
+
+        }
+        public ActionResult shipCountries()
+        {
+
+            //create dictionary
+            Dictionary<string, dynamic> shipData = new Dictionary<string, dynamic>();
+
+            //get list of countries
+            List<Country> countries = _uow.CountryRepo.GetAll().Select(a => new Country { Id = a.Id, Name = a.Name, CountryCode = a.CountryCode, NameAr = a.NameAr, IsArabCountry = a.IsArabCountry }).ToList();
+            shipData.Add("countries", countries);
+            //get list of industries
+            List<Industry> industries = _uow.IndustryRepo.GetAll().ToList();
+            shipData.Add("industries", industries);
+            //return json of contents
+            //string json = JsonConvert.SerializeObject(shipData, Formatting.Indented,
+            //    new JsonSerializerSettings()
+            //    {
+            //        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            //    });
+
+            return Json(shipData, JsonRequestBehavior.AllowGet);
+
+
+        }
+        public ActionResult shipCoupons()
+        {
+
+            //create dictionary
+            Dictionary<string, dynamic> shipData = new Dictionary<string, dynamic>();
+            //get list of coupons
+            List<Model.Coupons> coupons = _uow.couponsRepo.GetAll().ToList();
+            shipData.Add("coupons", coupons);
+            //get list of introvedio
+            List<IntroVedio> introVedios = _uow.introVedioRepo.GetAll().ToList();
+            shipData.Add("introVedios", introVedios);
+            //get list of userplans
+            List<UserPlan> userPlans = _uow.UserPlanRepo.GetAll().ToList();
+            shipData.Add("userPlans", userPlans);
+            return Json(shipData, JsonRequestBehavior.AllowGet);
+
+
+        }
+        public ActionResult shipDef()
+        {
+
+            //create dictionary
+            Dictionary<string, dynamic> shipData = new Dictionary<string, dynamic>();
+            //get list of coupons
+            List<DefaultMB> defaultMBs = _uow.DefaultMBRepo.GetAll().Where(a => a.CountryID == 182 && a.CompanySize == 6 && a.LanguageId == 2).ToList();
+            shipData.Add("defaultMBs", defaultMBs);
+            return Json(shipData, JsonRequestBehavior.AllowGet);
+
+
+        }
+        //get users ids by array of emails
+        public ActionResult GetUsersIdsByEmails()
+        {
+            string[] emails = Request["emails"].Split(',');
+            List<int> ids = new List<int>();
+            foreach (var email in emails)
+            {
+                User user = _uow.UserRepo.Search(a => a.Email == email).FirstOrDefault();
+                if (user != null)
+                    ids.Add(user.Id);
+            }
+            return Json(ids, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetUserByEmail(string email)
+        {
+            User user = _uow.UserRepo.Search(a => a.Email == email).FirstOrDefault();
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
+        //return sections of active user
+        public ActionResult GetUserSections()
+        {
+            Dictionary<string, dynamic> shipData = new Dictionary<string, dynamic>();
+            //get user by email
+            //User user = _uow.UserRepo.Search(a => a.Email == email).FirstOrDefault();
+            //get IDs of active users
+            List<int> activeUsers = _uow.UserRepo.Search(a => !a.IsDeleted && !a.IsAdmin).Select(a => a.Id).ToList();
+            //get allsection of all active users
+            var userSections = _uow.SectionRepo.Search(a => activeUsers.Contains(a.UserId) && a.ParenId == null).Select(z => new
+            {
+                z.SectionId,
+                z.Id,
+                z.IsHaveLineBefore,
+                z.UserId,
+                z.Ordering,
+                z.Title,
+                z.LanguageId,
+                z.ParenId,
+                z.CountryID,
+                //z.Childs,
+                z.CompanyIndustry,
+                z.CompanySize,
+                z.Content,
+                z.Description,
+                z.IsActive
+            }).ToList();
+            //List<Section> userSections = _uow.SectionRepo.Search(a => a.UserId == user.Id && a.LanguageId==lang).ToList();
+            shipData.Add("userSections", userSections);
+
+            var list = JsonConvert.SerializeObject(shipData, Formatting.None, new JsonSerializerSettings()
+            { ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore }
+            );
+            //download list to json physical file
+            //byte[] byteArray = System.Text.ASCIIEncoding.ASCII.GetBytes(list);
+
+            //return File(byteArray, "application/force-download", "file1.json");
+            return Content(list, "application/json");
+        }
+        //get subsection by parent id
+        public ActionResult GetSubSections(int parent)
+        {
+            Dictionary<string, dynamic> shipData = new Dictionary<string, dynamic>();
+            //get user by email
+
+            //get allsection of all active users
+            List<Section> userSections = _uow.SectionRepo.Search(a => a.ParenId == parent).ToList();
+            shipData.Add("userSections", userSections);
+            return Json(shipData, JsonRequestBehavior.AllowGet);
         }
     }
 }

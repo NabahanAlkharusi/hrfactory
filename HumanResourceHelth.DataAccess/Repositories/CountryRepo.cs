@@ -8,6 +8,7 @@ namespace HumanResourceHelth.DataAccess.Repositories
 
         public CountryRepo(HumanResourceContext context) : base(context)
         {
+            context.Configuration.ProxyCreationEnabled = false;
             Context = context;
         }
     }
